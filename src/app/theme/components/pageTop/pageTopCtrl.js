@@ -14,12 +14,52 @@
         //   return $timeout(function() {}, 3000);
         // };
 
-        $scope.test = function (e) {
+        $scope.show = {
+            topBarData: [
+                {
+                    title: '概况总览',
+                    state: 'overview'
+                },
+                {
+                    title: '实时监控',
+                    state: 'monitoring'
+                },
+                {
+                    title: '设备台账',
+                    state: 'device'
+                },
+                {
+                    title: '当前事件',
+                    state: 'events'
+                },
+                {
+                    title: '视频监控',
+                    state: 'videos'
+                },
+                {
+                    title: '签到查询',
+                    state: 'checkin'
+                },
+                {
+                    title: '历史数据',
+                    state: 'history'
+                },
+                {
+                    title: '报表查询',
+                    state: 'report'
+                },
+                {
+                    title: '平台设置',
+                    state: 'settings'
+                }]
+        };
 
-            $state.go('profile');
+        $scope.gotoState = function (e, state) {
 
             $('.page-top-content-title').removeClass('page-top-title-active');
             $(e.target).addClass('page-top-title-active');
+
+            $state.go(state);
         };
 
         /**

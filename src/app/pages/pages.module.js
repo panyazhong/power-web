@@ -15,13 +15,23 @@
         // 'BlurAdmin.pages.tables',
         // 'BlurAdmin.pages.charts',
         // 'BlurAdmin.pages.maps',
-        'BlurAdmin.pages.profile',
+        // 'BlurAdmin.pages.profile',
+
+        'BlurAdmin.pages.overview',
+        'BlurAdmin.pages.monitoring',
+        'BlurAdmin.pages.device',
+        'BlurAdmin.pages.events',
+        'BlurAdmin.pages.videos',
+        'BlurAdmin.pages.checkin',
+        'BlurAdmin.pages.history',
+        'BlurAdmin.pages.report',
+        'BlurAdmin.pages.settings',
     ])
         .config(routeConfig);
 
     /** @ngInject */
     function routeConfig($urlRouterProvider, baSidebarServiceProvider) {
-        $urlRouterProvider.otherwise('/dashboard');
+        $urlRouterProvider.otherwise('/overview');
 
         baSidebarServiceProvider.addStaticItem({
             title: 'Pages',

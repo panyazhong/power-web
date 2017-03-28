@@ -9,36 +9,14 @@
     <div class="page-top-div" style="width: calc(100% - 200px);">
         <div class="page-top-div" style="width: 80%;">
 
-            <div class="page-top-div page-top-content-title page-top-title-active"
-                 style="width: 11%;">
-                概况总览
-            </div>
-            <div class="page-top-div page-top-content-title" style="width: 11%;"
-                 ng-click="test($event)">
-                实时监控
-            </div>
-            <div class="page-top-div page-top-content-title" style="width: 11%;">
-                设备台账
-            </div>
-            <div class="page-top-div page-top-content-title" style="width: 11%;">
-                当前事件
-            </div>
-            <div class="page-top-div page-top-content-title" style="width: 11%;">
-                视频监控
-            </div>
-            <div class="page-top-div page-top-content-title" style="width: 11%;">
-                签到查询
-            </div>
-            <div class="page-top-div page-top-content-title" style="width: 11%;">
-                历史数据
-            </div>
-            <div class="page-top-div page-top-content-title" style="width: 11%;">
-                报表查询
-            </div>
-            <div class="page-top-div page-top-content-title" style="width: 11%;">
-                平台设置
-                <i class="ion-arrow-down-b" style="margin: 0 5px"></i>
-                <span class="page-top-divider"></span>
+            <div ng-repeat="item in show.topBarData" class="page-top-div page-top-content-title"
+                 style="width: 11%;" ng-class="$index == 0 ? 'page-top-title-active' : '' "
+                 ng-click="gotoState($event,item.state)">
+                {{item.title}}
+
+                <i class="ion-arrow-down-b" style="margin: 0 5px"
+                   ng-show="$index == show.topBarData.length-1"></i>
+                <span class="page-top-divider" ng-show="$index == show.topBarData.length-1"></span>
             </div>
 
         </div>
