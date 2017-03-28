@@ -1,24 +1,80 @@
-<div class="page-top clearfix" scroll-position="scrolled" max-height="50" ng-class="{'scrolled': scrolled}">
-  <a href="#/dashboard" class="al-logo clearfix"><span>Blur</span>Admin</a>
-  <a href class="collapse-menu-link ion-navicon" ba-sidebar-toggle-menu></a>
+<div class="page-top clearfix" scroll-position="scrolled" max-height="50"
+     ng-class="{'scrolled': scrolled}">
 
-  <div class="search">
-    <i class="ion-ios-search-strong" ng-click="startSearch()"></i>
-    <input id="searchInput" type="text" placeholder="Search for...">
-  </div>
-
-  <div class="user-profile clearfix">
-    <div class="al-user-profile" uib-dropdown>
-      <a uib-dropdown-toggle class="profile-toggle-link">
-        <img ng-src="{{::( 'Nasta' | profilePicture )}}">
-      </a>
-      <ul  class="top-dropdown-menu profile-dropdown" uib-dropdown-menu>
-        <li><i class="dropdown-arr"></i></li>
-        <li><a href="#/profile"><i class="fa fa-user"></i>Profile</a></li>
-        <li><a href><i class="fa fa-cog"></i>Settings</a></li>
-        <li><a href class="signout"><i class="fa fa-power-off"></i>Sign out</a></li>
-      </ul>
+    <div class="page-top-div" style="width: 200px;">
+        <a href="#/dashboard" class="al-logo clearfix"><span>Blur</span>Admin</a>
+        <a href class="collapse-menu-link ion-navicon" ba-sidebar-toggle-menu></a>
     </div>
-    <msg-center></msg-center>
-  </div>
+
+    <div class="page-top-div" style="width: calc(100% - 200px);">
+        <div class="page-top-div" style="width: 80%;">
+
+            <div class="page-top-div page-top-content-title page-top-title-active"
+                 style="width: 11%;">
+                概况总览
+            </div>
+            <div class="page-top-div page-top-content-title" style="width: 11%;"
+                 ng-click="test($event)">
+                实时监控
+            </div>
+            <div class="page-top-div page-top-content-title" style="width: 11%;">
+                设备台账
+            </div>
+            <div class="page-top-div page-top-content-title" style="width: 11%;">
+                当前事件
+            </div>
+            <div class="page-top-div page-top-content-title" style="width: 11%;">
+                视频监控
+            </div>
+            <div class="page-top-div page-top-content-title" style="width: 11%;">
+                签到查询
+            </div>
+            <div class="page-top-div page-top-content-title" style="width: 11%;">
+                历史数据
+            </div>
+            <div class="page-top-div page-top-content-title" style="width: 11%;">
+                报表查询
+            </div>
+            <div class="page-top-div page-top-content-title" style="width: 11%;">
+                平台设置
+                <i class="ion-arrow-down-b" style="margin: 0 5px"></i>
+                <span class="page-top-divider"></span>
+            </div>
+
+        </div>
+        <div class="page-top-div" style="width: 20%;">
+
+            <div class="page-top-div page-top-common-title" style="width: 50%;">
+                <!--{{'欢迎您，' + data.userInfo.username}}-->
+                {{'欢迎您，Olliva' }}
+            </div>
+            <div class="page-top-div page-top-common-title" style="width: 50%;">
+
+                <button ng-click="logout()" type="button"
+                        class="btn btn-primary btn-with-icon btn-transparent">
+                    <i class="ion-power"></i>退出
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!--<div class="search">-->
+    <!--<i class="ion-ios-search-strong" ng-click="startSearch()"></i>-->
+    <!--<input id="searchInput" type="text" placeholder="Search for...">-->
+    <!--</div>-->
+
+    <!--<div class="user-profile clearfix">-->
+    <!--<div class="al-user-profile" uib-dropdown>-->
+    <!--<a uib-dropdown-toggle class="profile-toggle-link">-->
+    <!--<img ng-src="{{::( 'Nasta' | profilePicture )}}">-->
+    <!--</a>-->
+    <!--<ul  class="top-dropdown-menu profile-dropdown" uib-dropdown-menu>-->
+    <!--<li><i class="dropdown-arr"></i></li>-->
+    <!--<li><a href="#/profile"><i class="fa fa-user"></i>Profile</a></li>-->
+    <!--<li><a href><i class="fa fa-cog"></i>Settings</a></li>-->
+    <!--<li><a href class="signout"><i class="fa fa-power-off"></i>Sign out</a></li>-->
+    <!--</ul>-->
+    <!--</div>-->
+    <!--<msg-center></msg-center>-->
+    <!--</div>-->
 </div>

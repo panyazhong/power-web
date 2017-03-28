@@ -6,7 +6,7 @@
   height: 66px;
   width: 100%;
   min-width: $resMin;
-  padding: 0 32px 0 40px;
+  //padding: 0 32px 0 40px;
 
   &.scrolled {
     background-color: rgba(black, 0.85)
@@ -169,4 +169,37 @@ a.collapse-menu-link {
 
 .profile-toggle-link{
   cursor: pointer;
+}
+
+.page-top-div{
+  display: inline-block;
+  height: 100%;
+  float: left
+}
+
+.page-top-content-title {
+  color: #fff;
+  font-size: 15px;
+  text-align: center;
+  line-height: 66px;
+  cursor: pointer;
+}
+
+.page-top-title-active{
+  background: #de3661 !important;
+}
+
+.page-top-common-title {
+  color: #fff;
+  font-size: 15px;
+  text-align: center;
+  line-height: 66px;
+}
+
+.page-top-divider{
+  background: #fff;
+  display: inline-block;
+  height: 22px;
+  width: 1px;
+  vertical-align: middle
 }
