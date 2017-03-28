@@ -8,14 +8,14 @@
     angular.module('BlurAdmin.pages', [
         'ui.router',
 
-        'BlurAdmin.pages.dashboard',
-        'BlurAdmin.pages.ui',
-        'BlurAdmin.pages.components',
-        'BlurAdmin.pages.form',
-        'BlurAdmin.pages.tables',
-        'BlurAdmin.pages.charts',
-        'BlurAdmin.pages.maps',
-        'BlurAdmin.pages.profile',
+        // 'BlurAdmin.pages.dashboard',
+        // 'BlurAdmin.pages.ui',
+        // 'BlurAdmin.pages.components',
+        // 'BlurAdmin.pages.form',
+        // 'BlurAdmin.pages.tables',
+        // 'BlurAdmin.pages.charts',
+        // 'BlurAdmin.pages.maps',
+        // 'BlurAdmin.pages.profile',
     ])
         .config(routeConfig);
 
@@ -49,41 +49,34 @@
             icon: 'ion-grid',
             subMenu: [{
                 title: '万6迪威行甲线',
-                icon: 'fa fa-circle',
+                icon: 'ion-record',
                 subMenu: [{
                     title: '供水支线',
-                    icon: 'ion-flag',
+                    icon: 'ion-flame',
                     disabled: true
                 }, {
                     title: '集控室支线',
-                    icon: 'ion-flag',
+                    icon: 'ion-key',
                     disabled: true
                 }, {
                     title: '脱硫支线',
-                    icon: 'ion-flag',
+                    icon: 'ion-lightbulb',
                     disabled: true
                 }]
             }, {
                 title: '国4迪威行乙线',
-                icon: 'fa fa-circle',
+                icon: 'ion-record',
                 subMenu: [{
-                    title: '供水支线',
-                    icon: 'ion-flag',
-                    disabled: true
-                }, {
-                    title: '集控室支线',
-                    icon: 'ion-flag',
-                    disabled: true
-                }, {
-                    title: '脱硫支线',
-                    icon: 'ion-flag',
+                    title: '除灰支线',
+                    icon: 'ion-record',
                     disabled: true
                 }]
             }, {
                 title: '万81迪威行丙线',
-                icon: 'fa fa-circle',
+                icon: 'ion-record',
                 subMenu: [{
-                    title: 'Menu Level 1.2.1',
+                    title: '测试支线',
+                    icon: 'ion-record',
                     disabled: true
                 }]
             }]

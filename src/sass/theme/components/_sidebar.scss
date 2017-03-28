@@ -104,7 +104,7 @@ a.al-sidebar-list-link {
 .slimScrollBar, .slimScrollRail {
   border-radius: 0px !important;
   width: 4px !important;
-  left: 176px;
+  left: 196px;
 }
 
 @mixin layout-collapsed() {
@@ -164,7 +164,7 @@ a.al-sidebar-list-link {
   background: $primary;
   position: absolute;
   top: -150px;
-  left: 176px;
+  left: 196px;
   transition: all 0.5s ease;
   transition-property: top, height;
   height: 42px;
