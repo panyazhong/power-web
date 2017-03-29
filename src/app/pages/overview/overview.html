@@ -1,7 +1,72 @@
-<div ba-panel ba-panel-class="profile-page">
-    <div class="panel-content">
+<div ba-panel>
+    <div class="row">
 
-        <h3> 概况总览；overview </h3>
+        <div id="container" style="height: 700px"></div>
+
+        <script type="text/javascript">
+
+            var mapObj;
+
+            function mapInit() {
+                mapObj = new AMap.Map('container', {
+                    dragEnable: false,
+                    zoomEnable: false,
+                    zoom: 12,
+                    center: [121.493496, 31.224609],    // 定义地图中心点
+//                    mapStyle: 'fresh',
+//                    features: ['road', 'building','bg']
+                });
+                AMap.event.addListener(mapObj, "complete", completeEventHandler);
+            }
+            mapInit();
+
+            /**
+             * 模拟后台返回的数据
+             */
+
+            var mapLabData = [{
+                img: 'assets/img/app/power/map_label_red.png',
+                labTitle: '时代金融',
+                lng: 121.506621,
+                lat: 31.240731
+            }, {
+                img: 'assets/img/app/power/map_label_red.png',
+                labTitle: '陆家嘴金融广场',
+                lng: 121.528121,
+                lat: 31.219177
+            }, {
+                img: 'assets/img/app/power/map_label_green.png',
+                labTitle: '世博轴',
+                lng: 121.492519,
+                lat: 31.183656
+            }, {
+                img: 'assets/img/app/power/map_label_green.png',
+                labTitle: '上海体育馆',
+                lng: 121.483166,
+                lat: 31.157394
+            }];
+
+            function completeEventHandler() {
+
+                for (x in mapLabData) {
+                    var item = mapLabData[x];
+                    var content =
+                            "<div style='text-align: center;'>" +
+                            "<div>" +
+                            "<img src='" + item.img + "' style='width: 50px;height: 50px;'/>" +
+                            "<div style='color: #fff;background: #000;opacity:0.5;padding: 3px 5px;font-size: 12px;white-space:nowrap;border-radius:5px !important'>" + item.labTitle + "</div>" +
+                            "</div>" +
+                            "</div>";
+
+                    var marker = new AMap.Marker({
+                        position: new AMap.LngLat(item.lng, item.lat),
+                        content: content
+                    });
+                    marker.setMap(mapObj);  // add point
+                }
+            }
+
+        </script>
 
     </div>
 </div>

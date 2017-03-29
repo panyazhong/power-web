@@ -3,10 +3,17 @@
   border: transparent !important;
 }
 
+//主色
 .color-blue {
   color: #144f92 !important;
 }
 
 .color-purple {
   color: #de3661 !important;
+}
+
+//内容默认无边距
+.panel > .panel-body {
+  padding: 0 !important;
+  margin: 15px !important;
 }
