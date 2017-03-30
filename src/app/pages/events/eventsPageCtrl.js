@@ -9,7 +9,17 @@
         .controller('eventsPageCtrl', eventsPageCtrl);
 
     /** @ngInject */
-    function eventsPageCtrl($scope) {
+    function eventsPageCtrl($scope, $location) {
+
+        $scope.show = {
+            clientId: ''
+        };
+
+        $scope.getParams = function () {
+            $scope.show.clientId = $location.search().id;
+            console.log("传过来客户id是：" + $scope.show.clientId);
+        };
+        $scope.getParams();
 
     }
 

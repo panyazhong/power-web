@@ -32,10 +32,10 @@
                     title: '当前事件',
                     state: 'events'
                 },
-                {
-                    title: '视频监控',
-                    state: 'videos'
-                },
+                // {
+                //     title: '视频监控',
+                //     state: 'videos'
+                // },
                 {
                     title: '签到查询',
                     state: 'checkin'
@@ -51,13 +51,17 @@
                 {
                     title: '平台设置',
                     state: 'settings'
-                }]
+                }],
+            // state: $state.$current,
         };
 
         $scope.gotoState = function (e, state) {
 
             $('.page-top-content-title').removeClass('page-top-title-active');
             $(e.target).addClass('page-top-title-active');
+
+            console.log($state.$current);
+
 
             $state.go(state);
         };

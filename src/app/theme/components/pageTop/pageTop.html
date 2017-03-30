@@ -10,7 +10,8 @@
         <div class="page-top-div" style="width: 80%;">
 
             <div ng-repeat="item in show.topBarData" class="page-top-div page-top-content-title"
-                 style="width: 11%;" ng-class="$index == 0 ? 'page-top-title-active' : '' "
+                 style="width: 11%;"
+                 ng-class="$index == 0 ? 'page-top-title-active' : '' "
                  ng-click="gotoState($event,item.state)">
                 {{item.title}}
 

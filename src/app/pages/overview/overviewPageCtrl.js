@@ -11,7 +11,6 @@
     /** @ngInject */
     function overviewPageCtrl($scope) {
 
-
     }
 
 })();

@@ -21,7 +21,7 @@
         'BlurAdmin.pages.monitoring',
         'BlurAdmin.pages.device',
         'BlurAdmin.pages.events',
-        'BlurAdmin.pages.videos',
+        // 'BlurAdmin.pages.videos',
         'BlurAdmin.pages.checkin',
         'BlurAdmin.pages.history',
         'BlurAdmin.pages.report',

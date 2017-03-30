@@ -9,7 +9,19 @@
         .controller('monitoringPageCtrl', monitoringPageCtrl);
 
     /** @ngInject */
-    function monitoringPageCtrl($scope) {
+    function monitoringPageCtrl($scope, $state, $location) {
+
+        $scope.show = {
+            clientId: ''
+        };
+
+        $scope.getParams = function () {
+            $scope.show.clientId = $location.search().id;
+            console.log("传过来客户id是：" + $scope.show.clientId);
+
+            console.log("current：" + $state.$current);
+        };
+        $scope.getParams();
 
     }
 

@@ -9,8 +9,8 @@
 
             function mapInit() {
                 mapObj = new AMap.Map('container', {
-                    dragEnable: false,
-                    zoomEnable: false,
+//                    dragEnable: false,
+//                    zoomEnable: false,
                     zoom: 12,
                     center: [121.493496, 31.224609],    // 定义地图中心点
 //                    mapStyle: 'fresh',
@@ -25,23 +25,27 @@
              */
 
             var mapLabData = [{
+                clientId: 0,
+                clientName: '时代金融',
                 img: 'assets/img/app/power/map_label_red.png',
-                labTitle: '时代金融',
                 lng: 121.506621,
                 lat: 31.240731
             }, {
+                clientId: 1,
+                clientName: '陆家嘴金融广场',
                 img: 'assets/img/app/power/map_label_red.png',
-                labTitle: '陆家嘴金融广场',
                 lng: 121.528121,
                 lat: 31.219177
             }, {
+                clientId: 2,
+                clientName: '世博轴',
                 img: 'assets/img/app/power/map_label_green.png',
-                labTitle: '世博轴',
                 lng: 121.492519,
                 lat: 31.183656
             }, {
+                clientId: 3,
+                clientName: '上海体育馆',
                 img: 'assets/img/app/power/map_label_green.png',
-                labTitle: '上海体育馆',
                 lng: 121.483166,
                 lat: 31.157394
             }];
@@ -54,16 +58,136 @@
                             "<div style='text-align: center;'>" +
                             "<div>" +
                             "<img src='" + item.img + "' style='width: 50px;height: 50px;'/>" +
-                            "<div style='color: #fff;background: #000;opacity:0.5;padding: 3px 5px;font-size: 12px;white-space:nowrap;border-radius:5px !important'>" + item.labTitle + "</div>" +
+                            "<div style='color: #fff;background: #000;opacity:0.5;padding: 3px 5px;font-size: 12px;white-space:nowrap;border-radius:5px !important'>" + item.clientName + "</div>" +
                             "</div>" +
                             "</div>";
 
                     var marker = new AMap.Marker({
                         position: new AMap.LngLat(item.lng, item.lat),
-                        content: content
+                        content: content,
+                        extData: item.clientId
                     });
+
+                    // map events
+                    var _onmouseover = function (e) {
+                        openWindow(e);
+                    };
+                    AMap.event.addListener(marker, 'mouseover', _onmouseover);
+//                    var _mouseout = function (e) {
+//                        mapObj.clearInfoWindow();
+//                    };
+//                    AMap.event.addListener(marker, 'mouseout', _mouseout);
+
                     marker.setMap(mapObj);  // add point
                 }
+            }
+
+            function openWindow(e) {
+
+                var clientId = e.target.getExtData();
+                /**
+                 *
+                 *
+                 *
+                 *
+                 *
+                 *
+                 *
+                 * 根据客户id获取站点信息
+                 * @type {{}}
+                 *
+                 *
+                 *
+                 *
+                 *
+                 *
+                 */
+
+
+                /**
+                 * 模拟数据
+                 * @type {*[]}
+                 */
+                var info = [{
+                    clientId: '021001',
+                    clientName: '时代金融',
+                    clientSite: '浦东新区银城中路68号',
+                    voltageGrade: '10kv',
+                    stationAdmin: '王平',
+                    stationTel: '13822223333',
+                    clientAdmin: '魏延',
+                    clientTel: '18878789999',
+                    loadDeclare: '2000kW',
+                    loadCurrent: '1500kW'
+                }, {
+                    clientId: '021002',
+                    clientName: '上海中心',
+                    clientSite: '浦东新区张杨路174号',
+                    voltageGrade: '15kv',
+                    stationAdmin: '关平',
+                    stationTel: '15933445533',
+                    clientAdmin: '关兴',
+                    clientTel: '13099998888',
+                    loadDeclare: '1500kW',
+                    loadCurrent: '120kW'
+                }, {
+                    clientId: '021003',
+                    clientName: '世博轴',
+                    clientSite: '浦东新区周家渡路',
+                    voltageGrade: '12kv',
+                    stationAdmin: '黄盖',
+                    stationTel: '15600990909',
+                    clientAdmin: '周瑜',
+                    clientTel: '13412312323',
+                    loadDeclare: '1000kw',
+                    loadCurrent: '555kW'
+                }, {
+                    clientId: '021004',
+                    clientName: '上海体育馆',
+                    clientSite: '徐汇区漕溪北路1114号',
+                    voltageGrade: '200kW',
+                    stationAdmin: '赵云',
+                    stationTel: '18767678899',
+                    clientAdmin: '嘟嘟',
+                    clientTel: '15099998888',
+                    loadDeclare: '100kW',
+                    loadCurrent: '67kW'
+                }];
+                var item = info[clientId];
+
+                var custXml = "<div style='background: #FFFFFF;width: 210px;box-shadow:0 0 7px 2px rgba(86, 96, 117, 0.5);'>" +
+                        "      <div style='line-height: 35px;background: #144f92;color: #FFFFFF;text-align: center;'>" + item.clientName + "</div>" +
+                        "     <div style='line-height: 25px;padding: 0 10px;'>电压等级：" + item.voltageGrade +
+                        " </div>" +
+                        "   <div style='line-height: 25px;padding: 0 10px;'>地址：" + item.clientSite +
+                        "   </div>" +
+                        "  <div style='line-height: 25px;padding: 0 10px;'>站长：" + item.stationAdmin +
+                        " </div>" +
+                        " <div style='line-height: 25px;padding: 0 10px;'>联系方式：" + item.stationTel +
+                        "  </div>" +
+                        "  <div style='line-height: 25px;padding: 0 10px;'>客户联系人：" + item.clientAdmin +
+                        "  </div>" +
+                        " <div style='line-height: 25px;padding: 0 10px;'>联系方式：" + item.clientTel +
+                        " </div>" +
+                        " <div style='line-height: 25px;padding: 0 10px;color: #144f92;'>当月申报需量：" + item.loadDeclare +
+                        "</div>" +
+                        " <div style='line-height: 25px;padding: 0 10px;color: #144f92;margin-bottom: 15px;'>当前负荷：" + item.loadCurrent +
+                        " </div>" +
+                        " <a href='/#/monitoring?id=" + item.clientId + "' style='line-height: 35px;color:#de3661;border-top: 1px #de3661 solid;text-align: center;cursor: pointer;display: block;'>" +
+                        "     前往该站" +
+                        "     </a>" +
+                        "     <a href='/#/events?id=" + item.clientId + "' style='line-height: 35px;color: #FFFFFF;background: #de3661;text-align: center;cursor: pointer;display: block;'>" +
+                        "     查看该站事件" +
+                        "    </a>" +
+                        "     </div>";
+
+                var infoWindow = new AMap.InfoWindow({
+                    isCustom: true,
+                    closeWhenClickMap: true,
+                    offset: new AMap.Pixel(200, -50),
+                    content: custXml
+                });
+                infoWindow.open(mapObj, e.target.getPosition());
             }
 
         </script>
