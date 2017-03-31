@@ -26,8 +26,8 @@
         })
         .factory('Resource', function ($resource, $httpParamSerializerJQLike, $q) {
 
-            var host = 'http://112.74.175.108:3100/api';
-            // var host = 'http://192.168.0.112:3100/api';
+            // var host = 'http://112.74.175.108:3100/api';
+            var host = 'http://192.168.0.150';
 
             var setAction = function (actions) {
                 var defaultParams = {
@@ -52,7 +52,7 @@
                         transformRequest: function (data) {
                             return $httpParamSerializerJQLike(data);
                         }
-                    }
+                    };
                     action.params = action.params || {};
                     angular.extend(action.params, defaultParams);
                     angular.extend(defaultAction, action);
@@ -91,5 +91,16 @@
             };
             return Resource(config);
         })
-
+        .factory('Demo', function (Resource) {
+            var config = {
+                url: 'login',
+                paramsDefault: {},
+                action: {
+                    login: {
+                        method: 'POST'
+                    },
+                }
+            };
+            return Resource(config);
+        })
 })();
