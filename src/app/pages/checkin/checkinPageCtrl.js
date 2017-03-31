@@ -5,7 +5,7 @@
 (function () {
     'use strict';
 
-    angular.module('BlurAdmin.pages.checkin')
+    angular.module('BlurAdmin.power.checkin')
         .controller('checkinPageCtrl', checkinPageCtrl);
 
     /** @ngInject */

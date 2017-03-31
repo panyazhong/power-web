@@ -5,7 +5,7 @@
 (function () {
   'use strict';
 
-  angular.module('BlurAdmin.pages.monitoring', [])
+  angular.module('BlurAdmin.power.monitoring', [])
       .config(routeConfig);
 
   /** @ngInject */

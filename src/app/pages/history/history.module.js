@@ -5,7 +5,7 @@
 (function () {
   'use strict';
 
-  angular.module('BlurAdmin.pages.history', [])
+  angular.module('BlurAdmin.power.history', [])
       .config(routeConfig);
 
   /** @ngInject */

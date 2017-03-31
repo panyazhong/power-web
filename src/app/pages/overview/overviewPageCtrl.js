@@ -5,23 +5,23 @@
 (function () {
     'use strict';
 
-    angular.module('BlurAdmin.pages.overview')
+    angular.module('BlurAdmin.power.overview')
         .controller('overviewPageCtrl', overviewPageCtrl);
 
     /** @ngInject */
-    function overviewPageCtrl($scope, Keyword) {
+    function overviewPageCtrl($scope) {
 
-        $scope.test = function () {
-
-            Keyword.getList({},
-                function (data) {
-
-                }, function (err) {
-
-                })
-
-        };
-        $scope.test();
+        // $scope.test = function () {
+        //
+        //     Keyword.getList({},
+        //         function (data) {
+        //
+        //         }, function (err) {
+        //
+        //         })
+        //
+        // };
+        // $scope.test();
 
     }
 

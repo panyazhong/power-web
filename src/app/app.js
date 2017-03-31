@@ -15,5 +15,6 @@ angular.module('BlurAdmin', [
 
     'BlurAdmin.theme',
     'BlurAdmin.pages',
-    'BlurAdmin.http-help'
+
+    // 'BlurAdmin.power'
 ]);

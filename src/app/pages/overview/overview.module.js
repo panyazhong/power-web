@@ -5,7 +5,7 @@
 (function () {
   'use strict';
 
-  angular.module('BlurAdmin.pages.overview', [])
+  angular.module('BlurAdmin.power.overview', [])
       .config(routeConfig);
 
   /** @ngInject */

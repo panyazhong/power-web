@@ -5,7 +5,7 @@
 (function () {
     'use strict';
 
-    angular.module('BlurAdmin.pages.device')
+    angular.module('BlurAdmin.power.device')
         .controller('devicePageCtrl', devicePageCtrl);
 
     /** @ngInject */

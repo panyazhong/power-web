@@ -19,15 +19,15 @@
         // 'BlurAdmin.pages.maps',
         // 'BlurAdmin.pages.profile',
 
-        'BlurAdmin.pages.overview',
-        'BlurAdmin.pages.monitoring',
-        'BlurAdmin.pages.device',
-        'BlurAdmin.pages.events',
-        // 'BlurAdmin.pages.videos',
-        'BlurAdmin.pages.checkin',
-        'BlurAdmin.pages.history',
-        'BlurAdmin.pages.report',
-        'BlurAdmin.pages.settings',
+        'BlurAdmin.power.overview',
+        'BlurAdmin.power.monitoring',
+        'BlurAdmin.power.device',
+        'BlurAdmin.power.events',
+        // 'BlurAdmin.power.videos',
+        'BlurAdmin.power.checkin',
+        'BlurAdmin.power.history',
+        'BlurAdmin.power.report',
+        'BlurAdmin.power.settings',
     ])
         .config(routeConfig);
 

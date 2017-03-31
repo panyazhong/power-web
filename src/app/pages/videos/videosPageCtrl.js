@@ -5,7 +5,7 @@
 (function () {
     'use strict';
 
-    angular.module('BlurAdmin.pages.videos')
+    angular.module('BlurAdmin.power.videos')
         .controller('videosPageCtrl', videosPageCtrl);
 
     /** @ngInject */

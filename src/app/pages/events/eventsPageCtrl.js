@@ -5,7 +5,7 @@
 (function () {
     'use strict';
 
-    angular.module('BlurAdmin.pages.events')
+    angular.module('BlurAdmin.power.events')
         .controller('eventsPageCtrl', eventsPageCtrl);
 
     /** @ngInject */
