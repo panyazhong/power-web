@@ -9,7 +9,19 @@
         .controller('overviewPageCtrl', overviewPageCtrl);
 
     /** @ngInject */
-    function overviewPageCtrl($scope) {
+    function overviewPageCtrl($scope, Keyword) {
+
+        $scope.test = function () {
+
+            Keyword.getList({},
+                function (data) {
+
+                }, function (err) {
+
+                })
+
+        };
+        $scope.test();
 
     }
 
