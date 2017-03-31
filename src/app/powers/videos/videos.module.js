@@ -14,7 +14,7 @@
         .state('videos', {
           url: '/videos',
           title: '视频监控',
-          templateUrl: 'app/pages/videos/videos.html',
+          templateUrl: 'app/powers/videos/videos.html',
           controller: 'videosPageCtrl',
         });
   }

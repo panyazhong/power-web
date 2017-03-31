@@ -14,7 +14,7 @@
         .state('events', {
           url: '/events',
           title: '当前事件',
-          templateUrl: 'app/pages/events/events.html',
+          templateUrl: 'app/powers/events/events.html',
           controller: 'eventsPageCtrl',
         });
   }

@@ -14,7 +14,7 @@
         .state('device', {
           url: '/device',
           title: '设备台账',
-          templateUrl: 'app/pages/device/device.html',
+          templateUrl: 'app/powers/device/device.html',
           controller: 'devicePageCtrl',
         });
   }

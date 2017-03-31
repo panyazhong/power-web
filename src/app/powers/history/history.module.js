@@ -14,7 +14,7 @@
         .state('history', {
           url: '/history',
           title: '历史数据',
-          templateUrl: 'app/pages/history/history.html',
+          templateUrl: 'app/powers/history/history.html',
           controller: 'historyPageCtrl',
         });
   }

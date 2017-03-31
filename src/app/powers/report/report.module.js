@@ -14,7 +14,7 @@
         .state('report', {
           url: '/report',
           title: '报表查询',
-          templateUrl: 'app/pages/report/report.html',
+          templateUrl: 'app/powers/report/report.html',
           controller: 'reportPageCtrl',
         });
   }

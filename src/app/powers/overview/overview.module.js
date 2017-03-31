@@ -14,7 +14,7 @@
         .state('overview', {
           url: '/overview',
           title: '概况总览',
-          templateUrl: 'app/pages/overview/overview.html',
+          templateUrl: 'app/powers/overview/overview.html',
           controller: 'overviewPageCtrl',
         });
   }

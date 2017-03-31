@@ -14,7 +14,7 @@
         .state('monitoring', {
           url: '/monitoring',
           title: '实时监控',
-          templateUrl: 'app/pages/monitoring/monitoring.html',
+          templateUrl: 'app/powers/monitoring/monitoring.html',
           controller: 'monitoringPageCtrl',
         });
   }

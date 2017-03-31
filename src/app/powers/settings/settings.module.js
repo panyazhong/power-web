@@ -14,7 +14,7 @@
         .state('settings', {
           url: '/settings',
           title: '平台设置',
-          templateUrl: 'app/pages/settings/settings.html',
+          templateUrl: 'app/powers/settings/settings.html',
           controller: 'settingsPageCtrl',
         });
   }
