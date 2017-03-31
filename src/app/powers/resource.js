@@ -7,12 +7,12 @@
             $httpProvider.interceptors.push(function ($q) {
                 return {
                     'request': function (config) {
-                        console.log('request: ' + JSON.stringify(config));
+                        // console.log('request: ' + JSON.stringify(config));
                         return config;
                     },
                     'response': function (response) {
                         // called if HTTP CODE = 2xx
-                        console.log('response:: ' + JSON.stringify(response));
+                        // console.log('response:: ' + JSON.stringify(response));
                         return response;
                     },
                     'responseError': function (rejection) {

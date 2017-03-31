@@ -14,12 +14,13 @@
         'BlurAdmin.power.report',
         'BlurAdmin.power.settings',
         // 'BlurAdmin.power.videos',
+        'BlurAdmin.power.demo',
     ])
         .config(routeConfig);
 
     /** @ngInject */
     function routeConfig($urlRouterProvider, baSidebarServiceProvider) {
-        $urlRouterProvider.otherwise('/overview');
+        $urlRouterProvider.otherwise('/demo');
 
         // baSidebarServiceProvider.addStaticItem({
         //     title: 'Pages',
