@@ -17,3 +17,35 @@
   padding: 0 !important;
   margin: 15px !important;
 }
+
+// popover 设备详情detail
+.pop-detail {
+  width: 230px;
+  min-width: 230px;
+  padding: 0;
+}
+
+.pop-title {
+  line-height: 35px;
+  background: #144f92;
+  color: #FFFFFF;
+  text-align: center;
+}
+
+.pop-content {
+  padding: 0 10px;
+}
+
+.pop-content-div {
+  line-height: 25px;
+  padding: 0 10px;
+}
+
+.pop-footer {
+  line-height: 35px;
+  color: #FFFFFF;
+  background: #de3661;
+  text-align: center;
+  cursor: pointer;
+  display: block;
+}
