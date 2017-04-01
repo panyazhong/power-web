@@ -4,6 +4,7 @@
     angular.module('BlurAdmin.power', [
         'ui.router',
         'ngResource',
+        // 'mgcrea.ngStrap',
 
         'BlurAdmin.power.overview',
         'BlurAdmin.power.monitoring',
