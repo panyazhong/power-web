@@ -1,7 +1,12 @@
-<div ba-panel ba-panel-class="profile-page">
-    <div class="panel-content">
+<div ba-panel>
+    <div class="row">
 
-        <h3> 实时监控；monitoring </h3>
+        <img
+                ng-repeat="item in show.testImgArr"
+                ng-src="{{item.imgLink}}"
+                ng-style="item.style"
+                ng-mouseenter="showDetail(item)"/>
+        <!--ng-mouseleave=""/>-->
 
     </div>
 </div>
