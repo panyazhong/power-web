@@ -56,7 +56,8 @@
     "angular-xeditable": "~0.5.0",
     "ng-js-tree": "~0.0.7",
     "angular-ui-select": "^0.19.6",
-    "angular-ui": "^0.4.0"
+    "angular-ui": "^0.4.0",
+    "angular-strap": "^2.3.12"
   },
   "resolutions": {
     "angular": "~1.5.9",
