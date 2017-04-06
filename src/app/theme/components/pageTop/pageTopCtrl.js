@@ -9,10 +9,7 @@
         .controller('pageTopCtrl', pageTopCtrl);
 
     /** @ngInject */
-    function pageTopCtrl($scope, $state, $timeout) {
-        // $scope.progressFunction = function() {
-        //   return $timeout(function() {}, 3000);
-        // };
+    function pageTopCtrl($scope, $state, PageTopCache) {
 
         $scope.show = {
             topBarData: [
@@ -52,25 +49,24 @@
                     title: '平台设置',
                     state: 'settings'
                 }],
-            // state: $state.$current,
+            currentState: PageTopCache.cState,
         };
 
-        $scope.gotoState = function (e, state) {
+        $scope.changeState = function (e, state) {
+            // $('.page-top-content-title').removeClass('page-top-title-active');
+            // $(e.target).addClass('page-top-title-active');
 
-            $('.page-top-content-title').removeClass('page-top-title-active');
-            $(e.target).addClass('page-top-title-active');
-
-            console.log($state.$current);
-
-
+            console.log("点击的state：" + state);
+            PageTopCache.setState(state);
             $state.go(state);
+            console.log("缓存的state：" + PageTopCache.getState());
         };
 
         /**
          * 退出
          */
         $scope.logout = function () {
-            alert('退出');
+            alert('退出登陆...');
         };
 
     }

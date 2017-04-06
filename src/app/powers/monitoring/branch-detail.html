@@ -1,50 +1,50 @@
 <div class="popover pop-detail">
 
     <div class="pop-title">
-        3：10千伏一段压变
+        {{show.branchData.deviceName}}
     </div>
 
     <div class="pop-content">
 
         <div class="pop-content-div">
-            A相电流：100A
+            A相电流：{{show.branchData.aL}}
         </div>
         <div class="pop-content-div">
-            B相电流：100A
+            B相电流：{{show.branchData.bL}}
         </div>
         <div class="pop-content-div">
-            C相电流：100A
+            C相电流：{{show.branchData.cL}}
         </div>
         <div class="pop-content-div">
-            有功(P)：0.00KW
+            有功(P)：{{show.branchData.p}}
         </div>
         <div class="pop-content-div">
-            功率因素：1.00
-        </div>
-
-        <div class="pop-content-div">
-            A相电压：10.06KV
-        </div>
-        <div class="pop-content-div">
-            B相电压：10.06KV
-        </div>
-        <div class="pop-content-div">
-            C相电压：10.06KV
+            功率因素：{{show.branchData.pElement}}
         </div>
 
         <div class="pop-content-div">
-            无功(Q)：0.00KVar
+            A相电压：{{show.branchData.aU}}
         </div>
         <div class="pop-content-div">
-            电量(Wp)：0.00kwh
+            B相电压：{{show.branchData.bU}}
         </div>
         <div class="pop-content-div">
-            变压器温度: 10℃
+            C相电压：{{show.branchData.cU}}
+        </div>
+
+        <div class="pop-content-div">
+            无功(Q)：{{show.branchData.q}}
+        </div>
+        <div class="pop-content-div">
+            电量(Wp)：{{show.branchData.wp}}
+        </div>
+        <div class="pop-content-div">
+            变压器温度: {{show.branchData.temp}}
         </div>
 
     </div>
 
-    <div class="pop-footer">
+    <div class="pop-footer" ng-click="lookDetail()">
         查看设备明细
     </div>
 

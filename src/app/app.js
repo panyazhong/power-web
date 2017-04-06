@@ -13,9 +13,13 @@ angular.module('BlurAdmin', [
     'ngJsTree',
     'angular-progress-button-styles',
 
+    // use lib
+    'ngResource',
+    'mgcrea.ngStrap.popover',
+    'DataCache',
+
     'BlurAdmin.theme',
     // 'BlurAdmin.pages',
-
     'BlurAdmin.power'
 
 ]);

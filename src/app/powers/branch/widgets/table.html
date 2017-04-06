@@ -1,0 +1,60 @@
+<div class="horizontal-scroll">
+    <table class="table table-bordered table-hover" st-table="show.branchDevice"
+           st-safe-src="rowCollection">
+        <thead>
+        <tr class="common-table-thead">
+            <!--<th>站名</th>-->
+            <th>设备名称</th>
+            <th>设备类型</th>
+            <th>设备型号</th>
+            <th>厂家</th>
+            <th>所属变电站</th>
+            <th>所属支线</th>
+            <th>上次电试日期</th>
+            <th>状态</th>
+            <th>操作</th>
+        </tr>
+        </thead>
+        <tbody class="common-table-body">
+        <tr ng-repeat="item in show.branchDevice">
+            <!--<td>-->
+            <!--<span ng-bind="item.customerName"></span>-->
+            <!--</td>-->
+            <td>
+                <span ng-bind="item.deviceName"></span>
+            </td>
+            <td>
+                <span ng-bind="item.deviceType"></span>
+            </td>
+            <td>
+                <span ng-bind="item.deviceModel"></span>
+            </td>
+            <td>
+                <span ng-bind="item.supplier"></span>
+            </td>
+            <td>
+                <span ng-bind="item.customerName"></span>
+            </td>
+            <td>
+                <span ng-bind="item.branchName"></span>
+            </td>
+            <td>
+                <span ng-bind="item.lastTestDate"></span>
+            </td>
+            <td>
+                <span ng-bind="item.status"></span>
+            </td>
+            <td>
+                <span>操作</span>
+            </td>
+        </tr>
+        </tbody>
+        <tfoot>
+        <tr>
+            <td colspan="9" class="text-center">
+                <div st-pagination="" st-items-by-page="5" st-displayed-pages="5"></div>
+            </td>
+        </tr>
+        </tfoot>
+    </table>
+</div>

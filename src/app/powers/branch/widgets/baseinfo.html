@@ -1,0 +1,76 @@
+<div class="row" style="background: #18130f;padding: 15px;color: #FFFFFF">
+
+    <div class="col-md-4">
+
+        <div class="top-content-tile">
+            {{show.branchData.deviceName}}
+        </div>
+
+        <div class="top-content">
+            <div class="col-md-6 top-content-div">
+                A相电流：{{show.branchData.aL}}
+            </div>
+            <div class="col-md-6 top-content-div">
+                A相电压：{{show.branchData.aU}}
+            </div>
+
+
+            <div class="col-md-6 top-content-div">
+                B相电流：{{show.branchData.bL}}
+            </div>
+            <div class="col-md-6 top-content-div">
+                B相电压：{{show.branchData.bU}}
+            </div>
+
+
+            <div class="col-md-6 top-content-div">
+                C相电流：{{show.branchData.cL}}
+            </div>
+            <div class="col-md-6 top-content-div">
+                C相电压：{{show.branchData.cU}}
+            </div>
+
+
+            <div class="col-md-6 top-content-div">
+                有功(P)：{{show.branchData.p}}
+            </div>
+            <div class="col-md-6 top-content-div">
+                无功(Q)：{{show.branchData.q}}
+            </div>
+
+
+            <div class="col-md-6 top-content-div">
+                功率因素：{{show.branchData.pElement}}
+            </div>
+            <div class="col-md-6 top-content-div">
+                电量(Wp)：{{show.branchData.wp}}
+            </div>
+
+
+            <div class="col-md-6 top-content-div">
+                变压器温度: {{show.branchData.temp}}
+            </div>
+            <div class="col-md-6 top-content-div">
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-3 top-middle">
+
+        <img ng-src="{{show.branchState}}"/>
+    </div>
+
+    <div class="col-md-5">
+
+        <div class="top-content-tile">
+            继电报警信号
+        </div>
+
+        <div class="col-md-6" ng-repeat="item in show.branchAlarm">
+            <div class="top-right-div" style="background: {{item.color}}">
+                {{item.desc}}
+            </div>
+        </div>
+    </div>
+
+</div>

@@ -18,7 +18,15 @@
   margin: 15px !important;
 }
 
-// popover 设备详情detail
+/*
+
+  ----------------------------------------common css finish-----------------------------------------
+
+*/
+
+/*
+  一次系统图 hovr pop
+*/
 .pop-detail {
   width: 200px;
   min-width: 200px;
@@ -47,4 +55,73 @@
   text-align: center;
   cursor: pointer;
   display: block;
+}
+
+/*
+  支线详情
+*/
+
+.detail .top-content-tile {
+  padding: 20px 0;
+  text-align: center;
+  font-size: 16px
+}
+
+.detail .top-content {
+  border: 1px solid #FFFFFF;
+  border-radius: 5px;
+  float: right;
+}
+
+.detail .top-content-div {
+  line-height: 40px;
+}
+
+.detail .top-middle {
+  text-align: center;
+  padding-top: 56px;
+}
+
+.detail .top-right-div {
+  line-height: 40px;
+  text-align: center;
+  border-radius: 5px;
+  margin-bottom: 8px;
+}
+
+/*
+  smart table
+*/
+
+//表头
+.table > thead > tr > th {
+  text-align: center;
+}
+
+//表身
+.table > tbody > tr > td {
+  text-align: center;
+}
+
+.common-table-body tr td {
+  padding: 7px 0 !important;
+}
+
+.common-table-body tr:hover {
+  background-color: #FFFBF0 !important;
+  color: #144f92 !important;
+  cursor: pointer !important;
+}
+
+.common-table-thead th {
+  font-size: 15px !important;
+  font-weight: bold !important;
+  color: #333333 !important;
+  padding: 7px 0 !important;
+  line-height: 35px !important;
+}
+
+//分页查询下标 padding-top
+.table > tfoot > tr > td {
+  padding-top: 15px !important;
 }

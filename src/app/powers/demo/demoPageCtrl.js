@@ -9,17 +9,16 @@
         .controller('demoPageCtrl', demoPageCtrl);
 
     /** @ngInject */
-    function demoPageCtrl($scope, baSidebarService, $window) {
-
-        console.log("demo .........");
+    function demoPageCtrl($scope, $state, baSidebarService, $window) {
 
         $scope.menuItems = baSidebarService.getMenuItems();
-        $scope.menuItemsAccess = [];
-        // var jsonMenu = JSON.parse($window.sessionStorage.menus); // JSON from Service
+        console.log("menuItems：\n" + JSON.stringify($scope.menuItems));
 
+        $scope.test  = function () {
 
-        console.log("menuItems: " + JSON.stringify($scope.menuItems));
-        console.log("windowsMenu: " + $window.sessionStorage.menus);
+        };
+        $scope.test();
+
     }
 
 })();

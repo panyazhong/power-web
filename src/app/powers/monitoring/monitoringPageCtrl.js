@@ -42,8 +42,22 @@
                     width: '150px',
                     height: '200px'
                 }
-            }]
-
+            }],
+            branchData: {
+                id: 'deviceid001',
+                deviceName: '3：10千伏一段压变',
+                aL: '100A',
+                bL: '105A',
+                cL: '103A',
+                p: '0.00KW',
+                pElement: '1.00',
+                aU: '10.01KV',
+                bU: '10.03KV',
+                cU: '10.09KV',
+                q: '0.01KVar',
+                wp: '0.05kwh',
+                temp: '8℃'
+            }
         };
 
         $scope.getParams = function () {
@@ -55,11 +69,20 @@
 
         /**
          * 显示控件详情
-         * @param obj
          */
         $scope.showDetail = function (obj) {
             console.log(obj.id);
         };
+
+        /**
+         * 查看设备明细
+         */
+        $scope.lookDetail = function () {
+            /**
+             * 需要将设备id传递过去，或全局变量记录当前设备信息
+             */
+            $state.go('branch');
+        }
 
     }
 

@@ -13,9 +13,9 @@
         <div class="page-top-div" style="width: 80%;">
 
             <div ng-repeat="item in show.topBarData" class="page-top-div page-top-content-title"
-                 style="width: 11%;"
-                 ng-class="$index == 0 ? 'page-top-title-active' : '' "
-                 ng-click="gotoState($event,item.state)">
+                 style="width: 12%;"
+                 ng-class="show.currentState == item.state ? 'page-top-title-active' : '' "
+                 ng-click="changeState($event,item.state)">
                 {{item.title}}
 
                 <i class="ion-arrow-down-b" style="margin: 0 5px"
@@ -28,7 +28,7 @@
 
             <div class="page-top-div page-top-common-title" style="width: 50%;">
                 <!--{{'欢迎您，' + data.userInfo.username}}-->
-                {{'欢迎您，Olliva' }}
+                {{'欢迎您，Oliva' }}
             </div>
             <div class="page-top-div page-top-common-title" style="width: 50%;">
 
