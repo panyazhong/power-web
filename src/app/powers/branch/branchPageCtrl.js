@@ -13,8 +13,8 @@
 
         $scope.show = {
             branchData: {
-                id: 'deviceid001',
-                deviceName: '3：10千伏一段压变',
+                id: 'id3001',
+                branchName: '3：10千伏一段压变',
                 aL: '100A',
                 bL: '105A',
                 cL: '103A',

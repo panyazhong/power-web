@@ -9,21 +9,7 @@
         .controller('overviewPageCtrl', overviewPageCtrl);
 
     /** @ngInject */
-    function overviewPageCtrl($scope, Keyword, Demo) {
-
-        $scope.test = function () {
-
-            Demo.login({
-                account: '111',
-                psw: '111111'
-            }, function (data) {
-
-            }, function (err) {
-
-            })
-
-        };
-        $scope.test();
+    function overviewPageCtrl($scope) {
 
     }
 

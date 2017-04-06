@@ -2,14 +2,14 @@
     <div class="row monitoring">
 
         <img
-                ng-repeat="item in show.testImgArr"
+                ng-repeat="item in show.sysImgData"
                 ng-src="{{item.imgLink}}"
                 ng-style="item.style"
                 ng-mouseenter="showDetail(item)"
 
                 data-placement="left"
                 data-container="body"
-                data-template-url="app/powers/monitoring/branch-detail.html"
+                data-template-url="app/powers/monitoring/widgets/branch-detail.html"
                 data-auto-close="1"
 
                 bs-popover

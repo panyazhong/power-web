@@ -9,8 +9,8 @@
 
             function mapInit() {
                 mapObj = new AMap.Map('container', {
-//                    dragEnable: false,
-//                    zoomEnable: false,
+//                    dragEnable: false,      //是否可拖拽
+//                    zoomEnable: false,      //是否可缩放
                     zoom: 12,
                     center: [121.493496, 31.224609],    // 定义地图中心点
 //                    mapStyle: 'fresh',
@@ -28,26 +28,26 @@
                 clientId: 0,
                 clientName: '时代金融',
                 img: 'assets/img/app/power/map_label_red.png',
-                lng: 121.506621,
-                lat: 31.240731
+                longitude: 121.506621,
+                latitude: 31.240731
             }, {
                 clientId: 1,
                 clientName: '陆家嘴金融广场',
                 img: 'assets/img/app/power/map_label_red.png',
-                lng: 121.528121,
-                lat: 31.219177
+                longitude: 121.528121,
+                latitude: 31.219177
             }, {
                 clientId: 2,
                 clientName: '世博轴',
                 img: 'assets/img/app/power/map_label_green.png',
-                lng: 121.492519,
-                lat: 31.183656
+                longitude: 121.492519,
+                latitude: 31.183656
             }, {
                 clientId: 3,
                 clientName: '上海体育馆',
                 img: 'assets/img/app/power/map_label_green.png',
-                lng: 121.483166,
-                lat: 31.157394
+                longitude: 121.483166,
+                latitude: 31.157394
             }];
 
             function completeEventHandler() {
@@ -63,7 +63,7 @@
                             "</div>";
 
                     var marker = new AMap.Marker({
-                        position: new AMap.LngLat(item.lng, item.lat),
+                        position: new AMap.LngLat(item.longitude, item.latitude),
                         content: content,
                         extData: item.clientId
                     });
@@ -111,67 +111,67 @@
                 var info = [{
                     clientId: '021001',
                     clientName: '时代金融',
-                    clientSite: '浦东新区银城中路68号',
-                    voltageGrade: '10kv',
-                    stationAdmin: '王平',
-                    stationTel: '13822223333',
+                    addresss: '浦东新区银城中路68号',
+                    level: '10kv',
+                    contactor: '王平',
+                    contactortel: '13822223333',
                     clientAdmin: '魏延',
                     clientTel: '18878789999',
-                    loadDeclare: '2000kW',
-                    loadCurrent: '1500kW'
+                    requiredmd: '2000kW',
+                    requiredmdCurrent: '1500kW'
                 }, {
                     clientId: '021002',
                     clientName: '上海中心',
-                    clientSite: '浦东新区张杨路174号',
-                    voltageGrade: '15kv',
-                    stationAdmin: '关平',
-                    stationTel: '15933445533',
+                    addresss: '浦东新区张杨路174号',
+                    level: '15kv',
+                    contactor: '关平',
+                    contactortel: '15933445533',
                     clientAdmin: '关兴',
                     clientTel: '13099998888',
-                    loadDeclare: '1500kW',
-                    loadCurrent: '120kW'
+                    requiredmd: '1500kW',
+                    requiredmdCurrent: '120kW'
                 }, {
                     clientId: '021003',
                     clientName: '世博轴',
-                    clientSite: '浦东新区周家渡路',
-                    voltageGrade: '12kv',
-                    stationAdmin: '黄盖',
-                    stationTel: '15600990909',
+                    addresss: '浦东新区周家渡路',
+                    level: '12kv',
+                    contactor: '黄盖',
+                    contactortel: '15600990909',
                     clientAdmin: '周瑜',
                     clientTel: '13412312323',
-                    loadDeclare: '1000kw',
-                    loadCurrent: '555kW'
+                    requiredmd: '1000kw',
+                    requiredmdCurrent: '555kW'
                 }, {
                     clientId: '021004',
                     clientName: '上海体育馆',
-                    clientSite: '徐汇区漕溪北路1114号',
-                    voltageGrade: '200kW',
-                    stationAdmin: '赵云',
-                    stationTel: '18767678899',
+                    addresss: '徐汇区漕溪北路1114号',
+                    level: '200kW',
+                    contactor: '赵云',
+                    contactortel: '18767678899',
                     clientAdmin: '嘟嘟',
                     clientTel: '15099998888',
-                    loadDeclare: '100kW',
-                    loadCurrent: '67kW'
+                    requiredmd: '100kW',
+                    requiredmdCurrent: '67kW'
                 }];
                 var item = info[clientId];
 
                 var custXml = "<div style='background: #FFFFFF;width: 210px;box-shadow:0 0 7px 2px rgba(86, 96, 117, 0.5);'>" +
                         "      <div style='line-height: 35px;background: #144f92;color: #FFFFFF;text-align: center;'>" + item.clientName + "</div>" +
-                        "     <div style='line-height: 25px;padding: 0 10px;'>电压等级：" + item.voltageGrade +
+                        "     <div style='line-height: 25px;padding: 0 10px;'>电压等级：" + item.level +
                         " </div>" +
-                        "   <div style='line-height: 25px;padding: 0 10px;'>地址：" + item.clientSite +
+                        "   <div style='line-height: 25px;padding: 0 10px;'>地址：" + item.addresss +
                         "   </div>" +
-                        "  <div style='line-height: 25px;padding: 0 10px;'>站长：" + item.stationAdmin +
+                        "  <div style='line-height: 25px;padding: 0 10px;'>站长：" + item.contactor +
                         " </div>" +
-                        " <div style='line-height: 25px;padding: 0 10px;'>联系方式：" + item.stationTel +
+                        " <div style='line-height: 25px;padding: 0 10px;'>联系方式：" + item.contactortel +
                         "  </div>" +
                         "  <div style='line-height: 25px;padding: 0 10px;'>客户联系人：" + item.clientAdmin +
                         "  </div>" +
                         " <div style='line-height: 25px;padding: 0 10px;'>联系方式：" + item.clientTel +
                         " </div>" +
-                        " <div style='line-height: 25px;padding: 0 10px;color: #144f92;'>当月申报需量：" + item.loadDeclare +
+                        " <div style='line-height: 25px;padding: 0 10px;color: #144f92;'>当月申报需量：" + item.requiredmd +
                         "</div>" +
-                        " <div style='line-height: 25px;padding: 0 10px;color: #144f92;margin-bottom: 15px;'>当前负荷：" + item.loadCurrent +
+                        " <div style='line-height: 25px;padding: 0 10px;color: #144f92;margin-bottom: 15px;'>当前负荷：" + item.requiredmdCurrent +
                         " </div>" +
                         " <a href='/#/monitoring?id=" + item.clientId + "' style='line-height: 35px;color:#de3661;border-top: 1px #de3661 solid;text-align: center;cursor: pointer;display: block;'>" +
                         "     前往该站" +
@@ -192,5 +192,5 @@
 
         </script>
 
-</div>
+    </div>
 </div>

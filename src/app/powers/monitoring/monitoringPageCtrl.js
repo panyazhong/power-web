@@ -12,7 +12,7 @@
     function monitoringPageCtrl($scope, $state, $location) {
 
         $scope.show = {
-            testImgArr: [{
+            sysImgData: [{
                 id: 2001,
                 imgLink: 'assets/img/app/power/iu01.jpg',
                 style: {
@@ -44,8 +44,8 @@
                 }
             }],
             branchData: {
-                id: 'deviceid001',
-                deviceName: '3：10千伏一段压变',
+                id: 'id3001',
+                branchName: '3：10千伏一段压变',
                 aL: '100A',
                 bL: '105A',
                 cL: '103A',
@@ -57,7 +57,7 @@
                 q: '0.01KVar',
                 wp: '0.05kwh',
                 temp: '8℃'
-            }
+            },
         };
 
         $scope.getParams = function () {
