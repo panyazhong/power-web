@@ -32,144 +32,152 @@
                 {
                     desc: '过流一段跳闸',
                     state: 'normal',
-                    color: '#f0444e'
+                    color: '#d43875'
                 },
                 {
                     desc: '3QF电压正常',
                     state: 'caution',
-                    color: '#48aded'
+                    color: '#5f53a0'
                 },
                 {
                     desc: '过流二段跳闸',
                     state: 'danger',
-                    color: '#2bc267'
+                    color: '#29945b'
                 },
                 {
                     desc: '2QF在运行位置分闸',
                     state: 'normal',
-                    color: '#f0444e'
+                    color: '#d43875'
                 },
                 {
                     desc: '零流跳闸',
                     state: 'normal',
-                    color: '#f0444e'
+                    color: '#d43875'
                 }, {
                     desc: '1ZK、3ZK小开关故障',
                     state: 'danger',
-                    color: '#2bc267'
+                    color: '#29945b'
                 }, {
                     desc: '零流二段跳闸',
                     state: 'caution',
-                    color: '#48aded'
+                    color: '#5f53a0'
                 }, {
                     desc: '二段计量柜3ZK故障',
                     state: 'caution',
-                    color: '#48aded'
+                    color: '#5f53a0'
                 }, {
                     desc: '弹簧未储能',
                     state: 'danger',
-                    color: '#2bc267'
+                    color: '#29945b'
                 }, {
                     desc: '二段压变3ZK故障',
                     state: 'normal',
-                    color: '#f0444e'
+                    color: '#d43875'
                 }, {
                     desc: '自切跳闸',
                     state: 'caution',
-                    color: '#48aded'
+                    color: '#5f53a0'
                 }
             ],
-            branchDevice: [  // 当前支线下所有设备
+            branchEqp: [  // 当前支线下所有设备
                 {
-                    did: 'id800891',
-                    customerName: "世博轴",
-                    branchName: '3:10千伏一段压变',
-                    deviceName: "3号变压器",
-                    deviceType: "变压器",
-                    deviceModel: 'S7-315/10',
-                    supplier: '江苏华鹏',
-                    lastTestDate: '2016.7.8',
-                    status: '在岗'
-                }, {
-                    did: 'id800891',
-                    customerName: "世博轴",
-                    branchName: '3:10千伏一段压变',
-                    deviceName: "3号进线开关",
-                    deviceType: "开关",
-                    deviceModel: 'S7-315/10',
-                    supplier: '江苏华鹏',
-                    lastTestDate: '2016.7.8',
-                    status: '在岗'
-                }, {
-                    did: 'id800891',
-                    customerName: "世博轴",
-                    branchName: '3:10千伏一段压变',
-                    deviceName: "4号电容电容器",
-                    deviceType: "电容器",
-                    deviceModel: 'S7-315/10',
-                    supplier: '江苏华鹏',
-                    lastTestDate: '2016.7.8',
-                    status: '在岗'
-                }, {
-                    did: 'id800891',
-                    customerName: "世博轴",
-                    branchName: '3:10千伏一段压变',
-                    deviceName: "4号电容电容器",
-                    deviceType: "电容器",
-                    deviceModel: 'S7-315/10',
-                    supplier: '江苏华鹏',
-                    lastTestDate: '2016.7.8',
-                    status: '在岗'
-                }, {
-                    did: 'id800891',
-                    customerName: "世博轴",
-                    branchName: '3:10千伏一段压变',
-                    deviceName: "3号进线开关",
-                    deviceType: "开关",
-                    deviceModel: 'S7-315/10',
-                    supplier: '江苏华鹏',
-                    lastTestDate: '2016.7.8',
-                    status: '在岗'
-                }, {
-                    did: 'id800891',
-                    customerName: "世博轴",
-                    branchName: '3:10千伏一段压变',
-                    deviceName: "3号变压器",
-                    deviceType: "变压器",
-                    deviceModel: 'S7-315/10',
-                    supplier: '江苏华鹏',
-                    lastTestDate: '2016.7.8',
-                    status: '在岗'
-                }, {
-                    did: 'id800891',
-                    customerName: "世博轴",
-                    branchName: '3:10千伏一段压变',
-                    deviceName: "3号进线开关",
-                    deviceType: "开关",
-                    deviceModel: 'S7-315/10',
-                    supplier: '江苏华鹏',
-                    lastTestDate: '2016.7.8',
-                    status: '在岗'
-                }, {
-                    did: 'id800891',
-                    customerName: "世博轴",
-                    branchName: '3:10千伏一段压变',
-                    deviceName: "4号电容电容器",
-                    deviceType: "电容器",
-                    deviceModel: 'S7-315/10',
-                    supplier: '江苏华鹏',
-                    lastTestDate: '2016.7.8',
-                    status: '在岗'
+                    did: 'd2001',
+                    name: '1#分站1#10KV变压器',
+                    type: '变压器',
+                    model: 'SCB10-1600/10',
+                    manufacturer: '许继变压器有限公司',
+                    client: '奕欧来1#分站',
+                    branch: '1',
+                    date: '2016/4/20',
+                    operationstatus: '运行'
+                },
+                {
+                    did: 'd2002',
+                    name: '1#分站1#10KV变压器',
+                    type: '开关',
+                    model: 'SCB10-1600/10',
+                    manufacturer: '许继变压器有限公司',
+                    client: '奕欧来1#分站',
+                    branch: '2',
+                    date: '2016/4/20',
+                    operationstatus: '运行'
+                },
+                {
+                    did: 'd2003',
+                    name: '1#分站1#10KV变压器',
+                    type: '电容器',
+                    model: 'SCB10-1600/10',
+                    manufacturer: '许继变压器有限公司',
+                    client: '奕欧来1#分站',
+                    branch: '3',
+                    date: '2016/4/20',
+                    operationstatus: '运行'
+                },
+                {
+                    did: 'd2004',
+                    name: '1#分站1#10KV变压器',
+                    type: '开关',
+                    model: 'SCB10-1600/10',
+                    manufacturer: '许继变压器有限公司',
+                    client: '奕欧来1#分站',
+                    branch: '1',
+                    date: '2016/4/20',
+                    operationstatus: '运行'
+                },
+                {
+                    did: 'd2005',
+                    name: '1#分站1#10KV变压器',
+                    type: '电容器',
+                    model: 'SCB10-1600/10',
+                    manufacturer: '许继变压器有限公司',
+                    client: '奕欧来1#分站',
+                    branch: '3',
+                    date: '2016/4/20',
+                    operationstatus: '运行'
+                },
+                {
+                    did: 'd2006',
+                    name: '1#分站1#10KV变压器',
+                    type: '变压器',
+                    model: 'SCB10-1600/10',
+                    manufacturer: '许继变压器有限公司',
+                    client: '奕欧来1#分站',
+                    branch: '1',
+                    date: '2016/4/20',
+                    operationstatus: '运行'
+                },
+                {
+                    did: 'd2007',
+                    name: '1#分站1#10KV变压器',
+                    type: '开关',
+                    model: 'SCB10-1600/10',
+                    manufacturer: '许继变压器有限公司',
+                    client: '奕欧来1#分站',
+                    branch: '2',
+                    date: '2016/4/20',
+                    operationstatus: '运行'
                 }
             ]
         };
 
         $scope.rowCollection = [];
 
-        $scope.demo = function () {
-            $scope.rowCollection = $scope.show.branchDevice;
+        $scope.initData = function () {
+            $scope.rowCollection = $scope.show.branchEqp;
         };
-        $scope.demo();
+        $scope.initData();
+
+        $scope.setItem = function (did) {
+
+            alert("设置：" + did);
+
+        };
+
+        $scope.delItem = function (did) {
+
+            alert("删除：" + did);
+
+        };
 
     }
 

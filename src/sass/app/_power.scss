@@ -15,7 +15,7 @@
 //内容默认无边距
 .panel > .panel-body {
   padding: 0 !important;
-  margin: 15px !important;
+  //margin: 15px !important;
 }
 
 /*
@@ -68,9 +68,11 @@
 }
 
 .detail .top-content {
-  border: 1px solid #FFFFFF;
   border-radius: 5px;
   float: right;
+  background-color: rgba(255, 255, 255, 0.1);
+  -webkit-box-shadow: 0 0 7px 2px rgba(20, 79, 146, 0.1);
+  box-shadow: 0 0 7px 2px rgba(20, 79, 146, 0.1);
 }
 
 .detail .top-content-div {
@@ -83,7 +85,7 @@
 }
 
 .detail .top-right-div {
-  line-height: 40px;
+  line-height: 35px;
   text-align: center;
   border-radius: 5px;
   margin-bottom: 8px;
@@ -92,28 +94,8 @@
 /*
   smart table
 */
-
-//表头
-.table > thead > tr > th {
+thead tr th {
   text-align: center;
-}
-
-//表身
-.table > tbody > tr > td {
-  text-align: center;
-}
-
-.common-table-body tr td {
-  padding: 7px 0 !important;
-}
-
-.common-table-body tr:hover {
-  background-color: #FFFBF0 !important;
-  color: #144f92 !important;
-  cursor: pointer !important;
-}
-
-.common-table-thead th {
   font-size: 15px !important;
   font-weight: bold !important;
   color: #333333 !important;
@@ -121,7 +103,30 @@
   line-height: 35px !important;
 }
 
-//分页查询下标 padding-top
-.table > tfoot > tr > td {
+tbody tr td {
+  text-align: center;
+  padding: 7px 0 !important;
+}
+
+tbody tr:hover {
+  background-color: #FFFBF0 !important;
+  color: #144f92 !important;
+  cursor: pointer !important;
+}
+
+tfoot tr td {
   padding-top: 15px !important;
+  border: none !important;
+}
+
+.common-table {
+  border-bottom: none !important;
+  border-left: none !important;
+  border-right: none !important;
+}
+
+.common-table-btn {
+  display: inline-block;
+  width: 35px;
+  font-size: 23px;
 }

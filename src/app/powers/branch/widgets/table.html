@@ -1,9 +1,8 @@
 <div class="horizontal-scroll">
-    <table class="table table-bordered table-hover" st-table="show.branchDevice"
+    <table class="table table-bordered table-hover common-table" st-table="show.branchEqp"
            st-safe-src="rowCollection">
         <thead>
-        <tr class="common-table-thead">
-            <!--<th>站名</th>-->
+        <tr>
             <th>设备名称</th>
             <th>设备类型</th>
             <th>设备型号</th>
@@ -15,37 +14,37 @@
             <th>操作</th>
         </tr>
         </thead>
-        <tbody class="common-table-body">
-        <tr ng-repeat="item in show.branchDevice">
-            <!--<td>-->
-            <!--<span ng-bind="item.customerName"></span>-->
-            <!--</td>-->
+        <tbody>
+        <tr ng-repeat="item in show.branchEqp">
             <td>
-                <span ng-bind="item.deviceName"></span>
+                <span ng-bind="item.name"></span>
             </td>
             <td>
-                <span ng-bind="item.deviceType"></span>
+                <span ng-bind="item.type"></span>
             </td>
             <td>
-                <span ng-bind="item.deviceModel"></span>
+                <span ng-bind="item.model"></span>
             </td>
             <td>
-                <span ng-bind="item.supplier"></span>
+                <span ng-bind="item.manufacturer"></span>
             </td>
             <td>
-                <span ng-bind="item.customerName"></span>
+                <span ng-bind="item.client"></span>
             </td>
             <td>
-                <span ng-bind="item.branchName"></span>
+                <span ng-bind="item.branch"></span>
             </td>
             <td>
-                <span ng-bind="item.lastTestDate"></span>
+                <span ng-bind="item.date"></span>
             </td>
             <td>
-                <span ng-bind="item.status"></span>
+                <span ng-bind="item.operationstatus"></span>
             </td>
             <td>
-                <span>操作</span>
+                <i class="ion-gear-a color-blue common-table-btn"
+                   ng-click="setItem(item.did)"></i>
+                <i class="ion-trash-a color-purple common-table-btn"
+                   ng-click="delItem(item.did)"></i>
             </td>
         </tr>
         </tbody>

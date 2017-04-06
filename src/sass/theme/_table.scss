@@ -26,9 +26,9 @@
         &:first-child {
           text-align: center;
         }
-        &:last-child {
-          padding-right: 16px !important;
-        }
+        //&:last-child {
+        //  padding-right: 16px !important;
+        //}
       }
     }
   }
@@ -316,7 +316,7 @@ th {
 .pagination > .active > span:hover,
 .pagination > .active > a:focus,
 .pagination > .active > span:focus {
-  background-color: $primary;
+  background-color: #144f92;
   border-color: $border;
 }
 
