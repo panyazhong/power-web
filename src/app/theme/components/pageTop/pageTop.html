@@ -15,7 +15,7 @@
             <div ng-repeat="item in show.topBarData" class="page-top-div page-top-content-title"
                  style="width: 12%;"
                  ng-class="show.currentState == item.state ? 'page-top-title-active' : '' "
-                 ng-click="changeState($event,item.state)">
+                 ng-click="changeState(item.state)">
                 {{item.title}}
 
                 <i class="ion-arrow-down-b" style="margin: 0 5px"

@@ -49,17 +49,14 @@
                     title: '平台设置',
                     state: 'settings'
                 }],
-            currentState: PageTopCache.cState,
+            currentState: PageTopCache.state
         };
 
-        $scope.changeState = function (e, state) {
+        $scope.changeState = function (state) {
             // $('.page-top-content-title').removeClass('page-top-title-active');
             // $(e.target).addClass('page-top-title-active');
-
-            console.log("点击的state：" + state);
-            PageTopCache.setState(state);
             $state.go(state);
-            console.log("缓存的state：" + PageTopCache.getState());
+            PageTopCache.state = state;
         };
 
         /**

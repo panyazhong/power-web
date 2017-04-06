@@ -31,21 +31,7 @@
         var currentState = 'overview';  // pageTop选中的状态
 
         return {
-            cState : currentState,
-            isEmpty: function () {
-                return currentState.length == 0;
-            },
-            setState: function (args) {
-
-                if (args.length > 0) {
-                    // currentState = _.cloneDeep(args);
-                    currentState = args;
-                }
-            },
-            getState: function () {
-
-                return currentState;
-            }
+            state: currentState
         }
 
     }
