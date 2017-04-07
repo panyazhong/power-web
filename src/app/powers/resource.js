@@ -103,4 +103,62 @@
             };
             return Resource(config);
         })
+        // 概况总览
+        .factory('Overview', function (Resource) {
+            var config = {
+                url: 'client/:cid',
+                paramsDefault: {
+                    cid: '@cid'
+                },
+                action: {
+                    query: {    //获取所有变电站信息
+                        method: 'GET'
+                    },
+                    queryDetail: {    //获取详情
+                        method: 'GET'
+                    },
+                    update: {
+                        method: 'PUT'
+                    }
+                }
+            };
+            return Resource(config);
+        })
+        // 一次系统图
+        .factory('Clientimg', function (Resource) {
+            var config = {
+                url: 'clientimg/:cid',
+                paramsDefault: {
+                    cid: '@cid'
+                },
+                action: {
+                    query: {    //获取一次系统图
+                        method: 'GET',
+                    },
+                    update: {
+                        method: 'PUT'
+                    }
+                }
+            };
+            return Resource(config);
+        })
+        // 支线
+        .factory('Branch', function (Resource) {
+            var config = {
+                url: 'branch/:bid',
+                paramsDefault: {
+                    bid: '@bid'
+                },
+                action: {
+                    query: {    //获取支线基本信息
+                        method: 'GET'
+                    },
+                    update: {
+                        method: 'PUT'
+                    }
+                }
+            };
+            return Resource(config);
+        })
+
 })();
