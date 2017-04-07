@@ -16,7 +16,6 @@
         'BlurAdmin.power.branch',
 
         'BlurAdmin.power.demo',
-        // 'BlurAdmin.power.videos',
     ])
         .config(routeConfig);
 

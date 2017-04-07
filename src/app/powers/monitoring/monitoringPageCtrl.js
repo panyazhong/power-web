@@ -12,52 +12,7 @@
     function monitoringPageCtrl($scope, $state, $location, PageTopCache, ToastUtils, Log) {
 
         $scope.show = {
-            sysImgData: [{
-                id: 2001,
-                imgLink: 'assets/img/app/power/iu01.jpg',
-                style: {
-                    position: 'absolute',
-                    top: '50px',
-                    left: '50px',
-                    width: '180px',
-                    height: '180px'
-                }
-            }, {
-                id: 2002,
-                imgLink: 'assets/img/app/power/iu02.jpg',
-                style: {
-                    position: 'absolute',
-                    top: '150px',
-                    left: '400px',
-                    width: '180px',
-                    height: '180px'
-                }
-            }, {
-                id: 2003,
-                imgLink: 'assets/img/app/power/iu03.jpg',
-                style: {
-                    position: 'absolute',
-                    top: '200px',
-                    left: '800px',
-                    width: '150px',
-                    height: '200px'
-                }
-            }],
-            branchData: {
-                id: 'id3001',
-                branchName: '3：10千伏一段压变',
-                aL: '100A',
-                bL: '105A',
-                cL: '103A',
-                p: '0.00KW',
-                pElement: '1.00',
-                aU: '10.01KV',
-                bU: '10.03KV',
-                cU: '10.09KV',
-                q: '0.01KVar',
-                wp: '0.05kwh',
-                temp: '8℃'
-            },
+
         };
 
         $scope.init = function () {
