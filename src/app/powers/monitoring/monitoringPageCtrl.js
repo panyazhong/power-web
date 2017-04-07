@@ -9,7 +9,7 @@
         .controller('monitoringPageCtrl', monitoringPageCtrl);
 
     /** @ngInject */
-    function monitoringPageCtrl($scope, $state, $location) {
+    function monitoringPageCtrl($scope, $state, $location, PageTopCache, ToastUtils, Log) {
 
         $scope.show = {
             sysImgData: [{
@@ -60,18 +60,19 @@
             },
         };
 
-        $scope.getParams = function () {
-            console.log("传过来客户id是：" + $location.search().id);
-            console.log("当前state是：" + $state.$current);
-        };
-        $scope.getParams();
+        $scope.init = function () {
+            PageTopCache.cache.state = $state.$current;
 
+            Log.i("传过来客户id是：" + $location.search().id);
+            Log.i("当前state是：" + $state.$current);
+        };
+        $scope.init();
 
         /**
          * 显示控件详情
          */
         $scope.showDetail = function (obj) {
-            console.log(obj.id);
+            Log.i(obj.id);
         };
 
         /**

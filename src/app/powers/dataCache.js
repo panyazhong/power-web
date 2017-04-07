@@ -28,10 +28,10 @@
 
     function pageTopCache() {
 
-        var currentState = 'overview';  // pageTop选中的状态
-
         return {
-            state: currentState
+            cache: {
+                state: 'overview'
+            }
         }
 
     }
