@@ -6,188 +6,99 @@
         <script type="text/javascript">
 
             var mapObj;
+            var mapLabData;
 
-            function mapInit() {
-                mapObj = new AMap.Map('container', {
+            var scope = angular.element($("#container")).scope();
+            mapLabData = scope.show;
+            if (mapLabData) {
+
+                function mapInit() {
+                    mapObj = new AMap.Map('container', {
 //                    dragEnable: false,      //是否可拖拽
 //                    zoomEnable: false,      //是否可缩放
-                    zoom: 12,
-                    center: [121.493496, 31.224609],    // 定义地图中心点
+                        zoom: 12,
+                        center: [121.493496, 31.224609],    // 定义地图中心点
 //                    mapStyle: 'fresh',
 //                    features: ['road', 'building','bg']
-                });
-                AMap.event.addListener(mapObj, "complete", completeEventHandler);
-            }
-            mapInit();
-
-            /**
-             * 模拟后台返回的数据
-             */
-
-            var mapLabData = [{
-                clientId: 0,
-                clientName: '时代金融',
-                img: 'assets/img/app/power/map_label_red.png',
-                longitude: 121.506621,
-                latitude: 31.240731
-            }, {
-                clientId: 1,
-                clientName: '陆家嘴金融广场',
-                img: 'assets/img/app/power/map_label_red.png',
-                longitude: 121.528121,
-                latitude: 31.219177
-            }, {
-                clientId: 2,
-                clientName: '世博轴',
-                img: 'assets/img/app/power/map_label_green.png',
-                longitude: 121.492519,
-                latitude: 31.183656
-            }, {
-                clientId: 3,
-                clientName: '上海体育馆',
-                img: 'assets/img/app/power/map_label_green.png',
-                longitude: 121.483166,
-                latitude: 31.157394
-            }];
-
-            function completeEventHandler() {
-
-                for (x in mapLabData) {
-                    var item = mapLabData[x];
-                    var content =
-                            "<div style='text-align: center;'>" +
-                            "<div>" +
-                            "<img src='" + item.img + "' style='width: 50px;height: 50px;'/>" +
-                            "<div style='color: #fff;background: #000;opacity:0.5;padding: 3px 5px;font-size: 12px;white-space:nowrap;border-radius:5px !important'>" + item.clientName + "</div>" +
-                            "</div>" +
-                            "</div>";
-
-                    var marker = new AMap.Marker({
-                        position: new AMap.LngLat(item.longitude, item.latitude),
-                        content: content,
-                        extData: item.clientId
                     });
+                    AMap.event.addListener(mapObj, "complete", completeEventHandler);
+                }
 
-                    // map events
-                    var _onmouseover = function (e) {
-                        openWindow(e);
-                    };
-                    AMap.event.addListener(marker, 'mouseover', _onmouseover);
+                mapInit();
+
+                function completeEventHandler() {
+
+                    for (x in mapLabData) {
+                        var item = mapLabData[x];
+                        var content =
+                                "<div style='text-align: center;'>" +
+                                "<div>" +
+                                "<img src='" + item.img + "' style='width: 50px;height: 50px;'/>" +
+                                "<div style='color: #fff;background: #000;opacity:0.5;padding: 3px 5px;font-size: 12px;white-space:nowrap;border-radius:5px !important'>" + item.clientName + "</div>" +
+                                "</div>" +
+                                "</div>";
+
+                        var marker = new AMap.Marker({
+                            position: new AMap.LngLat(item.longitude, item.latitude),
+                            content: content,
+                            extData: item.clientId
+                        });
+
+                        // map events
+                        var _onmouseover = function (e) {
+                            openWindow(e);
+                        };
+                        AMap.event.addListener(marker, 'mouseover', _onmouseover);
 //                    var _mouseout = function (e) {
 //                        mapObj.clearInfoWindow();
 //                    };
 //                    AMap.event.addListener(marker, 'mouseout', _mouseout);
 
-                    marker.setMap(mapObj);  // add point
+                        marker.setMap(mapObj);  // add point
+                    }
                 }
-            }
 
-            function openWindow(e) {
+                function openWindow(e) {
 
-                var clientId = e.target.getExtData();
-                /**
-                 *
-                 *
-                 *
-                 *
-                 *
-                 *
-                 *
-                 * 根据客户id获取站点信息
-                 * @type {{}}
-                 *
-                 *
-                 *
-                 *
-                 *
-                 *
-                 */
+                    var clientId = e.target.getExtData();
 
+                    var item = scope.getDetail(clientId);
+                    if (item) {
+                        var custXml = "<div style='background: #FFFFFF;width: 210px;box-shadow:0 0 7px 2px rgba(86, 96, 117, 0.5);'>" +
+                                "      <div style='line-height: 35px;background: #144f92;color: #FFFFFF;text-align: center;'>" + item.clientName + "</div>" +
+                                "     <div style='line-height: 25px;padding: 0 10px;'>电压等级：" + item.level +
+                                " </div>" +
+                                "   <div style='line-height: 25px;padding: 0 10px;'>地址：" + item.addresss +
+                                "   </div>" +
+                                "  <div style='line-height: 25px;padding: 0 10px;'>站长：" + item.contactor +
+                                " </div>" +
+                                " <div style='line-height: 25px;padding: 0 10px;'>联系方式：" + item.contactortel +
+                                "  </div>" +
+                                "  <div style='line-height: 25px;padding: 0 10px;'>客户联系人：" + item.clientAdmin +
+                                "  </div>" +
+                                " <div style='line-height: 25px;padding: 0 10px;'>联系方式：" + item.clientTel +
+                                " </div>" +
+                                " <div style='line-height: 25px;padding: 0 10px;color: #144f92;'>当月申报需量：" + item.requiredmd +
+                                "</div>" +
+                                " <div style='line-height: 25px;padding: 0 10px;color: #144f92;margin-bottom: 15px;'>当前负荷：" + item.requiredmdCurrent +
+                                " </div>" +
+                                " <a href='/#/monitoring?id=" + item.clientId + "' style='line-height: 35px;color:#de3661;border-top: 1px #de3661 solid;text-align: center;cursor: pointer;display: block;'>" +
+                                "     前往该站" +
+                                "     </a>" +
+                                "     <a href='/#/events?id=" + item.clientId + "' style='line-height: 35px;color: #FFFFFF;background: #de3661;text-align: center;cursor: pointer;display: block;'>" +
+                                "     查看该站事件" +
+                                "    </a>" +
+                                "     </div>";
 
-                /**
-                 * 模拟数据
-                 * @type {*[]}
-                 */
-                var info = [{
-                    clientId: '021001',
-                    clientName: '时代金融',
-                    addresss: '浦东新区银城中路68号',
-                    level: '10kv',
-                    contactor: '王平',
-                    contactortel: '13822223333',
-                    clientAdmin: '魏延',
-                    clientTel: '18878789999',
-                    requiredmd: '2000kW',
-                    requiredmdCurrent: '1500kW'
-                }, {
-                    clientId: '021002',
-                    clientName: '上海中心',
-                    addresss: '浦东新区张杨路174号',
-                    level: '15kv',
-                    contactor: '关平',
-                    contactortel: '15933445533',
-                    clientAdmin: '关兴',
-                    clientTel: '13099998888',
-                    requiredmd: '1500kW',
-                    requiredmdCurrent: '120kW'
-                }, {
-                    clientId: '021003',
-                    clientName: '世博轴',
-                    addresss: '浦东新区周家渡路',
-                    level: '12kv',
-                    contactor: '黄盖',
-                    contactortel: '15600990909',
-                    clientAdmin: '周瑜',
-                    clientTel: '13412312323',
-                    requiredmd: '1000kw',
-                    requiredmdCurrent: '555kW'
-                }, {
-                    clientId: '021004',
-                    clientName: '上海体育馆',
-                    addresss: '徐汇区漕溪北路1114号',
-                    level: '200kW',
-                    contactor: '赵云',
-                    contactortel: '18767678899',
-                    clientAdmin: '嘟嘟',
-                    clientTel: '15099998888',
-                    requiredmd: '100kW',
-                    requiredmdCurrent: '67kW'
-                }];
-                var item = info[clientId];
-
-                var custXml = "<div style='background: #FFFFFF;width: 210px;box-shadow:0 0 7px 2px rgba(86, 96, 117, 0.5);'>" +
-                        "      <div style='line-height: 35px;background: #144f92;color: #FFFFFF;text-align: center;'>" + item.clientName + "</div>" +
-                        "     <div style='line-height: 25px;padding: 0 10px;'>电压等级：" + item.level +
-                        " </div>" +
-                        "   <div style='line-height: 25px;padding: 0 10px;'>地址：" + item.addresss +
-                        "   </div>" +
-                        "  <div style='line-height: 25px;padding: 0 10px;'>站长：" + item.contactor +
-                        " </div>" +
-                        " <div style='line-height: 25px;padding: 0 10px;'>联系方式：" + item.contactortel +
-                        "  </div>" +
-                        "  <div style='line-height: 25px;padding: 0 10px;'>客户联系人：" + item.clientAdmin +
-                        "  </div>" +
-                        " <div style='line-height: 25px;padding: 0 10px;'>联系方式：" + item.clientTel +
-                        " </div>" +
-                        " <div style='line-height: 25px;padding: 0 10px;color: #144f92;'>当月申报需量：" + item.requiredmd +
-                        "</div>" +
-                        " <div style='line-height: 25px;padding: 0 10px;color: #144f92;margin-bottom: 15px;'>当前负荷：" + item.requiredmdCurrent +
-                        " </div>" +
-                        " <a href='/#/monitoring?id=" + item.clientId + "' style='line-height: 35px;color:#de3661;border-top: 1px #de3661 solid;text-align: center;cursor: pointer;display: block;'>" +
-                        "     前往该站" +
-                        "     </a>" +
-                        "     <a href='/#/events?id=" + item.clientId + "' style='line-height: 35px;color: #FFFFFF;background: #de3661;text-align: center;cursor: pointer;display: block;'>" +
-                        "     查看该站事件" +
-                        "    </a>" +
-                        "     </div>";
-
-                var infoWindow = new AMap.InfoWindow({
-                    isCustom: true,
-                    closeWhenClickMap: true,
-                    offset: new AMap.Pixel(200, -50),
-                    content: custXml
-                });
-                infoWindow.open(mapObj, e.target.getPosition());
+                        var infoWindow = new AMap.InfoWindow({
+                            isCustom: true,
+                            closeWhenClickMap: true,
+                            offset: new AMap.Pixel(200, -50),
+                            content: custXml
+                        });
+                        infoWindow.open(mapObj, e.target.getPosition());
+                    }
+                }
             }
 
         </script>
