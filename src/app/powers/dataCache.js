@@ -2,7 +2,8 @@
     'use strict';
 
     angular.module('DataCache', [])
-        .factory("PageTopCache", pageTopCache);
+        .factory("PageTopCache", pageTopCache)
+        .factory("ImgPrefix", imgPrefix);
 
     // function criterionCache(_) {
     //
@@ -32,6 +33,14 @@
             cache: {
                 state: 'overview'
             }
+        }
+
+    }
+
+    function imgPrefix() {
+
+        return {
+            prefix: 'http://192.168.0.150/'   // 图片前缀
         }
 
     }

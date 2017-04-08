@@ -91,7 +91,8 @@
             };
             return Resource(config);
         })
-        .factory('Demo', function (Resource) {
+        // 用户
+        .factory('User', function (Resource) {
             var config = {
                 url: 'login',
                 paramsDefault: {},
@@ -99,6 +100,13 @@
                     login: {
                         method: 'POST'
                     },
+                    query: {
+                        method: 'GET',
+                        isArray: true
+                    },
+                    update: {
+                        method: 'PUT'
+                    }
                 }
             };
             return Resource(config);

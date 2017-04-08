@@ -9,38 +9,58 @@
         .controller('overviewPageCtrl', overviewPageCtrl);
 
     /** @ngInject */
-    function overviewPageCtrl($scope, Log) {
+    function overviewPageCtrl($scope, Overview, User, ImgPrefix) {
 
         $scope.show = {};
+        $scope.prefix = ImgPrefix.prefix;
 
         $scope.init = function () {
 
-            $scope.show = [{
-                clientId: 0,
-                clientName: '时代金融',
-                img: 'assets/img/app/power/map_label_red.png',
-                longitude: 121.506621,
-                latitude: 31.240731
-            }, {
-                clientId: 1,
-                clientName: '陆家嘴金融广场',
-                img: 'assets/img/app/power/map_label_red.png',
-                longitude: 121.528121,
-                latitude: 31.219177
-            }, {
-                clientId: 2,
-                clientName: '世博轴',
-                img: 'assets/img/app/power/map_label_green.png',
-                longitude: 121.492519,
-                latitude: 31.183656
-            }, {
-                clientId: 3,
-                clientName: '上海体育馆',
-                img: 'assets/img/app/power/map_label_green.png',
-                longitude: 121.483166,
-                latitude: 31.157394
-            }]
+            // 模拟登陆
+            User.login({
+                    account: 111,
+                    psw: 111111
+                },
+                function (data) {
 
+                }, function (err) {
+
+                });
+
+            Overview.query({},
+                function (data) {
+
+                }, function (err) {
+
+                });
+
+            var data = {
+                "status": "OK",
+                "message": "",
+                "data": [
+                    {
+                        "cid": "1",
+                        "name": "时代金融",
+                        "ico": "public/img/client/blue.png",
+                        "longitude": "121.48",
+                        "latitude": "31.22"
+                    },
+                    {
+                        "cid": "2",
+                        "name": "交通大学",
+                        "ico": "public/img/client/red.png",
+                        "longitude": "121.16",
+                        "latitude": "30.89"
+                    }
+                ],
+                "auth": ""
+            };
+
+            for (var i = 0; i < data.data.length; i++) {
+                data.data[i].ico = ImgPrefix.prefix + data.data[i].ico;
+            }
+
+            $scope.show = data.data;
         };
         $scope.init();
 
