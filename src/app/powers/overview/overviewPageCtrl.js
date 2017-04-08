@@ -9,31 +9,15 @@
         .controller('overviewPageCtrl', overviewPageCtrl);
 
     /** @ngInject */
-    function overviewPageCtrl($scope, Overview, User, ImgPrefix) {
+    function overviewPageCtrl($scope, Overview, User, ImgPrefix, Log) {
 
         $scope.show = {};
         $scope.prefix = ImgPrefix.prefix;
 
-        $scope.init = function () {
-
-            // 模拟登陆
-            User.login({
-                    account: 111,
-                    psw: 111111
-                },
-                function (data) {
-
-                }, function (err) {
-
-                });
-
-            Overview.query({},
-                function (data) {
-
-                }, function (err) {
-
-                });
-
+        /**
+         * ---------------- del --------
+         */
+        $scope.d = function () {
             var data = {
                 "status": "OK",
                 "message": "",
@@ -62,56 +46,69 @@
 
             $scope.show = data.data;
         };
+        $scope.dd = function () {
+
+            var data = {
+                "status": "OK",
+                "message": "",
+                "data": {
+                    "cid": "1",
+                    "name": "时代金融",
+                    "address": "上海",
+                    "level": "10000kV",
+                    "contactor": "李四",
+                    "contactortel": "22",
+                    "customer_contactor": "王平",
+                    "customer_contactortel": "12345678",
+                    "requiredmd": "20000kW",
+                    "currentmd": "15000kW"
+                },
+                "auth": ""
+            };
+
+            return data.data;
+        };
+
+        $scope.init = function () {
+
+            // 模拟登陆
+            User.login({
+                    account: 111,
+                    psw: 111111
+                },
+                function (data) {
+                    Log.i(JSON.stringify(data.data));
+                }, function (err) {
+
+                });
+
+            Overview.query({},
+                function (data) {
+                    for (var i = 0; i < data.data.length; i++) {
+                        data.data[i].ico = ImgPrefix.prefix + data.data[i].ico;
+                    }
+                    $scope.show = data.data;
+
+                }, function (err) {
+
+                });
+
+            $scope.d();
+        };
         $scope.init();
 
         $scope.getDetail = function (id) {
 
-            var info = [{
-                clientId: '021001',
-                clientName: '时代金融',
-                addresss: '浦东新区银城中路68号',
-                level: '10kv',
-                contactor: '王平',
-                contactortel: '13822223333',
-                clientAdmin: '魏延',
-                clientTel: '18878789999',
-                requiredmd: '2000kW',
-                requiredmdCurrent: '1500kW'
-            }, {
-                clientId: '021002',
-                clientName: '上海中心',
-                addresss: '浦东新区张杨路174号',
-                level: '15kv',
-                contactor: '关平',
-                contactortel: '15933445533',
-                clientAdmin: '关兴',
-                clientTel: '13099998888',
-                requiredmd: '1500kW',
-                requiredmdCurrent: '120kW'
-            }, {
-                clientId: '021003',
-                clientName: '世博轴',
-                addresss: '浦东新区周家渡路',
-                level: '12kv',
-                contactor: '黄盖',
-                contactortel: '15600990909',
-                clientAdmin: '周瑜',
-                clientTel: '13412312323',
-                requiredmd: '1000kw',
-                requiredmdCurrent: '555kW'
-            }, {
-                clientId: '021004',
-                clientName: '上海体育馆',
-                addresss: '徐汇区漕溪北路1114号',
-                level: '200kW',
-                contactor: '赵云',
-                contactortel: '18767678899',
-                clientAdmin: '嘟嘟',
-                clientTel: '15099998888',
-                requiredmd: '100kW',
-                requiredmdCurrent: '67kW'
-            }];
-            return info[id];
+            Overview.queryDetail({
+                    cid: id
+                },
+                function (data) {
+                    return data.data;
+                }, function (err) {
+
+                });
+
+            return $scope.dd();
         };
 
     }

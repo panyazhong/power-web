@@ -33,15 +33,15 @@
                         var content =
                                 "<div style='text-align: center;'>" +
                                 "<div>" +
-                                "<img src='" + item.img + "' style='width: 50px;height: 50px;'/>" +
-                                "<div style='color: #fff;background: #000;opacity:0.5;padding: 3px 5px;font-size: 12px;white-space:nowrap;border-radius:5px !important'>" + item.clientName + "</div>" +
+                                "<img src='" + item.ico + "' style='width: 50px;height: 50px;'/>" +
+                                "<div style='color: #fff;background: #000;opacity:0.5;padding: 3px 5px;font-size: 12px;white-space:nowrap;border-radius:5px !important'>" + item.name + "</div>" +
                                 "</div>" +
                                 "</div>";
 
                         var marker = new AMap.Marker({
                             position: new AMap.LngLat(item.longitude, item.latitude),
                             content: content,
-                            extData: item.clientId
+                            extData: item.cid
                         });
 
                         // map events
@@ -60,32 +60,32 @@
 
                 function openWindow(e) {
 
-                    var clientId = e.target.getExtData();
+                    var cid = e.target.getExtData();
 
-                    var item = scope.getDetail(clientId);
+                    var item = scope.getDetail(cid);
                     if (item) {
                         var custXml = "<div style='background: #FFFFFF;width: 210px;box-shadow:0 0 7px 2px rgba(86, 96, 117, 0.5);'>" +
-                                "      <div style='line-height: 35px;background: #144f92;color: #FFFFFF;text-align: center;'>" + item.clientName + "</div>" +
+                                "      <div style='line-height: 35px;background: #144f92;color: #FFFFFF;text-align: center;'>" + item.name + "</div>" +
                                 "     <div style='line-height: 25px;padding: 0 10px;'>电压等级：" + item.level +
                                 " </div>" +
-                                "   <div style='line-height: 25px;padding: 0 10px;'>地址：" + item.addresss +
+                                "   <div style='line-height: 25px;padding: 0 10px;'>地址：" + item.address +
                                 "   </div>" +
                                 "  <div style='line-height: 25px;padding: 0 10px;'>站长：" + item.contactor +
                                 " </div>" +
                                 " <div style='line-height: 25px;padding: 0 10px;'>联系方式：" + item.contactortel +
                                 "  </div>" +
-                                "  <div style='line-height: 25px;padding: 0 10px;'>客户联系人：" + item.clientAdmin +
+                                "  <div style='line-height: 25px;padding: 0 10px;'>客户联系人：" + item.customer_contactor +
                                 "  </div>" +
-                                " <div style='line-height: 25px;padding: 0 10px;'>联系方式：" + item.clientTel +
+                                " <div style='line-height: 25px;padding: 0 10px;'>联系方式：" + item.customer_contactortel +
                                 " </div>" +
                                 " <div style='line-height: 25px;padding: 0 10px;color: #144f92;'>当月申报需量：" + item.requiredmd +
                                 "</div>" +
-                                " <div style='line-height: 25px;padding: 0 10px;color: #144f92;margin-bottom: 15px;'>当前负荷：" + item.requiredmdCurrent +
+                                " <div style='line-height: 25px;padding: 0 10px;color: #144f92;margin-bottom: 15px;'>当前负荷：" + item.currentmd +
                                 " </div>" +
-                                " <a href='/#/monitoring?id=" + item.clientId + "' style='line-height: 35px;color:#de3661;border-top: 1px #de3661 solid;text-align: center;cursor: pointer;display: block;'>" +
+                                " <a href='/#/monitoring?id=" + item.cid + "' style='line-height: 35px;color:#de3661;border-top: 1px #de3661 solid;text-align: center;cursor: pointer;display: block;'>" +
                                 "     前往该站" +
                                 "     </a>" +
-                                "     <a href='/#/events?id=" + item.clientId + "' style='line-height: 35px;color: #FFFFFF;background: #de3661;text-align: center;cursor: pointer;display: block;'>" +
+                                "     <a href='/#/events?id=" + item.cid + "' style='line-height: 35px;color: #FFFFFF;background: #de3661;text-align: center;cursor: pointer;display: block;'>" +
                                 "     查看该站事件" +
                                 "    </a>" +
                                 "     </div>";

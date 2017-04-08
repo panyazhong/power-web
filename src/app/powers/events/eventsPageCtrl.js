@@ -27,14 +27,6 @@
             // ToastUtils.openToast('info', '上传info........');
             // ToastUtils.openToast('warning', '上传warning..........');
 
-            Overview.queryDetail({
-                    cid: 1
-                },
-                function (data) {
-
-                }, function (err) {
-
-                });
             Clientimg.query({
                     cid: 1
                 },
