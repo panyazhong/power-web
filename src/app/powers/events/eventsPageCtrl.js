@@ -9,7 +9,7 @@
         .controller('eventsPageCtrl', eventsPageCtrl);
 
     /** @ngInject */
-    function eventsPageCtrl($scope, $state, $location, PageTopCache, ToastUtils, Log, Overview, Clientimg, Branch) {
+    function eventsPageCtrl($scope, $state, $location, PageTopCache, ToastUtils, Log) {
 
         $scope.show = {
             clientId: ''
@@ -26,24 +26,6 @@
             // ToastUtils.openToast('error', '上传error.....');
             // ToastUtils.openToast('info', '上传info........');
             // ToastUtils.openToast('warning', '上传warning..........');
-
-            Clientimg.query({
-                    cid: 1
-                },
-                function (data) {
-
-                }, function (err) {
-
-                });
-            Branch.query({
-                    bid: 1
-                },
-                function (data) {
-
-                }, function (err) {
-
-                });
-
         };
         $scope.init();
 

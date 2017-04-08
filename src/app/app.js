@@ -18,6 +18,7 @@ angular.module('BlurAdmin', [
     'mgcrea.ngStrap.popover',
     'DataCache',
     'Utils',
+    'HttpHelper',
 
     'BlurAdmin.theme',
     'BlurAdmin.power',

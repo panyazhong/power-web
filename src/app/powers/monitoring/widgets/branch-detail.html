@@ -1,50 +1,50 @@
 <div class="popover pop-detail">
 
     <div class="pop-title">
-        {{show.branchData.branchName}}
+        {{branchData.name}}
     </div>
 
     <div class="pop-content">
 
         <div class="pop-content-div">
-            A相电流：{{show.branchData.aL}}
+            A相电流：{{branchData.currentA}}
         </div>
         <div class="pop-content-div">
-            B相电流：{{show.branchData.bL}}
+            B相电流：{{branchData.currentB}}
         </div>
         <div class="pop-content-div">
-            C相电流：{{show.branchData.cL}}
+            C相电流：{{branchData.currentC}}
         </div>
         <div class="pop-content-div">
-            有功(P)：{{show.branchData.p}}
+            有功(P)：{{branchData.p}}
         </div>
         <div class="pop-content-div">
-            功率因素：{{show.branchData.pElement}}
-        </div>
-
-        <div class="pop-content-div">
-            A相电压：{{show.branchData.aU}}
-        </div>
-        <div class="pop-content-div">
-            B相电压：{{show.branchData.bU}}
-        </div>
-        <div class="pop-content-div">
-            C相电压：{{show.branchData.cU}}
+            功率因素：{{branchData.powerFactor}}
         </div>
 
         <div class="pop-content-div">
-            无功(Q)：{{show.branchData.q}}
+            A相电压：{{branchData.voltageA}}
         </div>
         <div class="pop-content-div">
-            电量(Wp)：{{show.branchData.wp}}
+            B相电压：{{branchData.voltageB}}
         </div>
         <div class="pop-content-div">
-            变压器温度: {{show.branchData.temp}}
+            C相电压：{{branchData.voltageC}}
+        </div>
+
+        <div class="pop-content-div">
+            无功(Q)：{{branchData.q}}
+        </div>
+        <div class="pop-content-div">
+            电量(Wp)：{{branchData.wp}}
+        </div>
+        <div class="pop-content-div">
+            变压器温度: {{branchData.temperature}}
         </div>
 
     </div>
 
-    <div class="pop-footer" ng-click="lookDetail()">
+    <div class="pop-footer" ng-click="lookDetail(branchData.bid)">
         查看设备明细
     </div>
 
