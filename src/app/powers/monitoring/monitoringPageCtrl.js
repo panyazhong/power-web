@@ -261,7 +261,7 @@
         $scope.showDetail = function (id) {
 
             Log.i("bid：" + id);
-            
+
             // Branch.query({
             //         bid: id
             //     },

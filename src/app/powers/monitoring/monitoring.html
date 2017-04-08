@@ -1,20 +1,24 @@
-<div ba-panel class="monitoring"
-     style="background: url({{show.client.img}}) no-repeat;background-size:100% 100%"
-     ng-style="show.client.style">
+<div ba-panel>
 
-    <img ng-repeat="item in show.incomingline"
-         ng-src="{{item.img}}"
-         ng-style="item.style"/>
+    <div class="monitoring"
+         style="background: url({{show.client.img}}) no-repeat center;background-size:100% 100%"
+         ng-style="show.client.style">
 
-    <img ng-repeat="item in show.branch"
-         ng-src="{{item.img}}"
-         ng-style="item.style"
-         ng-mouseenter="showDetail(item.bid)"
+        <img ng-repeat="item in show.incomingline"
+             ng-src="{{item.img}}"
+             ng-style="item.style"/>
 
-         data-placement="left"
-         data-container="body"
-         data-template-url="app/powers/monitoring/widgets/branch-detail.html"
-         data-auto-close="1"
-         bs-popover/>
+        <img ng-repeat="item in show.branch"
+             ng-src="{{item.img}}"
+             ng-style="item.style"
+             ng-mouseenter="showDetail(item.bid)"
+
+             data-placement="left"
+             data-container="body"
+             data-template-url="app/powers/monitoring/widgets/branch-detail.html"
+             data-auto-close="1"
+             bs-popover/>
+
+    </div>
 
 </div>
