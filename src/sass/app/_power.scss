@@ -5,17 +5,62 @@
 
 //主色
 .color-blue {
-  color: #144f92 !important;
+  color: #3b89ce !important;
 }
 
 .color-purple {
-  color: #de3661 !important;
+  color: #f0a53d !important;
 }
 
 //内容默认无边距
 .panel > .panel-body {
   padding: 0 !important;
   //margin: 15px !important;
+}
+
+.item-content-list {
+  background: #FFFFFF !important;
+  border-radius: 5px !important;
+  padding: 20px 30px !important;
+}
+
+.btn-def {
+  display: inline-block;
+  padding: 6px 12px;
+  margin-bottom: 0;
+  font-size: 14px;
+  font-weight: normal;
+  line-height: 1.42857143;
+  text-align: center;
+  white-space: nowrap;
+  vertical-align: middle;
+  -ms-touch-action: manipulation;
+  touch-action: manipulation;
+  cursor: pointer;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+  background-image: none;
+  border: 1px solid transparent;
+  border-radius: 4px;
+  outline: none;
+}
+
+.btn-main-blue {
+  border: 1px #3b89ce solid;
+  color: #3b89ce;
+  background: transparent;
+}
+
+.btn-submit-blue {
+  color: #FFFFFF !important;
+  background: #3b89ce;
+}
+
+.btn-submit-yellow {
+  color: #FFFFFF !important;
+  background: #f0a53d;
 }
 
 /*
@@ -35,7 +80,7 @@
 
 .pop-title {
   line-height: 35px;
-  background: #144f92;
+  background: #3b89ce;
   color: #FFFFFF;
   text-align: center;
 }
@@ -51,7 +96,7 @@
 .pop-footer {
   line-height: 35px;
   color: #FFFFFF;
-  background: #de3661;
+  background: #f0a53d;
   text-align: center;
   cursor: pointer;
   display: block;
@@ -110,7 +155,7 @@ tbody tr td {
 
 tbody tr:hover {
   background-color: #FFFBF0 !important;
-  color: #144f92 !important;
+  color: #3b89ce !important;
   cursor: pointer !important;
 }
 
