@@ -3,7 +3,8 @@
 
     angular.module('DataCache', [])
         .factory("PageTopCache", pageTopCache)
-        .factory("ImgPrefix", imgPrefix);
+        .factory("ImgPrefix", imgPrefix)
+        .factory("UserInfo", userInfo);
 
     // function criterionCache(_) {
     //
@@ -41,6 +42,14 @@
 
         return {
             prefix: 'http://192.168.0.150/'   // 图片前缀
+        }
+
+    }
+
+    function userInfo() {
+
+        return {
+            info: {}
         }
 
     }

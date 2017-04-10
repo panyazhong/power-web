@@ -38,7 +38,7 @@
                     var defaultAction = {
                         method: 'GET',
                         isArray: false,
-                        withCredentials: false,
+                        withCredentials: true,
                         timeout: 30000,
                         headers: {
                             'Content-Type': 'application/x-www-form-urlencoded'

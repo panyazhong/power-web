@@ -61,8 +61,12 @@
                 function openWindow(e) {
 
                     var cid = e.target.getExtData();
+                    var pos = e.target.getPosition();
 
-                    var item = scope.getDetail(cid);
+                    scope.getDetail(cid, pos, showPop);
+                }
+
+                function showPop(item, pos) {
                     if (item) {
                         var custXml = "<div style='background: #FFFFFF;width: 210px;box-shadow:0 0 7px 2px rgba(86, 96, 117, 0.5);'>" +
                                 "      <div style='line-height: 35px;background: #144f92;color: #FFFFFF;text-align: center;'>" + item.name + "</div>" +
@@ -96,7 +100,7 @@
                             offset: new AMap.Pixel(200, -50),
                             content: custXml
                         });
-                        infoWindow.open(mapObj, e.target.getPosition());
+                        infoWindow.open(mapObj, pos);
                     }
                 }
             }

@@ -9,7 +9,9 @@
         .controller('branchPageCtrl', branchPageCtrl);
 
     /** @ngInject */
-    function branchPageCtrl($scope) {
+    function branchPageCtrl($scope, $stateParams, Log) {
+
+        Log.i("bid：" + $stateParams.bid);
 
         $scope.show = {
             branchData: {
