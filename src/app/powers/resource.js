@@ -153,12 +153,13 @@
         // 支线
         .factory('Branch', function (Resource) {
             var config = {
-                url: 'branch/:bid',
+                url: 'branch/:bid/:device',
                 paramsDefault: {
-                    bid: '@bid'
+                    bid: '@bid',
+                    device: '@device',
                 },
                 action: {
-                    query: {    //获取支线基本信息
+                    query: {    //获取支线基本信息 / 获取支线设备
                         method: 'GET'
                     },
                     update: {

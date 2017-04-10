@@ -11,6 +11,30 @@
     /** @ngInject */
     function devicePageCtrl($scope) {
 
+        $scope.form = {
+            name: '',
+            type: '',
+            model: '',
+            manufacturer: '',
+            incomingline: '',
+            client_name: '',
+            banch_name: '',
+            operationstatus: ''
+        };
+
+        $scope.clearForm = function () {
+            $scope.form = {
+                name: '',
+                type: '',
+                model: '',
+                manufacturer: '',
+                incomingline: '',
+                client_name: '',
+                banch_name: '',
+                operationstatus: ''
+            };
+        };
+
     }
 
 })();

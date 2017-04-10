@@ -9,11 +9,10 @@
         .controller('branchPageCtrl', branchPageCtrl);
 
     /** @ngInject */
-    function branchPageCtrl($scope, $stateParams, Log) {
-
-        Log.i("bid：" + $stateParams.bid);
+    function branchPageCtrl($scope, $stateParams, Log, Branch) {
 
         $scope.show = {
+            bid: $stateParams.bid,
             branchData: {
                 id: 'id3001',
                 branchName: '3：10千伏一段压变',
@@ -81,93 +80,64 @@
                     color: '#5f53a0'
                 }
             ],
-            branchEqp: [  // 当前支线下所有设备
-                {
-                    did: 'd2001',
-                    name: '1#分站1#10KV变压器',
-                    type: '变压器',
-                    model: 'SCB10-1600/10',
-                    manufacturer: '许继变压器有限公司',
-                    client: '奕欧来1#分站',
-                    branch: '1',
-                    date: '2016/4/20',
-                    operationstatus: '运行'
-                },
-                {
-                    did: 'd2002',
-                    name: '1#分站1#10KV变压器',
-                    type: '开关',
-                    model: 'SCB10-1600/10',
-                    manufacturer: '许继变压器有限公司',
-                    client: '奕欧来1#分站',
-                    branch: '2',
-                    date: '2016/4/20',
-                    operationstatus: '运行'
-                },
-                {
-                    did: 'd2003',
-                    name: '1#分站1#10KV变压器',
-                    type: '电容器',
-                    model: 'SCB10-1600/10',
-                    manufacturer: '许继变压器有限公司',
-                    client: '奕欧来1#分站',
-                    branch: '3',
-                    date: '2016/4/20',
-                    operationstatus: '运行'
-                },
-                {
-                    did: 'd2004',
-                    name: '1#分站1#10KV变压器',
-                    type: '开关',
-                    model: 'SCB10-1600/10',
-                    manufacturer: '许继变压器有限公司',
-                    client: '奕欧来1#分站',
-                    branch: '1',
-                    date: '2016/4/20',
-                    operationstatus: '运行'
-                },
-                {
-                    did: 'd2005',
-                    name: '1#分站1#10KV变压器',
-                    type: '电容器',
-                    model: 'SCB10-1600/10',
-                    manufacturer: '许继变压器有限公司',
-                    client: '奕欧来1#分站',
-                    branch: '3',
-                    date: '2016/4/20',
-                    operationstatus: '运行'
-                },
-                {
-                    did: 'd2006',
-                    name: '1#分站1#10KV变压器',
-                    type: '变压器',
-                    model: 'SCB10-1600/10',
-                    manufacturer: '许继变压器有限公司',
-                    client: '奕欧来1#分站',
-                    branch: '1',
-                    date: '2016/4/20',
-                    operationstatus: '运行'
-                },
-                {
-                    did: 'd2007',
-                    name: '1#分站1#10KV变压器',
-                    type: '开关',
-                    model: 'SCB10-1600/10',
-                    manufacturer: '许继变压器有限公司',
-                    client: '奕欧来1#分站',
-                    branch: '2',
-                    date: '2016/4/20',
-                    operationstatus: '运行'
-                }
-            ]
+            branchEqp: []
         };
-
         $scope.rowCollection = [];
 
-        $scope.initData = function () {
+        /**
+         * ----------------------------------  delete
+         */
+        $scope.dd = function () {
+            $scope.show.branchEqp = [
+                {
+                    "id": "1",
+                    "name": "变压器1",
+                    "type": "变压器",
+                    "model": "test",
+                    "manufacturer": "test",
+                    "banch_name": "支线1",
+                    "client_name": "时代金融",
+                    "lastet_date": "2017-04-07 17:17:46",
+                    "operationstatus": "1"
+                },
+                {
+                    "id": "5",
+                    "name": "变压器3",
+                    "type": "变压器",
+                    "model": "test",
+                    "manufacturer": "test",
+                    "banch_name": "支线5",
+                    "client_name": "时代金融",
+                    "lastet_date": "2017-03-03 17:17:46",
+                    "operationstatus": "0"
+                }
+            ];
             $scope.rowCollection = $scope.show.branchEqp;
         };
-        $scope.initData();
+
+        $scope.init = function () {
+
+            Branch.query({
+                bid: $scope.show.bid,
+                device: 'device'
+            }, function (data) {
+                if (data.data) {
+                    $scope.show.branchEqp = data.data;
+                    $scope.rowCollection = data.data;
+                }
+            }, function (err) {
+
+            });
+
+            $scope.dd();
+        };
+        $scope.init();
+
+        $scope.formatDate = function (date) {
+            if (date) {
+                return moment(date).format('YYYY-MM-DD');
+            }
+        };
 
         $scope.setItem = function (did) {
 

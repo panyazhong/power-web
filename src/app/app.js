@@ -15,6 +15,7 @@ angular.module('BlurAdmin', [
 
     // lib
     'ngResource',
+    'ngCookies',
     'mgcrea.ngStrap.popover',
     'DataCache',
     'Utils',
