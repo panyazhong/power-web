@@ -9,26 +9,10 @@
         .controller('branchPageCtrl', branchPageCtrl);
 
     /** @ngInject */
-    function branchPageCtrl($scope, $stateParams, Log, Branch) {
+    function branchPageCtrl($scope, $stateParams, Log, Branch, HttpToast, Device, ToastUtils) {
 
         $scope.show = {
             bid: $stateParams.bid,
-            branchData: {
-                id: 'id3001',
-                branchName: '3：10千伏一段压变',
-                aL: '100A',
-                bL: '105A',
-                cL: '103A',
-                p: '0.00KW',
-                pElement: '1.00',
-                aU: '10.01KV',
-                bU: '10.03KV',
-                cU: '10.09KV',
-                q: '0.01KVar',
-                wp: '0.05kwh',
-                temp: '8℃'
-            },
-            branchState: 'assets/img/app/power/test_branch_state.png',
             branchAlarm: [
                 {
                     desc: '过流一段跳闸',
@@ -80,40 +64,9 @@
                     color: '#5f53a0'
                 }
             ],
-            branchEqp: []
+            branchEqp: []   // 支线设备列表
         };
         $scope.rowCollection = [];
-
-        /**
-         * ----------------------------------  delete
-         */
-        $scope.dd = function () {
-            $scope.show.branchEqp = [
-                {
-                    "id": "1",
-                    "name": "变压器1",
-                    "type": "变压器",
-                    "model": "test",
-                    "manufacturer": "test",
-                    "banch_name": "支线1",
-                    "client_name": "时代金融",
-                    "lastet_date": "2017-04-07 17:17:46",
-                    "operationstatus": "1"
-                },
-                {
-                    "id": "5",
-                    "name": "变压器3",
-                    "type": "变压器",
-                    "model": "test",
-                    "manufacturer": "test",
-                    "banch_name": "支线5",
-                    "client_name": "时代金融",
-                    "lastet_date": "2017-03-03 17:17:46",
-                    "operationstatus": "0"
-                }
-            ];
-            $scope.rowCollection = $scope.show.branchEqp;
-        };
 
         $scope.init = function () {
 
@@ -126,10 +79,9 @@
                     $scope.rowCollection = data.data;
                 }
             }, function (err) {
-
+                HttpToast.toast(err);
             });
 
-            $scope.dd();
         };
         $scope.init();
 
@@ -147,7 +99,18 @@
 
         $scope.delItem = function (did) {
 
-            alert("删除：" + did);
+            Device.delete({
+                did: did
+            }, function (data) {
+                if (data.status == 'OK' && data.data) {
+                    ToastUtils.openToast('info', data.data);
+                    $scope.init();
+                } else {
+                    ToastUtils.openToast('info', '很抱歉，无法从服务器获取数据。');
+                }
+            }, function (err) {
+                HttpToast.toast(err);
+            });
 
         };
 

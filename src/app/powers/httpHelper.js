@@ -3,6 +3,7 @@
 
     angular.module('HttpHelper', ['DataCache'])
         .factory("ClientimgHelper", clientimgHelper);
+        // .factory("SidebarHelper", sidebarHelper);
 
     function clientimgHelper(ImgPrefix, _) {
 
@@ -42,6 +43,21 @@
             }
         }
 
+    }
+
+    function sidebarHelper() {
+
+        return {
+            query: function (arr) {
+                if (!Array.isArray(arr)) {
+                    return;
+                }
+
+                // 记录总的变电站
+
+                //
+            }
+        }
     }
 
 })();

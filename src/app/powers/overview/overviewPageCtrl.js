@@ -9,9 +9,9 @@
         .controller('overviewPageCtrl', overviewPageCtrl);
 
     /** @ngInject */
-    function overviewPageCtrl($scope, Overview, UserInfo) {
+    function overviewPageCtrl($scope, Overview, UserInfo, HttpToast) {
 
-        $scope.show = UserInfo.info;
+        $scope.show = UserInfo.info.client;
 
         $scope.getDetail = function (id, pos, cb) {
 
@@ -23,7 +23,7 @@
                         cb(data.data, pos);
                     }
                 }, function (err) {
-
+                    HttpToast.toast(err);
                 });
         };
 

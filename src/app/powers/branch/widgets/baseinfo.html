@@ -5,51 +5,51 @@
         <div class="top-content">
 
             <div class="top-content-tile">
-                {{show.branchData.deviceName}}
+                {{branchData.name}}
             </div>
 
             <div class="col-md-6 top-content-div">
-                A相电流：{{show.branchData.aL}}
+                A相电流：{{branchData.currentA}}
             </div>
             <div class="col-md-6 top-content-div">
-                A相电压：{{show.branchData.aU}}
-            </div>
-
-
-            <div class="col-md-6 top-content-div">
-                B相电流：{{show.branchData.bL}}
-            </div>
-            <div class="col-md-6 top-content-div">
-                B相电压：{{show.branchData.bU}}
+                A相电压：{{branchData.voltageA}}
             </div>
 
 
             <div class="col-md-6 top-content-div">
-                C相电流：{{show.branchData.cL}}
+                B相电流：{{branchData.currentB}}
             </div>
             <div class="col-md-6 top-content-div">
-                C相电压：{{show.branchData.cU}}
-            </div>
-
-
-            <div class="col-md-6 top-content-div">
-                有功(P)：{{show.branchData.p}}
-            </div>
-            <div class="col-md-6 top-content-div">
-                无功(Q)：{{show.branchData.q}}
+                B相电压：{{branchData.voltageB}}
             </div>
 
 
             <div class="col-md-6 top-content-div">
-                功率因素：{{show.branchData.pElement}}
+                C相电流：{{branchData.currentC}}
             </div>
             <div class="col-md-6 top-content-div">
-                电量(Wp)：{{show.branchData.wp}}
+                C相电压：{{branchData.voltageC}}
             </div>
 
 
             <div class="col-md-6 top-content-div">
-                变压器温度: {{show.branchData.temp}}
+                有功(P)：{{branchData.p}}
+            </div>
+            <div class="col-md-6 top-content-div">
+                无功(Q)：{{branchData.q}}
+            </div>
+
+
+            <div class="col-md-6 top-content-div">
+                功率因素：{{branchData.powerFactor}}
+            </div>
+            <div class="col-md-6 top-content-div">
+                电量(Wp)：{{branchData.wp}}
+            </div>
+
+
+            <div class="col-md-6 top-content-div">
+                变压器温度: {{branchData.temperature}}
             </div>
             <div class="col-md-6 top-content-div">
             </div>
@@ -58,7 +58,7 @@
 
     <div class="col-md-3 top-middle">
 
-        <img ng-src="{{show.branchState}}"/>
+        <img ng-src="{{branchData.dlt_img}}"/>
     </div>
 
     <div class="col-md-5">

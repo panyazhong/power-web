@@ -9,7 +9,8 @@
         .controller('demoPageCtrl', demoPageCtrl);
 
     /** @ngInject */
-    function demoPageCtrl($scope, $state, baSidebarService, $window, User, Log, UserInfo, Overview, ImgPrefix) {
+    function demoPageCtrl($scope, baSidebarService, User, UserCache, Keyword, KeywordCache,
+                          ImgPrefix, HttpToast, $cookies) {
 
         $scope.menuItems = baSidebarService.getMenuItems();
         console.log("menuItems：\n" + JSON.stringify($scope.menuItems));
@@ -24,21 +25,44 @@
                     psw: 111111
                 },
                 function (data) {
-                    Log.i(JSON.stringify(data.data));
-                }, function (err) {
+                    if (data.data) {
+                        UserCache.info = data.data;
 
-                });
-
-            Overview.query({},
-                function (data) {
-                    for (var i = 0; i < data.data.length; i++) {
-                        data.data[i].ico = ImgPrefix.prefix + data.data[i].ico;
                     }
-                    UserInfo.info = data.data;
-
                 }, function (err) {
-
+                    HttpToast.toast(err);
                 });
+
+            // Sidebar.query({},
+            //     function (data) {
+            //         UserInfo.info.sidebar = data.data;
+            //
+            //     }, function (err) {
+            //         HttpToast.toast(err);
+            //     });
+            //
+            // Overview.query({},
+            //     function (data) {
+            //         for (var i = 0; i < data.data.length; i++) {
+            //             data.data[i].ico = ImgPrefix.prefix + data.data[i].ico;
+            //         }
+            //         UserInfo.info.client = data.data;
+            //
+            //     }, function (err) {
+            //         HttpToast.toast(err);
+            //     });
+
+
+            if (KeywordCache.isEmpty()) {
+                Keyword.query({},
+                    function (data) {
+                        if (data.data) {
+                            KeywordCache.create(data.data);
+                        }
+                    }, function (err) {
+                        HttpToast.toast(err);
+                    });
+            }
 
         };
         $scope.test();

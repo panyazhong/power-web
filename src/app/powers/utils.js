@@ -3,6 +3,8 @@
 
     angular.module('Utils', [])
         .service('ToastUtils', toastUtils)
+        .service('HttpToast', httpToast)
+        .service('ModalUtils', modalUtils)
         .service('Log', log);
 
     function toastUtils(toastr, toastrConfig) {
@@ -44,6 +46,49 @@
                 for (var o in options)
                     if (o != 'msg' && o != 'title') strOptions[o] = options[o];
                 optionsStr = "toastr." + options.type + "(\'" + options.msg + "\', \'" + options.title + "\', " + JSON.stringify(strOptions, null, 2) + ")";
+
+            }
+        }
+    }
+
+    function httpToast(ToastUtils) {
+        return {
+            toast: function (err) {
+                if (err.status == 'FAIL' && err.message) {  // 失败处理
+                    ToastUtils.openToast('error', err.message);
+                } else {
+                    ToastUtils.openToast('error', '很抱歉，无法从服务器获取数据。');
+                }
+            },
+            toastSucMsg: function (data) {         // 一些提示，如删除成功的提示，
+                if (data.status == 'OK' && data.data) {
+                    ToastUtils.openToast('info', data.data);
+                } else {
+                    ToastUtils.openToast('info', '很抱歉，无法从服务器获取数据。');
+                }
+            }
+        }
+    }
+
+    function modalUtils($uibModal) {
+        return {
+            open: function (page, size, ctrl, eleId, params, saveCB, cancelCB) {
+
+                $uibModal.open({
+                    animation: true,
+                    templateUrl: page,
+                    size: size,
+                    controller: ctrl,
+                    appendTo: angular.element('#' + eleId),
+                    resolve: {
+                        params: params
+                    },
+                    windowTopClass: "power-modal-layout"
+                }).result.then(function (result) {
+                    saveCB(result);
+                }, function (result) {
+                    cancelCB(result);
+                });
 
             }
         }

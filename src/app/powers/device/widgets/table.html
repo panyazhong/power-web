@@ -1,0 +1,61 @@
+<table class="table table-bordered table-hover common-table" st-pipe="getData"
+       st-table="show.branchEqp">
+    <thead>
+    <tr>
+        <th>设备名称</th>
+        <th>设备类型</th>
+        <th>设备型号</th>
+        <th>厂家</th>
+        <th>所属变电站</th>
+        <th>所属支线</th>
+        <th>上次电试日期</th>
+        <th>状态</th>
+        <th>操作</th>
+    </tr>
+    </thead>
+    <tbody ng-show="!show.isLoading">
+    <tr ng-repeat="item in show.branchEqp">
+        <td>
+            <span ng-bind="item.name"></span>
+        </td>
+        <td>
+            <span ng-bind="item.type"></span>
+        </td>
+        <td>
+            <span ng-bind="item.model"></span>
+        </td>
+        <td>
+            <span ng-bind="item.manufacturer"></span>
+        </td>
+        <td>
+            <span ng-bind="item.client_name"></span>
+        </td>
+        <td>
+            <span ng-bind="item.banch_name"></span>
+        </td>
+        <td>
+            <span ng-bind="formatDate(item.lastet_date)"></span>
+        </td>
+        <td>
+            <span ng-bind="item.operationstatus == '1' ?'运行':'停役'"></span>
+        </td>
+        <td>
+            <i class="ion-gear-a color-blue common-table-btn"
+               ng-click="setItem(item.id)"></i>
+            <i class="ion-trash-a color-purple common-table-btn"
+               ng-click="delItem(item.id)"></i>
+        </td>
+    </tr>
+    </tbody>
+    <tbody ng-show="show.isLoading">
+    <tr>
+        <td colspan="9" class="text-center">Loading ...</td>
+    </tr>
+    </tbody>
+    <tfoot>
+    <tr>
+        <td class="text-center" st-pagination="" st-items-by-page="show.maxSize" colspan="9">
+        </td>
+    </tr>
+    </tfoot>
+</table>

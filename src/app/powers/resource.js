@@ -68,15 +68,11 @@
         })
         .factory('Keyword', function (Resource) {
             var config = {
-                url: 'keyword/:keywordId/:type',
-                paramsDefault: {keywordId: '@id', type: '@type'},
+                url: 'keyword',
+                paramsDefault: {},
                 action: {
-                    getByType: {
+                    query: {
                         method: 'GET'
-                    },
-                    getList: {
-                        method: 'GET',
-                        isArray: true
                     },
                     create: {
                         method: 'POST'
@@ -103,6 +99,22 @@
                     query: {
                         method: 'GET',
                         isArray: true
+                    },
+                    update: {
+                        method: 'PUT'
+                    }
+                }
+            };
+            return Resource(config);
+        })
+        // 侧边栏
+        .factory('Sidebar', function (Resource) {
+            var config = {
+                url: 'sidebar',
+                paramsDefault: {},
+                action: {
+                    query: {
+                        method: 'GET',
                     },
                     update: {
                         method: 'PUT'
@@ -169,5 +181,45 @@
             };
             return Resource(config);
         })
+        // 设备
+        .factory('Device', function (Resource) {
+            var config = {
+                url: 'device/:did',
+                paramsDefault: {did: '@did'},
+                action: {
+                    getByType: {
+                        method: 'GET'
+                    },
+                    getList: {
+                        method: 'GET',
+                        isArray: true
+                    },
+                    create: {
+                        method: 'POST'
+                    },
+                    update: {
+                        method: 'PUT'
+                    },
+                    delete: {   // 删除设备
+                        method: 'DELETE'
+                    }
+                }
+            };
+            return Resource(config);
+        })
 
+        /// ----------------------------------test---------------------------------------
+
+        .factory('Demo', function (Resource) {
+            var config = {
+                url: 'device',
+                paramsDefault: {},
+                action: {
+                    update: {
+                        method: 'PUT'
+                    }
+                }
+            };
+            return Resource(config);
+        })
 })();
