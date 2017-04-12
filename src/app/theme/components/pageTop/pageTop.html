@@ -12,8 +12,8 @@
     <div class="page-top-div" style="width: calc(100% - 200px);">
         <div class="page-top-div" style="width: 80%;">
 
-            <div ng-repeat="item in show.topBarData" class="page-top-div page-top-content-title"
-                 style="width: 12%;"
+            <div class="page-top-div page-top-content-title" style="width: 12%;"
+                 ng-repeat="item in show.topBarData"
                  ng-class="show.cache.state == item.state ? 'page-top-title-active' : '' "
                  ng-click="changeState(item.state)">
                 {{item.title}}

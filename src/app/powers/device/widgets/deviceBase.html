@@ -1,0 +1,170 @@
+<div class="row">
+    <div class="form-group col-md-4">
+        <label>设备名称</label>
+        <input type="text" class="form-control" ng-model="form.base.name">
+    </div>
+    <div class="form-group col-md-4">
+        <label>设备类型</label>
+
+        <div class="row" style="margin-left: 0;margin-right: 0">
+            <!-- Single button -->
+            <div class="select-right" uib-dropdown>
+                <button type="button" class="btn-def btn-trans" style="text-align: left"
+                        uib-dropdown-toggle ng-disabled="disabled">
+                    <span class="caret"></span>{{show.deviceType}}
+                </button>
+
+                <ul class="dropdown-menu" uib-dropdown-menu role="menu"
+                    aria-labelledby="single-button">
+                    <li role="menuitem"
+                        ng-repeat="info in show.devicetypeArr track by $index">
+                        <a ng-bind="info.name" ng-click="setDeviceType(info)"></a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+
+    </div>
+    <div class="form-group col-md-4">
+        <label>设备种类</label>
+        <input type="text" class="form-control" ng-model="form.base.category">
+    </div>
+
+    <div class="form-group col-md-4">
+        <label>设备代码</label>
+        <input type="text" class="form-control" ng-model="form.base.code">
+    </div>
+    <div class="form-group col-md-4">
+        <label>设备型号</label>
+        <input type="text" class="form-control" ng-model="form.base.model">
+    </div>
+    <div class="form-group col-md-4">
+        <label>所属变电站</label>
+
+        <div class="row" style="margin-left: 0;margin-right: 0">
+            <!-- Single button -->
+            <div class="select-right" uib-dropdown>
+                <button type="button" class="btn-def btn-trans" style="text-align: left"
+                        uib-dropdown-toggle ng-disabled="disabled">
+                    <span class="caret"></span>{{show.clientName}}
+                </button>
+
+                <ul class="dropdown-menu" uib-dropdown-menu role="menu"
+                    aria-labelledby="single-button">
+                    <li role="menuitem"
+                        ng-repeat="info in show.sidebarArr track by $index">
+                        <a ng-bind="info.clientName" ng-click="changeClent(info)"></a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+
+    </div>
+
+    <div class="form-group col-md-4">
+        <label>所属总进线</label>
+
+        <div class="row" style="margin-left: 0;margin-right: 0">
+            <!-- Single button -->
+            <div class="select-right" uib-dropdown>
+                <button type="button" class="btn-def btn-trans" style="text-align: left"
+                        uib-dropdown-toggle ng-disabled="disabled">
+                    <span class="caret"></span>{{show.incominglineName}}
+                </button>
+
+                <ul class="dropdown-menu" uib-dropdown-menu role="menu"
+                    aria-labelledby="single-button">
+                    <li role="menuitem"
+                        ng-repeat="info in show.incominglingArr track by $index">
+                        <a ng-bind="info.incominglineName" ng-click="changeIncomingling(info)"></a>
+                    </li>
+                    <li role="menuitem" ng-show="show.incominglingArr.length ==0 ">
+                        <a>请先选择变电站信息</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+
+    </div>
+    <div class="form-group col-md-4">
+        <label>所属支线</label>
+
+        <div class="row" style="margin-left: 0;margin-right: 0">
+            <!-- Single button -->
+            <div class="select-right" uib-dropdown>
+                <button type="button" class="btn-def btn-trans" style="text-align: left"
+                        uib-dropdown-toggle ng-disabled="disabled">
+                    <span class="caret"></span>{{show.branchName}}
+                </button>
+
+                <ul class="dropdown-menu" uib-dropdown-menu role="menu"
+                    aria-labelledby="single-button">
+                    <li role="menuitem"
+                        ng-repeat="info in show.branchArr track by $index">
+                        <a ng-bind="info.branchName" ng-click="setBranch(info)"></a>
+                    </li>
+                    <li role="menuitem" ng-show="show.branchArr.length ==0 ">
+                        <a>请先选择总进线信息</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+
+    </div>
+    <div class="form-group col-md-4">
+        <label>安装位置</label>
+        <input type="text" class="form-control" ng-model="form.base.position">
+    </div>
+
+    <div class="form-group col-md-4">
+        <label>生产厂家</label>
+        <input type="text" class="form-control" ng-model="form.base.manufacturer">
+    </div>
+    <div class="form-group col-md-4">
+        <label>投运日期</label>
+        <input type="text" class="form-control" ng-model="form.base.comminssioningdate">
+    </div>
+    <div class="form-group col-md-4">
+        <label>上次电试日期</label>
+        <input type="text" class="form-control" ng-model="form.base.lastet_date">
+    </div>
+
+    <div class="form-group col-md-4">
+        <label>上次维修日期</label>
+        <input type="text" class="form-control" ng-model="form.base.lastrepair_date">
+    </div>
+    <div class="form-group col-md-4">
+        <label>厂家联系人</label>
+        <input type="text" class="form-control" ng-model="form.base.manufacturercontact">
+    </div>
+    <div class="form-group col-md-4">
+        <label>厂家联系电话</label>
+        <input type="text" class="form-control" ng-model="form.base.manufacturer_tel">
+    </div>
+
+    <div class="form-group col-md-4">
+        <label>额定电压</label>
+        <input type="text" class="form-control" ng-model="form.base.rated_voltage">
+    </div>
+    <div class="form-group col-md-4">
+        <label>额定电流</label>
+        <input type="text" class="form-control" ng-model="form.base.rated_current">
+    </div>
+    <div class="form-group col-md-4">
+        <label>额定频率</label>
+        <input type="text" class="form-control" ng-model="form.base.rated_frequency">
+    </div>
+
+    <div class="form-group col-md-4">
+        <label>额定容量</label>
+        <input type="text" class="form-control" ng-model="form.base.rated_capacity">
+    </div>
+    <div class="form-group col-md-4">
+        <label>运行状态</label>
+        <select class="form-control selectpicker" selectpicker title=""
+                ng-model="form.base.operationstatus"
+                ng-options="item.id as item.name for item in show.deviceoperationstatusArr">
+        </select>
+    </div>
+
+</div>

@@ -4,7 +4,8 @@
     angular.module('DataCache', [])
         .factory("PageTopCache", pageTopCache)
         .factory("ImgPrefix", imgPrefix)    // 用来配置图片前缀！！！！！正式需替换
-        .factory("KeywordCache", keywordCache)
+        .factory("KeywordCache", keywordCache)  // key
+        .factory("SidebarCache", sidebarCache)  // 侧边栏和地图数据
         .factory("UserCache", userCache);
 
     function pageTopCache() {
@@ -70,6 +71,25 @@
         };
         kwCache.getDevice_insulationclass = function () {
             return getType(groups.device_insulationclass);
+        };
+
+        kwCache.isEmpty = function () {
+            return kws.length === 0;
+        };
+
+        return kwCache;
+    }
+
+    function sidebarCache(_) {
+
+        var kws = [];
+        var kwCache = {};
+        kwCache.create = function (arr) {
+            kws = _.cloneDeep(arr);
+        };
+
+        kwCache.data = function () {
+            return _.cloneDeep(kws);
         };
 
         kwCache.isEmpty = function () {

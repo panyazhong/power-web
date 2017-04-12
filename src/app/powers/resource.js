@@ -187,12 +187,8 @@
                 url: 'device/:did',
                 paramsDefault: {did: '@did'},
                 action: {
-                    getByType: {
+                    query: {
                         method: 'GET'
-                    },
-                    getList: {
-                        method: 'GET',
-                        isArray: true
                     },
                     create: {
                         method: 'POST'

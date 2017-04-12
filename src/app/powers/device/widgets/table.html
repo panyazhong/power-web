@@ -14,7 +14,7 @@
     </tr>
     </thead>
     <tbody ng-show="!show.isLoading">
-    <tr ng-repeat="item in show.branchEqp">
+    <tr ng-repeat="item in show.branchEqp.devices">
         <td>
             <span ng-bind="item.name"></span>
         </td>
@@ -31,7 +31,7 @@
             <span ng-bind="item.client_name"></span>
         </td>
         <td>
-            <span ng-bind="item.banch_name"></span>
+            <span ng-bind="item.branch_name"></span>
         </td>
         <td>
             <span ng-bind="formatDate(item.lastet_date)"></span>
@@ -54,7 +54,12 @@
     </tbody>
     <tfoot>
     <tr>
-        <td class="text-center" st-pagination="" st-items-by-page="show.maxSize" colspan="9">
+        <td
+                id="powerTablePagination"
+                class="text-center" st-pagination=""
+                st-items-by-page="show.maxSize"
+                st-displayed-pages="show.displayedPages"
+                colspan="9">
         </td>
     </tr>
     </tfoot>

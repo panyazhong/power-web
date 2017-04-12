@@ -9,9 +9,9 @@
         .controller('overviewPageCtrl', overviewPageCtrl);
 
     /** @ngInject */
-    function overviewPageCtrl($scope, Overview, UserInfo, HttpToast) {
+    function overviewPageCtrl($scope, Overview, SidebarCache, HttpToast) {
 
-        $scope.show = UserInfo.info.client;
+        $scope.show = SidebarCache.info.clients;
 
         $scope.getDetail = function (id, pos, cb) {
 

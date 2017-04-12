@@ -1,0 +1,22 @@
+<div class="form-group col-md-4">
+    <label>所属变电站</label>
+
+    <div class="row" style="margin-left: 0;margin-right: 0">
+        <!-- Single button -->
+        <div class="select-right" uib-dropdown>
+            <button type="button" class="btn-def btn-trans" style="text-align: left"
+                    uib-dropdown-toggle ng-disabled="disabled">
+                <span class="caret"></span>{{show.clientName}}
+            </button>
+
+            <ul class="dropdown-menu" uib-dropdown-menu role="menu"
+                aria-labelledby="single-button">
+                <li role="menuitem"
+                    ng-repeat="info in show.sidebarArr track by $index">
+                    <a ng-bind="info.clientName" ng-click="changeClent(info)"></a>
+                </li>
+            </ul>
+        </div>
+    </div>
+
+</div>

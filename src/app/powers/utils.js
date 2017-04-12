@@ -79,7 +79,7 @@
                     templateUrl: page,
                     size: size,
                     controller: ctrl,
-                    appendTo: angular.element('#' + eleId),
+                    // appendTo: angular.element('#' + eleId),
                     resolve: {
                         params: params
                     },
