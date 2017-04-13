@@ -11,7 +11,9 @@
     /** @ngInject */
     function overviewPageCtrl($scope, Overview, SidebarCache, HttpToast) {
 
-        $scope.show = SidebarCache.info.clients;
+        $scope.show = SidebarCache.data().clients;
+
+        console.log("SidebarCache.data()"+JSON.stringify(SidebarCache.data()));
 
         $scope.getDetail = function (id, pos, cb) {
 
@@ -19,9 +21,7 @@
                     cid: id
                 },
                 function (data) {
-                    if (data.data) {
-                        cb(data.data, pos);
-                    }
+                    cb(data, pos);
                 }, function (err) {
                     HttpToast.toast(err);
                 });

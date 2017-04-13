@@ -63,7 +63,7 @@
 
     function deviceHelper() {
         return {
-            setDetail: function (params, obj) {
+            setDetail: function (params, obj) { // 新建设备提交前转换
 
                 params.phasenum = obj.phasenum;
                 params.product_code = obj.product_code;
@@ -83,7 +83,12 @@
                 params.tapgear = obj.tapgear;
 
                 return params;
-            }
+            },
+            // editBefore: function (obj) {
+            //
+            //     var data = {};
+            //
+            // }
         }
     }
 

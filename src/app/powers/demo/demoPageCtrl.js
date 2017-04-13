@@ -25,10 +25,8 @@
                     psw: 111111
                 },
                 function (data) {
-                    if (data.data) {
-                        UserCache.info = data.data;
-                        $cookies.putObject("uScope", data.data, {expires: new Date(new Date().getTime() + 24 * 60 * 60 * 1000)});
-                    }
+
+                    $cookies.putObject("uScope", data, {expires: new Date(new Date().getTime() + 24 * 60 * 60 * 1000)});
                 }, function (err) {
                     HttpToast.toast(err);
                 });
@@ -36,14 +34,12 @@
             if (SidebarCache.isEmpty()) {
                 Sidebar.query({},
                     function (data) {
-                        if (data.data) {
-                            SidebarCache.info = data.data;
-                        }
+
+                        SidebarCache.create(data);
                     }, function (err) {
                         HttpToast.toast(err);
                     });
             }
-
 
         };
         $scope.test();

@@ -72,7 +72,8 @@
                 paramsDefault: {},
                 action: {
                     query: {
-                        method: 'GET'
+                        method: 'GET',
+                        isArray: true,
                     },
                     create: {
                         method: 'POST'

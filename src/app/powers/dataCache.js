@@ -80,11 +80,19 @@
         return kwCache;
     }
 
-    function sidebarCache(_) {
+    function sidebarCache(_, ImgPrefix) {
 
-        var kws = [];
+        var kws = undefined;
         var kwCache = {};
         kwCache.create = function (arr) {
+
+            // 变电站图片
+            arr.clients.map(function (item) {
+                item.ico = ImgPrefix.prefix + item.ico;
+
+                console.log("item.ico：" + item.ico);
+            });
+
             kws = _.cloneDeep(arr);
         };
 
@@ -93,7 +101,7 @@
         };
 
         kwCache.isEmpty = function () {
-            return kws.length === 0;
+            return kws == undefined;
         };
 
         return kwCache;

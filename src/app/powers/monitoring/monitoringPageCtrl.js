@@ -10,7 +10,7 @@
 
     /** @ngInject */
     function monitoringPageCtrl($scope, $state, $location, PageTopCache, Log, Clientimg,
-                                ClientimgHelper, Branch, HttpToast, UserScope, $cookies) {
+                                ClientimgHelper, Branch, HttpToast, $cookies) {
 
         $scope.show = {};
         $scope.branchData = {};
@@ -18,14 +18,11 @@
         $scope.init = function () {
             PageTopCache.cache.state = $state.$current; // active
 
-
             Clientimg.query({
                     cid: $location.search().id
                 },
                 function (data) {
-                    if (data.data) {
-                        $scope.show = ClientimgHelper.query(data.data);
-                    }
+                    $scope.show = ClientimgHelper.query(data);
                 }, function (err) {
                     HttpToast.toast(err);
                 });
@@ -33,17 +30,12 @@
         $scope.init();
 
         $scope.onBeforeShow = function (id) {
-
             Branch.query({
                     bid: id
                 },
                 function (data) {
-                    if (data.data) {
-                        $scope.branchData = data.data;
-
-                        // UserScope.info.branch = data.data;
-                        // $cookies.putObject("eCookie",[] );
-                    }
+                    $scope.branchData = data;
+                    // $cookies.putObject("eCookie",[] );
                 }, function (err) {
                     HttpToast.toast(err);
                 });

@@ -71,17 +71,15 @@
         $scope.init = function () {
 
             Branch.query({
-                bid: $scope.show.bid,
-                device: 'device'
-            }, function (data) {
-                if (data.data) {
-                    $scope.show.branchEqp = data.data;
-                    $scope.rowCollection = data.data;
-                }
-            }, function (err) {
-                HttpToast.toast(err);
-            });
-
+                    bid: $scope.show.bid,
+                    device: 'device'
+                },
+                function (data) {
+                    $scope.show.branchEqp = data;
+                    $scope.rowCollection = data;
+                }, function (err) {
+                    HttpToast.toast(err);
+                });
         };
         $scope.init();
 
@@ -100,17 +98,14 @@
         $scope.delItem = function (did) {
 
             Device.delete({
-                did: did
-            }, function (data) {
-                if (data.status == 'OK' && data.data) {
-                    ToastUtils.openToast('info', data.data);
+                    did: did
+                },
+                function (data) {
+                    ToastUtils.openToast('success', data.message);
                     $scope.init();
-                } else {
-                    ToastUtils.openToast('info', '很抱歉，无法从服务器获取数据。');
-                }
-            }, function (err) {
-                HttpToast.toast(err);
-            });
+                }, function (err) {
+                    HttpToast.toast(err);
+                });
 
         };
 

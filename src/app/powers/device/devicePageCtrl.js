@@ -8,6 +8,7 @@
     angular.module('BlurAdmin.power.device')
         .controller('devicePageCtrl', devicePageCtrl)
         .controller('addDeviceCtrl', addDeviceCtrl);
+    // .controller('editDeviceCtrl', editDeviceCtrl);
 
     /** @ngInject */
     function devicePageCtrl($scope, PageTopCache, $state, Log, $timeout, ModalUtils, HttpToast, Keyword, KeywordCache,
@@ -79,12 +80,9 @@
             if (KeywordCache.isEmpty()) {
                 Keyword.query({},
                     function (data) {
-                        if (data.data) {
-                            KeywordCache.create(data.data);
-
-                            $scope.show.deviceoperationstatusArr = KeywordCache.getDevice_operationstatus();
-                            $scope.show.devicetypeArr = KeywordCache.getDevice_type();
-                        }
+                        KeywordCache.create(data);
+                        $scope.show.deviceoperationstatusArr = KeywordCache.getDevice_operationstatus();
+                        $scope.show.devicetypeArr = KeywordCache.getDevice_type();
                     }, function (err) {
                         HttpToast.toast(err);
                     });
@@ -92,10 +90,8 @@
             if (SidebarCache.isEmpty()) {
                 Sidebar.query({},
                     function (data) {
-                        if (data.data) {
-                            SidebarCache.create(data.data);
-                            $scope.show.sidebarArr = data.data.sidebar;
-                        }
+                        SidebarCache.create(data);
+                        $scope.show.sidebarArr = data.sidebar;
                     }, function (err) {
                         HttpToast.toast(err);
                     });
@@ -141,20 +137,13 @@
             }
 
             Device.query(params,
-                function (data) {
-                    console.log("成功了");
-
+                function (obj) {
                     $scope.show.isLoading = false;
-                    if (data.data) {
-                        var obj = data.data;
-                        $scope.show.branchEqp = obj;
-                        tableState.pagination.numberOfPages = obj.total_page;
-                        $scope.show.displayedPages = Math.ceil(parseFloat(obj.total_count) / parseInt(obj.total_page));
-                        $scope.show.branchEqp.tableState = tableState;
-                    }
+                    $scope.show.branchEqp = obj;
+                    tableState.pagination.numberOfPages = obj.total_page;
+                    $scope.show.displayedPages = Math.ceil(parseFloat(obj.total_count) / parseInt(obj.total_page));
+                    $scope.show.branchEqp.tableState = tableState;
                 }, function (err) {
-                    console.log("失败了");
-
                     $scope.show.isLoading = false;
                     HttpToast.toast(err);
                 });
@@ -175,9 +164,10 @@
             $scope.refreshTable();
         };
 
+        // 新建设备
         $scope.addDevice = function () {
             ModalUtils.open('app/powers/device/widgets/createDeviceModal.html', 'lg',
-                addDeviceCtrl, 'deviceDiv', {},
+                addDeviceCtrl, {},
                 function (info) {
                     // 传值走这里
                     Log.i('接收到传递的值：' + info);
@@ -189,31 +179,39 @@
                 });
         };
 
+        // 导出excel
         $scope.exportExcel = function () {
             alert('exportExcel...');
         };
 
+        // 修改设备
         $scope.setItem = function (did) {
 
-            alert("设置：" + did);
+            // ModalUtils.open('app/powers/device/widgets/editDeviceModal.html', 'lg',
+            //     editDeviceCtrl, {did: did},
+            //     function (info) {
+            //         // 传值走这里
+            //         Log.i('接收到传递的值：' + info);
+            //         if (info) {
+            //             $scope.searchDevice();
+            //         }
+            //     }, function (empty) {
+            //         // 不传值关闭走这里
+            //     });
 
         };
-
+        // 删除设备
         $scope.delItem = function (did) {
 
             Device.delete({
-                did: did
-            }, function (data) {
-                if (data.data) {
-                    ToastUtils.openToast('success', data.data);
+                    did: did
+                },
+                function (data) {
+                    ToastUtils.openToast('success', data.message);
                     $scope.searchDevice();
-                } else {
-                    ToastUtils.openToast('info', '很抱歉，无法从服务器获取数据。');
-                }
-            }, function (err) {
-                HttpToast.toast(err);
-            });
-
+                }, function (err) {
+                    HttpToast.toast(err);
+                });
         };
 
         // dropdown set
@@ -263,7 +261,6 @@
             $scope.show.deviceType = obj.name;
             $scope.form.type = obj.id;
         }
-
 
     }
 
@@ -444,16 +441,13 @@
                 params = DeviceHelper.setDetail(params, $scope.form.detail);
             }
 
-            Device.create(params, function (data) {
-                if (data.data) {
-                    ToastUtils.openToast('success', data.data);
-                    $scope.$close(data.data);
-                } else {
-                    ToastUtils.openToast('info', '很抱歉，无法从服务器获取数据。');
-                }
-            }, function (err) {
-                HttpToast.toast(err);
-            });
+            Device.create(params,
+                function (data) {
+                    ToastUtils.openToast('success', data.message);
+                    $scope.$close(data);
+                }, function (err) {
+                    HttpToast.toast(err);
+                });
 
         };
 
