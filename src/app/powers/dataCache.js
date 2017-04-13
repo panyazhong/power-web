@@ -82,7 +82,7 @@
 
     function sidebarCache(_, ImgPrefix) {
 
-        var kws = undefined;
+        var kws = {};
         var kwCache = {};
         kwCache.create = function (arr) {
 
@@ -101,7 +101,7 @@
         };
 
         kwCache.isEmpty = function () {
-            return kws == undefined;
+            return kws == {};
         };
 
         return kwCache;

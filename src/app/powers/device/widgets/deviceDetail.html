@@ -1,10 +1,25 @@
 <div class="row">
     <div class="form-group col-md-4">
         <label>相数</label>
-        <select class="form-control selectpicker" selectpicker title=""
-                ng-model="form.detail.phasenum"
-                ng-options="item.id as item.name for item in show.devicephasenumArr">
-        </select>
+
+        <div class="row" style="margin-left: 0;margin-right: 0">
+            <!-- Single button -->
+            <div class="select-right" uib-dropdown>
+                <button type="button" class="btn-def btn-trans" style="text-align: left"
+                        uib-dropdown-toggle ng-disabled="disabled">
+                    <span class="caret"></span>{{show.phasenum}}
+                </button>
+
+                <ul class="dropdown-menu" uib-dropdown-menu role="menu"
+                    aria-labelledby="single-button">
+                    <li role="menuitem"
+                        ng-repeat="info in show.devicephasenumArr track by $index">
+                        <a ng-bind="info.name" ng-click="setDevicephasenum(info)"></a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+
     </div>
     <div class="form-group col-md-4">
         <label>产品代号</label>
@@ -21,17 +36,47 @@
     </div>
     <div class="form-group col-md-4">
         <label>使用条件</label>
-        <select class="form-control selectpicker" selectpicker title=""
-                ng-model="form.detail.usecondition"
-                ng-options="item.id as item.name for item in show.deviceuseconditionArr">
-        </select>
+
+        <div class="row" style="margin-left: 0;margin-right: 0">
+            <!-- Single button -->
+            <div class="select-right" uib-dropdown>
+                <button type="button" class="btn-def btn-trans" style="text-align: left"
+                        uib-dropdown-toggle ng-disabled="disabled">
+                    <span class="caret"></span>{{show.usecondition}}
+                </button>
+
+                <ul class="dropdown-menu" uib-dropdown-menu role="menu"
+                    aria-labelledby="single-button">
+                    <li role="menuitem"
+                        ng-repeat="info in show.deviceuseconditionArr track by $index">
+                        <a ng-bind="info.name" ng-click="setUsecondition(info)"></a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+
     </div>
     <div class="form-group col-md-4">
         <label>绝缘耐热等级</label>
-        <select class="form-control selectpicker" selectpicker title=""
-                ng-model="form.detail.insulationclass"
-                ng-options="item.id as item.name for item in show.deviceinsulationclassArr">
-        </select>
+
+        <div class="row" style="margin-left: 0;margin-right: 0">
+            <!-- Single button -->
+            <div class="select-right" uib-dropdown>
+                <button type="button" class="btn-def btn-trans" style="text-align: left"
+                        uib-dropdown-toggle ng-disabled="disabled">
+                    <span class="caret"></span>{{show.insulationclass}}
+                </button>
+
+                <ul class="dropdown-menu" uib-dropdown-menu role="menu"
+                    aria-labelledby="single-button">
+                    <li role="menuitem"
+                        ng-repeat="info in show.deviceinsulationclassArr track by $index">
+                        <a ng-bind="info.name" ng-click="setInsulationclass(info)"></a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+
     </div>
 
     <div class="form-group col-md-4">

@@ -31,15 +31,13 @@
                     HttpToast.toast(err);
                 });
 
-            if (SidebarCache.isEmpty()) {
-                Sidebar.query({},
-                    function (data) {
+            Sidebar.query({},
+                function (data) {
 
-                        SidebarCache.create(data);
-                    }, function (err) {
-                        HttpToast.toast(err);
-                    });
-            }
+                    SidebarCache.create(data);
+                }, function (err) {
+                    HttpToast.toast(err);
+                });
 
         };
         $scope.test();

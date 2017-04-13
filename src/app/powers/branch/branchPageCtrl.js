@@ -70,7 +70,7 @@
 
         $scope.init = function () {
 
-            Branch.query({
+            Branch.queryList({
                     bid: $scope.show.bid,
                     device: 'device'
                 },

@@ -172,8 +172,12 @@
                     device: '@device',
                 },
                 action: {
+                    queryList: {
+                        method: 'GET',
+                        isArray: true
+                    },
                     query: {    //获取支线基本信息 / 获取支线设备
-                        method: 'GET'
+                        method: 'GET',
                     },
                     update: {
                         method: 'PUT'
@@ -189,7 +193,7 @@
                 paramsDefault: {did: '@did'},
                 action: {
                     query: {
-                        method: 'GET'
+                        method: 'GET'   //获取设备信息
                     },
                     create: {
                         method: 'POST'  //新建设备
