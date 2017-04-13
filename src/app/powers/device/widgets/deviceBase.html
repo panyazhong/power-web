@@ -122,16 +122,64 @@
     </div>
     <div class="form-group col-md-4">
         <label>投运日期</label>
-        <input type="text" class="form-control" ng-model="form.base.comminssioningdate">
+        <!--<input type="text" class="form-control" ng-model="form.base.comminssioningdate">-->
+
+        <input ng-click="toggleDatepicker()"
+               uib-datepicker-popup="{{data.beginDate.format}}"
+               is-open="data.beginDate.isOpen"
+               datepicker-options="data.beginDate.options"
+               clear-text="清除"
+               current-text="今天"
+               close-text="关闭"
+               alt-input-formats="data.beginDate.altInputFormats"
+               ng-model="form.base.comminssioningdate"
+               ng-model-options="data.beginDate.modelOptions"
+               type="text"
+               class="form-control-def"
+               readonly="readonly"
+               style="min-width: 90px">
+
     </div>
     <div class="form-group col-md-4">
         <label>上次电试日期</label>
-        <input type="text" class="form-control" ng-model="form.base.lastet_date">
+        <!--<input type="text" class="form-control" ng-model="form.base.lastet_date">-->
+
+        <input ng-click="togglelastetDatepicker()"
+               uib-datepicker-popup="{{data.lastet.format}}"
+               is-open="data.lastet.isOpen"
+               datepicker-options="data.lastet.options"
+               clear-text="清除"
+               current-text="今天"
+               close-text="关闭"
+               alt-input-formats="data.lastet.altInputFormats"
+               ng-model="form.base.lastet_date"
+               ng-model-options="data.lastet.modelOptions"
+               type="text"
+               class="form-control-def"
+               readonly="readonly"
+               style="min-width: 90px">
+
     </div>
 
     <div class="form-group col-md-4">
         <label>上次维修日期</label>
-        <input type="text" class="form-control" ng-model="form.base.lastrepair_date">
+        <!--<input type="text" class="form-control" ng-model="form.base.lastrepair_date">-->
+
+        <input ng-click="togglelastrepairDatepicker()"
+               uib-datepicker-popup="{{data.lastrepair.format}}"
+               is-open="data.lastrepair.isOpen"
+               datepicker-options="data.lastrepair.options"
+               clear-text="清除"
+               current-text="今天"
+               close-text="关闭"
+               alt-input-formats="data.lastrepair.altInputFormats"
+               ng-model="form.base.lastrepair_date"
+               ng-model-options="data.lastrepair.modelOptions"
+               type="text"
+               class="form-control-def"
+               readonly="readonly"
+               style="min-width: 90px">
+
     </div>
     <div class="form-group col-md-4">
         <label>厂家联系人</label>

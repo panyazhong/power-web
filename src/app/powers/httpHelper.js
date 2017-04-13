@@ -2,8 +2,9 @@
     'use strict';
 
     angular.module('HttpHelper', ['DataCache'])
-        .factory("ClientimgHelper", clientimgHelper);
+        .factory("ClientimgHelper", clientimgHelper)
         // .factory("SidebarHelper", sidebarHelper);
+        .factory("DeviceHelper", deviceHelper);
 
     function clientimgHelper(ImgPrefix, _) {
 
@@ -56,6 +57,32 @@
                 // 记录总的变电站
 
                 //
+            }
+        }
+    }
+
+    function deviceHelper() {
+        return {
+            setDetail: function (params, obj) {
+
+                params.phasenum = obj.phasenum;
+                params.product_code = obj.product_code;
+                params.standard_code = obj.standard_code;
+                params.insulationlevel = obj.insulationlevel;
+                params.usecondition = obj.usecondition;
+                params.insulationclass = obj.insulationclass;
+
+                params.tempriselimit = obj.tempriselimit;
+                params.totalweight = obj.totalweight;
+                params.connectionsymbol = obj.connectionsymbol;
+                params.coolingmode = obj.coolingmode;
+                params.current_noload = obj.current_noload;
+                params.loss_noload = obj.loss_noload;
+
+                params.shortcircuit_impedance = obj.shortcircuit_impedance;
+                params.tapgear = obj.tapgear;
+
+                return params;
             }
         }
     }

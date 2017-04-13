@@ -191,7 +191,7 @@
                         method: 'GET'
                     },
                     create: {
-                        method: 'POST'
+                        method: 'POST'  //新建设备
                     },
                     update: {
                         method: 'PUT'

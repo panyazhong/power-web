@@ -10,12 +10,12 @@
         .controller('addDeviceCtrl', addDeviceCtrl);
 
     /** @ngInject */
-    function devicePageCtrl($scope, Log, $timeout, ModalUtils, HttpToast, Keyword, KeywordCache,
-                            Sidebar, SidebarCache, Device) {
+    function devicePageCtrl($scope, PageTopCache, $state, Log, $timeout, ModalUtils, HttpToast, Keyword, KeywordCache,
+                            Sidebar, SidebarCache, Device, ToastUtils) {
 
         $scope.show = {
             isLoading: true,
-            maxSize: 20,    // 每页显示的数量
+            maxSize: 10,    // 每页显示的数量
             displayedPages: 0,
             branchEqp: {},
 
@@ -74,6 +74,8 @@
         };
 
         $scope.init = function () {
+            PageTopCache.cache.state = $state.$current;
+
             if (KeywordCache.isEmpty()) {
                 Keyword.query({},
                     function (data) {
@@ -179,6 +181,9 @@
                 function (info) {
                     // 传值走这里
                     Log.i('接收到传递的值：' + info);
+                    if (info) {
+                        $scope.searchDevice();
+                    }
                 }, function (empty) {
                     // 不传值关闭走这里
                 });
@@ -196,13 +201,18 @@
 
         $scope.delItem = function (did) {
 
-            // Device.delete({
-            //     did: did
-            // }, function (data) {
-            //     HttpToast.toastSucMsg(data, getData);
-            // }, function (err) {
-            //     HttpToast.toast(err);
-            // });
+            Device.delete({
+                did: did
+            }, function (data) {
+                if (data.data) {
+                    ToastUtils.openToast('success', data.data);
+                    $scope.searchDevice();
+                } else {
+                    ToastUtils.openToast('info', '很抱歉，无法从服务器获取数据。');
+                }
+            }, function (err) {
+                HttpToast.toast(err);
+            });
 
         };
 
@@ -257,7 +267,52 @@
 
     }
 
-    function addDeviceCtrl($scope, KeywordCache, Log, SidebarCache, ToastUtils) {
+    function addDeviceCtrl($scope, KeywordCache, Log, SidebarCache, ToastUtils, Device, $cookies, HttpToast, DeviceHelper) {
+
+        $scope.data = {
+            beginDate: {
+                options: {
+                    formatYear: 'yyyy',
+                    startingDay: 1,
+                    showWeeks: false,
+                    language: 'zh-CN',
+                },
+                isOpen: false,
+                altInputFormats: ['yyyy-MM-dd'],
+                format: 'yyyy-MM-dd',
+                modelOptions: {
+                    timezone: 'Asia/beijing'
+                }
+            },
+            lastet: {
+                options: {
+                    formatYear: 'yyyy',
+                    startingDay: 1,
+                    showWeeks: false,
+                    language: 'zh-CN',
+                },
+                isOpen: false,
+                altInputFormats: ['yyyy-MM-dd'],
+                format: 'yyyy-MM-dd',
+                modelOptions: {
+                    timezone: 'Asia/beijing'
+                }
+            },
+            lastrepair: {
+                options: {
+                    formatYear: 'yyyy',
+                    startingDay: 1,
+                    showWeeks: false,
+                    language: 'zh-CN',
+                },
+                isOpen: false,
+                altInputFormats: ['yyyy-MM-dd'],
+                format: 'yyyy-MM-dd',
+                modelOptions: {
+                    timezone: 'Asia/beijing'
+                }
+            },
+        };
 
         $scope.show = {
             pageTabData: [
@@ -314,12 +369,14 @@
                 insulationlevel: '',    //绝缘水平
                 usecondition: '',   //使用条件KEY
                 insulationclass: '',    //绝缘耐热等级KEY
+
                 tempriselimit: '',  //温升限值
                 totalweight: '',    //总重kg(double)
                 connectionsymbol: '',   //联结组标号
                 coolingmode: '',    //冷却方式
                 current_noload: '', //空载电流%(double)
                 loss_noload: '',    //空载损耗kW(double)
+
                 shortcircuit_impedance: '', //短路阻抗%(double)
                 tapgear: '' //所在分接档位
             }
@@ -350,28 +407,55 @@
 
         $scope.confirm = function () {
 
+            // 基本信息
+            for (var Key in $scope.form.base) {
+                // console.log($scope.form.base[Key]);
+                if ($scope.form.base[Key] == '') {
+                    ToastUtils.openToast('warning', '请完善所有基本信息！');
+                    return;
+                }
+            }
+
+            // 变电站信息
             if ($scope.show.deviceType == '变压器') {
-                for (var key in $scope.form.detail) {
-                    if (!$scope.form.detail[key]) {
+                for (var Key in $scope.form.detail) {
+                    // console.log($scope.form.detail[Key]);
+                    if ($scope.form.detail[Key] == '') {
                         ToastUtils.openToast('warning', '请完善所有详细信息！');
                         return;
                     }
                 }
             }
 
-            for (var key in $scope.form.base) {
-                if (!$scope.form.base[key]) {
-                    ToastUtils.openToast('warning', '请完善所有基本信息！');
-                    return;
-                }
+            // change格式
+            if ($scope.form.base.comminssioningdate) {
+                $scope.form.base.comminssioningdate = moment($scope.form.base.comminssioningdate).format('YYYY-MM-DD HH:mm:ss');
+            }
+            if ($scope.form.base.lastet_date) {
+                $scope.form.base.lastet_date = moment($scope.form.base.lastet_date).format('YYYY-MM-DD HH:mm:ss');
+            }
+            if ($scope.form.base.lastrepair_date) {
+                $scope.form.base.lastrepair_date = moment($scope.form.base.lastrepair_date).format('YYYY-MM-DD HH:mm:ss');
             }
 
+            var params = $scope.form.base;
+            params.uid = $cookies.getObject('uScope').uid;
+            if ($scope.show.deviceType == '变压器') {
+                params = DeviceHelper.setDetail(params, $scope.form.detail);
+            }
+
+            Device.create(params, function (data) {
+                if (data.data) {
+                    ToastUtils.openToast('success', data.data);
+                    $scope.$close(data.data);
+                } else {
+                    ToastUtils.openToast('info', '很抱歉，无法从服务器获取数据。');
+                }
+            }, function (err) {
+                HttpToast.toast(err);
+            });
+
         };
-
-        $scope.cancel = function () {
-
-        };
-
 
         // dropdown set
         $scope.changeClent = function (obj) {
@@ -410,7 +494,18 @@
         $scope.setDeviceType = function (obj) {
             $scope.show.deviceType = obj.name;
             $scope.form.base.type = obj.id;
-        }
+        };
+
+        // date
+        $scope.toggleDatepicker = function () {
+            $scope.data.beginDate.isOpen = !$scope.data.beginDate.isOpen;
+        };
+        $scope.togglelastetDatepicker = function () {
+            $scope.data.lastet.isOpen = !$scope.data.lastet.isOpen;
+        };
+        $scope.togglelastrepairDatepicker = function () {
+            $scope.data.lastrepair.isOpen = !$scope.data.lastrepair.isOpen;
+        };
 
     }
 

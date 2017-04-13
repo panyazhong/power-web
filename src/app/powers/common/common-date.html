@@ -1,0 +1,19 @@
+<div>
+
+    <input ng-click="toggleDatepicker()"
+           uib-datepicker-popup="{{data.beginDate.format}}"
+           is-open="data.beginDate.isOpen"
+           datepicker-options="data.beginDate.options"
+           clear-text="清除"
+           current-text="今天"
+           close-text="关闭"
+           alt-input-formats="data.beginDate.altInputFormats"
+           ng-model="show.birth"
+           ng-model-options="data.beginDate.modelOptions"
+           type="text"
+           class="form-control-def"
+           readonly="readonly"
+           ng-change="calAge(show.birth)"
+           style="min-width: 90px">
+
+</div>

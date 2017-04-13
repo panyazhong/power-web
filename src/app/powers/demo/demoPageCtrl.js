@@ -27,6 +27,7 @@
                 function (data) {
                     if (data.data) {
                         UserCache.info = data.data;
+                        $cookies.putObject("uScope", data.data, {expires: new Date(new Date().getTime() + 24 * 60 * 60 * 1000)});
                     }
                 }, function (err) {
                     HttpToast.toast(err);

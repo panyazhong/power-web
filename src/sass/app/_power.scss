@@ -70,10 +70,34 @@
   height: 34px;
 }
 
+/**
+  默认form-ctrl
+*/
+
+.form-control-def {
+  display: block;
+  width: 100%;
+  height: 34px;
+  padding: 6px 12px;
+  font-size: 14px;
+  line-height: 1.42857143;
+  color: #666666;
+  border: 1px solid #cbcbcb;
+  border-radius: 5px;
+  background-color: #ffffff;
+  box-shadow: none;
+}
+
+.form-control-def:focus {
+  outline: none !important;
+  box-shadow: none !important;
+  border-color: #4db1a7 !important;
+  background: #ffffff !important;
+}
+
 /*
  placeHolder默认颜色
 */
-
 
 /*
 
