@@ -6,7 +6,7 @@
         .factory("ImgPrefix", imgPrefix)    // 用来配置图片前缀！！！！！正式需替换
         .factory("KeywordCache", keywordCache)  // key
         .factory("SidebarCache", sidebarCache)  // 侧边栏和地图数据
-        .factory("UserCache", userCache);
+        .factory("GlobalCache", globalCache);
 
     function pageTopCache() {
         return {
@@ -80,38 +80,77 @@
         return kwCache;
     }
 
-    function sidebarCache(_, ImgPrefix) {
+    function sidebarCache(_, ImgPrefix, ToastUtils) {   // 缓存侧边栏和地图所需信息
 
-        var kws = {};
-        var kwCache = {};
-        kwCache.create = function (arr) {
+        var obj;
+        var cache = {};
+        cache.create = function (data) {
+            if (data.clients && Array.isArray(data.clients)) {
+                data.clients.map(function (item) {
+                    item.ico = ImgPrefix.prefix + item.ico; // 变电站icon
+                });
 
-            // 变电站图片
-            arr.clients.map(function (item) {
-                item.ico = ImgPrefix.prefix + item.ico;
+                obj = _.cloneDeep(data);
+                return;
+            }
 
-                console.log("item.ico：" + item.ico);
-            });
-
-            kws = _.cloneDeep(arr);
+            ToastUtils.openToast('info', '获取变电站信息失败，请联系管理员。');
         };
 
-        kwCache.data = function () {
-            return _.cloneDeep(kws);
+        cache.getData = function () {
+            return _.cloneDeep(obj);
         };
 
-        kwCache.isEmpty = function () {
-            return kws == {};
+        cache.isEmpty = function () {
+            return !obj;
         };
 
-        return kwCache;
+        return cache;
     }
 
-    function userCache() {
+    function globalCache($cookies) {
 
         return {
-            info: {}
+            set: function (key, value) {
+                var g = $cookies.getObject('globalScope');
+                var arr;
+                if (g) {
+                    arr = g;
+                } else {
+                    arr = ["nothing", "nothing", "nothing"];
+                }
+                switch (key) {
+                    case 'cid':
+                        arr[0] = value;
+                        break;
+                    case 'inid':
+                        arr[1] = value;
+                        break;
+                    case 'bid':
+                        arr[2] = value;
+                        break;
+                }
+
+                console.log('setCookie之前：' + JSON.stringify(arr));
+
+                $cookies.putObject("globalScope", arr, {expires: new Date(new Date().getTime() + 24 * 60 * 60 * 1000)});
+            },
+            get: function (key) {
+                var arr = $cookies.getObject('globalScope');
+                switch (key) {
+                    case 'cid':
+                        return arr[0];
+                        break;
+                    case 'inid':
+                        return arr[1];
+                        break;
+                    case 'bid':
+                        return arr[2];
+                        break;
+                }
+            }
         }
+
     }
 
 })();

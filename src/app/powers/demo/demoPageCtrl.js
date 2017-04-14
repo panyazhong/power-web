@@ -9,13 +9,11 @@
         .controller('demoPageCtrl', demoPageCtrl);
 
     /** @ngInject */
-    function demoPageCtrl($scope, baSidebarService, User, UserCache, Keyword, KeywordCache,
-                          ImgPrefix, HttpToast, $cookies, Sidebar, SidebarCache) {
+    function demoPageCtrl($scope, baSidebarService, User, HttpToast, $cookies, Sidebar, SidebarCache) {
 
+        // 自定义侧边栏
         $scope.menuItems = baSidebarService.getMenuItems();
         console.log("menuItems：\n" + JSON.stringify($scope.menuItems));
-
-        $scope.prefix = ImgPrefix.prefix;
 
         $scope.test = function () {
 
@@ -25,7 +23,6 @@
                     psw: 111111
                 },
                 function (data) {
-
                     $cookies.putObject("uScope", data, {expires: new Date(new Date().getTime() + 24 * 60 * 60 * 1000)});
                 }, function (err) {
                     HttpToast.toast(err);
@@ -33,8 +30,8 @@
 
             Sidebar.query({},
                 function (data) {
-
                     SidebarCache.create(data);
+                    $cookies.putObject("clientScope", data.clients, {expires: new Date(new Date().getTime() + 24 * 60 * 60 * 1000)});
                 }, function (err) {
                     HttpToast.toast(err);
                 });

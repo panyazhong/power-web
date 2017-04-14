@@ -12,6 +12,8 @@
             mapLabData = scope.show;
             if (mapLabData) {
 
+                console.log('mapLabData 存在.');
+
                 function mapInit() {
                     mapObj = new AMap.Map('container', {
 //                    dragEnable: false,      //是否可拖拽
@@ -103,6 +105,8 @@
                         infoWindow.open(mapObj, pos);
                     }
                 }
+            } else {
+                console.log('mapLabData不存在...');
             }
 
         </script>

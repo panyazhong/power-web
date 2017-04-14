@@ -208,6 +208,21 @@
             };
             return Resource(config);
         })
+        .factory('DeviceEdit', function (Resource) {
+            var config = {
+                url: 'device',
+                paramsDefault: {},
+                action: {
+                    update: {
+                        method: 'PUT'
+                    },
+                    delete: {   // 删除设备
+                        method: 'DELETE'
+                    }
+                }
+            };
+            return Resource(config);
+        })
 
         /// ----------------------------------test---------------------------------------
 

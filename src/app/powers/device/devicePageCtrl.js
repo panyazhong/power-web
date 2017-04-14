@@ -14,6 +14,8 @@
     function devicePageCtrl($scope, PageTopCache, $state, ModalUtils, HttpToast, Keyword, KeywordCache,
                             Sidebar, SidebarCache, Device, ToastUtils) {
 
+        PageTopCache.cache.state = $state.$current; // active
+
         $scope.show = {
             isLoading: true,
             maxSize: 10,    // 每页显示的数量
@@ -25,7 +27,7 @@
             branchName: '所处支线',    //支线
             deviceoperationstatusName: '运行状态',  //
             deviceType: '设备类型',  // 设备类型
-            sidebarArr: SidebarCache.data().sidebar,    //变电站数组，默认从缓存里拿
+            sidebarArr: [],    //变电站数组，默认从缓存里拿
             incominglingArr: [],  //总线数组
             branchArr: [],    //支线数组,
             deviceoperationstatusArr: [],   //设备运行状态
@@ -75,7 +77,6 @@
         };
 
         $scope.init = function () {
-            PageTopCache.cache.state = $state.$current;
 
             if (KeywordCache.isEmpty()) {
                 Keyword.query({},
@@ -88,18 +89,21 @@
                     });
             }
 
-            // if (SidebarCache.isEmpty()) {
-            Sidebar.query({},
-                function (data) {
-                    SidebarCache.create(data);
-                    $scope.show.sidebarArr = data.sidebar;
+            if (SidebarCache.isEmpty()) {
+                console.log('empty： ——SidebarCache');
 
-                    console.log("$scope.show.sidebarArr: " + JSON.stringify($scope.show.sidebarArr));
+                Sidebar.query({},
+                    function (data) {
+                        SidebarCache.create(data);
+                        $scope.show.sidebarArr = data.sidebar;
+                    }, function (err) {
+                        HttpToast.toast(err);
+                    });
+            } else {
+                console.log('exist： ——SidebarCache');
+                $scope.show.sidebarArr = SidebarCache.getData().sidebar;
+            }
 
-                }, function (err) {
-                    HttpToast.toast(err);
-                });
-            // }
         };
         $scope.init();
 
@@ -337,7 +341,7 @@
             clientName: '',  //变电站
             incominglineName: '',    //总线
             branchName: '',    //支线
-            sidebarArr: SidebarCache.data().sidebar,    //变电站数组
+            sidebarArr: SidebarCache.getData().sidebar,    //变电站数组
             incominglingArr: [],  //总线数组
             branchArr: [],    //支线数组,
 
@@ -389,7 +393,7 @@
         };
 
         $scope.init = function () {
-            console.log("sidebar :" + JSON.stringify(SidebarCache.data().sidebar));
+            console.log("sidebar :" + JSON.stringify(SidebarCache.getData().sidebar));
         };
         $scope.init();
 
@@ -530,7 +534,8 @@
 
     }
 
-    function editDeviceCtrl($scope, KeywordCache, SidebarCache, ToastUtils, Device, $cookies, HttpToast, DeviceHelper, params) {
+    function editDeviceCtrl($scope, KeywordCache, SidebarCache, ToastUtils, Device, $cookies,
+                            HttpToast, DeviceHelper, params, DeviceEdit) {
 
         $scope.did = params.did;
 
@@ -601,7 +606,7 @@
             clientName: '',  //变电站
             incominglineName: '',    //总线
             branchName: '',    //支线
-            sidebarArr: SidebarCache.data().sidebar,    //变电站数组
+            sidebarArr: SidebarCache.getData().sidebar,    //变电站数组
             incominglingArr: [],  //总线数组
             branchArr: [],    //支线数组,
 
@@ -653,7 +658,7 @@
         };
 
         $scope.init = function () {
-            console.log("sidebar :" + JSON.stringify(SidebarCache.data().sidebar));
+            console.log("sidebar :" + JSON.stringify(SidebarCache.getData().sidebar));
 
             Device.query({
                     did: $scope.did
@@ -673,7 +678,7 @@
                     $scope.show.clientName = data.client.name;
                     $scope.show.incominglineName = data.incomingline.name;
                     // 设置总进线，支线数据
-                    SidebarCache.data().sidebar.map(function (item) {
+                    SidebarCache.getData().sidebar.map(function (item) {
 
                         if (item.clientId == data.client.cid) {
                             $scope.show.incominglingArr = item.incominglineData;
@@ -794,11 +799,13 @@
                 params = DeviceHelper.setDetail(params, $scope.form.detail);
             }
 
-            Device.update(params,
+            DeviceEdit.update(params,
                 function (data) {
                     ToastUtils.openToast('success', data.message);
                     $scope.$close(data);
                 }, function (err) {
+                    console.log("err: " + JSON.stringify(err));
+
                     HttpToast.toast(err);
                 });
 

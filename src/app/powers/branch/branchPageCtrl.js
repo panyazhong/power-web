@@ -9,10 +9,13 @@
         .controller('branchPageCtrl', branchPageCtrl);
 
     /** @ngInject */
-    function branchPageCtrl($scope, $stateParams, Log, Branch, HttpToast, Device, ToastUtils) {
+    function branchPageCtrl($scope, $stateParams, Branch, HttpToast, Device, ToastUtils, GlobalCache,
+                            BranchimgHelper, PageTopCache) {
+
+        PageTopCache.cache.state = 'monitoring';
 
         $scope.show = {
-            bid: $stateParams.bid,
+            bid: $stateParams.bid || GlobalCache.get('bid'),
             branchAlarm: [
                 {
                     desc: '过流一段跳闸',
@@ -64,12 +67,12 @@
                     color: '#5f53a0'
                 }
             ],
-            branchEqp: []   // 支线设备列表
+            branchData: {},      // 支线基本信息
+            branchEqp: [],   // 支线设备列表
         };
         $scope.rowCollection = [];
 
-        $scope.init = function () {
-
+        $scope.queryList = function () {
             Branch.queryList({
                     bid: $scope.show.bid,
                     device: 'device'
@@ -81,6 +84,19 @@
                     HttpToast.toast(err);
                 });
         };
+
+        $scope.init = function () {
+            Branch.query({
+                    bid: $scope.show.bid
+                },
+                function (data) {
+                    $scope.branchData = BranchimgHelper.query(data);
+                }, function (err) {
+                    HttpToast.toast(err);
+                });
+
+            $scope.queryList();
+        };
         $scope.init();
 
         $scope.formatDate = function (date) {
@@ -89,12 +105,21 @@
             }
         };
 
+        /**
+         * 编辑设备
+         * @param did
+         */
         $scope.setItem = function (did) {
 
             alert("设置：" + did);
+            // $scope.queryList();  //编辑完刷新
 
         };
 
+        /**
+         * 删除设备
+         * @param did
+         */
         $scope.delItem = function (did) {
 
             Device.delete({
@@ -102,7 +127,7 @@
                 },
                 function (data) {
                     ToastUtils.openToast('success', data.message);
-                    $scope.init();
+                    $scope.queryList();
                 }, function (err) {
                     HttpToast.toast(err);
                 });

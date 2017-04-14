@@ -9,17 +9,22 @@
         .controller('monitoringPageCtrl', monitoringPageCtrl);
 
     /** @ngInject */
-    function monitoringPageCtrl($scope, $state, $location, PageTopCache, Log, Clientimg,
-                                ClientimgHelper, Branch, HttpToast, $cookies) {
+    function monitoringPageCtrl($scope, $state, $location, PageTopCache, Clientimg, ClientimgHelper,
+                                Branch, HttpToast, GlobalCache) {
+
+        PageTopCache.cache.state = $state.$current; // active
 
         $scope.show = {};
         $scope.branchData = {};
 
         $scope.init = function () {
-            PageTopCache.cache.state = $state.$current; // active
+            GlobalCache.set('cid', $location.search().id);
+
+            console.log('cid: ' + GlobalCache.get('cid'));
+            console.log('bid: ' + GlobalCache.get('bid'));
 
             Clientimg.query({
-                    cid: $location.search().id
+                    cid: GlobalCache.get('cid')
                 },
                 function (data) {
                     $scope.show = ClientimgHelper.query(data);
@@ -29,22 +34,26 @@
         };
         $scope.init();
 
+        /**
+         * hover前搜索
+         */
         $scope.onBeforeShow = function (id) {
             Branch.query({
                     bid: id
                 },
                 function (data) {
                     $scope.branchData = data;
-                    // $cookies.putObject("eCookie",[] );
                 }, function (err) {
                     HttpToast.toast(err);
                 });
         };
 
+        /**
+         * 查看分支详情
+         */
         $scope.viewBranchDetail = function (id) {
             $state.go('branch', {bid: id});
-
-            // var uid = Config.UserInfo.uid ? Config.UserInfo.uid : Config.Banana('uid');
+            GlobalCache.set('bid', id);
         }
 
     }

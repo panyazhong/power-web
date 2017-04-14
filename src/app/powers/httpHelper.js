@@ -3,7 +3,7 @@
 
     angular.module('HttpHelper', ['DataCache'])
         .factory("ClientimgHelper", clientimgHelper)
-        // .factory("SidebarHelper", sidebarHelper);
+        .factory("BranchimgHelper", branchimgHelper)
         .factory("DeviceHelper", deviceHelper);
 
     function clientimgHelper(ImgPrefix, _) {
@@ -11,11 +11,14 @@
         return {
             query: function (obj) {
                 // 背景
-                obj.client.img = ImgPrefix.prefix + obj.client.img;
-                obj.client.style = {
-                    width: obj.client.imgw + "px",
-                    height: obj.client.imgh + "px"
-                };
+                if (obj.client && obj.client.img) {
+                    obj.client.img = ImgPrefix.prefix + obj.client.img;
+                    obj.client.style = {
+                        width: obj.client.imgw + "px",
+                        height: obj.client.imgh + "px"
+                    };
+                }
+
                 // 总进线
                 obj.incomingline.map(function (item) {
                     item.img = ImgPrefix.prefix + item.img;
@@ -46,17 +49,12 @@
 
     }
 
-    function sidebarHelper() {
+    function branchimgHelper(ImgPrefix, _) {
 
         return {
-            query: function (arr) {
-                if (!Array.isArray(arr)) {
-                    return;
-                }
-
-                // 记录总的变电站
-
-                //
+            query: function (obj) {
+                obj.dlt_img = ImgPrefix.prefix + obj.dlt_img;
+                return _.cloneDeep(obj);
             }
         }
     }
@@ -83,12 +81,7 @@
                 params.tapgear = obj.tapgear;
 
                 return params;
-            },
-            // editBefore: function (obj) {
-            //
-            //     var data = {};
-            //
-            // }
+            }
         }
     }
 

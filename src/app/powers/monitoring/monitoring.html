@@ -1,5 +1,5 @@
 <div ba-panel>
-    <div style="background: #000;text-align: center">
+    <div style="background: #000;text-align: center" ng-show="show.client.img">
         <div style="display: inline-block;position: relative;">
 
             <div class="monitoring"
@@ -25,4 +25,9 @@
 
         </div>
     </div>
+
+    <h3 ng-show="show && !show.client.img" style="padding:55px 0;text-align: center">
+        获取一次系统图信息失败，请联系管理员。
+    </h3>
+
 </div>

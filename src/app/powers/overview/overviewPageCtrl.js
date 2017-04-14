@@ -9,14 +9,12 @@
         .controller('overviewPageCtrl', overviewPageCtrl);
 
     /** @ngInject */
-    function overviewPageCtrl($scope, Overview, SidebarCache, HttpToast) {
+    function overviewPageCtrl($scope, Overview, SidebarCache, $cookies, HttpToast) {
 
-        $scope.show = SidebarCache.data().clients;
-
-        console.log("SidebarCache.data()"+JSON.stringify(SidebarCache.data()));
+        // $scope.show = SidebarCache.getData().clients;
+        $scope.show = $cookies.getObject('clientScope');
 
         $scope.getDetail = function (id, pos, cb) {
-
             Overview.queryDetail({
                     cid: id
                 },
