@@ -24,14 +24,19 @@
                 },
                 function (data) {
                     $cookies.putObject("uScope", data, {expires: new Date(new Date().getTime() + 24 * 60 * 60 * 1000)});
-                }, function (err) {
-                    HttpToast.toast(err);
-                });
+                    // init cookie
+                    // $cookies.remove('clientScope');
+                    $cookies.remove('cid');
+                    $cookies.remove('bid');
 
-            Sidebar.query({},
-                function (data) {
-                    SidebarCache.create(data);
-                    $cookies.putObject("clientScope", data.clients, {expires: new Date(new Date().getTime() + 24 * 60 * 60 * 1000)});
+                    Sidebar.query({},
+                        function (data) {
+                            SidebarCache.create(data);
+                            $cookies.putObject("clientScope", data.clients, {expires: new Date(new Date().getTime() + 24 * 60 * 60 * 1000)});
+                        }, function (err) {
+                            HttpToast.toast(err);
+                        });
+
                 }, function (err) {
                     HttpToast.toast(err);
                 });

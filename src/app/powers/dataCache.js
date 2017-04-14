@@ -6,7 +6,6 @@
         .factory("ImgPrefix", imgPrefix)    // 用来配置图片前缀！！！！！正式需替换
         .factory("KeywordCache", keywordCache)  // key
         .factory("SidebarCache", sidebarCache)  // 侧边栏和地图数据
-        .factory("GlobalCache", globalCache);
 
     function pageTopCache() {
         return {
@@ -106,51 +105,6 @@
         };
 
         return cache;
-    }
-
-    function globalCache($cookies) {
-
-        return {
-            set: function (key, value) {
-                var g = $cookies.getObject('globalScope');
-                var arr;
-                if (g) {
-                    arr = g;
-                } else {
-                    arr = ["nothing", "nothing", "nothing"];
-                }
-                switch (key) {
-                    case 'cid':
-                        arr[0] = value;
-                        break;
-                    case 'inid':
-                        arr[1] = value;
-                        break;
-                    case 'bid':
-                        arr[2] = value;
-                        break;
-                }
-
-                console.log('setCookie之前：' + JSON.stringify(arr));
-
-                $cookies.putObject("globalScope", arr, {expires: new Date(new Date().getTime() + 24 * 60 * 60 * 1000)});
-            },
-            get: function (key) {
-                var arr = $cookies.getObject('globalScope');
-                switch (key) {
-                    case 'cid':
-                        return arr[0];
-                        break;
-                    case 'inid':
-                        return arr[1];
-                        break;
-                    case 'bid':
-                        return arr[2];
-                        break;
-                }
-            }
-        }
-
     }
 
 })();

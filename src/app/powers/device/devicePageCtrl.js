@@ -12,7 +12,7 @@
 
     /** @ngInject */
     function devicePageCtrl($scope, PageTopCache, $state, ModalUtils, HttpToast, Keyword, KeywordCache,
-                            Sidebar, SidebarCache, Device, ToastUtils) {
+                            Sidebar, SidebarCache, Device, ToastUtils, Log) {
 
         PageTopCache.cache.state = $state.$current; // active
 
@@ -90,7 +90,7 @@
             }
 
             if (SidebarCache.isEmpty()) {
-                console.log('empty： ——SidebarCache');
+                Log.i('empty： ——SidebarCache');
 
                 Sidebar.query({},
                     function (data) {
@@ -100,7 +100,7 @@
                         HttpToast.toast(err);
                     });
             } else {
-                console.log('exist： ——SidebarCache');
+                Log.i('exist： ——SidebarCache');
                 $scope.show.sidebarArr = SidebarCache.getData().sidebar;
             }
 
@@ -198,10 +198,10 @@
                 editDeviceCtrl, {did: did},
                 function (info) {
                     // 传值走这里
-                    // if (info) {
-                    //     $scope.clearForm(); // 新建，删除需要初始化表单状态
-                    //     $scope.searchDevice();
-                    // }
+                    if (info) {
+                        $scope.clearForm(); // 新建，删除需要初始化表单状态
+                        $scope.searchDevice();
+                    }
                 }, function (empty) {
                     // 不传值关闭走这里
                 });
@@ -272,7 +272,8 @@
 
     }
 
-    function addDeviceCtrl($scope, KeywordCache, SidebarCache, ToastUtils, Device, $cookies, HttpToast, DeviceHelper) {
+    function addDeviceCtrl($scope, KeywordCache, SidebarCache, ToastUtils, Device, $cookies, HttpToast,
+                           DeviceHelper, Log, Sidebar, Keyword) {
 
         $scope.data = {
             beginDate: {
@@ -333,15 +334,15 @@
             pageTabState: 'base',   // 默认state
             deviceType: '',          // 默认是否显示详细信息
 
-            devicetypeArr: KeywordCache.getDevice_type(),
-            deviceoperationstatusArr: KeywordCache.getDevice_operationstatus(),
-            devicephasenumArr: KeywordCache.getDevice_phasenum(),
-            deviceinsulationclassArr: KeywordCache.getDevice_insulationclass(),
-            deviceuseconditionArr: KeywordCache.getDevice_usecondition(),
+            devicetypeArr: [],
+            deviceoperationstatusArr: [],
+            devicephasenumArr: [],
+            deviceinsulationclassArr: [],
+            deviceuseconditionArr: [],
             clientName: '',  //变电站
             incominglineName: '',    //总线
             branchName: '',    //支线
-            sidebarArr: SidebarCache.getData().sidebar,    //变电站数组
+            sidebarArr: [],    //变电站数组
             incominglingArr: [],  //总线数组
             branchArr: [],    //支线数组,
 
@@ -393,7 +394,42 @@
         };
 
         $scope.init = function () {
-            console.log("sidebar :" + JSON.stringify(SidebarCache.getData().sidebar));
+
+            if (KeywordCache.isEmpty()) {
+                Keyword.query({},
+                    function (data) {
+                        KeywordCache.create(data);
+                        $scope.show.devicetypeArr = KeywordCache.getDevice_type();
+                        $scope.show.deviceoperationstatusArr = KeywordCache.getDevice_operationstatus();
+                        $scope.show.devicephasenumArr = KeywordCache.getDevice_phasenum();
+                        $scope.show.deviceinsulationclassArr = KeywordCache.getDevice_insulationclass();
+                        $scope.show.deviceuseconditionArr = KeywordCache.getDevice_usecondition();
+                    }, function (err) {
+                        HttpToast.toast(err);
+                    });
+            } else {
+                $scope.show.devicetypeArr = KeywordCache.getDevice_type();
+                $scope.show.deviceoperationstatusArr = KeywordCache.getDevice_operationstatus();
+                $scope.show.devicephasenumArr = KeywordCache.getDevice_phasenum();
+                $scope.show.deviceinsulationclassArr = KeywordCache.getDevice_insulationclass();
+                $scope.show.deviceuseconditionArr = KeywordCache.getDevice_usecondition();
+            }
+
+            if (SidebarCache.isEmpty()) {
+                Log.i('empty： ——SidebarCache');
+
+                Sidebar.query({},
+                    function (data) {
+                        SidebarCache.create(data);
+                        $scope.show.sidebarArr = data.sidebar;
+                    }, function (err) {
+                        HttpToast.toast(err);
+                    });
+            } else {
+                Log.i('exist： ——SidebarCache');
+                $scope.show.sidebarArr = SidebarCache.getData().sidebar;
+            }
+
         };
         $scope.init();
 
@@ -535,7 +571,7 @@
     }
 
     function editDeviceCtrl($scope, KeywordCache, SidebarCache, ToastUtils, Device, $cookies,
-                            HttpToast, DeviceHelper, params, DeviceEdit) {
+                            HttpToast, DeviceHelper, params, DeviceEdit, Log, Sidebar, Keyword) {
 
         $scope.did = params.did;
 
@@ -598,15 +634,15 @@
             pageTabState: 'base',   // 默认state
             deviceType: '',          // 默认是否显示详细信息
 
-            devicetypeArr: KeywordCache.getDevice_type(),
-            deviceoperationstatusArr: KeywordCache.getDevice_operationstatus(),
-            devicephasenumArr: KeywordCache.getDevice_phasenum(),
-            deviceinsulationclassArr: KeywordCache.getDevice_insulationclass(),
-            deviceuseconditionArr: KeywordCache.getDevice_usecondition(),
+            devicetypeArr: [],
+            deviceoperationstatusArr: [],
+            devicephasenumArr: [],
+            deviceinsulationclassArr: [],
+            deviceuseconditionArr: [],
             clientName: '',  //变电站
             incominglineName: '',    //总线
             branchName: '',    //支线
-            sidebarArr: SidebarCache.getData().sidebar,    //变电站数组
+            sidebarArr: [],    //变电站数组
             incominglingArr: [],  //总线数组
             branchArr: [],    //支线数组,
 
@@ -657,9 +693,7 @@
             }
         };
 
-        $scope.init = function () {
-            console.log("sidebar :" + JSON.stringify(SidebarCache.getData().sidebar));
-
+        $scope.queryDeviceDetail = function () {
             Device.query({
                     did: $scope.did
                 },
@@ -695,9 +729,9 @@
 
                     $scope.form.base.position = data.position;
                     $scope.form.base.manufacturer = data.manufacturer;
-                    $scope.form.base.comminssioningdate = moment(data.comminssioningdate).format('YYYY-MM-DD');
-                    $scope.form.base.lastet_date = moment(data.lastet_date).format('YYYY-MM-DD');
-                    $scope.form.base.lastrepair_date = moment(data.lastrepair_date).format('YYYY-MM-DD');
+                    $scope.form.base.comminssioningdate = new Date(data.comminssioningdate);
+                    $scope.form.base.lastet_date = new Date(data.lastet_date);
+                    $scope.form.base.lastrepair_date = new Date(data.lastrepair_date);
                     $scope.form.base.manufacturercontact = data.manufacturercontact;
 
                     $scope.form.base.manufacturer_tel = data.manufacturer_tel;
@@ -723,22 +757,62 @@
                         $scope.show.insulationclass = data.insulationclass.name;
 
                         $scope.form.detail.tempriselimit = data.tempriselimit;
-                        $scope.form.detail.totalweight = data.totalweight;
+                        $scope.form.detail.totalweight = parseFloat(data.totalweight);
                         $scope.form.detail.connectionsymbol = data.connectionsymbol;
                         $scope.form.detail.coolingmode = data.coolingmode;
-                        $scope.form.detail.current_noload = data.current_noload;
-                        $scope.form.detail.loss_noload = data.loss_noload;
+                        $scope.form.detail.current_noload = parseFloat(data.current_noload);
+                        $scope.form.detail.loss_noload = parseFloat(data.loss_noload);
 
-                        $scope.form.detail.shortcircuit_impedance = data.shortcircuit_impedance;
+                        $scope.form.detail.shortcircuit_impedance = parseFloat(data.shortcircuit_impedance);
                         $scope.form.detail.tapgear = data.tapgear;
                     }
 
                     // 3.提交
-                    console.log("test：" + moment(data.comminssioningdate).format('YYYY-MM-DD'));
 
                 }, function (err) {
                     HttpToast.toast(err);
                 });
+        };
+
+        $scope.init = function () {
+
+            if (KeywordCache.isEmpty()) {
+                Keyword.query({},
+                    function (data) {
+                        KeywordCache.create(data);
+                        $scope.show.devicetypeArr = KeywordCache.getDevice_type();
+                        $scope.show.deviceoperationstatusArr = KeywordCache.getDevice_operationstatus();
+                        $scope.show.devicephasenumArr = KeywordCache.getDevice_phasenum();
+                        $scope.show.deviceinsulationclassArr = KeywordCache.getDevice_insulationclass();
+                        $scope.show.deviceuseconditionArr = KeywordCache.getDevice_usecondition();
+                    }, function (err) {
+                        HttpToast.toast(err);
+                    });
+            } else {
+                $scope.show.devicetypeArr = KeywordCache.getDevice_type();
+                $scope.show.deviceoperationstatusArr = KeywordCache.getDevice_operationstatus();
+                $scope.show.devicephasenumArr = KeywordCache.getDevice_phasenum();
+                $scope.show.deviceinsulationclassArr = KeywordCache.getDevice_insulationclass();
+                $scope.show.deviceuseconditionArr = KeywordCache.getDevice_usecondition();
+            }
+
+            if (SidebarCache.isEmpty()) {
+                Log.i('empty： ——SidebarCache');
+
+                Sidebar.query({},
+                    function (data) {
+                        SidebarCache.create(data);
+                        $scope.show.sidebarArr = data.sidebar;
+
+                        $scope.queryDeviceDetail()
+                    }, function (err) {
+                        HttpToast.toast(err);
+                    });
+            } else {
+                Log.i('exist： ——SidebarCache');
+                $scope.show.sidebarArr = SidebarCache.getData().sidebar;
+                $scope.queryDeviceDetail();
+            }
 
         };
         $scope.init();

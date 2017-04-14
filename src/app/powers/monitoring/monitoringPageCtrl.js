@@ -10,21 +10,23 @@
 
     /** @ngInject */
     function monitoringPageCtrl($scope, $state, $location, PageTopCache, Clientimg, ClientimgHelper,
-                                Branch, HttpToast, GlobalCache) {
+                                Branch, HttpToast, $cookies, ToastUtils) {
 
         PageTopCache.cache.state = $state.$current; // active
+        $cookies.put('cid', $location.search().id);
 
         $scope.show = {};
         $scope.branchData = {};
 
         $scope.init = function () {
-            GlobalCache.set('cid', $location.search().id);
 
-            console.log('cid: ' + GlobalCache.get('cid'));
-            console.log('bid: ' + GlobalCache.get('bid'));
+            if (!$cookies.get('cid')) {
+                ToastUtils.openToast('warning', '请先选择一个变电站！');
+                return;
+            }
 
             Clientimg.query({
-                    cid: GlobalCache.get('cid')
+                    cid: $cookies.get('cid')
                 },
                 function (data) {
                     $scope.show = ClientimgHelper.query(data);
@@ -53,7 +55,7 @@
          */
         $scope.viewBranchDetail = function (id) {
             $state.go('branch', {bid: id});
-            GlobalCache.set('bid', id);
+            $cookies.put('bid', id);
         }
 
     }
