@@ -189,8 +189,11 @@
         // 设备
         .factory('Device', function (Resource) {
             var config = {
-                url: 'device/:did',
-                paramsDefault: {did: '@did'},
+                url: 'device/:did/:export',
+                paramsDefault: {
+                    did: '@did',
+                    export: '@export'
+                },
                 action: {
                     query: {
                         method: 'GET'   //获取设备信息

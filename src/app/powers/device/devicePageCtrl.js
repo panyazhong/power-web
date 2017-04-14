@@ -12,7 +12,7 @@
 
     /** @ngInject */
     function devicePageCtrl($scope, PageTopCache, $state, ModalUtils, HttpToast, Keyword, KeywordCache,
-                            Sidebar, SidebarCache, Device, ToastUtils, Log) {
+                            Sidebar, SidebarCache, Device, ToastUtils, Log, ExportPrefix) {
 
         PageTopCache.cache.state = $state.$current; // active
 
@@ -189,7 +189,48 @@
 
         // 导出excel
         $scope.exportExcel = function () {
-            alert('exportExcel...');
+
+            var params = {};
+
+            if (!$.isEmptyObject($scope.form.name)) {
+                params.name = $scope.form.name;
+            }
+            if (!$.isEmptyObject($scope.form.type)) {
+                params.type = $scope.form.type;
+            }
+            if (!$.isEmptyObject($scope.form.model)) {
+                params.model = $scope.form.model;
+            }
+            if (!$.isEmptyObject($scope.form.manufacturer)) {
+                params.manufacturer = $scope.form.manufacturer;
+            }
+            if (!$.isEmptyObject($scope.form.client_id)) {
+                params.client_id = $scope.form.client_id;
+            }
+            if (!$.isEmptyObject($scope.form.incomingline_id)) {
+                params.incomingline_id = $scope.form.incomingline_id;
+            }
+            if (!$.isEmptyObject($scope.form.branch_id)) {
+                params.branch_id = $scope.form.branch_id;
+            }
+            if (!$.isEmptyObject($scope.form.operationstatus)) {
+                params.operationstatus = $scope.form.operationstatus;
+            }
+
+            var p = $scope.allPrpos(params);
+
+            var strWindowFeatures = "location=yes,height=570,width=520,scrollbars=yes,status=yes";
+            var URL = ExportPrefix.prefix + p;
+            window.open(URL, "_blank", strWindowFeatures);
+        };
+
+        $scope.allPrpos = function (obj) {
+            var names = "";
+            for (var name in obj) {
+                names += name + "=" + obj[name] + "&";
+            }
+
+            return names ? '?' + names.substring(0, names.length - 1) : "";
         };
 
         // 修改设备
