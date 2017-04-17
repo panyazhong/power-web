@@ -270,6 +270,8 @@
             }
 
             $scope.form.client_id = obj.clientId;
+            $scope.form.incomingline_id = '';   //和新增设备不同，需清空子集
+            $scope.form.branch_id = '';
             // set
             $scope.show.clientName = obj.clientName;
             $scope.show.incominglingArr = obj.incominglineData;
@@ -286,6 +288,7 @@
             }
 
             $scope.form.incomingline_id = obj.incominglingId;
+            $scope.form.branch_id = '';   //和新增设备不同，需清空子集
             // set
             $scope.show.incominglineName = obj.incominglineName;
             $scope.show.branchArr = obj.branchData;
@@ -295,16 +298,14 @@
         };
 
         $scope.setBranch = function (obj) {
-
-            $scope.form.branch_id = obj.branchId;
-
             $scope.show.branchName = obj.branchName;
+            $scope.form.branch_id = obj.branchId;
         };
 
         $scope.setStatus = function (obj) {
             $scope.show.deviceoperationstatusName = obj.name;
             $scope.form.operationstatus = obj.id;
-        }
+        };
 
         $scope.setDeviceType = function (obj) {
             $scope.show.deviceType = obj.name;
