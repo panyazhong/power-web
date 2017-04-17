@@ -1,0 +1,169 @@
+<form class="form-inline row">
+
+    <div class="col-sm-7 col-md-7 col-lg-7">
+        <div class="form-group col-sm-3 col-md-3 col-lg-3" style="margin-bottom: 10px;">
+            <!--<input type="text" class="form-control" placeholder="变电站" ng-model="form.client_id">-->
+
+            <div class="row" style="margin-left: 0;margin-right: 0">
+                <!-- Single button -->
+                <div class="select-right" uib-dropdown>
+                    <button type="button" class="btn-def btn-trans" style="text-align: left"
+                            uib-dropdown-toggle ng-disabled="disabled">
+                        <span class="caret"></span>{{show.clientName}}
+                    </button>
+
+                    <ul class="dropdown-menu" uib-dropdown-menu role="menu"
+                        aria-labelledby="single-button">
+                        <li role="menuitem"
+                            ng-repeat="info in show.sidebarArr track by $index">
+                            <a ng-bind="info.clientName" ng-click="changeClent(info)"></a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+
+        </div>
+        <div class="form-group col-sm-3 col-md-3 col-lg-3" style="margin-bottom: 10px;">
+            <!--<input type="text" class="form-control" placeholder="总进线"-->
+            <!--ng-model="form.incomingline_id">-->
+
+            <div class="row" style="margin-left: 0;margin-right: 0">
+                <!-- Single button -->
+                <div class="select-right" uib-dropdown>
+                    <button type="button" class="btn-def btn-trans" style="text-align: left"
+                            uib-dropdown-toggle ng-disabled="disabled">
+                        <span class="caret"></span>{{show.incominglineName}}
+                    </button>
+
+                    <ul class="dropdown-menu" uib-dropdown-menu role="menu"
+                        aria-labelledby="single-button">
+                        <li role="menuitem"
+                            ng-repeat="info in show.incominglingArr track by $index">
+                            <a ng-bind="info.incominglineName"
+                               ng-click="changeIncomingling(info)"></a>
+                        </li>
+                        <li role="menuitem" ng-show="show.incominglingArr.length ==0 ">
+                            <a>请先选择变电站信息</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+
+        </div>
+        <div class="form-group col-sm-3 col-md-3 col-lg-3" style="margin-bottom: 10px;">
+            <!--<input type="text" class="form-control" placeholder="所处支线" ng-model="form.branch_id">-->
+
+            <div class="row" style="margin-left: 0;margin-right: 0">
+                <!-- Single button -->
+                <div class="select-right" uib-dropdown>
+                    <button type="button" class="btn-def btn-trans" style="text-align: left"
+                            uib-dropdown-toggle ng-disabled="disabled">
+                        <span class="caret"></span>{{show.branchName}}
+                    </button>
+
+                    <ul class="dropdown-menu" uib-dropdown-menu role="menu"
+                        aria-labelledby="single-button">
+                        <li role="menuitem"
+                            ng-repeat="info in show.branchArr track by $index">
+                            <a ng-bind="info.branchName" ng-click="setBranch(info)"></a>
+                        </li>
+                        <li role="menuitem" ng-show="show.branchArr.length ==0 ">
+                            <a>请先选择总进线信息</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+
+        </div>
+        <div class="form-group col-sm-3 col-md-3 col-lg-3" style="margin-bottom: 10px;">
+            <input type="text" class="form-control" placeholder="设备名称" ng-model="form.name">
+        </div>
+
+        <div class="form-group col-sm-3 col-md-3 col-lg-3" style="margin-bottom: 10px;">
+            <!--<input type="text" class="form-control" placeholder="起始时间" ng-model="form.beginDate">-->
+
+            <input ng-click="toggleDatepicker()"
+                   uib-datepicker-popup="{{data.beginDate.format}}"
+                   is-open="data.beginDate.isOpen"
+                   datepicker-options="data.beginDate.options"
+                   clear-text="清除"
+                   current-text="今天"
+                   close-text="关闭"
+                   alt-input-formats="data.beginDate.altInputFormats"
+                   ng-model="show.beginDate"
+                   ng-model-options="data.beginDate.modelOptions"
+                   type="text"
+                   class="form-control-def"
+                   readonly="readonly"
+                   placeholder="起始时间"
+                   style="min-width: 90px">
+
+        </div>
+        <div class="form-group col-sm-3 col-md-3 col-lg-3" style="margin-bottom: 10px;">
+            <!--<input type="text" class="form-control" placeholder="结束时间" ng-model="form.endDate">-->
+
+            <input ng-click="toggleEndDatepicker()"
+                   uib-datepicker-popup="{{data.endDate.format}}"
+                   is-open="data.endDate.isOpen"
+                   datepicker-options="data.endDate.options"
+                   clear-text="清除"
+                   current-text="今天"
+                   close-text="关闭"
+                   alt-input-formats="data.endDate.altInputFormats"
+                   ng-model="show.endDate"
+                   ng-model-options="data.endDate.modelOptions"
+                   type="text"
+                   class="form-control-def"
+                   readonly="readonly"
+                   placeholder="结束时间"
+                   style="min-width: 90px">
+
+        </div>
+
+    </div>
+    <div class="col-sm-5 col-md-5 col-lg-5">
+
+        <div class="form-group col-sm-3 col-md-3 col-lg-3" style="margin-bottom: 10px;">
+            <button class="btn-def btn-submit-yellow"
+                    style="width: 100%" ng-click="clearForm()">清空
+            </button>
+        </div>
+
+        <div class="form-group col-sm-3 col-md-3 col-lg-3" style="margin-bottom: 10px;">
+        </div>
+
+        <div class="form-group col-sm-3 col-md-3 col-lg-3" style="margin-bottom: 10px;">
+            <button class="btn-def btn-main-blue"
+                    style="width: 100%">打印
+            </button>
+        </div>
+
+        <div class="form-group col-sm-3 col-md-3 col-lg-3" style="margin-bottom: 10px;">
+            <button class="btn-def btn-main-blue"
+                    style="width: 100%" ng-click="exportExcel()">导出
+            </button>
+        </div>
+
+        <div class="form-group col-sm-3 col-md-3 col-lg-3" style="margin-bottom: 10px;">
+            <button class="btn-def btn-submit-blue"
+                    style="width: 100%" ng-click="searchDevice()">查询
+            </button>
+        </div>
+
+        <div class="form-group col-sm-3 col-md-3 col-lg-3" style="margin-bottom: 10px;">
+        </div>
+
+        <div class="form-group col-sm-3 col-md-3 col-lg-3" style="margin-bottom: 10px;">
+            <button class="btn-def btn-main-blue"
+                    style="width: 100%" ng-click="convertSelect()">反选
+            </button>
+        </div>
+        <div class="form-group col-sm-3 col-md-3 col-lg-3" style="margin-bottom: 10px;">
+            <button class="btn-def btn-main-blue"
+                    style="width: 100%" ng-click="batchConfirm()">确认
+            </button>
+        </div>
+
+    </div>
+
+</form>

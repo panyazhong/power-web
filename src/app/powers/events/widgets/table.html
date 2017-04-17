@@ -1,0 +1,82 @@
+<table class="table table-bordered table-hover common-table" st-pipe="getData"
+       st-table="show.eventsData">
+    <thead>
+    <tr>
+        <th>
+            <label class="custom-checkbox" style="padding: 0 3px 0 10px;">
+                <input type="checkbox" ng-click="switchSelectAll()">
+                <span></span>
+            </label>
+        </th>
+        <th>时间</th>
+        <th>所属变电站</th>
+        <th>所属总进线</th>
+        <th>所属支线</th>
+        <th>设备名称</th>
+        <th>描述</th>
+        <th>确认</th>
+        <th>操作员</th>
+        <th>操作时间</th>
+    </tr>
+    </thead>
+    <tbody ng-show="!show.isLoading">
+    <tr ng-repeat="item in show.eventsData.events">
+        <td>
+            <label class="custom-checkbox" style="padding: 0 3px 0 10px;">
+                <input type="checkbox" ng-model="item.checked">
+                <span></span>
+            </label>
+        </td>
+        <td>
+            <span ng-bind="formatDate(item.time)"></span>
+        </td>
+        <td>
+            <span ng-bind="item.client_name" class="color-blue"></span>
+        </td>
+        <td>
+            <span ng-bind="item.incomingline_name" class="color-blue"></span>
+        </td>
+        <td>
+            <span ng-bind="item.branch_name" class="color-blue"></span>
+        </td>
+        <td>
+            <span ng-bind="item.name" class="color-blue"></span>
+        </td>
+        <td>
+            <span ng-bind="item.desc"></span>
+        </td>
+        <td>
+            <button class="btn-def btn-submit-blue" style="width: 68px;"
+                    ng-click="confirmItemEvent(item.id)"
+                    ng-show="!item.confirm">确 认
+            </button>
+
+            <button class="btn-def btn-submit-gray" style="width: 68px;" ng-show="item.confirm">已确认
+            </button>
+        </td>
+        <td>
+            <span ng-bind="item.confirm_person"></span>
+        </td>
+        <td>
+            <span ng-bind="formatDate(item.confirm_time)"></span>
+        </td>
+
+    </tr>
+    </tbody>
+    <tbody ng-show="show.isLoading">
+    <tr>
+        <td colspan="10" class="text-center">Loading ...</td>
+    </tr>
+    </tbody>
+    <tfoot>
+    <tr>
+        <td
+                id="powerTablePagination"
+                class="text-center" st-pagination=""
+                st-items-by-page="show.maxSize"
+                st-displayed-pages="show.displayedPages"
+                colspan="10">
+        </td>
+    </tr>
+    </tfoot>
+</table>

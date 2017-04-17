@@ -226,19 +226,30 @@
             };
             return Resource(config);
         })
-
-        /// ----------------------------------test---------------------------------------
-
-        .factory('Demo', function (Resource) {
+        // 事件
+        .factory('Event', function (Resource) {
             var config = {
-                url: 'device',
-                paramsDefault: {},
+                url: 'event/:eid/:export',
+                paramsDefault: {
+                    did: '@eid',
+                    export: '@export'
+                },
                 action: {
+                    query: {
+                        method: 'GET'   //获取设备信息
+                    },
+                    create: {
+                        method: 'POST'  //新建设备
+                    },
                     update: {
                         method: 'PUT'
+                    },
+                    delete: {   // 删除设备
+                        method: 'DELETE'
                     }
                 }
             };
             return Resource(config);
         })
+
 })();

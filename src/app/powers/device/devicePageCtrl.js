@@ -107,6 +107,7 @@
         };
         $scope.init();
 
+        // smart table
         $scope.getData = function (tableState) {
 
             $scope.show.isLoading = true;
