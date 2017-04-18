@@ -49,7 +49,6 @@
             maxSize: 10,    // 每页显示的数量
             displayedPages: 0,
             selectAll: false,   //是否全选
-            isSelectAll: false,
             eventsData: {},
 
             clientName: '变电站',  //变电站
@@ -58,9 +57,8 @@
             sidebarArr: [],    //变电站数组，默认从缓存里拿
             incominglingArr: [],  //总线数组
             branchArr: [],    //支线数组,
-
-            beginDate: '',
-            endDate: ''
+            beginDate: '',  //开始时间
+            endDate: ''     //结束时间
         };
 
         $scope.form = {
@@ -154,17 +152,17 @@
                 params.endDate = moment($scope.show.endDate).format('YYYY-MM-DD HH:mm:ss');
             }
 
-            // Event.query(params,
-            //     function (obj) {
-            //         $scope.show.isLoading = false;
-            //         $scope.show.eventsData = obj;
-            //         tableState.pagination.numberOfPages = obj.total_page;
-            //         $scope.show.displayedPages = Math.ceil(parseFloat(obj.total_count) / parseInt(obj.total_page));
-            //         $scope.show.eventsData.tableState = tableState;
-            //     }, function (err) {
-            //         $scope.show.isLoading = false;
-            //         HttpToast.toast(err);
-            //     });
+            Event.query(params,
+                function (obj) {
+                    $scope.show.isLoading = false;
+                    $scope.show.eventsData = obj;
+                    tableState.pagination.numberOfPages = obj.total_page;
+                    $scope.show.displayedPages = Math.ceil(parseFloat(obj.total_count) / parseInt(obj.total_page));
+                    $scope.show.eventsData.tableState = tableState;
+                }, function (err) {
+                    $scope.show.isLoading = false;
+                    HttpToast.toast(err);
+                });
 
             //test
             Log.i("p: " + JSON.stringify(params));
@@ -254,8 +252,6 @@
         };
 
         $scope.switchSelectAll = function () {
-            Log.i('checkBoxState：' + $scope.show.selectAll);
-
             $scope.show.selectAll = !$scope.show.selectAll;
 
             if ($scope.show.selectAll) {
@@ -291,7 +287,6 @@
             }
 
             Log.i('需要确认的事件id：' + JSON.stringify(parmas));
-
             Event.create({
                     eid: parmas
                 },
@@ -311,7 +306,6 @@
             parmas.push(id);
 
             Log.i('需要确认的事件id：' + JSON.stringify(parmas));
-
             Event.create({
                     eid: parmas
                 },
@@ -351,12 +345,12 @@
 
             var p = $scope.allPrpos(params);
 
+            var strWindowFeatures = "location=yes,height=570,width=520,scrollbars=yes,status=yes";
             var URL = ExportPrefix.eventPrefix + p;
-            Log.i('导出excel  URL：' + URL);
+            window.open(URL, "_blank", strWindowFeatures);
 
-            // var strWindowFeatures = "location=yes,height=570,width=520,scrollbars=yes,status=yes";
-            // var URL = ExportPrefix.eventPrefix + p;
-            // window.open(URL, "_blank", strWindowFeatures);
+            // test
+            Log.i('导出excel  URL：' + ExportPrefix.eventPrefix + p);
         };
 
         $scope.allPrpos = function (obj) {
