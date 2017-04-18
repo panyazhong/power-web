@@ -13,7 +13,7 @@
                                 Branch, HttpToast, $cookies, ToastUtils) {
 
         PageTopCache.cache.state = $state.$current; // active
-        $cookies.put('cid', $location.search().id);
+        $location.search().id ? $cookies.put('cid', $location.search().id) : '';
 
         $scope.show = {};
         $scope.branchData = {};

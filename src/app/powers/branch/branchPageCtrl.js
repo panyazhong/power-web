@@ -69,7 +69,7 @@
                 }
             ],
             branchData: {},      // 支线基本信息
-            branchEqp: [],   // 支线设备列表
+            branchEqp: [],   // 支线 设备列表
         };
         $scope.rowCollection = [];
 
@@ -98,7 +98,7 @@
                     bid: $scope.show.bid
                 },
                 function (data) {
-                    $scope.branchData = BranchimgHelper.query(data);
+                    $scope.show.branchData = BranchimgHelper.query(data);
                 }, function (err) {
                     HttpToast.toast(err);
                 });

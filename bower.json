@@ -59,8 +59,7 @@
     "angular-ui": "^0.4.0",
     "angular-strap": "^2.3.12",
     "lodash": "^4.17.4",
-    "angular-cookies": "1.5.8",
-    "angular-i18n": "^1.6.4"
+    "angular-cookies": "1.5.8"
   },
   "resolutions": {
     "angular": "~1.5.9",
