@@ -14,7 +14,7 @@
                     <span class="caret"></span>{{show.deviceType}}
                 </button>
 
-                <ul class="dropdown-menu" uib-dropdown-menu role="menu"
+                <ul class="dropdown-menu common-dp-ul" uib-dropdown-menu role="menu"
                     aria-labelledby="single-button">
                     <li role="menuitem"
                         ng-repeat="info in show.devicetypeArr track by $index">
@@ -49,7 +49,7 @@
                     <span class="caret"></span>{{show.clientName}}
                 </button>
 
-                <ul class="dropdown-menu" uib-dropdown-menu role="menu"
+                <ul class="dropdown-menu common-dp-ul" uib-dropdown-menu role="menu"
                     aria-labelledby="single-button">
                     <li role="menuitem"
                         ng-repeat="info in show.sidebarArr track by $index">
@@ -72,7 +72,7 @@
                     <span class="caret"></span>{{show.incominglineName}}
                 </button>
 
-                <ul class="dropdown-menu" uib-dropdown-menu role="menu"
+                <ul class="dropdown-menu common-dp-ul" uib-dropdown-menu role="menu"
                     aria-labelledby="single-button">
                     <li role="menuitem"
                         ng-repeat="info in show.incominglingArr track by $index">
@@ -97,7 +97,7 @@
                     <span class="caret"></span>{{show.branchName}}
                 </button>
 
-                <ul class="dropdown-menu" uib-dropdown-menu role="menu"
+                <ul class="dropdown-menu common-dp-ul" uib-dropdown-menu role="menu"
                     aria-labelledby="single-button">
                     <li role="menuitem"
                         ng-repeat="info in show.branchArr track by $index">
@@ -132,7 +132,7 @@
                current-text="今天"
                close-text="关闭"
                alt-input-formats="data.beginDate.altInputFormats"
-               ng-model="form.base.comminssioningdate"
+               ng-model="show.comminssioningdate"
                ng-model-options="data.beginDate.modelOptions"
                type="text"
                class="form-control-def"
@@ -152,7 +152,7 @@
                current-text="今天"
                close-text="关闭"
                alt-input-formats="data.lastet.altInputFormats"
-               ng-model="form.base.lastet_date"
+               ng-model="show.lastet_date"
                ng-model-options="data.lastet.modelOptions"
                type="text"
                class="form-control-def"
@@ -173,7 +173,7 @@
                current-text="今天"
                close-text="关闭"
                alt-input-formats="data.lastrepair.altInputFormats"
-               ng-model="form.base.lastrepair_date"
+               ng-model="show.lastrepair_date"
                ng-model-options="data.lastrepair.modelOptions"
                type="text"
                class="form-control-def"
@@ -218,7 +218,7 @@
                     <span class="caret"></span>{{show.deviceoperationstatus}}
                 </button>
 
-                <ul class="dropdown-menu" uib-dropdown-menu role="menu"
+                <ul class="dropdown-menu common-dp-ul" uib-dropdown-menu role="menu"
                     aria-labelledby="single-button">
                     <li role="menuitem"
                         ng-repeat="info in show.deviceoperationstatusArr track by $index">

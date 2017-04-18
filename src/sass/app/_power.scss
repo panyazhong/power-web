@@ -121,7 +121,7 @@ input[type=number]::-webkit-outer-spin-button {
 */
 
 /*
-  一次系统图 hovr pop
+  一次系统图 hovr popover
 */
 .pop-detail {
   width: 200px;
@@ -190,7 +190,13 @@ input[type=number]::-webkit-outer-spin-button {
 /*
   smart table
 */
-thead tr th {
+.common-table {
+  border-bottom: none !important;
+  border-left: none !important;
+  border-right: none !important;
+}
+
+.common-table thead tr th {
   text-align: center;
   font-size: 15px !important;
   font-weight: bold !important;
@@ -199,33 +205,31 @@ thead tr th {
   line-height: 35px !important;
 }
 
-tbody tr td {
+.common-table tbody tr td {
   text-align: center;
   padding: 7px 0 !important;
 }
 
-tbody tr:hover {
+.common-table tbody tr:hover {
   background-color: #FFFBF0 !important;
   color: #3b89ce !important;
   cursor: pointer !important;
 }
 
-tfoot tr td {
+.common-table tfoot tr td {
   padding-top: 15px !important;
   border: none !important;
 }
 
-.common-table {
-  border-bottom: none !important;
-  border-left: none !important;
-  border-right: none !important;
-}
-
-.common-table-btn {
+.common-table-btn { // iconfont操作
   display: inline-block;
   width: 35px;
   font-size: 23px;
 }
+
+/*
+  smart table end......
+*/
 
 /*
   angular toast css
@@ -251,9 +255,53 @@ tfoot tr td {
   margin: 8px 0;
 }
 
-//.dropdown-menu {
-//  width: 100% !important;
-//  margin-top: 0 !important;
-//  max-height: 1000px;
-//  overflow-y: auto;
-//}
+/*
+  datepicker
+*/
+.uib-datepicker-popup.dropdown-menu:focus, .uib-datepicker-popup.dropdown-menu *:focus {
+  outline: none !important;
+}
+
+.uib-datepicker-popup.dropdown-menu button {
+  border: none !important;
+}
+
+.uib-datepicker-popup.dropdown-menu button.btn.btn-default.btn-sm.btn-info.active {
+  color: white !important;
+  background: #3b89ce !important;
+  box-shadow: none !important;
+  -webkit-box-shadow: none !important;
+}
+
+.uib-datepicker-popup .btn-info {
+  color: #FFFFFF !important;
+}
+
+.uib-datepicker-popup .btn-danger {
+  color: #FFFFFF !important;
+}
+
+.uib-datepicker-popup .btn-success {
+  color: #FFFFFF !important;
+}
+
+.uib-datepicker-popup th {
+  line-height: 30px;
+}
+
+.uib-datepicker-popup td {
+  line-height: 35px;
+}
+
+.uib-datepicker-popup.dropdown-menu button.btn.btn-default.btn-sm.btn-info.active .text-info {
+  color: #fff !important;
+}
+
+/*
+  dropdown ul列表配置
+*/
+
+.common-dp-ul {
+  max-height: 250px;
+  overflow: auto;
+}

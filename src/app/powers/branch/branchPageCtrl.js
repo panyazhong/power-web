@@ -153,10 +153,90 @@
     }
 
     // 编辑设备ctrl，若修改在在台账修改
-    function editDeviceCtrl($scope, KeywordCache, SidebarCache, ToastUtils, Device, $cookies,
-                            HttpToast, DeviceHelper, params, DeviceEdit, Log, Sidebar, Keyword) {
+    function editDeviceCtrl($scope, KeywordCache, SidebarCache, ToastUtils, Device, $cookies, HttpToast,
+                            DeviceHelper, Log, Sidebar, Keyword, params, DeviceEdit) {
 
         $scope.did = params.did;
+        $scope.queryDeviceDetail = function () {
+            Device.query({
+                    did: $scope.did
+                },
+                function (data) {
+
+                    // 1.赋值
+                    $scope.form.base.name = data.name;
+                    $scope.form.base.type = data.type.id;
+                    $scope.show.deviceType = data.type.name;
+                    $scope.form.base.category = data.category;
+                    $scope.form.base.code = data.code;
+                    $scope.form.base.model = data.model;
+                    $scope.form.base.branch_id = data.branch.bid;
+                    $scope.show.branchName = data.branch.name;
+                    // 变压器
+                    $scope.show.clientName = data.client.name;
+                    $scope.show.incominglineName = data.incomingline.name;
+                    // 设置总进线，支线数据
+                    SidebarCache.getData().sidebar.map(function (item) {
+
+                        if (item.clientId == data.client.cid) {
+                            $scope.show.incominglingArr = item.incominglineData;
+                        }
+
+                    });
+                    $scope.show.incominglingArr.map(function (item) {
+
+                        if (item.incominglingId == data.incomingline.inid) {
+                            $scope.show.branchArr = item.branchData;
+                        }
+
+                    });
+
+                    $scope.form.base.position = data.position;
+                    $scope.form.base.manufacturer = data.manufacturer;
+                    $scope.show.comminssioningdate = new Date(data.comminssioningdate);
+                    $scope.show.lastet_date = new Date(data.lastet_date);
+                    $scope.show.lastrepair_date = new Date(data.lastrepair_date);
+                    $scope.form.base.manufacturercontact = data.manufacturercontact;
+
+                    $scope.form.base.manufacturer_tel = data.manufacturer_tel;
+                    $scope.form.base.rated_voltage = data.rated_voltage;
+                    $scope.form.base.rated_current = data.rated_current;
+                    $scope.form.base.rated_frequency = data.rated_frequency;
+                    $scope.form.base.rated_capacity = data.rated_capacity;
+                    $scope.form.base.operationstatus = data.operationstatus.id;
+                    $scope.show.deviceoperationstatus = data.operationstatus.name;
+
+                    // 2.判断类型   - 详细信息
+                    if (data.product_code) {
+                        $scope.show.deviceType = '变压器';
+
+                        $scope.form.detail.phasenum = data.phasenum.id;
+                        $scope.show.phasenum = data.phasenum.name;
+                        $scope.form.detail.product_code = data.product_code;
+                        $scope.form.detail.standard_code = data.standard_code;
+                        $scope.form.detail.insulationlevel = data.insulationlevel;
+                        $scope.form.detail.usecondition = data.usecondition.id;
+                        $scope.show.usecondition = data.usecondition.name;
+                        $scope.form.detail.insulationclass = data.insulationclass.id;
+                        $scope.show.insulationclass = data.insulationclass.name;
+
+                        $scope.form.detail.tempriselimit = data.tempriselimit;
+                        $scope.form.detail.totalweight = parseFloat(data.totalweight);
+                        $scope.form.detail.connectionsymbol = data.connectionsymbol;
+                        $scope.form.detail.coolingmode = data.coolingmode;
+                        $scope.form.detail.current_noload = parseFloat(data.current_noload);
+                        $scope.form.detail.loss_noload = parseFloat(data.loss_noload);
+
+                        $scope.form.detail.shortcircuit_impedance = parseFloat(data.shortcircuit_impedance);
+                        $scope.form.detail.tapgear = data.tapgear;
+                    }
+
+                    // 3.提交
+
+                }, function (err) {
+                    HttpToast.toast(err);
+                });
+        };
 
         $scope.data = {
             beginDate: {
@@ -234,6 +314,9 @@
             usecondition: '',    //使用条件KEY
             insulationclass: '',    //绝缘耐热等级KEY
 
+            comminssioningdate: '', //投运日期
+            lastet_date: '',    //上次电试日期
+            lastrepair_date: '',    //上次维修日期
         };
         $scope.form = {
             base: {
@@ -276,87 +359,6 @@
             }
         };
 
-        $scope.queryDeviceDetail = function () {
-            Device.query({
-                    did: $scope.did
-                },
-                function (data) {
-
-                    // 1.赋值
-                    $scope.form.base.name = data.name;
-                    $scope.form.base.type = data.type.id;
-                    $scope.show.deviceType = data.type.name;
-                    $scope.form.base.category = data.category;
-                    $scope.form.base.code = data.code;
-                    $scope.form.base.model = data.model;
-                    $scope.form.base.branch_id = data.branch.bid;
-                    $scope.show.branchName = data.branch.name;
-                    // 变压器
-                    $scope.show.clientName = data.client.name;
-                    $scope.show.incominglineName = data.incomingline.name;
-                    // 设置总进线，支线数据
-                    SidebarCache.getData().sidebar.map(function (item) {
-
-                        if (item.clientId == data.client.cid) {
-                            $scope.show.incominglingArr = item.incominglineData;
-                        }
-
-                    });
-                    $scope.show.incominglingArr.map(function (item) {
-
-                        if (item.incominglingId == data.incomingline.inid) {
-                            $scope.show.branchArr = item.branchData;
-                        }
-
-                    });
-
-                    $scope.form.base.position = data.position;
-                    $scope.form.base.manufacturer = data.manufacturer;
-                    $scope.form.base.comminssioningdate = new Date(data.comminssioningdate);
-                    $scope.form.base.lastet_date = new Date(data.lastet_date);
-                    $scope.form.base.lastrepair_date = new Date(data.lastrepair_date);
-                    $scope.form.base.manufacturercontact = data.manufacturercontact;
-
-                    $scope.form.base.manufacturer_tel = data.manufacturer_tel;
-                    $scope.form.base.rated_voltage = data.rated_voltage;
-                    $scope.form.base.rated_current = data.rated_current;
-                    $scope.form.base.rated_frequency = data.rated_frequency;
-                    $scope.form.base.rated_capacity = data.rated_capacity;
-                    $scope.form.base.operationstatus = data.operationstatus.id;
-                    $scope.show.deviceoperationstatus = data.operationstatus.name;
-
-                    // 2.判断类型   - 详细信息
-                    if (data.product_code) {
-                        $scope.show.deviceType = '变压器';
-
-                        $scope.form.detail.phasenum = data.phasenum.id;
-                        $scope.show.phasenum = data.phasenum.name;
-                        $scope.form.detail.product_code = data.product_code;
-                        $scope.form.detail.standard_code = data.standard_code;
-                        $scope.form.detail.insulationlevel = data.insulationlevel;
-                        $scope.form.detail.usecondition = data.usecondition.id;
-                        $scope.show.usecondition = data.usecondition.name;
-                        $scope.form.detail.insulationclass = data.insulationclass.id;
-                        $scope.show.insulationclass = data.insulationclass.name;
-
-                        $scope.form.detail.tempriselimit = data.tempriselimit;
-                        $scope.form.detail.totalweight = parseFloat(data.totalweight);
-                        $scope.form.detail.connectionsymbol = data.connectionsymbol;
-                        $scope.form.detail.coolingmode = data.coolingmode;
-                        $scope.form.detail.current_noload = parseFloat(data.current_noload);
-                        $scope.form.detail.loss_noload = parseFloat(data.loss_noload);
-
-                        $scope.form.detail.shortcircuit_impedance = parseFloat(data.shortcircuit_impedance);
-                        $scope.form.detail.tapgear = data.tapgear;
-                    }
-
-                    // 3.提交
-
-                }, function (err) {
-                    HttpToast.toast(err);
-                });
-        };
-
         $scope.init = function () {
 
             if (KeywordCache.isEmpty()) {
@@ -386,7 +388,6 @@
                     function (data) {
                         SidebarCache.create(data);
                         $scope.show.sidebarArr = data.sidebar;
-
                         $scope.queryDeviceDetail()
                     }, function (err) {
                         HttpToast.toast(err);
@@ -394,7 +395,7 @@
             } else {
                 Log.i('exist： ——SidebarCache');
                 $scope.show.sidebarArr = SidebarCache.getData().sidebar;
-                $scope.queryDeviceDetail();
+                $scope.queryDeviceDetail()
             }
 
         };
@@ -416,10 +417,24 @@
 
         $scope.confirm = function () {
 
+            // change格式
+            $scope.form.base.comminssioningdate = '';
+            $scope.form.base.lastet_date = '';
+            $scope.form.base.lastrepair_date = '';
+            if ($scope.show.comminssioningdate) {
+                $scope.form.base.comminssioningdate = moment($scope.show.comminssioningdate).format('YYYY-MM-DD HH:mm:ss');
+            }
+            if ($scope.show.lastet_date) {
+                $scope.form.base.lastet_date = moment($scope.show.lastet_date).format('YYYY-MM-DD HH:mm:ss');
+            }
+            if ($scope.show.lastrepair_date) {
+                $scope.form.base.lastrepair_date = moment($scope.show.lastrepair_date).format('YYYY-MM-DD HH:mm:ss');
+            }
+
             // 基本信息
             for (var Key in $scope.form.base) {
-                // console.log($scope.form.base[Key]);
-                if ($scope.form.base[Key] == '') {
+                // Log.i($scope.form.base[Key]);
+                if (!$scope.form.base[Key]) {
                     ToastUtils.openToast('warning', '请完善所有基本信息！');
                     return;
                 }
@@ -428,30 +443,18 @@
             // 变电站信息
             if ($scope.show.deviceType == '变压器') {
                 for (var Key in $scope.form.detail) {
-                    // console.log($scope.form.detail[Key]);
-                    if ($scope.form.detail[Key] == '') {
+                    // Log.i($scope.form.detail[Key]);
+                    if (!$scope.form.detail[Key]) {
                         ToastUtils.openToast('warning', '请完善所有详细信息！');
                         return;
                     }
                 }
             }
 
-            // change格式
-            if ($scope.form.base.comminssioningdate) {
-                $scope.form.base.comminssioningdate = moment($scope.form.base.comminssioningdate).format('YYYY-MM-DD HH:mm:ss');
-            }
-            if ($scope.form.base.lastet_date) {
-                $scope.form.base.lastet_date = moment($scope.form.base.lastet_date).format('YYYY-MM-DD HH:mm:ss');
-            }
-            if ($scope.form.base.lastrepair_date) {
-                $scope.form.base.lastrepair_date = moment($scope.form.base.lastrepair_date).format('YYYY-MM-DD HH:mm:ss');
-            }
-
             var params = $scope.form.base;
             params.uid = $cookies.getObject('uScope').uid;
 
             params.did = $scope.did;    // 修改比新建多了did参数
-
             if ($scope.show.deviceType == '变压器') {
                 params = DeviceHelper.setDetail(params, $scope.form.detail);
             }
@@ -461,8 +464,6 @@
                     ToastUtils.openToast('success', data.message);
                     $scope.$close(data);
                 }, function (err) {
-                    console.log("err: " + JSON.stringify(err));
-
                     HttpToast.toast(err);
                 });
 

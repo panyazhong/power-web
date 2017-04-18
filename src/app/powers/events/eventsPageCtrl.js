@@ -152,17 +152,17 @@
                 params.endDate = moment($scope.show.endDate).format('YYYY-MM-DD HH:mm:ss');
             }
 
-            Event.query(params,
-                function (obj) {
-                    $scope.show.isLoading = false;
-                    $scope.show.eventsData = obj;
-                    tableState.pagination.numberOfPages = obj.total_page;
-                    $scope.show.displayedPages = Math.ceil(parseFloat(obj.total_count) / parseInt(obj.total_page));
-                    $scope.show.eventsData.tableState = tableState;
-                }, function (err) {
-                    $scope.show.isLoading = false;
-                    HttpToast.toast(err);
-                });
+            // Event.query(params,
+            //     function (obj) {
+            //         $scope.show.isLoading = false;
+            //         $scope.show.eventsData = obj;
+            //         tableState.pagination.numberOfPages = obj.total_page;
+            //         $scope.show.displayedPages = Math.ceil(parseFloat(obj.total_count) / parseInt(obj.total_page));
+            //         $scope.show.eventsData.tableState = tableState;
+            //     }, function (err) {
+            //         $scope.show.isLoading = false;
+            //         HttpToast.toast(err);
+            //     });
 
             //test
             Log.i("p: " + JSON.stringify(params));
