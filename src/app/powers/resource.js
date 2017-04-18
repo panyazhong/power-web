@@ -229,17 +229,14 @@
         // 事件
         .factory('Event', function (Resource) {
             var config = {
-                url: 'event/:eid/:export',
-                paramsDefault: {
-                    did: '@eid',
-                    export: '@export'
-                },
+                url: 'event',
+                paramsDefault: {},
                 action: {
                     query: {
-                        method: 'GET'   //获取设备信息
+                        method: 'GET'   //获取事件列表，筛选
                     },
                     create: {
-                        method: 'POST'  //新建设备
+                        method: 'POST'  //确认事件
                     },
                     update: {
                         method: 'PUT'

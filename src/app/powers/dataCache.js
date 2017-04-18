@@ -24,7 +24,8 @@
 
     function exportPrefix() {
         return {
-            prefix: 'http://192.168.0.150/device/export'
+            prefix: 'http://192.168.0.150/device/export',   // 设备导出
+            eventPrefix: 'http://192.168.0.150/event/export',  // 事件导出
         }
     }
 

@@ -9,7 +9,7 @@
         .controller('eventsPageCtrl', eventsPageCtrl);
 
     /** @ngInject */
-    function eventsPageCtrl($scope, $state, PageTopCache, Sidebar, SidebarCache, HttpToast, Log, Device, ToastUtils, ExportPrefix) {
+    function eventsPageCtrl($scope, $state, PageTopCache, Sidebar, SidebarCache, HttpToast, Log, Device, ToastUtils, ExportPrefix, Event) {
 
         PageTopCache.cache.state = $state.$current; // active
 
@@ -124,6 +124,7 @@
         // smart table
         $scope.getData = function (tableState) {
 
+            $scope.show.selectAll = false;  // 与设备台账区别
             $scope.show.isLoading = true;
             var pagination = tableState.pagination;
             var start = pagination.start || 0;     // This is NOT the page number, but the index of item in the list that you want to use to display the table.
@@ -153,7 +154,7 @@
                 params.endDate = moment($scope.show.endDate).format('YYYY-MM-DD HH:mm:ss');
             }
 
-            // Device.query(params,
+            // Event.query(params,
             //     function (obj) {
             //         $scope.show.isLoading = false;
             //         $scope.show.eventsData = obj;
@@ -253,6 +254,8 @@
         };
 
         $scope.switchSelectAll = function () {
+            Log.i('checkBoxState：' + $scope.show.selectAll);
+
             $scope.show.selectAll = !$scope.show.selectAll;
 
             if ($scope.show.selectAll) {
@@ -288,6 +291,18 @@
             }
 
             Log.i('需要确认的事件id：' + JSON.stringify(parmas));
+
+            Event.create({
+                    eid: parmas
+                },
+                function (data) {
+
+                    ToastUtils.openToast('success', data.message);
+                    $scope.clearForm(); // 确认完需要初始化表单状态
+                    $scope.searchDevice();
+                }, function (err) {
+                    HttpToast.toast(err);
+                });
         };
 
         // 单个确认
@@ -296,6 +311,18 @@
             parmas.push(id);
 
             Log.i('需要确认的事件id：' + JSON.stringify(parmas));
+
+            Event.create({
+                    eid: parmas
+                },
+                function (data) {
+
+                    ToastUtils.openToast('success', data.message);
+                    $scope.clearForm(); // 确认完需要初始化表单状态
+                    $scope.searchDevice();
+                }, function (err) {
+                    HttpToast.toast(err);
+                });
         };
 
         // 导出excel
@@ -324,10 +351,11 @@
 
             var p = $scope.allPrpos(params);
 
-            Log.i('导出的参数：' + JSON.stringify(p));
+            var URL = ExportPrefix.eventPrefix + p;
+            Log.i('导出excel  URL：' + URL);
 
             // var strWindowFeatures = "location=yes,height=570,width=520,scrollbars=yes,status=yes";
-            // var URL = ExportPrefix.prefix + p;
+            // var URL = ExportPrefix.eventPrefix + p;
             // window.open(URL, "_blank", strWindowFeatures);
         };
 
