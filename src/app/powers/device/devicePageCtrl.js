@@ -90,7 +90,6 @@
             } else {
                 $scope.show.deviceoperationstatusArr = KeywordCache.getDevice_operationstatus();
                 $scope.show.devicetypeArr = KeywordCache.getDevice_type();
-                console.log('keyword 不会null');
             }
 
             if (SidebarCache.isEmpty()) {
