@@ -44,18 +44,27 @@
                         ba-ui-sref-toggling-submenu>
                         <li ng-mouseenter="hoverItem($event, item)"
                             ng-repeat="subSubitem in ::subitem.subMenu" ui-sref-active="selected">
-                            <a ng-mouseenter="hoverItem($event, item)" href
-                               ng-if="::subSubitem.disabled" class="al-sidebar-list-link">
-                                <!--{{ ::subSubitem.title }}-->
+                            <!--<a ng-mouseenter="hoverItem($event, item)" href-->
+                            <!--ng-if="::subSubitem.disabled" class="al-sidebar-list-link">-->
+                            <!--&lt;!&ndash;{{ ::subSubitem.title }}&ndash;&gt;-->
 
-                                <!--三级菜单标题-->
-                                <i class="{{ ::subSubitem.icon }}"></i><span>{{ ::subSubitem.title }}</span>
-                            </a>
+                            <!--&lt;!&ndash;三级菜单标题&ndash;&gt;-->
+                            <!--<i class="{{ ::subSubitem.icon }}"></i><span>{{ ::subSubitem.title }}</span>-->
+                            <!--</a>-->
                             <a ng-mouseenter="hoverItem($event, item)"
-                               ui-state="subSubitem.stateRef || ''"
+                               ng-click="goState($event,subSubitem.branchId)"
                                ng-if="::!subSubitem.disabled"
-                               ng-href="{{::(subSubitem.fixedHref ? subSubitem.fixedHref: '')}}">
-                                {{::subSubitem.title }}
+                               style="cursor:pointer;">
+
+                                <div style="pointer-events: none;">
+                                    <i class="{{ ::subSubitem.icon }}"
+                                       style="margin-right: 9px;width: 16px;display: inline-block;">
+                                    </i>
+                                    <span class="page-sb-item">
+                                	    {{ ::subSubitem.title }}
+                                    </span>
+                                </div>
+
                             </a>
                         </li>
                     </ul>

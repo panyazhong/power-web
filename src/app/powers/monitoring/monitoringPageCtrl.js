@@ -10,7 +10,7 @@
 
     /** @ngInject */
     function monitoringPageCtrl($scope, $state, $location, PageTopCache, Clientimg, ClientimgHelper,
-                                Branch, HttpToast, $cookies, ToastUtils) {
+                                Branch, HttpToast, $cookies, SidebarCache, Sidebar, Log) {
 
         PageTopCache.cache.state = $state.$current; // active
         $location.search().id ? $cookies.put('cid', $location.search().id) : '';
@@ -18,15 +18,12 @@
         $scope.show = {};
         $scope.branchData = {};
 
-        $scope.init = function () {
+        $scope.queryClientImg = function (cid) {
 
-            if (!$cookies.get('cid')) {
-                ToastUtils.openToast('warning', '请先选择一个变电站！');
-                return;
-            }
+            var id = $cookies.get('cid') ? $cookies.get('cid') : cid;   //cookie不会空取put的，否则默认取第一个
 
             Clientimg.query({
-                    cid: $cookies.get('cid')
+                    cid: id
                 },
                 function (data) {
                     $scope.show = ClientimgHelper.query(data);
@@ -34,12 +31,30 @@
                     HttpToast.toast(err);
                 });
         };
+
+        $scope.init = function () {
+
+            if (SidebarCache.isEmpty()) {
+                Log.i('empty： ——SidebarCache');
+
+                Sidebar.query({},
+                    function (data) {
+                        SidebarCache.create(data);
+                        $scope.queryClientImg(data.sidebar[0].clientId);
+                    }, function (err) {
+                        HttpToast.toast(err);
+                    });
+            } else {
+                $scope.queryClientImg(SidebarCache.getData().sidebar[0].clientId);
+            }
+        };
         $scope.init();
 
         /**
-         * hover前搜索
+         * 显示前搜索
          */
         $scope.onBeforeShow = function (id) {
+
             Branch.query({
                     bid: id
                 },
@@ -54,7 +69,9 @@
          * 查看分支详情
          */
         $scope.viewBranchDetail = function (id) {
-            $state.go('branch', {bid: id});
+
+            $state.go('branch', {bid: id}, {reload: true});
+
             $cookies.put('bid', id);
         }
 

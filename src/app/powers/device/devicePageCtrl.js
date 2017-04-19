@@ -267,6 +267,11 @@
                 });
         };
 
+        // 打印
+        $scope.print = function () {
+            alert('打印。');
+        };
+
         // dropdown set
         $scope.changeClent = function (obj) {
             if ($scope.show.clientName == obj.clientName) {

@@ -15,51 +15,14 @@
         'BlurAdmin.power.settings',
         'BlurAdmin.power.branch',
 
-        'BlurAdmin.power.demo',
+        'BlurAdmin.power.demo', // 测试，模拟登陆，正式修改！~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     ])
         .config(routeConfig);
 
     /** @ngInject */
-    function routeConfig($urlRouterProvider, baSidebarServiceProvider) {
-        $urlRouterProvider.otherwise('/demo');
+    function routeConfig($urlRouterProvider) {
 
-        // baSidebarServiceProvider.addStaticItem({
-        //     title: '时代金融',
-        //     icon: 'ion-grid',
-        //     subMenu: [{
-        //         title: '万6迪威行甲线',
-        //         icon: 'ion-record',
-        //         subMenu: [{
-        //             title: '供水支线',
-        //             icon: 'ion-flame',
-        //             disabled: true
-        //         }, {
-        //             title: '集控室支线',
-        //             icon: 'ion-key',
-        //             disabled: true
-        //         }, {
-        //             title: '脱硫支线',
-        //             icon: 'ion-lightbulb',
-        //             disabled: true
-        //         }]
-        //     }, {
-        //         title: '国4迪威行乙线',
-        //         icon: 'ion-record',
-        //         subMenu: [{
-        //             title: '除灰支线',
-        //             icon: 'ion-record',
-        //             disabled: true
-        //         }]
-        //     }, {
-        //         title: '万81迪威行丙线',
-        //         icon: 'ion-record',
-        //         subMenu: [{
-        //             title: '测试支线',
-        //             icon: 'ion-record',
-        //             disabled: true
-        //         }]
-        //     }]
-        // });
+        $urlRouterProvider.otherwise('/demo');  //  正式修改！~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
     }
 

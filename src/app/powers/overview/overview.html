@@ -1,113 +1,26 @@
 <div ba-panel>
     <div class="overview">
 
-        <div id="container" style="height: 700px"></div>
+        <div id="map" style="height: 700px"></div>
 
         <script type="text/javascript">
 
             var mapObj;
-            var mapLabData;
+            var recordData;
 
-            var scope = angular.element($("#container")).scope();
-            mapLabData = scope.show;
-            if (mapLabData) {
+            var scope = angular.element($("#map")).scope();
+            var data = scope.info;
+            if (data) {
+                recordData = data.clients;
 
-                console.log('mapLabData 存在.');
+                if (recordData.length > 0) {
 
-                function mapInit() {
-                    mapObj = new AMap.Map('container', {
-//                    dragEnable: false,      //是否可拖拽
-//                    zoomEnable: false,      //是否可缩放
-                        zoom: 12,
-                        center: [121.493496, 31.224609],    // 定义地图中心点
-//                    mapStyle: 'fresh',
-//                    features: ['road', 'building','bg']
-                    });
-                    AMap.event.addListener(mapObj, "complete", completeEventHandler);
+
+                    console.log("map data : " + JSON.stringify(recordData))
+
                 }
-
-                mapInit();
-
-                function completeEventHandler() {
-
-                    for (x in mapLabData) {
-                        var item = mapLabData[x];
-                        var content =
-                                "<div style='text-align: center;'>" +
-                                "<div>" +
-                                "<img src='" + item.ico + "' style='width: 50px;height: 50px;'/>" +
-                                "<div style='color: #fff;background: #000;opacity:0.5;padding: 3px 5px;font-size: 12px;white-space:nowrap;border-radius:5px !important'>" + item.name + "</div>" +
-                                "</div>" +
-                                "</div>";
-
-                        var marker = new AMap.Marker({
-                            position: new AMap.LngLat(item.longitude, item.latitude),
-                            content: content,
-                            extData: item.cid
-                        });
-
-                        // map events
-                        var _onmouseover = function (e) {
-                            openWindow(e);
-                        };
-                        AMap.event.addListener(marker, 'mouseover', _onmouseover);
-//                    var _mouseout = function (e) {
-//                        mapObj.clearInfoWindow();
-//                    };
-//                    AMap.event.addListener(marker, 'mouseout', _mouseout);
-
-                        marker.setMap(mapObj);  // add point
-                    }
-                }
-
-                function openWindow(e) {
-
-                    var cid = e.target.getExtData();
-                    var pos = e.target.getPosition();
-
-                    scope.getDetail(cid, pos, showPop);
-                }
-
-                function showPop(item, pos) {
-                    if (item) {
-                        var custXml = "<div style='background: #FFFFFF;width: 210px;box-shadow:0 0 7px 2px rgba(86, 96, 117, 0.5);'>" +
-                                "      <div style='line-height: 35px;background: #144f92;color: #FFFFFF;text-align: center;'>" + item.name + "</div>" +
-                                "     <div style='line-height: 25px;padding: 0 10px;'>电压等级：" + item.level +
-                                " </div>" +
-                                "   <div style='line-height: 25px;padding: 0 10px;'>地址：" + item.address +
-                                "   </div>" +
-                                "  <div style='line-height: 25px;padding: 0 10px;'>站长：" + item.contactor +
-                                " </div>" +
-                                " <div style='line-height: 25px;padding: 0 10px;'>联系方式：" + item.contactortel +
-                                "  </div>" +
-                                "  <div style='line-height: 25px;padding: 0 10px;'>客户联系人：" + item.customer_contactor +
-                                "  </div>" +
-                                " <div style='line-height: 25px;padding: 0 10px;'>联系方式：" + item.customer_contactortel +
-                                " </div>" +
-                                " <div style='line-height: 25px;padding: 0 10px;color: #144f92;'>当月申报需量：" + item.requiredmd +
-                                "</div>" +
-                                " <div style='line-height: 25px;padding: 0 10px;color: #144f92;margin-bottom: 15px;'>当前负荷：" + item.currentmd +
-                                " </div>" +
-                                " <a href='/#/monitoring?id=" + item.cid + "' style='line-height: 35px;color:#de3661;border-top: 1px #de3661 solid;text-align: center;cursor: pointer;display: block;'>" +
-                                "     前往该站" +
-                                "     </a>" +
-                                "     <a href='/#/events?id=" + item.cid + "' style='line-height: 35px;color: #FFFFFF;background: #de3661;text-align: center;cursor: pointer;display: block;'>" +
-                                "     查看该站事件" +
-                                "    </a>" +
-                                "     </div>";
-
-                        var infoWindow = new AMap.InfoWindow({
-                            isCustom: true,
-                            closeWhenClickMap: true,
-                            offset: new AMap.Pixel(200, -50),
-                            content: custXml
-                        });
-                        infoWindow.open(mapObj, pos);
-                    }
-                }
-            } else {
-                console.log('mapLabData不存在...');
             }
+
 
         </script>
 

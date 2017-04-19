@@ -362,6 +362,11 @@
             return names ? '?' + names.substring(0, names.length - 1) : "";
         };
 
+        // 打印
+        $scope.print = function () {
+            alert('打印。');
+        };
+
         // dropdown set
         $scope.changeClent = function (obj) {
             if ($scope.show.clientName == obj.clientName) {

@@ -21,52 +21,52 @@
                 {
                     desc: '过流一段跳闸',
                     state: 'normal',
-                    color: '#d43875'
+                    color: '#f0a53d'
                 },
                 {
-                    desc: '3QF电压正常',
-                    state: 'caution',
-                    color: '#5f53a0'
+                    desc: '二段压变3ZK故障',
+                    state: 'normal',
+                    color: '#f0a53d'
                 },
                 {
                     desc: '过流二段跳闸',
                     state: 'danger',
-                    color: '#29945b'
+                    color: '#f0a53d'
                 },
                 {
                     desc: '2QF在运行位置分闸',
                     state: 'normal',
-                    color: '#d43875'
+                    color: '#f0a53d'
                 },
                 {
                     desc: '零流跳闸',
                     state: 'normal',
-                    color: '#d43875'
+                    color: '#f0a53d'
                 }, {
                     desc: '1ZK、3ZK小开关故障',
                     state: 'danger',
                     color: '#29945b'
                 }, {
-                    desc: '零流二段跳闸',
-                    state: 'caution',
-                    color: '#5f53a0'
-                }, {
-                    desc: '二段计量柜3ZK故障',
-                    state: 'caution',
-                    color: '#5f53a0'
-                }, {
                     desc: '弹簧未储能',
                     state: 'danger',
                     color: '#29945b'
                 }, {
-                    desc: '二段压变3ZK故障',
-                    state: 'normal',
-                    color: '#d43875'
+                    desc: '零流二段跳闸',
+                    state: 'caution',
+                    color: '#ef5c62'
+                }, {
+                    desc: '二段计量柜3ZK故障',
+                    state: 'caution',
+                    color: '#ef5c62'
                 }, {
                     desc: '自切跳闸',
                     state: 'caution',
-                    color: '#5f53a0'
-                }
+                    color: '#ef5c62'
+                }, {
+                    desc: '3QF电压正常',
+                    state: 'caution',
+                    color: '#ef5c62'
+                },
             ],
             branchData: {},      // 支线基本信息
             branchEqp: [],   // 支线 设备列表
