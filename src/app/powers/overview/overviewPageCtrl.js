@@ -123,9 +123,9 @@
                     "<div style='height: 5px;background: #dcdcdc;margin: 5px 0;'>" +
                     "<div style='display: inline-block;background: #1baeb3;height: 5px;float: left;width:" + percentage + ";'></div>" +
                     "</div>" +
-                    "<div style='line-height: 25px;padding: 0 10px;text-align: center;color: #1baeb3'>" + percentage +
+                    "<div style='line-height: 25px;padding: 0 10px;text-align: center;color: #1baeb3'>" +"需量占比："+ percentage +
                     "</div>" +
-                    "<a href='/#/monitoring?id=" + item.cid + "' class='map-btn-monitoring'>" +
+                    "<a href='/#/monitoring?id=" + item.cid + "' class='map-btn-event'>" +
                     "前往该站" +
                     "</a>" +
                     "<a href='/#/events?id=" + item.cid + "' class='map-btn-event'>" +

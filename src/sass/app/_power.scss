@@ -262,7 +262,7 @@ input[type=number]::-webkit-outer-spin-button {
 
 .common-table tbody tr td {
   text-align: center;
-  padding: 7px 0 !important;
+  padding: 3px 0 !important;
 }
 
 .common-table tbody tr:hover {
@@ -388,7 +388,7 @@ input[type=number]::-webkit-outer-spin-button {
   background: #FFFFFF;
   width: 210px;
   box-shadow: 0 0 7px 2px rgba(86, 96, 117, 0.5);
-  padding-bottom: 15px;
+  padding-bottom: 5px;
 }
 
 .map-btn-title {
@@ -398,24 +398,14 @@ input[type=number]::-webkit-outer-spin-button {
   text-align: center;
 }
 
-.map-btn-monitoring {
-  line-height: 35px;
-  color: #f0a53d;
-  border: 1px #f0a53d solid;
-  text-align: center;
-  cursor: pointer;
-  display: block;
-  margin: 0 30px 15px 30px;
-}
-
 .map-btn-event {
   line-height: 35px;
-  color: #FFFFFF;
-  background: #f0a53d;
+  color: #FFFFFF !important;
+  background: #f0a53d !important;
   text-align: center;
   cursor: pointer;
   display: block;
-  margin: 0 30px;
+  margin: 10px 20px;
 }
 
 .map-item {

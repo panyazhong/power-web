@@ -19,7 +19,7 @@
 
         $scope.show = {
             isLoading: true,
-            maxSize: 10,    // 每页显示的数量
+            maxSize: 15,    // 每页显示的数量
             displayedPages: 0,
             branchEqp: {},
 
