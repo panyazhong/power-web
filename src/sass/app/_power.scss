@@ -347,6 +347,16 @@ input[type=number]::-webkit-outer-spin-button {
 /*
  地图 css
 */
+.map-icon-title {
+  color: #fff;
+  background: #000;
+  opacity: 0.5;
+  padding: 3px 5px;
+  font-size: 12px;
+  white-space: nowrap;
+  border-radius: 5px !important
+}
+
 .map-content {
   background: #FFFFFF;
   width: 210px;

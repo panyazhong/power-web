@@ -31,7 +31,7 @@
 
                     Sidebar.query({},
                         function (data) {
-                            SidebarCache.create(data);
+                            // SidebarCache.create(data);
                             $cookies.putObject("clientScope", data.clients, {expires: new Date(new Date().getTime() + 24 * 60 * 60 * 1000)});
                         }, function (err) {
                             HttpToast.toast(err);
