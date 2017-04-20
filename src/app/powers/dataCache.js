@@ -7,6 +7,7 @@
         .factory("ExportPrefix", exportPrefix)    // 用来配置图片前缀！！！！！正式需替换
         .factory("KeywordCache", keywordCache)  // key
         .factory("SidebarCache", sidebarCache)  // 侧边栏和地图数据
+        .factory("locals", locals);
 
     function pageTopCache() {
         return {
@@ -113,6 +114,23 @@
         };
 
         return cache;
+    }
+
+    function locals($window) {
+        return {
+            put: function (key, value) {
+                $window.localStorage[key] = value;
+            },
+            get: function (key, defValue) {
+                return $window.localStorage[key] || defValue;
+            },
+            putObject: function (key, value) {
+                $window.localStorage[key] = JSON.stringify(value);
+            },
+            getObject: function (key) {
+                return JSON.parse($window.localStorage[key] || '{}');
+            }
+        }
     }
 
 })();

@@ -20,7 +20,7 @@
             // 模拟登陆
             User.login({
                     account: 111,
-                    psw: 1111111
+                    psw: 111111
                 },
                 function (data) {
                     $cookies.putObject("uScope", data, {expires: new Date(new Date().getTime() + 24 * 60 * 60 * 1000)});
