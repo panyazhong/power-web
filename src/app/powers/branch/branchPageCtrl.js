@@ -7,7 +7,8 @@
 
     angular.module('BlurAdmin.power.branch')
         .controller('branchPageCtrl', branchPageCtrl)
-        .controller('editDeviceCtrl', editDeviceCtrl);
+        .controller('editDeviceCtrl', editDeviceCtrl)
+        .controller('modalDelDeviceCtrl', modalDelDeviceCtrl);
 
     /** @ngInject */
     function branchPageCtrl($scope, $stateParams, Branch, HttpToast, Device, ToastUtils, BranchimgHelper,
@@ -138,14 +139,23 @@
          */
         $scope.delItem = function (did) {
 
-            Device.delete({
-                    did: did
-                },
-                function (data) {
-                    ToastUtils.openToast('success', data.message);
-                    $scope.queryList();
-                }, function (err) {
-                    HttpToast.toast(err);
+            ModalUtils.openMsg('app/powers/modal/dangerDelDevice.html', '',
+                modalDelDeviceCtrl, {},
+                function (info) {
+                    // 传值走这里
+                    if (info) {
+                        Device.delete({
+                                did: did
+                            },
+                            function (data) {
+                                ToastUtils.openToast('success', data.message);
+                                $scope.queryList();
+                            }, function (err) {
+                                HttpToast.toast(err);
+                            });
+                    }
+                }, function (empty) {
+                    // 不传值关闭走这里
                 });
 
         };
@@ -154,7 +164,7 @@
 
     // 编辑设备ctrl，若修改在在台账修改
     function editDeviceCtrl($scope, KeywordCache, SidebarCache, ToastUtils, Device, $cookies, HttpToast,
-                            DeviceHelper, Log, Sidebar, Keyword, params, DeviceEdit) {
+                            DeviceHelper, Log, Sidebar, Keyword, params, DeviceEdit, ModalUtils) {
 
         $scope.did = params.did;
         $scope.queryDeviceDetail = function () {
@@ -459,14 +469,23 @@
                 params = DeviceHelper.setDetail(params, $scope.form.detail);
             }
 
-            DeviceEdit.update(params,
-                function (data) {
-                    ToastUtils.openToast('success', data.message);
-                    $scope.$close(data);
-                }, function (err) {
-                    HttpToast.toast(err);
-                });
+            ModalUtils.openMsg('app/powers/modal/infoEditDevice.html', '',
+                modalDelDeviceCtrl, {},
+                function (info) {
+                    // 传值走这里
+                    if (info) {
+                        DeviceEdit.update(params,
+                            function (data) {
+                                ToastUtils.openToast('success', data.message);
+                                $scope.$close(data);
+                            }, function (err) {
+                                HttpToast.toast(err);
+                            });
 
+                    }
+                }, function (empty) {
+                    // 不传值关闭走这里
+                });
         };
 
         // dropdown set
@@ -539,6 +558,15 @@
         };
         $scope.togglelastrepairDatepicker = function () {
             $scope.data.lastrepair.isOpen = !$scope.data.lastrepair.isOpen;
+        };
+
+    }
+
+    function modalDelDeviceCtrl($scope) {
+
+        $scope.submit = function () {
+            var data = 'submit';
+            $scope.$close(data);
         };
 
     }

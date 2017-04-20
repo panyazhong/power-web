@@ -83,7 +83,26 @@
                     cancelCB(result);
                 });
 
-            }
+            },
+            openMsg: function (page, size, ctrl, params, saveCB, cancelCB) {
+
+                $uibModal.open({
+                    animation: true,
+                    templateUrl: page,
+                    size: size,
+                    controller: ctrl,
+                    // appendTo: angular.element('#' + eleId),
+                    resolve: {
+                        params: params
+                    },
+                    windowTopClass: "power-modal-layout-msg"
+                }).result.then(function (result) {
+                    saveCB(result);
+                }, function (result) {
+                    cancelCB(result);
+                });
+
+            },
         }
     }
 
