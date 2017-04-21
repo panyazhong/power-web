@@ -333,7 +333,7 @@
 
     }
 
-    function addDeviceCtrl($scope, KeywordCache, SidebarCache, ToastUtils, Device, $cookies, HttpToast,
+    function addDeviceCtrl($scope, KeywordCache, SidebarCache, ToastUtils, Device, locals, HttpToast,
                            DeviceHelper, Log, Sidebar, Keyword) {
 
         $scope.data = {
@@ -548,7 +548,7 @@
             }
 
             var params = $scope.form.base;
-            params.uid = $cookies.getObject('uScope').uid;
+            params.uid = locals.getObject('user').uid;
             if ($scope.show.deviceType == '变压器') {
                 params = DeviceHelper.setDetail(params, $scope.form.detail);
             }
@@ -637,7 +637,7 @@
 
     }
 
-    function editDeviceCtrl($scope, KeywordCache, SidebarCache, ToastUtils, Device, $cookies, HttpToast,
+    function editDeviceCtrl($scope, KeywordCache, SidebarCache, ToastUtils, Device, locals, HttpToast,
                             DeviceHelper, Log, Sidebar, Keyword, params, DeviceEdit, ModalUtils) {
 
         $scope.did = params.did;
@@ -936,7 +936,7 @@
             }
 
             var params = $scope.form.base;
-            params.uid = $cookies.getObject('uScope').uid;
+            params.uid = locals.getObject('user').uid;
 
             params.did = $scope.did;    // 修改比新建多了did参数
             if ($scope.show.deviceType == '变压器') {

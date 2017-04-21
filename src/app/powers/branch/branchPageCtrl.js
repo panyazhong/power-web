@@ -12,7 +12,7 @@
 
     /** @ngInject */
     function branchPageCtrl($scope, $stateParams, Branch, HttpToast, Device, ToastUtils, BranchimgHelper,
-                            PageTopCache, ModalUtils, $cookies) {
+                            PageTopCache, ModalUtils, locals) {
 
         PageTopCache.cache.state = 'monitoring';
 
@@ -88,7 +88,7 @@
         };
 
         $scope.init = function () {
-            $scope.show.bid = $stateParams.bid || $cookies.get('bid');
+            $scope.show.bid = $stateParams.bid || locals.get('bid', '');
 
             if (!$scope.show.bid) {
                 ToastUtils.openToast('warning', '请先选择一个支线！');
@@ -163,7 +163,7 @@
     }
 
     // 编辑设备ctrl，若修改在在台账修改
-    function editDeviceCtrl($scope, KeywordCache, SidebarCache, ToastUtils, Device, $cookies, HttpToast,
+    function editDeviceCtrl($scope, KeywordCache, SidebarCache, ToastUtils, Device, locals, HttpToast,
                             DeviceHelper, Log, Sidebar, Keyword, params, DeviceEdit, ModalUtils) {
 
         $scope.did = params.did;
@@ -462,7 +462,7 @@
             }
 
             var params = $scope.form.base;
-            params.uid = $cookies.getObject('uScope').uid;
+            params.uid = locals.getObject('user').uid;
 
             params.did = $scope.did;    // 修改比新建多了did参数
             if ($scope.show.deviceType == '变压器') {

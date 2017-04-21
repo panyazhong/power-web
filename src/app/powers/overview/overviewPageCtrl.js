@@ -9,7 +9,7 @@
         .controller('overviewPageCtrl', overviewPageCtrl);
 
     /** @ngInject */
-    function overviewPageCtrl($scope, Overview, Sidebar, SidebarCache, Log, HttpToast, $timeout) {
+    function overviewPageCtrl($scope, Overview, Sidebar, SidebarCache, Log, HttpToast, $timeout, locals) {
 
         // $timeout(function () {
         //     $scope.show.mapData = [
@@ -123,7 +123,7 @@
                     "<div style='height: 5px;background: #dcdcdc;margin: 5px 0;'>" +
                     "<div style='display: inline-block;background: #1baeb3;height: 5px;float: left;width:" + percentage + ";'></div>" +
                     "</div>" +
-                    "<div style='line-height: 25px;padding: 0 10px;text-align: center;color: #1baeb3'>" +"需量占比："+ percentage +
+                    "<div style='line-height: 25px;padding: 0 10px;text-align: center;color: #1baeb3'>" + "需量占比：" + percentage +
                     "</div>" +
                     "<a href='/#/monitoring?id=" + item.cid + "' class='map-btn-event'>" +
                     "前往该站" +
@@ -148,11 +148,14 @@
             Sidebar.query({},
                 function (data) {
                     SidebarCache.create(data);
+                    locals.putObject('sidebar', data.sidebar);
                     $scope.show.mapData = SidebarCache.getData().clients;
                     $scope.setMap();
                 }, function (err) {
                     HttpToast.toast(err);
                 });
+
+            console.log('op................');
         };
         $scope.init();
 

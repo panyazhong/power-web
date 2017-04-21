@@ -17,38 +17,36 @@
 
         $scope.test = function () {
 
-            Sidebar.query({},
+            // 模拟登陆
+            User.login({
+                    account: 111,
+                    psw: 111111
+                },
                 function (data) {
-                    // SidebarCache.create(data);
-                    $cookies.putObject("clientScope", data.clients, {expires: new Date(new Date().getTime() + 24 * 60 * 60 * 1000)});
+                    $cookies.putObject("uScope", data, {expires: new Date(new Date().getTime() + 24 * 60 * 60 * 1000)});
+                    // init cookie
+                    $cookies.remove('cid');
+                    $cookies.remove('bid');
+
+                    Sidebar.query({},
+                        function (data) {
+                            // SidebarCache.create(data);
+                            $cookies.putObject("clientScope", data.clients, {expires: new Date(new Date().getTime() + 24 * 60 * 60 * 1000)});
+                        }, function (err) {
+                            console.log("err" + JSON.stringify(err));
+
+                            HttpToast.toast(err);
+                        });
+
                 }, function (err) {
-                    console.log("err" + JSON.stringify(err));
+
+                    console.log("errDemo:" + JSON.stringify(err));
 
                     HttpToast.toast(err);
                 });
 
-            // // 模拟登陆
-            // User.login({
-            //         account: 111,
-            //         psw: 111111
-            //     },
-            //     function (data) {
-            //         $cookies.putObject("uScope", data, {expires: new Date(new Date().getTime() + 24 * 60 * 60 * 1000)});
-            //         // init cookie
-            //         $cookies.remove('cid');
-            //         $cookies.remove('bid');
-            //
-            //
-            //
-            //     }, function (err) {
-            //
-            //         console.log("errDemo:"+JSON.stringify(err));
-            //
-            //         HttpToast.toast(err);
-            //     });
-
         };
-        $scope.test();
+        // $scope.test();
 
     }
 

@@ -9,7 +9,7 @@
         .controller('BaSidebarCtrl', BaSidebarCtrl);
 
     /** @ngInject */
-    function BaSidebarCtrl($scope, baSidebarService, $state) {
+    function BaSidebarCtrl($scope, baSidebarService, $state, locals) {
 
         // $scope.menuItems = baSidebarService.getMenuItems();
         // $scope.defaultSidebarState = $scope.menuItems[0].stateRef;
@@ -82,8 +82,12 @@
             }]
         };
 
+        console.log('sb ...................')
+
+        var info = locals.getObject('sidebar');
+
         $scope.setLeftMenu = function (obj) {
-            var data = obj.sidebar;
+            var data = obj;
             var menuData = [];
             data.map(function (item) {
                 // 一级菜单
@@ -122,7 +126,7 @@
             return menuData;
         };
 
-        $scope.menuItems = $scope.setLeftMenu(data);    // 设置侧边栏数据
+        $scope.menuItems = $scope.setLeftMenu(info);    // 设置侧边栏数据
         $scope.defaultSidebarState = 'test';    // 默认选中的state
 
         $scope.$on('$stateChangeSuccess', function () {

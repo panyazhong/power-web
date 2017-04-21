@@ -10,17 +10,17 @@
 
     /** @ngInject */
     function monitoringPageCtrl($scope, $state, $location, PageTopCache, Clientimg, ClientimgHelper,
-                                Branch, HttpToast, $cookies, SidebarCache, Sidebar, Log) {
+                                Branch, HttpToast, SidebarCache, Sidebar, Log, locals) {
 
         PageTopCache.cache.state = $state.$current; // active
-        $location.search().id ? $cookies.put('cid', $location.search().id) : '';
+        $location.search().id ? locals.put('cid', $location.search().id) : '';
 
         $scope.show = {};
         $scope.branchData = {};
 
         $scope.queryClientImg = function (cid) {
 
-            var id = $cookies.get('cid') ? $cookies.get('cid') : cid;   //cookie不会空取put的，否则默认取第一个
+            var id = locals.get('cid', '') ? locals.get('cid', '') : cid;   //cookie不会空取put的，否则默认取第一个
 
             Clientimg.query({
                     cid: id
@@ -72,7 +72,7 @@
 
             $state.go('branch', {bid: id}, {reload: true});
 
-            $cookies.put('bid', id);
+            locals.put('bid', id);
         }
 
     }

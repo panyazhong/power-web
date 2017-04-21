@@ -9,7 +9,7 @@
         .controller('pageTopCtrl', pageTopCtrl);
 
     /** @ngInject */
-    function pageTopCtrl($scope, $state, PageTopCache) {
+    function pageTopCtrl($scope, $state, PageTopCache, locals) {
 
         $scope.show = {
             topBarData: [
@@ -45,7 +45,8 @@
                     title: '平台设置',
                     state: 'settings'
                 }],
-            cache: PageTopCache.cache
+            cache: PageTopCache.cache,
+            userName: locals.getObject('user').name
         };
 
         $scope.changeState = function (state) {
