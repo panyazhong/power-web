@@ -18,16 +18,47 @@
                  ng-click="changeState(item.state)">
                 {{item.title}}
 
+                <!-- Single button -->
+                <!--<div class="select-right"  ng-show="$index == show.topBarData.length-1">-->
+                <!--<button type="button" class="btn-def btn-trans" style="text-align: left"-->
+                <!--&gt;-->
+                <!--<span class="caret"></span>{{show.deviceType}}-->
+                <!--</button>-->
+
+                <!---->
+                <!--</div>-->
+                <span uib-dropdown uib-dropdown-toggle ng-disabled="disabled"
+                      ng-show="$index == show.topBarData.length-1" style="display: inline-block;width: 20px">
+                    <ul class="dropdown-menu common-dp-ul" uib-dropdown-menu role="menu"
+                        aria-labelledby="single-button">
+                    <li role="menuitem"
+                        ng-repeat="info in show.devicetypeArr track by $index">
+                        <a ng-bind="info.name" ng-click="setDeviceType(info)"></a>
+                    </li>
+                    </ul>
+                </span>
+
                 <i class="ion-arrow-down-b" style="margin: 0 5px"
                    ng-show="$index == show.topBarData.length-1"></i>
                 <span class="page-top-divider" ng-show="$index == show.topBarData.length-1"></span>
+
             </div>
+
+            <!--<div class="page-top-div page-top-content-title" style="width: 12%;"-->
+            <!--ng-repeat="item in show.topBarData"-->
+            <!--ng-class="show.cache.state == item.state ? 'page-top-title-active' : '' "-->
+            <!--ng-click="changeState(item.state)">-->
+            <!--{{item.title}}-->
+
+            <!--<i class="ion-arrow-down-b" style="margin: 0 5px"-->
+            <!--ng-show="$index == show.topBarData.length-1"></i>-->
+            <!--<span class="page-top-divider" ng-show="$index == show.topBarData.length-1"></span>-->
+            <!--</div>-->
 
         </div>
         <div class="page-top-div" style="width: 20%;">
 
             <div class="page-top-div page-top-common-title" style="width: 50%;">
-                <!--{{'欢迎您，' + data.userInfo.username}}-->
                 欢迎您，{{show.userName}}
             </div>
             <div class="page-top-div page-top-common-title" style="width: 50%;">
