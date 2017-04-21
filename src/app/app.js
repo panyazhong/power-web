@@ -25,4 +25,18 @@ angular.module('BlurAdmin', [
     'BlurAdmin.power',
     // 'BlurAdmin.pages'
 
-]);
+]).run(function (Log, locals) {
+
+    Log.i('ng is run...');
+
+    var userInfo = locals.getObject('user');
+
+    if (JSON.stringify(userInfo) == '{}') {
+
+        // local
+        window.location.assign('/auth.html');
+        // rel
+        // window.location.assign('/aa/bb/cc');
+    }
+
+});

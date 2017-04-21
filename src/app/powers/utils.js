@@ -3,7 +3,7 @@
 
     angular.module('Utils', [])
         .service('ToastUtils', toastUtils)
-        .service('HttpToast', httpToast)
+        .service('HttpToast', httpToast)        // 用来配置用用户信息过期跳转！！！！！正式需替换
         .service('ModalUtils', modalUtils)
         .service('Log', log);
 
@@ -51,11 +51,20 @@
         }
     }
 
-    function httpToast(ToastUtils) {
+    function httpToast(ToastUtils, locals) {
         return {
             toast: function (err) {
-                if (err.message) {  // 失败处理
-                    ToastUtils.openToast('error', err.message);
+                if (err.status == 403) {
+                    locals.clear();
+                    // local
+                    window.location.assign('/auth.html');
+                    // rel
+                    // window.location.assign('/aa/bb/cc');
+                    return;
+                }
+
+                if (err.data && err.data.message) {  // 失败msg处理
+                    ToastUtils.openToast('error', err.data.message);
                 } else {
                     ToastUtils.openToast('error', '很抱歉，无法从服务器获取数据。');
                 }

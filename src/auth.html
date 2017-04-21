@@ -10,19 +10,10 @@
     <link rel="icon" type="image/png" sizes="32x32" href="assets/img/favicon-32x32.png">
     <link rel="icon" type="image/png" sizes="96x96" href="assets/img/favicon-96x96.png">
 
-    <style scope>
-        body {
-            font-family: 'Microsoft Yahei', 'Helvetica Neue', Helvetica, Arial, sans-serif !important;
-        }
-
-        .login-item {
-            width: 300px !important;
-            margin: auto !important;
-        }
-    </style>
-
     <script src="http://oba97lyy4.bkt.clouddn.com/jquery-2.2.2.js"></script>
     <script type="text/javascript">
+
+        window.localStorage.clear();    // init local
 
         //local host
         var host = 'http://192.168.0.150/login';
@@ -33,19 +24,36 @@
             var account = $('#inputUsername').val();
             var pwd = $('#inputPwd').val();
             if (account && pwd) {
-                $.post(host, {
+                var params = {
                     account: account,
                     psw: pwd
-                }).done(function (data) {
-                    localStorage.user = JSON.stringify(data);
+                };
+                $.ajax({
+                    url: host,
+                    data: params,
+                    contentType: 'application/x-www-form-urlencoded',
+                    type: 'POST',
+                    xhrFields: {
+                        withCredentials: true
+                    },
+                    success: function (data) {
 
-                }).fail(function (err) {
-                    if (err.responseJSON && err.responseJSON.message) {
-                        alert(err.responseJSON.message);
-                    } else {
-                        alert('很抱歉，无法从服务器获取数据。');
+                        localStorage.user = JSON.stringify(data);
+
+                        // local
+                        window.location.assign('/index.html');
+                        // rel
+                        // window.location.assign('/aa/bb/cc');
+                    },
+                    error: function (err) {
+                        if (err.responseJSON && err.responseJSON.message) {
+                            alert(err.responseJSON.message);
+                        } else {
+                            alert('很抱歉，无法从服务器获取数据。');
+                        }
                     }
-                });
+                })
+
             } else {
                 alert("请填入账号和密码。");
             }
@@ -67,8 +75,8 @@
 <body>
 <main class="auth-main">
     <div class="auth-block" style="text-align: center;">
-        <img src="http://imgsrc.baidu.com/forum/w%3D580%3B/sign=0bdab4698f35e5dd902ca5d746fda7ef/18d8bc3eb13533fac693c715a2d3fd1f41345be7.jpg"
-             alt="网站logo">
+        <img src="https://upload.wikimedia.org/wikipedia/commons/2/28/IU_after_shooting_%22Producer%22%2C_21_April_2015_03.jpg"
+             alt="网站logo" style="width: 300px;">
         <form class="form-horizontal" style="margin-top: 30px;">
             <div class="">
                 <input type="text" class="form-control login-item" id="inputUsername"

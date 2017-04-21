@@ -17,32 +17,35 @@
 
         $scope.test = function () {
 
-            // 模拟登陆
-            User.login({
-                    account: 111,
-                    psw: 111111
-                },
+            Sidebar.query({},
                 function (data) {
-                    $cookies.putObject("uScope", data, {expires: new Date(new Date().getTime() + 24 * 60 * 60 * 1000)});
-                    // init cookie
-                    // $cookies.remove('clientScope');
-                    $cookies.remove('cid');
-                    $cookies.remove('bid');
-
-                    Sidebar.query({},
-                        function (data) {
-                            // SidebarCache.create(data);
-                            $cookies.putObject("clientScope", data.clients, {expires: new Date(new Date().getTime() + 24 * 60 * 60 * 1000)});
-                        }, function (err) {
-                            HttpToast.toast(err);
-                        });
-
+                    // SidebarCache.create(data);
+                    $cookies.putObject("clientScope", data.clients, {expires: new Date(new Date().getTime() + 24 * 60 * 60 * 1000)});
                 }, function (err) {
-
-                    console.log("errDemo:"+JSON.stringify(err));
+                    console.log("err" + JSON.stringify(err));
 
                     HttpToast.toast(err);
                 });
+
+            // // 模拟登陆
+            // User.login({
+            //         account: 111,
+            //         psw: 111111
+            //     },
+            //     function (data) {
+            //         $cookies.putObject("uScope", data, {expires: new Date(new Date().getTime() + 24 * 60 * 60 * 1000)});
+            //         // init cookie
+            //         $cookies.remove('cid');
+            //         $cookies.remove('bid');
+            //
+            //
+            //
+            //     }, function (err) {
+            //
+            //         console.log("errDemo:"+JSON.stringify(err));
+            //
+            //         HttpToast.toast(err);
+            //     });
 
         };
         $scope.test();

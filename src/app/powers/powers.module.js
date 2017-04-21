@@ -22,7 +22,7 @@
     /** @ngInject */
     function routeConfig($urlRouterProvider) {
 
-        $urlRouterProvider.otherwise('/demo');  //  正式修改！~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+        $urlRouterProvider.otherwise('/overview');  // 默认进入概况总览
 
     }
 
