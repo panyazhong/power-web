@@ -22,6 +22,7 @@ $text-color: #ffffff;
   border-radius: 5px;
   color: $text-color;
 }
+
 .form-control[disabled], .form-control[readonly], fieldset[disabled] .form-control {
   @include placeholderStyle($text-color, 0.6);
 }
@@ -145,10 +146,49 @@ a.forgot-pass {
 }
 
 .btn-auth {
-  color: #ffffff!important;
+  color: #3b89ce !important;
+  background: #fff !important;
+  border: transparent !important;
 }
 
-.login-item {
+.auth-main .login-item {
   width: 300px !important;
   margin: auto !important;
+}
+
+.auth-main .login-form {
+  border: transparent !important;
+  background: #fff !important;
+  color: #3b89ce !important;
+}
+
+.auth-main .login-content {
+  text-align: center;
+  background: transparent !important;
+  padding: 0;
+  width: 450px !important;
+  border-radius: 5px !important;
+}
+
+/*
+  placeholder 颜色
+*/
+/* do not group these rules */
+.auth-main *::-webkit-input-placeholder {
+  color: #3b89ce !important;
+}
+
+.auth-main *:-moz-placeholder {
+  /* FF 4-18 */
+  color: #3b89ce !important;
+}
+
+.auth-main *::-moz-placeholder {
+  /* FF 19+ */
+  color: #3b89ce !important;
+}
+
+.auth-main *:-ms-input-placeholder {
+  /* IE 10+ */
+  color: #3b89ce !important;
 }

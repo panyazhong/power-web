@@ -50,7 +50,7 @@
 }
 
 @mixin main-background() {
-  $mainBgUrl: $images-root + 'blur-bg.jpg';
+  //$mainBgUrl: $images-root + 'blur-bg.jpg';
 
   &::before {
     content: '';
@@ -59,7 +59,7 @@
     height: 100%;
     top: 0;
     left: 0;
-    background: url($mainBgUrl) no-repeat center center;
+    //background: url($mainBgUrl) no-repeat center center;
     background-size: cover;
     will-change: transform;
     z-index: -1;

@@ -10,6 +10,12 @@
     <link rel="icon" type="image/png" sizes="32x32" href="assets/img/favicon-32x32.png">
     <link rel="icon" type="image/png" sizes="96x96" href="assets/img/favicon-96x96.png">
 
+    <style scope>
+        body {
+            font-family: 'Microsoft Yahei', 'Helvetica Neue', Helvetica, Arial, sans-serif !important;
+        }
+    </style>
+
     <script src="http://oba97lyy4.bkt.clouddn.com/jquery-2.2.2.js"></script>
     <script type="text/javascript">
 
@@ -72,27 +78,40 @@
     <!-- endbuild -->
 </head>
 
-<body>
+<body style="background: url(assets/img/app/power/bg_login.jpg) no-repeat center center">
 <main class="auth-main">
-    <div class="auth-block" style="text-align: center;">
-        <img src="https://upload.wikimedia.org/wikipedia/commons/2/28/IU_after_shooting_%22Producer%22%2C_21_April_2015_03.jpg"
-             alt="网站logo" style="width: 300px;">
-        <form class="form-horizontal" style="margin-top: 30px;">
-            <div class="">
-                <input type="text" class="form-control login-item" id="inputUsername"
-                       placeholder="输入账号">
+    <div class="auth-block login-content">
+
+        <div style="background: rgba(44,132,193, 0.55);padding: 32px;">
+            <img src="assets/img/app/power/logo_login.png" alt="logo" style="height: 100px;">
+
+            <div style="padding: 20px 0;font-size: 22px;font-weight: 200">
+                恒汇电力设备数据监控平台
             </div>
-            <div class="" style="margin-top: 15px;">
-                <input type="password" class="form-control login-item" id="inputPwd"
-                       placeholder="输入密码">
-            </div>
-            <div class="" style="margin-top: 30px;">
-                <button onclick="login()" type="button"
-                        class="btn btn-default btn-auth login-item">登录
-                </button>
-            </div>
-        </form>
+
+            <form class="form-horizontal" style="margin-top: 30px;">
+                <div class="">
+                    <input type="text" class="form-control login-item login-form" id="inputUsername"
+                           placeholder="输入账号">
+                </div>
+                <div class="" style="margin-top: 15px;">
+                    <input type="password" class="form-control login-item login-form" id="inputPwd"
+                           placeholder="输入密码">
+                </div>
+                <div class="" style="margin-top: 30px;">
+                    <button onclick="login()" type="button"
+                            class="btn btn-default btn-auth login-item">登录
+                    </button>
+                </div>
+            </form>
+        </div>
+
+        <div style="padding-top: 32px;">
+            如忘记密码或无法登录，请电话联系平台客服人员：021-11112222
+        </div>
+
     </div>
+
 </main>
 </body>
 
