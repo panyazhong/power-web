@@ -14,8 +14,9 @@
         'BlurAdmin.power.report',
         'BlurAdmin.power.settings',
         'BlurAdmin.power.branch',
-
-        'BlurAdmin.power.demo', // 测试，模拟登陆，正式修改！~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+        'BlurAdmin.power.setuser',
+        'BlurAdmin.power.setpwd',
+        'BlurAdmin.power.setalarm'
     ])
         .config(routeConfig);
 

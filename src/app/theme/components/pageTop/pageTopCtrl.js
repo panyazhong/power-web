@@ -46,12 +46,38 @@
                     state: 'settings'
                 }],
             cache: PageTopCache.cache,
-            userName: locals.getObject('user').name
+            userName: locals.getObject('user').name,
+            setData: [
+                {
+                    title: '用户设置',
+                    state: 'setuser'
+                },
+                {
+                    title: '报警设置',
+                    state: 'setpwd'
+                },
+                {
+                    title: '管理员设置',
+                    state: 'setalarm'
+                }
+            ]
         };
 
-        $scope.changeState = function (state) {
-            $state.go(state);
-            PageTopCache.cache.state = state;
+        $scope.changeState = function (item) {
+            PageTopCache.cache.state = item.state;
+
+            if (item.state == 'settings') {
+                $scope.isSetting = true;
+                item.isopen = !item.isopen;
+                return;
+            }
+
+            $scope.isSetting = false;
+            $state.go(item.state);
+        };
+
+        $scope.changeSetState = function (obj) {
+            $state.go(obj.state);
         };
 
         $scope.logout = function () {

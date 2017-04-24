@@ -1,7 +1,3 @@
-/**
- * @author v.lugovsky
- * created on 16.12.2015
- */
 (function () {
     'use strict';
 
@@ -9,7 +5,8 @@
         .controller('settingsPageCtrl', settingsPageCtrl);
 
     /** @ngInject */
-    function settingsPageCtrl($scope) {
+    function settingsPageCtrl($scope, PageTopCache) {
+        PageTopCache.cache.state = 'settings';
 
     }
 
