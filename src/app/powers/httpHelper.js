@@ -4,7 +4,8 @@
     angular.module('HttpHelper', ['DataCache'])
         .factory("ClientimgHelper", clientimgHelper)
         .factory("BranchimgHelper", branchimgHelper)
-        .factory("DeviceHelper", deviceHelper);
+        .factory("DeviceHelper", deviceHelper)
+        .factory("UserHelper", userHelper);
 
     function clientimgHelper(ImgPrefix, _) {
 
@@ -81,6 +82,21 @@
                 params.tapgear = obj.tapgear;
 
                 return params;
+            }
+        }
+    }
+
+    function userHelper(_) {
+
+        return {
+            query: function (obj) {
+                // 用户列表
+                obj.map(function (item) {
+                    var arr = item.auth_id.split("/");
+                    item.authList = arr;
+                });
+
+                return _.cloneDeep(obj);
             }
         }
     }

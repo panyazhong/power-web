@@ -91,7 +91,7 @@
         // 用户
         .factory('User', function (Resource) {
             var config = {
-                url: 'login',
+                url: 'user',
                 paramsDefault: {},
                 action: {
                     login: {
