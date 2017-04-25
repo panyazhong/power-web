@@ -1,0 +1,23 @@
+<div class="modal-create-user" style="max-height: 580px;overflow-y: auto">
+
+    <div style="margin-bottom: 15px">
+        <button type="button" class="btn-def btn-submit-blue" style="border-radius: 0;">
+            用户详情
+        </button>
+
+        <div style="background:#3b89ce;height: 2px"></div>
+    </div>
+
+    <div include-with-scope="app/powers/setuser/widgets/userBase.html"></div>
+
+    <div style="margin-top: 30px;text-align: center">
+        <button class="btn-def btn-submit-blue" style="width: 80px;margin: 15px;"
+                ng-click="submit()">编辑
+        </button>
+
+        <button class="btn-def btn-main-blue" style="width: 80px;margin: 15px;"
+                ng-click="$dismiss()">取消
+        </button>
+    </div>
+
+</div>

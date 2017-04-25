@@ -91,8 +91,12 @@
         // 用户
         .factory('User', function (Resource) {
             var config = {
-                url: 'user',
-                paramsDefault: {},
+                url: 'user/:psw/:logout/:uid',
+                paramsDefault: {
+                    psw: '@psw',
+                    logout: '@logout',
+                    uid: '@uid',
+                },
                 action: {
                     login: {
                         method: 'POST'
@@ -103,11 +107,37 @@
                     },
                     update: {
                         method: 'PUT'
+                    },
+                    editpwd: {
+                        method: 'POST'
+                    },
+                    exit: {
+                        method: 'GET',
+                    },
+                    create: {
+                        method: 'POST'
+                    },
+                    queryDetail: {
+                        method: 'GET'
                     }
                 }
             };
             return Resource(config);
         })
+        // 新建修改user
+        .factory('EditUser', function (Resource) {
+            var config = {
+                url: 'user',
+                paramsDefault: {},
+                action: {
+                    create: {
+                        method: 'POST'
+                    }
+                }
+            };
+            return Resource(config);
+        })
+
         // 侧边栏
         .factory('Sidebar', function (Resource) {
             var config = {

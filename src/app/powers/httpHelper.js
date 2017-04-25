@@ -86,7 +86,7 @@
         }
     }
 
-    function userHelper(_) {
+    function userHelper(_, ToastUtils) {
 
         return {
             query: function (obj) {
@@ -97,6 +97,26 @@
                 });
 
                 return _.cloneDeep(obj);
+            },
+            add: function (isMust, formObj) {
+
+                for (var Key in formObj) {
+                    if (isMust.indexOf(Key) == -1) {  //必选
+                        if (!formObj[Key]) {
+                            ToastUtils.openToast('warning', '请完善所有必选信息！');
+                            return false;
+                        }
+                    }
+                }
+
+                var params = {};
+                for (var Key in formObj) {
+                    if (formObj[Key]) {
+                        params[Key] = formObj[Key];
+                    }
+                }
+
+                return params;
             }
         }
     }

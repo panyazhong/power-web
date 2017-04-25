@@ -1,6 +1,6 @@
 <!--<div class="horizontal-scroll">-->
 <div>
-    <table class="table table-bordered table-hover common-table" st-table="show.branchEqp"
+    <table class="table table-bordered table-hover common-table" st-table="show.userList"
            st-safe-src="rowCollection">
         <thead>
         <tr>
@@ -14,24 +14,24 @@
         </thead>
         <tbody>
         <tr ng-repeat="item in show.userList">
-            <td>
+            <td ng-click="edit(item.uid)">
                 <span ng-bind="item.name"></span>
             </td>
-            <td>
+            <td ng-click="edit(item.uid)">
                 <span ng-bind="item.account"></span>
             </td>
-            <td>
+            <td ng-click="edit(item.uid)">
                 <span ng-bind="item.authority"></span>
             </td>
-            <td>
+            <td ng-click="edit(item.uid)">
                 <span ng-bind="item.code"></span>
             </td>
             <td>
                 <div class="select-right" uib-dropdown
                      style="display: inline-block;min-width: 160px;">
-                    <button type="button" class="btn-def btn-trans" style="text-align: left"
+                    <button type="button" class="btn-def btn-transparent btn-autospace"
                             uib-dropdown-toggle ng-disabled="disabled">
-                        <span class="caret"></span>{{item.authList[0]}}
+                        <span class="caret"></span>{{item.auth_id}}
                     </button>
 
                     <ul class="dropdown-menu common-dp-ul" uib-dropdown-menu role="menu"
@@ -43,7 +43,7 @@
                     </ul>
                 </div>
             </td>
-            <td>
+            <td ng-click="edit(item.uid)">
                 <span ng-bind="item.status"></span>
             </td>
         </tr>

@@ -17,6 +17,7 @@
 
         $scope.show = {};
         $scope.branchData = {};
+        $scope.cName = '';
 
         $scope.queryClientImg = function (cid) {
 
@@ -27,6 +28,8 @@
                 },
                 function (data) {
                     $scope.show = ClientimgHelper.query(data);
+                    $scope.cName = data.client.name;
+                    PageTopCache.currentState.state = data.client.name + " / 一次系统图";
                 }, function (err) {
                     HttpToast.toast(err);
                 });
@@ -73,6 +76,7 @@
             $state.go('branch', {bid: id}, {reload: true});
 
             locals.put('bid', id);
+            locals.put('cName', $scope.cName);
         }
 
     }

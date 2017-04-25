@@ -1,7 +1,44 @@
-<div ba-panel ba-panel-class="profile-page">
-    <div class="panel-content">
+<div ba-panel>
+    <div class="setpwd">
 
-        <h3> setpwd </h3>
+        <div class="setpwd-block">
+
+            <h4>修改密码</h4>
+
+            <form class="form-horizontal">
+
+                <div class="form-group" style="margin-top: 30px">
+                    <label class="col-sm-4 control-label">请输入原密码</label>
+                    <div class="col-sm-6">
+                        <input type="password" class="form-control" ng-model="form.pwd">
+                    </div>
+                </div>
+
+                <div class="form-group" style="margin-top: 30px">
+                    <label class="col-sm-4 control-label">请输入新密码</label>
+                    <div class="col-sm-6">
+                        <input type="password" class="form-control" ng-model="form.newpwd">
+                    </div>
+                </div>
+                <div class="form-group" style="margin-top: 30px">
+                    <label class="col-sm-4 control-label">请确认新密码</label>
+                    <div class="col-sm-6">
+                        <input type="password" class="form-control" ng-model="form.renewpwd">
+                    </div>
+                </div>
+            </form>
+
+            <div style="margin-top: 30px">
+                <div class="form-group col-sm-4 col-md-4 col-lg-4" style="margin-bottom: 10px;">
+                </div>
+                <div class="form-group col-sm-4 col-md-4 col-lg-4" style="margin-bottom: 10px;">
+                    <button class="btn-def btn-submit-blue"
+                            style="width: 100%" ng-click="submit()">确定
+                    </button>
+                </div>
+            </div>
+
+        </div>
 
     </div>
 </div>

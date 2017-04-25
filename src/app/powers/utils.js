@@ -3,9 +3,10 @@
 
     angular.module('Utils', [])
         .service('ToastUtils', toastUtils)
-        .service('HttpToast', httpToast)        // 用来配置用用户信息过期跳转！！！！！正式需替换
+        .service('HttpToast', httpToast)
         .service('ModalUtils', modalUtils)
-        .service('Log', log);
+        .service('Log', log)
+        .service('SkipUtils', skipUtils);       // 用来主动跳转！！！！！正式需替换
 
     function toastUtils(toastr, toastrConfig) {
         var defaultConfig = angular.copy(toastrConfig);
@@ -51,15 +52,11 @@
         }
     }
 
-    function httpToast(ToastUtils, locals) {
+    function httpToast(ToastUtils, SkipUtils) {
         return {
             toast: function (err) {
                 if (err.status == 403) {
-                    locals.clear();
-                    // local
-                    window.location.assign('/auth.html');
-                    // rel
-                    // window.location.assign('/aa/bb/cc');
+                    SkipUtils.skip();
                     return;
                 }
 
@@ -124,6 +121,22 @@
                 if (isDebug) {
                     console.log(msg);
                 }
+            }
+        }
+    }
+
+    function skipUtils(locals, ToastUtils) {
+
+        return {
+            skip: function (data) {
+                ToastUtils.openToast('success', data.message);
+
+                locals.clear();
+                // local
+                window.location.assign('/auth.html');
+                // rel
+                // window.location.assign('/aa/bb/cc');
+                return;
             }
         }
     }

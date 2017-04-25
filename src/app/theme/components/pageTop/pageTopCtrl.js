@@ -9,7 +9,7 @@
         .controller('pageTopCtrl', pageTopCtrl);
 
     /** @ngInject */
-    function pageTopCtrl($scope, $state, PageTopCache, locals) {
+    function pageTopCtrl($scope, $state, PageTopCache, locals, User, HttpToast, SkipUtils, ToastUtils) {
 
         $scope.show = {
             topBarData: [
@@ -40,10 +40,6 @@
                 {
                     title: '报表查询',
                     state: 'report'
-                },
-                {
-                    title: '平台设置',
-                    state: 'settings'
                 }],
             cache: PageTopCache.cache,
             userName: locals.getObject('user').name,
@@ -54,14 +50,27 @@
                 },
                 {
                     title: '报警设置',
-                    state: 'setpwd'
+                    state: 'setalarm'
                 },
                 {
                     title: '管理员设置',
-                    state: 'setalarm'
+                    state: 'setpwd'
                 }
             ]
         };
+
+        $scope.init = function () {
+            var item = {
+                title: '平台设置',
+                state: 'settings'
+            };
+
+            if (locals.getObject('user').hasTop == 1) {
+                $scope.show.topBarData.push(item);
+            }
+
+        };
+        $scope.init();
 
         $scope.changeState = function (item) {
             PageTopCache.cache.state = item.state;
@@ -81,7 +90,13 @@
         };
 
         $scope.logout = function () {
-            alert('退出登陆...');
+            User.exit({
+                logout: 'logout'
+            }, function (data) {
+                SkipUtils.skip(data);
+            }, function (err) {
+                HttpToast.toast(err);
+            })
         };
 
     }

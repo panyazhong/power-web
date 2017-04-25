@@ -13,6 +13,9 @@
         return {
             cache: {
                 state: 'overview'
+            },
+            currentState: {
+                state: 'overview'
             }
         }
     }
@@ -24,9 +27,12 @@
     }
 
     function exportPrefix() {
+        var host = 'http://192.168.0.150';
+
         return {
-            prefix: 'http://192.168.0.150/device/export',   // 设备导出
-            eventPrefix: 'http://192.168.0.150/event/export',  // 事件导出
+            prefix: host + '/device/export',   // 设备导出
+            eventPrefix: host + '/event/export',  // 事件导出
+            userPrefix: host + '/user/export',  // 用户导出
         }
     }
 
@@ -42,6 +48,10 @@
             device_phasenum: "device_phasenum",
             device_usecondition: "device_usecondition",
             device_insulationclass: "device_insulationclass",
+            user_contracttypt: 'user_contracttypt',  //用户合同类型
+            user_education: 'user_education',  //用户教育程度
+            user_status: 'user_status',  //用户状态
+            user_authority: 'user_authority',  //用户权限
         };
         kwCache.create = function (arr) {
             if (Array.isArray(arr)) {
@@ -79,6 +89,18 @@
         };
         kwCache.getDevice_insulationclass = function () {
             return getType(groups.device_insulationclass);
+        };
+        kwCache.getUser_contracttypt = function () {
+            return getType(groups.user_contracttypt);
+        };
+        kwCache.getUser_education = function () {
+            return getType(groups.user_education);
+        };
+        kwCache.getUser_status = function () {
+            return getType(groups.user_status);
+        };
+        kwCache.getUser_authority = function () {
+            return getType(groups.user_authority);
         };
 
         kwCache.isEmpty = function () {

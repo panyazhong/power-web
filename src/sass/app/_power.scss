@@ -232,7 +232,7 @@ input[type=number]::-webkit-outer-spin-button {
 
 .detail .top-middle {
   text-align: center;
-  padding-top: 56px;
+  //padding-top: 56px;
 }
 
 .detail .top-right-div {
@@ -313,11 +313,16 @@ input[type=number]::-webkit-outer-spin-button {
 .caret {
   float: right !important;
   margin: 8px 0;
+  margin-left: 5px;
 }
 
 .power-modal-desc {
   font-size: 15px;
   color: #262626;
+}
+
+.modal-create-user {
+  padding: 25px 30px;
 }
 
 /*
@@ -393,7 +398,7 @@ input[type=number]::-webkit-outer-spin-button {
 
 .map-btn-title {
   line-height: 35px;
-  background: #1baeb3;
+  background: #3b89ce;
   color: #FFFFFF;
   text-align: center;
 }
@@ -412,4 +417,40 @@ input[type=number]::-webkit-outer-spin-button {
   line-height: 25px;
   padding: 0 10px 0 20px;
   color: #3f3f3f;
+}
+
+.setpwd {
+  height: 500px;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  //-webkit-box-align: center;
+  //-ms-flex-align: center;
+  //align-items: center;
+  padding-top: 50px;
+}
+
+.setpwd .setpwd-block {
+  text-align: center;
+  width: 450px !important;
+  margin: 0 auto;
+}
+
+/*
+  dropdown多选下拉样式
+*/
+.dp-multi-hover {
+  background: #f0a53d !important;
+  color: #FFFFFF !important;
+}
+
+/*
+  btn超过一行显示省略号
+*/
+.btn-autospace {
+  text-align: left !important;
+  overflow: hidden !important;
+  white-space: nowrap !important;
+  text-overflow: ellipsis !important;
+  max-width: 200px !important
 }

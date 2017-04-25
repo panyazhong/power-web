@@ -15,8 +15,8 @@
         'BlurAdmin.power.settings',
         'BlurAdmin.power.branch',
         'BlurAdmin.power.setuser',
-        'BlurAdmin.power.setpwd',
-        'BlurAdmin.power.setalarm'
+        'BlurAdmin.power.setalarm',
+        'BlurAdmin.power.setpwd'
     ])
         .config(routeConfig);
 

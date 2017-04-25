@@ -96,6 +96,7 @@
                 },
                 function (data) {
                     $scope.show.branchData = BranchimgHelper.query(data);
+                    PageTopCache.currentState.state = locals.get('cName', '') + " / " + data.name;
                 }, function (err) {
                     HttpToast.toast(err);
                 });
