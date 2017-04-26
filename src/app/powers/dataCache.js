@@ -15,7 +15,7 @@
                 state: 'overview'
             },
             currentState: {
-                state: 'overview'
+                state: ''
             }
         }
     }

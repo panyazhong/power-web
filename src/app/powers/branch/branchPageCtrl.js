@@ -18,27 +18,27 @@
                 {
                     desc: '过流一段跳闸',
                     state: 'normal',
-                    color: '#f0a53d'
+                    color: '#666666'
                 },
                 {
                     desc: '二段压变3ZK故障',
                     state: 'normal',
-                    color: '#f0a53d'
+                    color: '#666666'
                 },
                 {
                     desc: '过流二段跳闸',
                     state: 'danger',
-                    color: '#f0a53d'
+                    color: '#666666'
                 },
                 {
                     desc: '2QF在运行位置分闸',
                     state: 'normal',
-                    color: '#f0a53d'
+                    color: '#666666'
                 },
                 {
                     desc: '零流跳闸',
                     state: 'normal',
-                    color: '#f0a53d'
+                    color: '#666666'
                 }, {
                     desc: '1ZK、3ZK小开关故障',
                     state: 'danger',

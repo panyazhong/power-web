@@ -13,8 +13,7 @@
   angular.module('BlurAdmin.theme.components',
 
       [
-        'BlurAdmin.theme.components.pageTop', 
-          'BlurAdmin.theme.components.contentTop'
+        'BlurAdmin.theme.components.pageTop'
       ]
   );
 
