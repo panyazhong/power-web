@@ -278,5 +278,24 @@
             };
             return Resource(config);
         })
+        // 报警信息
+        .factory('AlertMsg', function (Resource) {
+            var config = {
+                url: 'message/type/:mtid',
+                paramsDefault: {
+                    mtid: '@mtid'
+                },
+                action: {
+                    query: {
+                        method: 'GET',
+                        isArray: true
+                    },
+                    edit: {
+                        method: 'POST'
+                    }
+                }
+            };
+            return Resource(config);
+        })
 
 })();
