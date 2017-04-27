@@ -6,16 +6,7 @@
             <label class="col-sm-5"
                    style="margin-right: 0 !important;line-height: 34px;">起始时间：</label>
             <div class="col-sm-7">
-                <!--<input type="text" class="form-control">-->
 
-                <!-- <input type="text"
-				ng-model="data.modalScheduleObj.start_date"
-				datetime-picker="yyyy-MM-dd HH:mm"
-				is-open="data.datetimepickerOptions1.datetimepicker.isOpen"
-				button-bar="data.datetimepickerOptions1.datetimepicker.buttonBar"
-				timepicker-options="data.datetimepickerOptions1.timepicker"
-				datepicker-options="data.datetimepickerOptions1.datepicker"
-				ng-click="data.datetimepickerOptions1.datetimepicker.isOpen = true" /> -->
                 <input id="scheduleBeginTime" type="text"
                        ng-model="show.from_time"
                        datetime-picker="yyyy-MM-dd HH:mm"
@@ -23,17 +14,8 @@
                        button-bar="data.datetimepickerOptions1.datetimepicker.buttonBar"
                        timepicker-options="data.datetimepickerOptions1.timepicker"
                        datepicker-options="data.datetimepickerOptions1.datepicker"
-                       ng-click="data.datetimepickerOptions1.click()" class="form-control"/>
-                <!-- <input type="text" class="form-control"  ng-model="data.modalScheduleObj.start_date"  /> -->
-                <!-- <input type="text"
-                    class="form-control"
-                    datetime-picker="mediumDate"
-                    ng-model="picker1.date"
-                    is-open="picker1.open"
-                    enable-time="false"
-                    datepicker-options="picker1.datepickerOptions"
-                    close-on-date-selection="false"
-                    datepicker-append-to-body="true" /> -->
+                       ng-click="data.datetimepickerOptions1.click()" class="form-control"
+                       readonly/>
 
             </div>
         </div>
@@ -49,7 +31,6 @@
             <label class="col-sm-5"
                    style="margin-right: 0 !important;line-height: 34px;">结束时间：</label>
             <div class="col-sm-7">
-                <!--<input type="text" class="form-control">-->
 
                 <input id="scheduleEndTime" type="text"
                        ng-model="show.to_time"
@@ -59,8 +40,7 @@
                        timepicker-options="data.datetimepickerOptions2.timepicker"
                        datepicker-options="data.datetimepickerOptions2.datepicker"
                        ng-click="data.datetimepickerOptions2.datetimepicker.isOpen = true"
-                       class="form-control"/>
-
+                       class="form-control" readonly/>
 
             </div>
         </div>
@@ -74,7 +54,7 @@
                 <div class="select-right" uib-dropdown>
                     <button type="button" class="btn-def btn-trans" style="text-align: left"
                             uib-dropdown-toggle ng-disabled="disabled">
-                        <span class="caret"></span>{{show.uploadUser}}
+                        <span class="caret"></span>{{show.upload_user}}
                     </button>
 
                     <ul class="dropdown-menu common-dp-ul" uib-dropdown-menu role="menu"

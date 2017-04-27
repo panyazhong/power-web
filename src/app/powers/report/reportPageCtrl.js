@@ -100,10 +100,12 @@
 
         $scope.show = {
             reportList: [], // 报表列表
-            hasTop: [],      // 上传者列表
-            from_time: '',  // 开始时间
-            to_time: '',     // 结束时间
-            uploadUser: ''   // 上传者,
+            hasTop: '',      // 是否显示
+            uploadUserArr: [],      // 上传者列表
+
+            from_time: '',
+            to_time: '',
+            upload_user: ''
         };
         $scope.rowCollection = [];
 
@@ -136,14 +138,14 @@
         };
 
         $scope.clear = function () {
-            $scope.show.from_time = '';
-            $scope.show.to_time = '';
-            $scope.show.uploadUser = '';
-
             $scope.form.from_time = '';
             $scope.form.to_time = '';
             $scope.form.filename = '';
             $scope.form.upload_user = '';
+
+            $scope.show.from_time = '';
+            $scope.show.to_time = '';
+            $scope.show.upload_user = '';
         };
 
         $scope.search = function () {
@@ -163,13 +165,13 @@
 
         $scope.init = function () {
             $scope.show.hasTop = locals.getObject('user').hasTop;
-            if ($scope.hasTop == '1') {
+            if ($scope.show.hasTop == '1') {
 
                 Report.queryUser({
                         user: 'user'
                     },
                     function (data) {
-
+                        $scope.show.uploadUserArr = data;
                     },
                     function (err) {
                         HttpToast.toast(err);
@@ -246,7 +248,6 @@
                 function (data) {
                     ToastUtils.openToast('success', data.message);
                     $scope.search();
-                    // $scope.clear(); // 删除成功需要初始化表单状态
                 },
                 function (err) {
                     HttpToast.toast(err);
@@ -256,8 +257,8 @@
         // dp set
 
         $scope.setUploadUser = function (obj) {
-            $scope.show.uploadUser = obj.name;
-            $scope.form.uploadUser = obj.id;
+            $scope.show.upload_user = obj.name;
+            $scope.form.upload_user = obj.uid;
         }
 
     }

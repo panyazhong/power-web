@@ -462,3 +462,17 @@ input[type=number]::-webkit-outer-spin-button {
 .switches .switch-container {
   float: none !important;
 }
+
+/*
+  日期选择器：bootstrap-ui-datetime-picker
+*/
+
+.datetime-picker-dropdown * {
+  border: 0;
+  outline: none;
+}
+
+.report .form-control {
+  color: #6b6b6b;
+  background-color: transparent;
+}
