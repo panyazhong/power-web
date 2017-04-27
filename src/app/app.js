@@ -20,6 +20,8 @@ angular.module('BlurAdmin', [
     'DataCache',
     'Utils',
     'HttpHelper',
+    'ui.bootstrap.datetimepicker',
+    'ngFileUpload',
 
     'BlurAdmin.theme',
     'BlurAdmin.power',

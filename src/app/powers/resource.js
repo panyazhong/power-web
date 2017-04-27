@@ -297,5 +297,32 @@
             };
             return Resource(config);
         })
+        // 报表
+        .factory('Report', function (Resource) {
+            var config = {
+                url: 'report/:rpid/:user',
+                paramsDefault: {
+                    rpid: '@rpid',
+                    user: '@user',
+                },
+                action: {
+                    query: {        // 查询报表列表
+                        method: 'GET',
+                        isArray: true
+                    },
+                    queryUser: {    // 管理员查询上上传
+                        method: 'GET',
+                        isArray: true
+                    },
+                    edit: {
+                        method: 'POST'
+                    },
+                    delete: {
+                        method: 'DELETE'
+                    }
+                }
+            };
+            return Resource(config);
+        })
 
 })();
