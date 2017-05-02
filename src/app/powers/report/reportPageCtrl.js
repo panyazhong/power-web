@@ -137,6 +137,9 @@
             return params;
         };
 
+        /**
+         * clear form
+         */
         $scope.clear = function () {
             $scope.form.from_time = '';
             $scope.form.to_time = '';
@@ -146,6 +149,7 @@
             $scope.show.from_time = '';
             $scope.show.to_time = '';
             $scope.show.upload_user = '';
+
         };
 
         $scope.search = function () {
@@ -153,7 +157,7 @@
 
             Report.query(params,
                 function (data) {
-                    ToastUtils.openToast('success', '获取报表列表成功！');
+                    // ToastUtils.openToast('success', '获取报表列表成功！');
                     $scope.show.reportList = data;
                     $scope.rowCollection = data;
                 },
@@ -163,7 +167,7 @@
         };
         $scope.search();
 
-        $scope.init = function () {
+        $scope.getReportUser = function () {
             $scope.show.hasTop = locals.getObject('user').hasTop;
             if ($scope.show.hasTop == '1') {
 
@@ -178,7 +182,7 @@
                     })
             }
         };
-        $scope.init();
+        $scope.getReportUser();
 
         $scope.uploadFiles = function (file, errFiles) {
 
@@ -191,6 +195,8 @@
 
                 file.upload.then(function (data) {
                     ToastUtils.openToast('success', data.message);
+                    // 清除下form
+                    $scope.clear();
                     $scope.search();
                 }, function (err) {
                     ToastUtils.openToast('error', err.data.message);
@@ -203,6 +209,9 @@
             }
         };
 
+        /**
+         * 批量下载
+         */
         $scope.download = function () {
 
             var params = $scope.formatForm();
@@ -234,6 +243,9 @@
                 });
         };
 
+        /**
+         *  下载单个报表
+         */
         $scope.downItem = function (id) {
             var link = ExportPrefix.reportItem(id);
             if (link) {
@@ -241,6 +253,9 @@
             }
         };
 
+        /**
+         * 删除单个报表
+         */
         $scope.delItem = function (id) {
             Report.delete({
                     rpid: id
@@ -254,7 +269,7 @@
                 })
         };
 
-        // dp set
+        // dropdown set
 
         $scope.setUploadUser = function (obj) {
             $scope.show.upload_user = obj.name;
