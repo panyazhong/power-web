@@ -6,11 +6,12 @@
     'use strict';
 
     angular.module('BlurAdmin.power.report')
-        .controller('reportPageCtrl', reportPageCtrl);
+        .controller('reportPageCtrl', reportPageCtrl)
+        .controller('reportDelCtrl', reportDelCtrl);
 
     /** @ngInject */
     function reportPageCtrl($scope, Log, Report, HttpToast, ToastUtils, ExportPrefix, $window,
-                            PageTopCache, $state, Upload, locals) {
+                            PageTopCache, $state, Upload, locals, ModalUtils, Device) {
 
         PageTopCache.cache.state = $state.$current; // active
 
@@ -257,16 +258,27 @@
          * 删除单个报表
          */
         $scope.delItem = function (id) {
-            Report.delete({
-                    rpid: id
-                },
-                function (data) {
-                    ToastUtils.openToast('success', data.message);
-                    $scope.search();
-                },
-                function (err) {
-                    HttpToast.toast(err);
-                })
+
+            ModalUtils.openMsg('app/powers/modal/dangerDelReport.html', '',
+                reportDelCtrl, {},
+                function (info) {
+                    // 传值走这里
+                    if (info) {
+                        Report.delete({
+                                rpid: id
+                            },
+                            function (data) {
+                                ToastUtils.openToast('success', data.message);
+                                $scope.search();
+                            },
+                            function (err) {
+                                HttpToast.toast(err);
+                            })
+                    }
+                }, function (empty) {
+                    // 不传值关闭走这里
+                });
+
         };
 
         // dropdown set
@@ -275,6 +287,15 @@
             $scope.show.upload_user = obj.name;
             $scope.form.upload_user = obj.uid;
         }
+
+    }
+
+    function reportDelCtrl($scope) {
+
+        $scope.submit = function () {
+            var data = 'submit';
+            $scope.$close(data);
+        };
 
     }
 

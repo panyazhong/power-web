@@ -5,7 +5,10 @@
         .controller('eventsPageCtrl', eventsPageCtrl);
 
     /** @ngInject */
-    function eventsPageCtrl($scope, $state, PageTopCache, Sidebar, SidebarCache, HttpToast, Log, Device, ToastUtils, ExportPrefix, Event) {
+    function eventsPageCtrl($scope, $state, PageTopCache, Sidebar, SidebarCache, HttpToast, Log,
+                            Device, ToastUtils, ExportPrefix, Event, EventsCache) {
+
+        EventsCache.event.totalCount = 0;  // test del
 
         PageTopCache.cache.state = $state.$current; // active
 

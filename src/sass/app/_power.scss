@@ -476,3 +476,37 @@ input[type=number]::-webkit-outer-spin-button {
   color: #6b6b6b;
   background-color: transparent;
 }
+
+.event-label {
+  display: inline-block;
+  min-width: 10px;
+  padding: 2px 4px 2px 4px;
+  color: #ffffff;
+  vertical-align: baseline;
+  white-space: nowrap;
+  text-align: center;
+  border-radius: 13px;
+  text-shadow: none;
+  line-height: 11px;
+  background-color: #e85656;
+  position: absolute;
+  top: 18px;
+  font-size: 11px;
+}
+
+.event-label-big {
+  display: inline-block;
+  min-width: 10px;
+  padding: 2px 4px 2px 4px;
+  color: #ffffff;
+  vertical-align: baseline;
+  white-space: nowrap;
+  text-align: center;
+  border-radius: 13px;
+  text-shadow: none;
+  line-height: 11px;
+  background-color: #e85656;
+  position: absolute;
+  top: 18px;
+  font-size: 11px;
+}

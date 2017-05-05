@@ -19,6 +19,11 @@
                  uib-dropdown is-open="item.isopen">
                 {{item.title}}
 
+                <span ng-show="item.state == 'events' && show.event.totalCount > 0"
+                      ng-class="show.event.totalCount > 9?'event-label-big':'event-label'">
+                    {{show.event.totalCount}}
+                </span>
+
                 <i class="ion-arrow-down-b" style="margin: 0 5px"
                    ng-show="item.state == 'settings'"></i>
                 <!--<span class="page-top-divider" ng-show="item.state == 'settings'"></span>-->

@@ -3,6 +3,7 @@
 
     angular.module('DataCache', [])
         .factory("PageTopCache", pageTopCache)
+        .factory("EventsCache", eventsCache)    // 需要配置事件前缀！！！正式需替换，需要更换 index 页的引入
         .factory("ImgPrefix", imgPrefix)    // 用来配置图片前缀！！！！！正式需替换
         .factory("ExportPrefix", exportPrefix)    // 用来配置图片前缀！！！！！正式需替换
         .factory("KeywordCache", keywordCache)  // key
@@ -20,14 +21,38 @@
         }
     }
 
+    function eventsCache(Log) {
+        var socket = io.connect('http://192.168.0.120:6688', {resource: 'event/socket.io'});
+
+        socket.on('alert', function (data) {
+            socket.emit('received', {mhid: JSON.parse(data).mhid});
+
+            Log.i('alert msg:' + JSON.parse(data));
+        });
+        socket.on('monitor', function (data) {
+            Log.i('monitor msg:' + JSON.parse(data));
+        });
+
+        // socket.emit('subscribe', {client_id: 1});
+
+        return {
+            event: {
+                totalCount: 0    // 事件未处理的条数
+            },
+            subscribeSmg: function (cid) {  // 根据 cid 订阅实时数据
+                socket.emit('subscribe', {client_id: cid});
+            }
+        }
+    }
+
     function imgPrefix() {
         return {
-            prefix: 'http://192.168.0.150/'
+            prefix: 'http://192.168.0.120/'
         }
     }
 
     function exportPrefix() {
-        var host = 'http://192.168.0.150';
+        var host = 'http://192.168.0.120';
 
         return {
             prefix: host + '/device/export',   // 设备导出

@@ -9,7 +9,9 @@
         .controller('historyPageCtrl', historyPageCtrl);
 
     /** @ngInject */
-    function historyPageCtrl($scope) {
+    function historyPageCtrl($scope,EventsCache) {
+
+        EventsCache.event.totalCount = 88;  // test del
 
     }
 
