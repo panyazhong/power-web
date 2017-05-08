@@ -3,20 +3,21 @@
  * created on 16.12.2015
  */
 (function () {
-  'use strict';
+    'use strict';
 
-  angular.module('BlurAdmin.power.monitoring', [])
-      .config(routeConfig);
+    angular.module('BlurAdmin.power.monitoring', [])
+        .config(routeConfig);
 
-  /** @ngInject */
-  function routeConfig($stateProvider) {
-    $stateProvider
-        .state('monitoring', {
-          url: '/monitoring',
-          title: '实时监控',
-          templateUrl: 'app/powers/monitoring/monitoring.html',
-          controller: 'monitoringPageCtrl',
-        });
-  }
+    /** @ngInject */
+    function routeConfig($stateProvider) {
+        $stateProvider
+            .state('monitoring', {
+                url: '/monitoring',
+                title: '实时监控',
+                params: {'cid': null},
+                templateUrl: 'app/powers/monitoring/monitoring.html',
+                controller: 'monitoringPageCtrl',
+            });
+    }
 
 })();

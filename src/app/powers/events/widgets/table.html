@@ -27,37 +27,38 @@
                 <span></span>
             </label>
         </td>
-        <td>
-            <span ng-bind="formatDate(item.time)"></span>
+        <td class="table-def-cursor">
+            <span ng-bind="formatDate(item.create_date)"></span>
         </td>
-        <td>
-            <span ng-bind="item.client_name" class="color-blue"></span>
+        <td ng-click="viewClientDetail(item.cid)">
+            <span ng-bind="item.client" class="color-blue"></span>
         </td>
-        <td>
-            <span ng-bind="item.incomingline_name" class="color-blue"></span>
+        <td class="table-def-cursor">
+            <span ng-bind="item.incomingline" class="color-blue"></span>
         </td>
-        <td>
-            <span ng-bind="item.branch_name" class="color-blue"></span>
+        <td ng-click="viewBranchDetail(item)">
+            <span ng-bind="item.branch" class="color-blue"></span>
         </td>
         <!--<td>-->
-            <!--<span ng-bind="item.name" class="color-blue"></span>-->
+        <!--<span ng-bind="item.name" class="color-blue"></span>-->
         <!--</td>-->
-        <td>
+        <td class="table-def-cursor">
             <span ng-bind="item.desc"></span>
         </td>
         <td>
             <button class="btn-def btn-submit-blue" style="width: 68px;"
-                    ng-click="confirmItemEvent(item.id)"
-                    ng-show="!item.confirm">确 认
+                    ng-click="confirmItemEvent(item.msg_id)"
+                    ng-show="!item.confirm_time">确 认
             </button>
 
-            <button class="btn-def btn-submit-gray" style="width: 68px;" ng-show="item.confirm">已确认
+            <button class="btn-def btn-submit-gray" style="width: 68px;"
+                    ng-show="item.confirm_time">已确认
             </button>
         </td>
-        <td>
-            <span ng-bind="item.confirm_person"></span>
+        <td class="table-def-cursor">
+            <span ng-bind="item.confirm_person.name"></span>
         </td>
-        <td>
+        <td class="table-def-cursor">
             <span ng-bind="formatDate(item.confirm_time)"></span>
         </td>
 

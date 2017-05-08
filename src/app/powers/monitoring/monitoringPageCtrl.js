@@ -10,10 +10,11 @@
 
     /** @ngInject */
     function monitoringPageCtrl($scope, $state, $location, PageTopCache, Clientimg, ClientimgHelper,
-                                Branch, HttpToast, SidebarCache, Sidebar, Log, locals) {
+                                Branch, HttpToast, SidebarCache, Sidebar, Log, locals, $stateParams) {
 
         PageTopCache.cache.state = $state.$current; // active
-        $location.search().id ? locals.put('cid', $location.search().id) : '';
+        // $location.search().id ? locals.put('cid', $location.search().id) : '';
+        $location.search().id ? locals.put('cid', $location.search().id) : $stateParams.cid ? locals.put('cid', $stateParams.cid) : ''; // 0506事件跳一次系统图
 
         $scope.show = {};
         $scope.branchData = {};

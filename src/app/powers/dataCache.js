@@ -56,7 +56,7 @@
 
         return {
             prefix: host + '/device/export',   // 设备导出
-            eventPrefix: host + '/event/export',  // 事件导出
+            eventPrefix: host + '/message/list/export',  // 事件导出
             userPrefix: host + '/user/export',  // 用户导出
             reportItem: function (rpid) {
                 return host + '/report/' + rpid;    //下载报表 单个

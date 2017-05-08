@@ -259,17 +259,20 @@
         // 事件
         .factory('Event', function (Resource) {
             var config = {
-                url: 'event',
-                paramsDefault: {},
+                url: 'message/:list/:confirm',
+                paramsDefault: {
+                    list: '@list',
+                    confirm: '@confirm'
+                },
                 action: {
                     query: {
                         method: 'GET'   //获取事件列表，筛选
                     },
                     create: {
-                        method: 'POST'  //确认事件
+                        method: 'POST'
                     },
                     update: {
-                        method: 'PUT'
+                        method: 'PUT'   //确认事件
                     },
                     delete: {   // 删除设备
                         method: 'DELETE'

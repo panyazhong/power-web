@@ -6,7 +6,7 @@
 
     /** @ngInject */
     function eventsPageCtrl($scope, $state, PageTopCache, Sidebar, SidebarCache, HttpToast, Log,
-                            Device, ToastUtils, ExportPrefix, Event, EventsCache) {
+                            Device, ToastUtils, ExportPrefix, Event, EventsCache, locals) {
 
         EventsCache.event.totalCount = 0;  // test del
 
@@ -130,6 +130,7 @@
             var params = {
                 start: start,
                 number: number,
+                list: 'list'
             };
 
             if (!$.isEmptyObject($scope.form.client_id)) {
@@ -151,87 +152,87 @@
                 params.endDate = moment($scope.show.endDate).format('YYYY-MM-DD HH:mm:ss');
             }
 
-            // Event.query(params,
-            //     function (obj) {
-            //         $scope.show.isLoading = false;
-            //         $scope.show.eventsData = obj;
-            //         tableState.pagination.numberOfPages = obj.total_page;
-            //         $scope.show.displayedPages = Math.ceil(parseFloat(obj.total_count) / parseInt(obj.total_page));
-            //         $scope.show.eventsData.tableState = tableState;
-            //     }, function (err) {
-            //         $scope.show.isLoading = false;
-            //         HttpToast.toast(err);
-            //     });
+            Event.query(params,
+                function (obj) {
+                    $scope.show.isLoading = false;
+                    $scope.show.eventsData = obj;
+                    tableState.pagination.numberOfPages = obj.total_page;
+                    $scope.show.displayedPages = Math.ceil(parseFloat(obj.total_count) / parseInt(obj.total_page));
+                    $scope.show.eventsData.tableState = tableState;
+                }, function (err) {
+                    $scope.show.isLoading = false;
+                    HttpToast.toast(err);
+                });
 
             //test
-            Log.i("p: " + JSON.stringify(params));
-            Log.i("time: " + JSON.stringify($scope.show.beginDate));
-
-            var obj = {
-                "total_count": 5,
-                "total_page": 1,
-                "events": [{
-                    "time": "2017-03-29 18:00:00",
-                    "client_name": "时代金融",
-                    "incomingline_name": "",
-                    "branch_name": "",
-                    "name": "",
-                    "desc": "距离下次电试还有30天",
-                    "confirm": true,
-                    "confirm_person": "小明",
-                    "confirm_time": "2017-03-29 18:05:00",
-                    "id": "2001"
-                }, {
-                    "time": "2017-03-30 12:00:00",
-                    "client_name": "时代金融",
-                    "incomingline_name": "万6迪威行甲线",
-                    "branch_name": "3",
-                    "name": "3号变压器",
-                    "desc": "距离下次电试还有30天",
-                    "confirm": true,
-                    "confirm_person": "小明",
-                    "confirm_time": "2017-03-30 12:30:00",
-                    "id": "2002"
-                }, {
-                    "time": "2017-03-29 18:00:00",
-                    "client_name": "时代金融",
-                    "incomingline_name": "万6迪威行甲线",
-                    "branch_name": "",
-                    "name": "",
-                    "desc": "距离下次电试还有30天",
-                    "confirm": false,
-                    "confirm_person": "",
-                    "confirm_time": "",
-                    "id": "2003"
-                }, {
-                    "time": "2017-03-30 12:00:00",
-                    "client_name": "时代金融",
-                    "incomingline_name": "万6迪威行甲线",
-                    "branch_name": "3",
-                    "name": "",
-                    "desc": "距离下次电试还有30天",
-                    "confirm": false,
-                    "confirm_person": "",
-                    "confirm_time": "",
-                    "id": "2006"
-                }, {
-                    "time": "2017-03-29 18:00:00",
-                    "client_name": "时代金融",
-                    "incomingline_name": "万6迪威行甲线",
-                    "branch_name": "3",
-                    "name": "3号变压器",
-                    "desc": "距离下次电试还有30天",
-                    "confirm": false,
-                    "confirm_person": "",
-                    "confirm_time": "",
-                    "id": "2005"
-                }]
-            };
-            $scope.show.isLoading = false;
-            $scope.show.eventsData = obj;
-            tableState.pagination.numberOfPages = obj.total_page;
-            $scope.show.displayedPages = Math.ceil(parseFloat(obj.total_count) / parseInt(obj.total_page));
-            $scope.show.eventsData.tableState = tableState;
+            // Log.i("p: " + JSON.stringify(params));
+            // Log.i("time: " + JSON.stringify($scope.show.beginDate));
+            //
+            // var obj = {
+            //     "total_count": 5,
+            //     "total_page": 1,
+            //     "events": [{
+            //         "time": "2017-03-29 18:00:00",
+            //         "client_name": "时代金融",
+            //         "incomingline_name": "",
+            //         "branch_name": "",
+            //         "name": "",
+            //         "desc": "距离下次电试还有30天",
+            //         "confirm": true,
+            //         "confirm_person": "小明",
+            //         "confirm_time": "2017-03-29 18:05:00",
+            //         "id": "2001"
+            //     }, {
+            //         "time": "2017-03-30 12:00:00",
+            //         "client_name": "时代金融",
+            //         "incomingline_name": "万6迪威行甲线",
+            //         "branch_name": "3",
+            //         "name": "3号变压器",
+            //         "desc": "距离下次电试还有30天",
+            //         "confirm": true,
+            //         "confirm_person": "小明",
+            //         "confirm_time": "2017-03-30 12:30:00",
+            //         "id": "2002"
+            //     }, {
+            //         "time": "2017-03-29 18:00:00",
+            //         "client_name": "时代金融",
+            //         "incomingline_name": "万6迪威行甲线",
+            //         "branch_name": "",
+            //         "name": "",
+            //         "desc": "距离下次电试还有30天",
+            //         "confirm": false,
+            //         "confirm_person": "",
+            //         "confirm_time": "",
+            //         "id": "2003"
+            //     }, {
+            //         "time": "2017-03-30 12:00:00",
+            //         "client_name": "时代金融",
+            //         "incomingline_name": "万6迪威行甲线",
+            //         "branch_name": "3",
+            //         "name": "",
+            //         "desc": "距离下次电试还有30天",
+            //         "confirm": false,
+            //         "confirm_person": "",
+            //         "confirm_time": "",
+            //         "id": "2006"
+            //     }, {
+            //         "time": "2017-03-29 18:00:00",
+            //         "client_name": "时代金融",
+            //         "incomingline_name": "万6迪威行甲线",
+            //         "branch_name": "3",
+            //         "name": "3号变压器",
+            //         "desc": "距离下次电试还有30天",
+            //         "confirm": false,
+            //         "confirm_person": "",
+            //         "confirm_time": "",
+            //         "id": "2005"
+            //     }]
+            // };
+            // $scope.show.isLoading = false;
+            // $scope.show.eventsData = obj;
+            // tableState.pagination.numberOfPages = obj.total_page;
+            // $scope.show.displayedPages = Math.ceil(parseFloat(obj.total_count) / parseInt(obj.total_page));
+            // $scope.show.eventsData.tableState = tableState;
 
         };
 
@@ -275,8 +276,8 @@
             var parmas = [];
 
             $scope.show.eventsData.events.map(function (item) {
-                if (item.checked && !item.confirm) {
-                    parmas.push(item.id);
+                if (item.checked && !item.confirm_time) {
+                    parmas.push(item.msg_id);
                 }
             });
 
@@ -286,8 +287,9 @@
             }
 
             Log.i('需要确认的事件id：' + JSON.stringify(parmas));
-            Event.create({
-                    eid: parmas
+            Event.update({
+                    mhs: parmas,
+                    confirm: 'confirm'
                 },
                 function (data) {
 
@@ -305,8 +307,9 @@
             parmas.push(id);
 
             Log.i('需要确认的事件id：' + JSON.stringify(parmas));
-            Event.create({
-                    eid: parmas
+            Event.update({
+                    mhs: parmas,
+                    confirm: 'confirm'
                 },
                 function (data) {
 
@@ -413,6 +416,30 @@
         $scope.toggleEndDatepicker = function () {
             $scope.data.endDate.isOpen = !$scope.data.endDate.isOpen;
         };
+
+        // new fn
+        $scope.viewClientDetail = function (id) {
+            if (!id) {
+                ToastUtils.openToast('warning', '变电站信息异常。稍后再试.');
+                return
+            }
+            $state.go('monitoring', {cid: id}, {reload: true});
+        };
+
+        /**
+         * 查看分支详情
+         */
+        $scope.viewBranchDetail = function (item) {
+            if (!item.bid) {
+                ToastUtils.openToast('warning', '支线信息异常。稍后再试.');
+                return
+            }
+
+            $state.go('branch', {bid: item.bid}, {reload: true});
+
+            locals.put('bid', item.bid);
+            locals.put('cName', item.client);
+        }
 
     }
 
