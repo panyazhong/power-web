@@ -9,7 +9,8 @@
         .controller('BaSidebarCtrl', BaSidebarCtrl);
 
     /** @ngInject */
-    function BaSidebarCtrl($scope, baSidebarService, $state, locals, SidebarCache, Sidebar, Log, HttpToast) {
+    function BaSidebarCtrl($scope, baSidebarService, $state, locals, SidebarCache, Sidebar, Log,
+                           HttpToast, EventsCache) {
 
         // $scope.menuItems = baSidebarService.getMenuItems();
         // $scope.defaultSidebarState = $scope.menuItems[0].stateRef;
@@ -54,7 +55,12 @@
             return menuData;
         };
 
+        $scope.stsidebar = {
+            sidebar: ''
+        };
+
         $scope.init = function () {
+            $scope.stsidebar = EventsCache.subscribeSidebar();  // 订阅 侧边栏信息
 
             if (SidebarCache.isEmpty()) {
                 Sidebar.query({},

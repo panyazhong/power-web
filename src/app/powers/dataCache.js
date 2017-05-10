@@ -2,32 +2,28 @@
     'use strict';
 
     angular.module('DataCache', [])
-        .factory("PageTopCache", pageTopCache)
         .factory("EventsCache", eventsCache)    // 需要配置事件前缀！！！正式需替换，需要更换 index 页的引入
+        .factory("PageTopCache", pageTopCache)
         .factory("ImgPrefix", imgPrefix)    // 用来配置图片前缀！！！！！正式需替换
         .factory("ExportPrefix", exportPrefix)    // 用来配置图片前缀！！！！！正式需替换
         .factory("KeywordCache", keywordCache)  // key
         .factory("SidebarCache", sidebarCache)  // 侧边栏和地图数据
         .factory("locals", locals);
 
-    function pageTopCache() {
-        return {
-            cache: {
-                state: 'overview'
-            },
-            currentState: {
-                state: ''
-            }
-        }
-    }
-
     function eventsCache(Log, ModalUtils, $state, locals, $rootScope) {
         var bCache = {      // 支线基本信息
-            branch: ''
+            branch: ""
         };
         var bid = "";       // 支线 id
+        var imgsCache = {      // 一次系统图
+            imgs: ""
+        };
+        var cid = "";       // 变电站 id
+        var sidebarCache = {    // 侧边栏信息
+            sidebar: ""
+        };
 
-        var socket = io.connect('http://192.168.0.120:6688', {resource: 'event/socket.io'});
+        var socket = io.connect('http://192.168.2.203:6688', {resource: 'event/socket.io'});
         socket.on('alert', function (data) {    // 监听事件
             var obj = JSON.parse(data);
 
@@ -107,7 +103,7 @@
 
             var cid = locals.get('cid', '');
             if (cid && bid) {
-                Log.i("sub branchInfo：" + JSON.stringify((JSON.parse(obj.content)[cid])[bid]));
+                Log.i("subRes branch：" + JSON.stringify((JSON.parse(obj.content)[cid])[bid]));
 
                 bCache.branch = (JSON.parse(obj.content)[cid])[bid];
                 $rootScope.$digest();
@@ -119,23 +115,43 @@
                 totalCount: 0    // 事件未处理的条数
             },
             subscribeMsg: function (cid) {
+                Log.i("sub的变电站id：" + cid);
+
                 socket.emit('subscribe', {client_id: cid}); // 根据cid，订阅变电站信息
             },
-            subscribeBranch: function (id) { // 订阅支线基本信息
+            subscribeBranch: function (id) { // 订阅 支线基本信息
                 bid = id;
                 return bCache;
+            },
+            subscribeClientImgs: function (id) { // 订阅 一次系统图图片
+                cid = id;
+                return imgsCache;
+            },
+            subscribeSidebar: function () { // 订阅 侧边栏信息
+                return sidebarCache;
+            }
+        }
+    }
+
+    function pageTopCache() {
+        return {
+            cache: {
+                state: 'overview'
+            },
+            currentState: {
+                state: ''
             }
         }
     }
 
     function imgPrefix() {
         return {
-            prefix: 'http://192.168.0.120/'
+            prefix: 'http://192.168.2.203/'
         }
     }
 
     function exportPrefix() {
-        var host = 'http://192.168.0.120';
+        var host = 'http://192.168.2.203';
 
         return {
             prefix: host + '/device/export',   // 设备导出
