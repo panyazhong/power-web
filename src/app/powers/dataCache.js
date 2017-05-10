@@ -21,26 +21,109 @@
         }
     }
 
-    function eventsCache(Log) {
+    function eventsCache(Log, ModalUtils, $state, locals, $rootScope) {
+        var bCache = {      // 支线基本信息
+            branch: ''
+        };
+        var bid = "";       // 支线 id
+
         var socket = io.connect('http://192.168.0.120:6688', {resource: 'event/socket.io'});
+        socket.on('alert', function (data) {    // 监听事件
+            var obj = JSON.parse(data);
 
-        socket.on('alert', function (data) {
-            socket.emit('received', {mhid: JSON.parse(data).mhid});
+            socket.emit('received', {mhid: obj.mhid}); // 收到alert事件后响应
+            switch (obj.level) {
+                case 0:
+                    ModalUtils.openMsg('app/powers/modal/warningEvent.html', '',
+                        warningEventCtrl, {
+                            data: obj
+                        },
+                        function (info) {
+                            // 传值走这里
+                            if (info) {
+                                $state.go('events');
+                            }
+                        }, function (empty) {
+                            // 不传值关闭走这里
+                        });
+                    break;
+                case 1:
+                    ModalUtils.openMsg('app/powers/modal/dangerEvent.html', '',
+                        eventCtrl, {
+                            data: obj
+                        },
+                        function (info) {
+                            // 传值走这里
+                            if (info) {
+                                $state.go('events');
+                            }
+                        }, function (empty) {
+                            // 不传值关闭走这里
+                        });
 
-            Log.i('alert msg:' + JSON.parse(data));
+                    break;
+            }
+
+            function eventCtrl($scope, params) {
+                $scope.title = params.data.desc;
+
+                $scope.submit = function () {
+                    var data = 'submit';
+                    $scope.$close(data);
+                };
+            }
+
+            function warningEventCtrl($scope, params) {
+                $scope.title = params.data.desc;
+
+                $scope.submit = function () {
+                    var data = 'submit';
+                    $scope.$close(data);
+                };
+            }
+
+            /*
+             // 上面正式的
+             ********** 测试 ******************************************************
+
+             ModalUtils.openMsg('app/powers/modal/dangerEvent.html', '',
+             eventCtrl, {
+             data: obj
+             },
+             function (info) {
+             // 传值走这里
+             if (info) {
+             $state.go('events');
+             }
+             }, function (empty) {
+             // 不传值关闭走这里
+             });
+
+             Log.i('alert msg：' + data);
+             */
         });
-        socket.on('monitor', function (data) {
-            Log.i('monitor msg:' + JSON.parse(data));
-        });
+        socket.on('monitor', function (data) {  // 预定数据
+            var obj = JSON.parse(data);
 
-        // socket.emit('subscribe', {client_id: 1});
+            var cid = locals.get('cid', '');
+            if (cid && bid) {
+                Log.i("sub branchInfo：" + JSON.stringify((JSON.parse(obj.content)[cid])[bid]));
+
+                bCache.branch = (JSON.parse(obj.content)[cid])[bid];
+                $rootScope.$digest();
+            }
+        });
 
         return {
             event: {
                 totalCount: 0    // 事件未处理的条数
             },
-            subscribeSmg: function (cid) {  // 根据 cid 订阅实时数据
-                socket.emit('subscribe', {client_id: cid});
+            subscribeMsg: function (cid) {
+                socket.emit('subscribe', {client_id: cid}); // 根据cid，订阅变电站信息
+            },
+            subscribeBranch: function (id) { // 订阅支线基本信息
+                bid = id;
+                return bCache;
             }
         }
     }

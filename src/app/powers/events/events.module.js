@@ -1,18 +1,19 @@
 (function () {
-  'use strict';
+    'use strict';
 
-  angular.module('BlurAdmin.power.events', [])
-      .config(routeConfig);
+    angular.module('BlurAdmin.power.events', [])
+        .config(routeConfig);
 
-  /** @ngInject */
-  function routeConfig($stateProvider) {
-    $stateProvider
-        .state('events', {
-          url: '/events',
-          title: '当前事件',
-          templateUrl: 'app/powers/events/events.html',
-          controller: 'eventsPageCtrl',
-        });
-  }
+    /** @ngInject */
+    function routeConfig($stateProvider) {
+        $stateProvider
+            .state('events', {
+                url: '/events',
+                title: '当前事件',
+                params: {'cid': null},
+                templateUrl: 'app/powers/events/events.html',
+                controller: 'eventsPageCtrl',
+            });
+    }
 
 })();

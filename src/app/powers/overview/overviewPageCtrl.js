@@ -5,7 +5,8 @@
         .controller('overviewPageCtrl', overviewPageCtrl);
 
     /** @ngInject */
-    function overviewPageCtrl($scope, Overview, Sidebar, SidebarCache, Log, HttpToast, $timeout, locals) {
+    function overviewPageCtrl($scope, Overview, Sidebar, SidebarCache, Log, HttpToast, $timeout,
+                              locals, ToastUtils, $state) {
 
         // $timeout(function () {
         //     $scope.show.mapData = [
@@ -121,10 +122,10 @@
                     "</div>" +
                     "<div style='line-height: 25px;padding: 0 10px;text-align: center;color: #1baeb3'>" + "需量占比：" + percentage +
                     "</div>" +
-                    "<a href='/#/monitoring?id=" + item.cid + "' class='map-btn-event'>" +
+                    "<a onclick='viewClientDetail(" + item.cid + ")' class='map-btn-event'>" +
                     "前往该站" +
                     "</a>" +
-                    "<a href='/#/events?id=" + item.cid + "' class='map-btn-event'>" +
+                    "<a onclick='viewClientEvent(" + item.cid + ")' class='map-btn-event'>" +
                     "查看该站事件" +
                     "</a>" +
                     "</div>";
@@ -165,6 +166,26 @@
                     HttpToast.toast(err);
                 });
         };
+
+
+        // btn click event
+        $scope.viewClientDetail = function (id) {
+            if (!id) {
+                ToastUtils.openToast('warning', '变电站信息异常。稍后再试.');
+                return
+            }
+            $state.go('monitoring', {cid: id});
+        };
+
+        $scope.viewClientEvent = function (id) {
+            if (!id) {
+                ToastUtils.openToast('warning', '变电站信息异常。稍后再试.');
+                return
+            }
+            $state.go('events', {cid: id});
+
+            locals.put('cid', id);      // 也记录下变电站id
+        }
 
     }
 

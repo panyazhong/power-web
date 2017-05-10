@@ -6,7 +6,7 @@
 
     /** @ngInject */
     function eventsPageCtrl($scope, $state, PageTopCache, Sidebar, SidebarCache, HttpToast, Log,
-                            Device, ToastUtils, ExportPrefix, Event, EventsCache, locals) {
+                            Device, ToastUtils, ExportPrefix, Event, EventsCache, locals, $stateParams) {
 
         EventsCache.event.totalCount = 0;  // test del
 
@@ -61,7 +61,7 @@
         };
 
         $scope.form = {
-            client_id: "",  //变电站cid
+            client_id: $stateParams.cid ? $stateParams.cid : '',  //变电站cid，有可能是从地图界面传过来的参
             incomingline_id: "",    //总进线inid
             branch_id: "",  //所处支线bid
             name: '',   //设备名称
@@ -133,16 +133,16 @@
                 list: 'list'
             };
 
-            if (!$.isEmptyObject($scope.form.client_id)) {
+            if ($scope.form.client_id) {
                 params.client_id = $scope.form.client_id;
             }
-            if (!$.isEmptyObject($scope.form.incomingline_id)) {
+            if ($scope.form.incomingline_id) {
                 params.incomingline_id = $scope.form.incomingline_id;
             }
-            if (!$.isEmptyObject($scope.form.branch_id)) {
+            if ($scope.form.branch_id) {
                 params.branch_id = $scope.form.branch_id;
             }
-            if (!$.isEmptyObject($scope.form.name)) {
+            if ($scope.form.name) {
                 params.name = $scope.form.name;
             }
             if ($scope.show.beginDate) {
@@ -163,76 +163,6 @@
                     $scope.show.isLoading = false;
                     HttpToast.toast(err);
                 });
-
-            //test
-            // Log.i("p: " + JSON.stringify(params));
-            // Log.i("time: " + JSON.stringify($scope.show.beginDate));
-            //
-            // var obj = {
-            //     "total_count": 5,
-            //     "total_page": 1,
-            //     "events": [{
-            //         "time": "2017-03-29 18:00:00",
-            //         "client_name": "时代金融",
-            //         "incomingline_name": "",
-            //         "branch_name": "",
-            //         "name": "",
-            //         "desc": "距离下次电试还有30天",
-            //         "confirm": true,
-            //         "confirm_person": "小明",
-            //         "confirm_time": "2017-03-29 18:05:00",
-            //         "id": "2001"
-            //     }, {
-            //         "time": "2017-03-30 12:00:00",
-            //         "client_name": "时代金融",
-            //         "incomingline_name": "万6迪威行甲线",
-            //         "branch_name": "3",
-            //         "name": "3号变压器",
-            //         "desc": "距离下次电试还有30天",
-            //         "confirm": true,
-            //         "confirm_person": "小明",
-            //         "confirm_time": "2017-03-30 12:30:00",
-            //         "id": "2002"
-            //     }, {
-            //         "time": "2017-03-29 18:00:00",
-            //         "client_name": "时代金融",
-            //         "incomingline_name": "万6迪威行甲线",
-            //         "branch_name": "",
-            //         "name": "",
-            //         "desc": "距离下次电试还有30天",
-            //         "confirm": false,
-            //         "confirm_person": "",
-            //         "confirm_time": "",
-            //         "id": "2003"
-            //     }, {
-            //         "time": "2017-03-30 12:00:00",
-            //         "client_name": "时代金融",
-            //         "incomingline_name": "万6迪威行甲线",
-            //         "branch_name": "3",
-            //         "name": "",
-            //         "desc": "距离下次电试还有30天",
-            //         "confirm": false,
-            //         "confirm_person": "",
-            //         "confirm_time": "",
-            //         "id": "2006"
-            //     }, {
-            //         "time": "2017-03-29 18:00:00",
-            //         "client_name": "时代金融",
-            //         "incomingline_name": "万6迪威行甲线",
-            //         "branch_name": "3",
-            //         "name": "3号变压器",
-            //         "desc": "距离下次电试还有30天",
-            //         "confirm": false,
-            //         "confirm_person": "",
-            //         "confirm_time": "",
-            //         "id": "2005"
-            //     }]
-            // };
-            // $scope.show.isLoading = false;
-            // $scope.show.eventsData = obj;
-            // tableState.pagination.numberOfPages = obj.total_page;
-            // $scope.show.displayedPages = Math.ceil(parseFloat(obj.total_count) / parseInt(obj.total_page));
-            // $scope.show.eventsData.tableState = tableState;
 
         };
 
@@ -326,16 +256,16 @@
 
             var params = {};
 
-            if (!$.isEmptyObject($scope.form.client_id)) {
+            if ($scope.form.client_id) {
                 params.client_id = $scope.form.client_id;
             }
-            if (!$.isEmptyObject($scope.form.incomingline_id)) {
+            if ($scope.form.incomingline_id) {
                 params.incomingline_id = $scope.form.incomingline_id;
             }
-            if (!$.isEmptyObject($scope.form.branch_id)) {
+            if ($scope.form.branch_id) {
                 params.branch_id = $scope.form.branch_id;
             }
-            if (!$.isEmptyObject($scope.form.name)) {
+            if ($scope.form.name) {
                 params.name = $scope.form.name;
             }
             if ($scope.show.beginDate) {

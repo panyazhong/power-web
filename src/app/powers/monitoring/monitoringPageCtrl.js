@@ -9,26 +9,29 @@
         .controller('monitoringPageCtrl', monitoringPageCtrl);
 
     /** @ngInject */
-    function monitoringPageCtrl($scope, $state, $location, PageTopCache, Clientimg, ClientimgHelper,
-                                Branch, HttpToast, SidebarCache, Sidebar, Log, locals, $stateParams) {
+    function monitoringPageCtrl($scope, $state, $stateParams, PageTopCache, Clientimg, ClientimgHelper,
+                                Branch, HttpToast, SidebarCache, Sidebar, Log, locals, EventsCache) {
 
         PageTopCache.cache.state = $state.$current; // active
-        // $location.search().id ? locals.put('cid', $location.search().id) : '';
-        $location.search().id ? locals.put('cid', $location.search().id) : $stateParams.cid ? locals.put('cid', $stateParams.cid) : ''; // 0506事件跳一次系统图
+        $stateParams.cid ? locals.put('cid', $stateParams.cid) : '';
 
-        $scope.show = {};
-        $scope.branchData = {};
+        $scope.show = {
+            imgs: {},   // images info
+            branch: {}  // branch info
+        };
         $scope.cName = '';
 
         $scope.queryClientImg = function (cid) {
 
             var id = locals.get('cid', '') ? locals.get('cid', '') : cid;   //cookie不会空取put的，否则默认取第一个
 
+            EventsCache.subscribeMsg(id);   // 订阅msg
+
             Clientimg.query({
                     cid: id
                 },
                 function (data) {
-                    $scope.show = ClientimgHelper.query(data);
+                    $scope.show.imgs = ClientimgHelper.query(data);
                     $scope.cName = data.client.name;
                     PageTopCache.currentState.state = data.client.name + " / 一次系统图";
                 }, function (err) {
@@ -58,12 +61,13 @@
          * 显示前搜索
          */
         $scope.onBeforeShow = function (id) {
+            $scope.subscribeBranch(id);    // subscribe
 
             Branch.query({
                     bid: id
                 },
                 function (data) {
-                    $scope.branchData = data;
+                    $scope.show.branch = data;
                 }, function (err) {
                     HttpToast.toast(err);
                 });
@@ -78,8 +82,18 @@
 
             locals.put('bid', id);
             locals.put('cName', $scope.cName);
-        }
+        };
 
+        $scope.stdata = {
+            branch: {}
+        };
+
+        /**
+         *  subscribe
+         */
+        $scope.subscribeBranch = function (bid) {
+            // $scope.data = EventsCache.subscribeBranch(bid);  // 订阅支线基本信息
+        };
     }
 
 })();

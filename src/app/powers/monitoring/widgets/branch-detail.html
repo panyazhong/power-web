@@ -1,50 +1,96 @@
 <div class="popover pop-detail">
 
     <div class="pop-title">
-        {{branchData.name}}
+        {{show.branch.name}}
     </div>
 
+    <!-- rel ，下方仅演示
+
+        <div class="pop-content">
+
+        <div class="pop-content-div">
+            A相电流：{{show.branch.currentA}}
+        </div>
+        <div class="pop-content-div">
+            B相电流：{{show.branch.currentB}}
+        </div>
+        <div class="pop-content-div">
+            C相电流：{{show.branch.currentC}}
+        </div>
+        <div class="pop-content-div">
+            有功(P)：{{show.branch.p}}
+        </div>
+        <div class="pop-content-div">
+            功率因素：{{show.branch.powerFactor}}
+        </div>
+
+        <div class="pop-content-div">
+            A相电压：{{show.branch.voltageA}}
+        </div>
+        <div class="pop-content-div">
+            B相电压：{{show.branch.voltageB}}
+        </div>
+        <div class="pop-content-div">
+            C相电压：{{show.branch.voltageC}}
+        </div>
+
+        <div class="pop-content-div">
+            无功(Q)：{{show.branch.q}}
+        </div>
+        <div class="pop-content-div">
+            电量(Wp)：{{show.branch.wp}}
+        </div>
+        <div class="pop-content-div">
+            变压器温度: {{show.branch.temperature}}
+        </div>
+
+    </div>
+
+
+    -->
+
+    <!-- demo 代码 -->
     <div class="pop-content">
 
         <div class="pop-content-div">
-            A相电流：{{branchData.currentA}}
+            A相电流：{{stdata.branch.active_power}}
         </div>
         <div class="pop-content-div">
-            B相电流：{{branchData.currentB}}
+            B相电流：{{stdata.branch.current}}
         </div>
         <div class="pop-content-div">
-            C相电流：{{branchData.currentC}}
+            C相电流：{{stdata.branch.electricity_consumption}}
         </div>
         <div class="pop-content-div">
-            有功(P)：{{branchData.p}}
+            有功(P)：{{stdata.branch.reactive_power}}
         </div>
         <div class="pop-content-div">
-            功率因素：{{branchData.powerFactor}}
-        </div>
-
-        <div class="pop-content-div">
-            A相电压：{{branchData.voltageA}}
-        </div>
-        <div class="pop-content-div">
-            B相电压：{{branchData.voltageB}}
-        </div>
-        <div class="pop-content-div">
-            C相电压：{{branchData.voltageC}}
+            功率因素：{{stdata.branch.voltage}}
         </div>
 
         <div class="pop-content-div">
-            无功(Q)：{{branchData.q}}
+            A相电压：{{stdata.branch.electricity_consumption}}
         </div>
         <div class="pop-content-div">
-            电量(Wp)：{{branchData.wp}}
+            B相电压：{{stdata.branch.active_power}}
         </div>
         <div class="pop-content-div">
-            变压器温度: {{branchData.temperature}}
+            C相电压：{{stdata.branch.current}}
+        </div>
+
+        <div class="pop-content-div">
+            无功(Q)：{{stdata.branch.electricity_consumption}}
+        </div>
+        <div class="pop-content-div">
+            电量(Wp)：{{stdata.branch.voltage}}
+        </div>
+        <div class="pop-content-div">
+            变压器温度: {{stdata.branch.reactive_power}}
         </div>
 
     </div>
 
-    <div class="pop-footer" ng-click="viewBranchDetail(branchData.bid)">
+    <div class="pop-footer" ng-click="viewBranchDetail(show.branch.bid)">
         查看设备明细
     </div>
 

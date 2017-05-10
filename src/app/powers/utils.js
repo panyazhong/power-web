@@ -70,6 +70,8 @@
     }
 
     function modalUtils($uibModal) {
+        var modalInstance;
+
         return {
             open: function (page, size, ctrl, params, saveCB, cancelCB) {
 
@@ -92,6 +94,11 @@
             },
             openMsg: function (page, size, ctrl, params, saveCB, cancelCB) {
 
+                // if(modalInstance){
+                //     modalInstance.close();
+                // }
+
+                // modalInstance = $uibModal.open({
                 $uibModal.open({
                     animation: true,
                     templateUrl: page,
