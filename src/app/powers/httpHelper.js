@@ -24,46 +24,40 @@
                     }
                 }
 
-                if (statusObj && statusObj[obj.client.cid]) {
-                    // 总进线
-                    obj.incomingline.map(function (item) {
-                        if (statusObj[obj.client.cid][item.inid]) {
-                            if (!item.imgLink) {
-                                item.imgLink = ImgPrefix.prefix + item.img;
-
-                            }
-                            if (!item.style) {
-                                item.style = {
-                                    position: 'absolute',
-                                    top: item.imgtop + "px",
-                                    left: item.imgleft + "px",
-                                    width: item.imgw + "px",
-                                    height: item.imgh + "px"
-                                }
-                            }
+                // 总进线
+                obj.incomingline.map(function (item) {
+                    if (statusObj && statusObj[obj.client.cid] && statusObj[obj.client.cid][item.inid]) {
+                        if (!item.imgLink) {
+                            item.imgLink = ImgPrefix.prefix + item.img;
                         }
-                    });
+                    }
 
-                    // 支线
-                    obj.branch.map(function (item) {
-                        if (statusObj[item.inid] && statusObj[item.inid][item.bid]) {
-                            if (!item.imgLink) {
-                                item.imgLink = ImgPrefix.prefix + item.img;
+                    item.style = {
+                        position: 'absolute',
+                        top: item.imgtop + "px",
+                        left: item.imgleft + "px",
+                        width: item.imgw + "px",
+                        height: item.imgh + "px"
+                    }
+                });
 
-                            }
-                            if (!item.style) {
-                                item.style = {
-                                    position: 'absolute',
-                                    top: item.imgtop + "px",
-                                    left: item.imgleft + "px",
-                                    width: item.imgw + "px",
-                                    height: item.imgh + "px"
-                                }
-                            }
+                // 支线
+                obj.branch.map(function (item) {
+                    if (statusObj && statusObj[obj.client.cid] && statusObj[obj.client.cid][item.inid]
+                        && statusObj[obj.client.cid][item.inid][item.bid]) {
+                        if (!item.imgLink) {
+                            item.imgLink = ImgPrefix.prefix + item.img;
                         }
+                    }
 
-                    });
-                }
+                    item.style = {
+                        position: 'absolute',
+                        top: item.imgtop + "px",
+                        left: item.imgleft + "px",
+                        width: item.imgw + "px",
+                        height: item.imgh + "px"
+                    }
+                });
 
                 return _.cloneDeep(obj);
             }

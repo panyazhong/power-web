@@ -25,6 +25,7 @@
 
             var id = locals.get('cid', '') ? locals.get('cid', '') : cid;   //cookie不会空取put的，否则默认取第一个
 
+            EventsCache.subscribeMsg(id);
             $scope.statusCache = EventsCache.subscribeStatus();  // 订阅 一次系统图图片
 
             Clientimg.query({
@@ -32,7 +33,7 @@
                 },
                 function (data) {
                     $scope.show.imgs = ClientimgHelper.query(data, {});
-                    Log.i("data imgs: " + JSON.stringify($scope.show.imgs));
+                    Log.i("Clientimg处理后: " + JSON.stringify($scope.show.imgs));
                     $scope.cName = data.client.name;
                     PageTopCache.currentState.state = data.client.name + " / 一次系统图";
                 }, function (err) {
@@ -103,7 +104,7 @@
 
         $rootScope.$on('refresh', function (event, data) {
             $scope.show.imgs = ClientimgHelper.query($scope.show.imgs, data);
-            Log.i("refresh imgs：" + JSON.stringify($scope.show.imgs));
+            // Log.i("refresh imgs：" + JSON.stringify($scope.show.imgs));
         });
     }
 

@@ -99,10 +99,15 @@
         });
 
         socket.on('monitor', function (data) {  // 变电站信息
+            Log.i('变电站信息: ' + data);
+
             var obj = JSON.parse(data);
             var cid = locals.get('cid', '');
             if (cid && bid) {
                 bCache.branch = (JSON.parse(obj.content)[cid])[bid];
+
+                Log.i('支线基本信息: ' + JSON.stringify(bCache.branch));
+
                 $rootScope.$digest();
             }
         });
@@ -120,7 +125,12 @@
             totalCount: function () {
                 return count;
             },
+            subscribeMsg: function (cid) {
+                Log.i("sub的变电站id：" + cid);
+                socket.emit('subscribe', {client_id: cid}); // 根据cid，订阅变电站信息，没用到
+            },
             subscribeBranch: function (id) { // 订阅 支线基本信息
+                Log.i('预定的支线id是：' + id);
                 bid = id;
                 return bCache;
             },
