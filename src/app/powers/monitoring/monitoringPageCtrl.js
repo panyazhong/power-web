@@ -19,20 +19,13 @@
             imgs: {},   // images info
             branch: {}  // branch info
         };
-        $scope.stbranch = {
-            branch: {}  // socket branchInfo
-        };
-        $scope.stimgs = {
-            imgs: {}  // socket imgsInfo
-        };
         $scope.cName = '';
 
         $scope.queryClientImg = function (cid) {
 
             var id = locals.get('cid', '') ? locals.get('cid', '') : cid;   //cookie不会空取put的，否则默认取第一个
 
-            EventsCache.subscribeMsg(id);                         // 订阅 变电站
-            $scope.stimgs = EventsCache.subscribeClientImgs(id);  // 订阅 一次系统图图片
+            $scope.statusCache = EventsCache.subscribeStatus();  // 订阅 一次系统图图片
 
             Clientimg.query({
                     cid: id
@@ -67,7 +60,10 @@
          * 显示前搜索
          */
         $scope.onBeforeShow = function (id) {
-            $scope.subscribeBranch(id);    // sub
+
+            $scope.show.branch = "";    // init
+            $scope.stbranch = {};   // init
+            $scope.subscribeBranch(id);    // subscribe
 
             Branch.query({
                     bid: id
@@ -90,6 +86,13 @@
             locals.put('cName', $scope.cName);
         };
 
+
+        $scope.stbranch = {
+            branch: {}  // socket branchInfo
+        };
+        $scope.statusCache = {
+            status: {}  // socket imgsInfo
+        };
         /**
          *  subscribe
          */

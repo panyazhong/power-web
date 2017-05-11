@@ -5,10 +5,7 @@
         .controller('checkinPageCtrl', checkinPageCtrl);
 
     /** @ngInject */
-    function checkinPageCtrl($scope,EventsCache) {
-
-        EventsCache.event.totalCount = 9;   // test del
-
+    function checkinPageCtrl($scope) {
 
     }
 

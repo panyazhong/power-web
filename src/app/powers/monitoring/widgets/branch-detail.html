@@ -53,39 +53,39 @@
     <div class="pop-content">
 
         <div class="pop-content-div">
-            A相电流：{{stdata.branch.active_power}}
+            A相电流：{{stbranch.branch.active_power}}
         </div>
         <div class="pop-content-div">
-            B相电流：{{stdata.branch.current}}
+            B相电流：{{stbranch.branch.current}}
         </div>
         <div class="pop-content-div">
-            C相电流：{{stdata.branch.electricity_consumption}}
+            C相电流：{{stbranch.branch.electricity_consumption}}
         </div>
         <div class="pop-content-div">
-            有功(P)：{{stdata.branch.reactive_power}}
+            有功(P)：{{stbranch.branch.reactive_power}}
         </div>
         <div class="pop-content-div">
-            功率因素：{{stdata.branch.voltage}}
-        </div>
-
-        <div class="pop-content-div">
-            A相电压：{{stdata.branch.electricity_consumption}}
-        </div>
-        <div class="pop-content-div">
-            B相电压：{{stdata.branch.active_power}}
-        </div>
-        <div class="pop-content-div">
-            C相电压：{{stdata.branch.current}}
+            功率因素：{{stbranch.branch.voltage}}
         </div>
 
         <div class="pop-content-div">
-            无功(Q)：{{stdata.branch.electricity_consumption}}
+            A相电压：{{stbranch.branch.electricity_consumption}}
         </div>
         <div class="pop-content-div">
-            电量(Wp)：{{stdata.branch.voltage}}
+            B相电压：{{stbranch.branch.active_power}}
         </div>
         <div class="pop-content-div">
-            变压器温度: {{stdata.branch.reactive_power}}
+            C相电压：{{stbranch.branch.current}}
+        </div>
+
+        <div class="pop-content-div">
+            无功(Q)：{{stbranch.branch.electricity_consumption}}
+        </div>
+        <div class="pop-content-div">
+            电量(Wp)：{{stbranch.branch.voltage}}
+        </div>
+        <div class="pop-content-div">
+            变压器温度: {{stbranch.branch.reactive_power}}
         </div>
 
     </div>

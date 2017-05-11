@@ -20,7 +20,7 @@
                 {{item.title}}
 
                 <span ng-show="item.state == 'events' && show.event.totalCount > 0"
-                      ng-class="show.event.totalCount > 9?'event-label-big':'event-label'">
+                      ng-class="show.event.totalCount.total > 9?'event-label-big':'event-label'">
                     {{show.event.totalCount}}
                 </span>
 

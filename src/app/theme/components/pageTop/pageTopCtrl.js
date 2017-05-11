@@ -42,7 +42,7 @@
                     state: 'report'
                 }],
             cache: PageTopCache.cache,
-            event: EventsCache.event,
+            event: EventsCache.totalCount(),
             userName: locals.getObject('user').name,
             setData: [
                 {

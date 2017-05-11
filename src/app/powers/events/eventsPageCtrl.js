@@ -8,8 +8,6 @@
     function eventsPageCtrl($scope, $state, PageTopCache, Sidebar, SidebarCache, HttpToast, Log,
                             Device, ToastUtils, ExportPrefix, Event, EventsCache, locals, $stateParams) {
 
-        EventsCache.event.totalCount = 0;  // test del
-
         PageTopCache.cache.state = $state.$current; // active
 
         $scope.data = {
