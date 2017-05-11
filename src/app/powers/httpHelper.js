@@ -10,39 +10,60 @@
     function clientimgHelper(ImgPrefix, _) {
 
         return {
-            query: function (obj) {
+            query: function (obj, statusObj) {
                 // 背景
                 if (obj.client && obj.client.img) {
-                    obj.client.img = ImgPrefix.prefix + obj.client.img;
-                    obj.client.style = {
-                        width: obj.client.imgw + "px",
-                        height: obj.client.imgh + "px"
-                    };
+                    if (!obj.client.imgLink) {
+                        obj.client.imgLink = ImgPrefix.prefix + obj.client.img;
+                    }
+                    if (!obj.client.style) {
+                        obj.client.style = {
+                            width: obj.client.imgw + "px",
+                            height: obj.client.imgh + "px"
+                        };
+                    }
                 }
 
-                // 总进线
-                obj.incomingline.map(function (item) {
-                    item.img = ImgPrefix.prefix + item.img;
-                    item.style = {
-                        position: 'absolute',
-                        top: item.imgtop + "px",
-                        left: item.imgleft + "px",
-                        width: item.imgw + "px",
-                        height: item.imgh + "px"
-                    }
-                });
+                if (statusObj && statusObj[obj.client.cid]) {
+                    // 总进线
+                    obj.incomingline.map(function (item) {
+                        if (statusObj[obj.client.cid][item.inid]) {
+                            if (!item.imgLink) {
+                                item.imgLink = ImgPrefix.prefix + item.img;
 
-                // 支线
-                obj.branch.map(function (item) {
-                    item.img = ImgPrefix.prefix + item.img;
-                    item.style = {
-                        position: 'absolute',
-                        top: item.imgtop + "px",
-                        left: item.imgleft + "px",
-                        width: item.imgw + "px",
-                        height: item.imgh + "px"
-                    }
-                });
+                            }
+                            if (!item.style) {
+                                item.style = {
+                                    position: 'absolute',
+                                    top: item.imgtop + "px",
+                                    left: item.imgleft + "px",
+                                    width: item.imgw + "px",
+                                    height: item.imgh + "px"
+                                }
+                            }
+                        }
+                    });
+
+                    // 支线
+                    obj.branch.map(function (item) {
+                        if (statusObj[item.inid] && statusObj[item.inid][item.bid]) {
+                            if (!item.imgLink) {
+                                item.imgLink = ImgPrefix.prefix + item.img;
+
+                            }
+                            if (!item.style) {
+                                item.style = {
+                                    position: 'absolute',
+                                    top: item.imgtop + "px",
+                                    left: item.imgleft + "px",
+                                    width: item.imgw + "px",
+                                    height: item.imgh + "px"
+                                }
+                            }
+                        }
+
+                    });
+                }
 
                 return _.cloneDeep(obj);
             }

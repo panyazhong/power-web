@@ -9,7 +9,7 @@
         .controller('pageTopCtrl', pageTopCtrl);
 
     /** @ngInject */
-    function pageTopCtrl($scope, $state, PageTopCache, locals, User, HttpToast, SkipUtils, ToastUtils, EventsCache) {
+    function pageTopCtrl($scope, $state, PageTopCache, locals, User, HttpToast, SkipUtils, EventsCache) {
 
         $scope.show = {
             topBarData: [
@@ -42,7 +42,7 @@
                     state: 'report'
                 }],
             cache: PageTopCache.cache,
-            event: EventsCache.totalCount(),
+            eventTotal: EventsCache.totalCount(),
             userName: locals.getObject('user').name,
             setData: [
                 {

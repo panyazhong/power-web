@@ -18,9 +18,6 @@
         var statusCache = {    // 侧边栏信息、一次系统图
             status: ""
         };
-        // var imgsCache = {      // 一次系统图
-        //     imgs: ""
-        // };
         var count = {
             total: 0
         };
@@ -101,30 +98,21 @@
              */
         });
 
-        socket.on('monitor', function (data) {  // 预定数据
+        socket.on('monitor', function (data) {  // 变电站信息
             var obj = JSON.parse(data);
-
             var cid = locals.get('cid', '');
             if (cid && bid) {
-                // Log.i("subRes branch：" + JSON.stringify((JSON.parse(obj.content)[cid])[bid]));
-
                 bCache.branch = (JSON.parse(obj.content)[cid])[bid];
                 $rootScope.$digest();
             }
-        }); // 变电站信息
+        });
 
-        socket.on('status', function (data) {  // 预定数据
+        socket.on('status', function (data) {   // 预定的数据
             var obj = JSON.parse(data);
+            count.total = JSON.parse(obj.content).total;    // 未处理的event数量
+            statusCache.status = (JSON.parse(obj.content)).detail;  // 侧边栏和一次系统图
 
-            count.total = JSON.parse(obj.content).total;
-            statusCache.status = (JSON.parse(obj.content)).detail;
-
-            // Log.i("subRes status00：" + JSON.stringify(JSON.parse(obj.content)));
-            // Log.i("subRes status11：" + JSON.stringify(statusCache.status["1"]));
-            // Log.i("subRes status22：" + JSON.stringify(statusCache.status["1"]["1"]));
-            // Log.i("subRes status33：" + JSON.stringify(statusCache.status["1"]["1"]["2"]));
             $rootScope.$emit('refresh', statusCache.status);
-
             $rootScope.$digest();
         });
 
@@ -132,11 +120,6 @@
             totalCount: function () {
                 return count;
             },
-            // subscribeMsg: function (cid) {
-            //     Log.i("sub的变电站id：" + cid);
-            //
-            //     socket.emit('subscribe', {client_id: cid}); // 根据cid，订阅变电站信息，没用到
-            // },
             subscribeBranch: function (id) { // 订阅 支线基本信息
                 bid = id;
                 return bCache;
@@ -144,9 +127,6 @@
             subscribeStatus: function () { // 订阅侧边栏信息、一次系统图
                 return statusCache;
             }
-            // subscribeSidebar: function () { // 订阅 侧边栏信息
-            //     return sidebarCache;
-            // }
         }
     }
 

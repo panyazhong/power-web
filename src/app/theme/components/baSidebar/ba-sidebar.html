@@ -3,7 +3,8 @@
        ng-mouseleave="hoverElemTop=selectElemTop">
     <ul class="al-sidebar-list" slimscroll="{height: '{{menuHeight}}px'}"
         slimscroll-watch="menuHeight">
-        <li ng-repeat="item in ::menuItems" class="al-sidebar-list-item"
+        <!--<li ng-repeat="item in ::menuItems" class="al-sidebar-list-item"-->
+        <li ng-repeat="item in show.menuItems" class="al-sidebar-list-item"
             ng-class="::{'with-sub-menu': item.subMenu}" ui-sref-active="selected"
             ba-sidebar-toggling-item="item">
 
@@ -12,12 +13,12 @@
             <a ng-mouseenter="hoverItem($event, item)" ui-state="item.stateRef || ''"
                ng-href="{{::(item.fixedHref ? item.fixedHref: '')}}" ng-if="::!item.subMenu"
                class="al-sidebar-list-link">
-                <i class="{{ ::item.icon }}"></i><span>{{ ::item.title }}</span>
+                <i class="{{ item.icon }}"></i><span>{{ ::item.title }}</span>
             </a>
 
             <a ng-mouseenter="hoverItem($event, item)" ng-if="::item.subMenu"
                class="al-sidebar-list-link" ba-ui-sref-toggler>
-                <i class="{{ ::item.icon }}"></i><span>{{ ::item.title }}</span>
+                <i class="{{ item.icon }}"></i><span>{{ ::item.title }}</span>
                 <b class="fa fa-angle-down" ui-sref-active="fa-angle-up"
                    ng-if="::item.subMenu"></b>
             </a>
@@ -33,7 +34,7 @@
                        class="al-sidebar-list-link subitem-submenu-link">
 
                         <!--二级菜单标题-->
-                        <i class="{{ ::subitem.icon }}"></i><span>{{ ::subitem.title }}</span>
+                        <i class="{{ subitem.icon }}"></i><span>{{ ::subitem.title }}</span>
 
                         <b class="fa"
                            ng-class="{'fa-angle-up': subitem.expanded, 'fa-angle-down': !subitem.expanded}"
@@ -57,7 +58,7 @@
                                style="cursor:pointer;">
 
                                 <div style="pointer-events: none;">
-                                    <i class="{{ ::subSubitem.icon }}"
+                                    <i class="{{ subSubitem.icon }}"
                                        style="margin-right: 9px;width: 16px;display: inline-block;">
                                     </i>
                                     <span class="page-sb-item">

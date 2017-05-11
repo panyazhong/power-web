@@ -10,11 +10,15 @@
 
     /** @ngInject */
     function BaSidebarCtrl($scope, baSidebarService, $state, locals, SidebarCache, Sidebar, Log,
-                           HttpToast, EventsCache, $rootScope) {
+                           HttpToast, EventsCache, $rootScope, _) {
 
         // $scope.menuItems = baSidebarService.getMenuItems();
         // $scope.defaultSidebarState = $scope.menuItems[0].stateRef;
         // $scope.menuItems = $scope.setLeftMenu($scope.info);    // 设置侧边栏数据
+
+        $scope.show = {
+            menuItems: []
+        };
 
         $scope.setLeftMenu = function (obj) {
             var data = obj;
@@ -24,18 +28,7 @@
                 var i = {};
                 i.clientId = item.clientId;
                 i.title = item.clientName;
-                // i.icon = 'ion-record';
-
-                if ($scope.statusCache.status && $scope.statusCache.status[i.clientId]) {
-                    Log.i("i.icon111");
-                    i.icon = 'ion-record';
-                }
-                else {
-                    Log.i("i.icon2222");
-                    i.icon = 'ion-star';
-                }
-
-                // i.icon = $scope.statusCache.status && $scope.statusCache.status[i.clientId] ? 'ion-record' : 'ion-star';
+                i.icon = 'ion-record';
                 if (item.incominglineData.length > 0) {
                     i.subMenu = [];
                     item.incominglineData.map(function (subItem) {
@@ -43,11 +36,7 @@
                         var j = {};
                         j.incominglingId = subItem.incominglingId;
                         j.title = subItem.incominglineName;
-                        // j.icon = 'ion-record';
-
-                        j.icon = $scope.statusCache.status && $scope.statusCache.status[i.clientId] &&
-                        $scope.statusCache.status[i.clientId][j.incominglingId] ? 'ion-record' : 'ion-star';
-
+                        j.icon = 'ion-record';
                         if (subItem.branchData.length > 0) {
                             j.subMenu = [];
                             subItem.branchData.map(function (subSubItem) {
@@ -55,12 +44,7 @@
                                 var k = {};
                                 k.branchId = subSubItem.branchId;
                                 k.title = subSubItem.branchName;
-
-                                // k.icon = 'ion-record';
-                                k.icon = $scope.statusCache.status && $scope.statusCache.status[i.clientId] &&
-                                $scope.statusCache.status[i.clientId][j.incominglingId] &&
-                                $scope.statusCache.status[i.clientId][j.incominglingId][k.branchId] ? 'ion-record' : 'ion-star';
-
+                                k.icon = 'ion-record';
                                 k.stateRef = 'branch';
 
                                 j.subMenu.push(k);
@@ -76,25 +60,25 @@
             return menuData;
         };
 
-        $scope.statusCache = {
-            status: {}  // socket imgsInfo
-        };
-
-        $scope.init = function () {
-            $scope.statusCache = EventsCache.subscribeStatus(); // subscribe
-
+        $scope.setMenu = function () {
             if (SidebarCache.isEmpty()) {
                 Sidebar.query({},
                     function (data) {
                         SidebarCache.create(data);
                         locals.putObject('sidebar', data.sidebar);
-                        $scope.menuItems = $scope.setLeftMenu(data.sidebar);
+                        $scope.show.menuItems = $scope.setLeftMenu(data.sidebar);
                     }, function (err) {
                         HttpToast.toast(err);
                     });
             } else {
-                $scope.menuItems = $scope.setLeftMenu(locals.getObject('sidebar'));
+                $scope.show.menuItems = $scope.setLeftMenu(locals.getObject('sidebar'));
             }
+        };
+
+        $scope.init = function () {
+            $scope.statusCache = EventsCache.subscribeStatus(); // subscribe
+
+            $scope.setMenu();
         };
         $scope.init();
 
@@ -121,22 +105,42 @@
         };
 
         $rootScope.$on('refresh', function (event, data) {
-            console.log("refresh...\n" + JSON.stringify(data));
 
-            // $scope.statusCache.status = data;
-            //
-            // if (SidebarCache.isEmpty()) {
-            //     Sidebar.query({},
-            //         function (data) {
-            //             SidebarCache.create(data);
-            //             locals.putObject('sidebar', data.sidebar);
-            //             $scope.menuItems = $scope.setLeftMenu(data.sidebar);
-            //         }, function (err) {
-            //             HttpToast.toast(err);
-            //         });
-            // } else {
-            //     $scope.menuItems = $scope.setLeftMenu(locals.getObject('sidebar'));
-            // }
+            $scope.show.menuItems.map(function (item) {
+                // 一级菜单
+                if (data[item.clientId]) {
+                    item.icon = 'ion-star';
+                }
+                else {
+                    item.icon = 'ion-record';
+                }
+
+                if (item.subMenu.length > 0) {
+                    item.subMenu.map(function (subItem) {
+                        // 二级菜单
+                        if (data[item.clientId] && data[item.clientId][subItem.incominglingId]) {
+                            subItem.icon = 'ion-star';
+                        }
+                        else {
+                            subItem.icon = 'ion-record';
+                        }
+
+                        if (subItem.subMenu.length > 0) {
+                            subItem.subMenu.map(function (subSubItem) {
+                                // 三级菜单
+                                if (data[item.clientId] && data[item.clientId][subItem.incominglingId] &&
+                                    data[item.clientId][subItem.incominglingId][subSubItem.branchId]
+                                ) {
+                                    subSubItem.icon = 'ion-star';
+                                }
+                                else {
+                                    subSubItem.icon = 'ion-record';
+                                }
+                            });
+                        }
+                    });
+                }
+            });
         });
 
     }

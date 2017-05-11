@@ -10,7 +10,7 @@
 
     /** @ngInject */
     function monitoringPageCtrl($scope, $state, $stateParams, PageTopCache, Clientimg, ClientimgHelper,
-                                Branch, HttpToast, SidebarCache, Sidebar, Log, locals, EventsCache) {
+                                Branch, HttpToast, SidebarCache, Sidebar, Log, locals, EventsCache, $rootScope) {
 
         PageTopCache.cache.state = $state.$current; // active
         $stateParams.cid ? locals.put('cid', $stateParams.cid) : '';
@@ -31,7 +31,8 @@
                     cid: id
                 },
                 function (data) {
-                    $scope.show.imgs = ClientimgHelper.query(data);
+                    $scope.show.imgs = ClientimgHelper.query(data, {});
+                    Log.i("data imgs: " + JSON.stringify($scope.show.imgs));
                     $scope.cName = data.client.name;
                     PageTopCache.currentState.state = data.client.name + " / 一次系统图";
                 }, function (err) {
@@ -99,6 +100,11 @@
         $scope.subscribeBranch = function (bid) {
             $scope.stbranch = EventsCache.subscribeBranch(bid); // 订阅 支线基本信息
         };
+
+        $rootScope.$on('refresh', function (event, data) {
+            $scope.show.imgs = ClientimgHelper.query($scope.show.imgs, data);
+            Log.i("refresh imgs：" + JSON.stringify($scope.show.imgs));
+        });
     }
 
 })();

@@ -6,7 +6,7 @@
 
     /** @ngInject */
     function eventsPageCtrl($scope, $state, PageTopCache, Sidebar, SidebarCache, HttpToast, Log,
-                            Device, ToastUtils, ExportPrefix, Event, EventsCache, locals, $stateParams) {
+                            Device, ToastUtils, ExportPrefix, Event, locals, $stateParams) {
 
         PageTopCache.cache.state = $state.$current; // active
 
