@@ -33,7 +33,7 @@
                 },
                 function (data) {
                     $scope.show.imgs = ClientimgHelper.query(data, {});
-                    Log.i("Clientimg处理后: " + JSON.stringify($scope.show.imgs));
+                    // Log.i("Clientimg处理后:\n " + JSON.stringify($scope.show.imgs));
                     $scope.cName = data.client.name;
                     PageTopCache.currentState.state = data.client.name + " / 一次系统图";
                 }, function (err) {
@@ -104,7 +104,6 @@
 
         $rootScope.$on('refresh', function (event, data) {
             $scope.show.imgs = ClientimgHelper.query($scope.show.imgs, data);
-            // Log.i("refresh imgs：" + JSON.stringify($scope.show.imgs));
         });
     }
 

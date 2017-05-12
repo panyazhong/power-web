@@ -43,8 +43,8 @@
                 mapObj = new AMap.Map('container', {
 //                    dragEnable: false,      //是否可拖拽
 //                    zoomEnable: false,      //是否可缩放
-                    zoom: 12,
-                    center: [121.493496, 31.224609],    // 定义地图中心点
+                    zoom: 9,
+                    center: [121.582888, 31.466200],    // 定义地图中心点
                 });
                 AMap.event.addListener(mapObj, "complete", completeEventHandler);
             }
@@ -133,7 +133,7 @@
                 var infoWindow = new AMap.InfoWindow({
                     isCustom: true,
                     closeWhenClickMap: true,
-                    offset: new AMap.Pixel(200, -50),
+                    offset: new AMap.Pixel(150, 0),
                     content: custXml
                 });
                 infoWindow.open(mapObj, pos);

@@ -13,12 +13,12 @@
             <a ng-mouseenter="hoverItem($event, item)" ui-state="item.stateRef || ''"
                ng-href="{{::(item.fixedHref ? item.fixedHref: '')}}" ng-if="::!item.subMenu"
                class="al-sidebar-list-link">
-                <i class="{{ item.icon }}"></i><span>{{ ::item.title }}</span>
+                <span class="{{ item.icon }}"></span><span>{{ ::item.title }}</span>
             </a>
 
             <a ng-mouseenter="hoverItem($event, item)" ng-if="::item.subMenu"
                class="al-sidebar-list-link" ba-ui-sref-toggler>
-                <i class="{{ item.icon }}"></i><span>{{ ::item.title }}</span>
+                <span class="{{ item.icon }}"></span><span>{{ ::item.title }}</span>
                 <b class="fa fa-angle-down" ui-sref-active="fa-angle-up"
                    ng-if="::item.subMenu"></b>
             </a>
@@ -34,7 +34,7 @@
                        class="al-sidebar-list-link subitem-submenu-link">
 
                         <!--二级菜单标题-->
-                        <i class="{{ subitem.icon }}"></i><span>{{ ::subitem.title }}</span>
+                        <span class="{{ subitem.icon }}"></span><span>{{ ::subitem.title }}</span>
 
                         <b class="fa"
                            ng-class="{'fa-angle-up': subitem.expanded, 'fa-angle-down': !subitem.expanded}"
@@ -45,22 +45,17 @@
                         ba-ui-sref-toggling-submenu>
                         <li ng-mouseenter="hoverItem($event, item)"
                             ng-repeat="subSubitem in ::subitem.subMenu" ui-sref-active="selected">
-                            <!--<a ng-mouseenter="hoverItem($event, item)" href-->
-                            <!--ng-if="::subSubitem.disabled" class="al-sidebar-list-link">-->
-                            <!--&lt;!&ndash;{{ ::subSubitem.title }}&ndash;&gt;-->
 
-                            <!--&lt;!&ndash;三级菜单标题&ndash;&gt;-->
-                            <!--<i class="{{ ::subSubitem.icon }}"></i><span>{{ ::subSubitem.title }}</span>-->
-                            <!--</a>-->
+                            <!--三级菜单标题-->
+
                             <a ng-mouseenter="hoverItem($event, item)"
                                ng-click="goState($event,subSubitem.branchId)"
                                ng-if="::!subSubitem.disabled"
                                style="cursor:pointer;">
 
                                 <div style="pointer-events: none;">
-                                    <i class="{{ subSubitem.icon }}"
-                                       style="margin-right: 9px;width: 16px;display: inline-block;">
-                                    </i>
+                                    <span class="{{ subSubitem.icon }}">
+                                    </span>
                                     <span class="page-sb-item">
                                 	    {{ ::subSubitem.title }}
                                     </span>

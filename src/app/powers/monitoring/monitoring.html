@@ -8,23 +8,18 @@
 
                 <img ng-repeat="item in show.imgs.incomingline"
                      ng-src="{{item.imgLink}}"
-                     ng-style="item.style"
+                     ng-style="item.style"/>
 
-                     style="border: 1px solid #FFFFFF;"
-                />
+                <span ng-repeat="item in show.imgs.branch"
+                      ng-style="item.style"
+                      ng-click="onBeforeShow(item.bid)"
 
-                <img ng-repeat="item in show.imgs.branch"
-                     ng-src="{{item.imgLink}}"
-                     ng-style="item.style"
-                     ng-click="onBeforeShow(item.bid)"
-
-                     style="border: 1px solid #FFFFFF;"
-
-                     data-placement="left"
-                     data-container="body"
-                     data-template-url="app/powers/monitoring/widgets/branch-detail.html"
-                     data-auto-close="1"
-                     bs-popover/>
+                      data-placement="left"
+                      data-container="body"
+                      data-template-url="app/powers/monitoring/widgets/branch-detail.html"
+                      data-auto-close="1"
+                      bs-popover>
+                </span>
 
             </div>
 

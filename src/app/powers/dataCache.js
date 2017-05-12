@@ -99,14 +99,14 @@
         });
 
         socket.on('monitor', function (data) {  // 变电站信息
-            Log.i('变电站信息: ' + data);
+            // Log.i('变电站信息: ' + data);
 
             var obj = JSON.parse(data);
             var cid = locals.get('cid', '');
             if (cid && bid) {
                 bCache.branch = (JSON.parse(obj.content)[cid])[bid];
 
-                Log.i('支线基本信息: ' + JSON.stringify(bCache.branch));
+                // Log.i('支线基本信息: ' + JSON.stringify(bCache.branch));
 
                 $rootScope.$digest();
             }

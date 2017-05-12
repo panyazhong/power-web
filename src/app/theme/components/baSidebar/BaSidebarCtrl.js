@@ -12,10 +12,6 @@
     function BaSidebarCtrl($scope, baSidebarService, $state, locals, SidebarCache, Sidebar, Log,
                            HttpToast, EventsCache, $rootScope, _) {
 
-        // $scope.menuItems = baSidebarService.getMenuItems();
-        // $scope.defaultSidebarState = $scope.menuItems[0].stateRef;
-        // $scope.menuItems = $scope.setLeftMenu($scope.info);    // 设置侧边栏数据
-
         $scope.show = {
             menuItems: []
         };
@@ -28,7 +24,7 @@
                 var i = {};
                 i.clientId = item.clientId;
                 i.title = item.clientName;
-                i.icon = 'ion-record';
+                i.icon = 'indicator-normal';
                 if (item.incominglineData.length > 0) {
                     i.subMenu = [];
                     item.incominglineData.map(function (subItem) {
@@ -36,7 +32,7 @@
                         var j = {};
                         j.incominglingId = subItem.incominglingId;
                         j.title = subItem.incominglineName;
-                        j.icon = 'ion-record';
+                        j.icon = 'indicator-normal';
                         if (subItem.branchData.length > 0) {
                             j.subMenu = [];
                             subItem.branchData.map(function (subSubItem) {
@@ -44,7 +40,7 @@
                                 var k = {};
                                 k.branchId = subSubItem.branchId;
                                 k.title = subSubItem.branchName;
-                                k.icon = 'ion-record';
+                                k.icon = 'indicator-normal';
                                 k.stateRef = 'branch';
 
                                 j.subMenu.push(k);
@@ -106,41 +102,43 @@
 
         $rootScope.$on('refresh', function (event, data) {
 
-            $scope.show.menuItems.map(function (item) {
-                // 一级菜单
-                if (data[item.clientId]) {
-                    item.icon = 'ion-star';
-                }
-                else {
-                    item.icon = 'ion-record';
-                }
+            if ($scope.show.menuItems && Array.isArray($scope.show.menuItems)) {
+                $scope.show.menuItems.map(function (item) {
+                    // 一级菜单
+                    if (data[item.clientId]) {
+                        item.icon = 'indicator-error';
+                    }
+                    else {
+                        item.icon = 'indicator-normal';
+                    }
 
-                if (item.subMenu.length > 0) {
-                    item.subMenu.map(function (subItem) {
-                        // 二级菜单
-                        if (data[item.clientId] && data[item.clientId][subItem.incominglingId]) {
-                            subItem.icon = 'ion-star';
-                        }
-                        else {
-                            subItem.icon = 'ion-record';
-                        }
+                    if (item.subMenu.length > 0) {
+                        item.subMenu.map(function (subItem) {
+                            // 二级菜单
+                            if (data[item.clientId] && data[item.clientId][subItem.incominglingId]) {
+                                subItem.icon = 'indicator-error';
+                            }
+                            else {
+                                subItem.icon = 'indicator-normal';
+                            }
 
-                        if (subItem.subMenu.length > 0) {
-                            subItem.subMenu.map(function (subSubItem) {
-                                // 三级菜单
-                                if (data[item.clientId] && data[item.clientId][subItem.incominglingId] &&
-                                    data[item.clientId][subItem.incominglingId][subSubItem.branchId]
-                                ) {
-                                    subSubItem.icon = 'ion-star';
-                                }
-                                else {
-                                    subSubItem.icon = 'ion-record';
-                                }
-                            });
-                        }
-                    });
-                }
-            });
+                            if (subItem.subMenu.length > 0) {
+                                subItem.subMenu.map(function (subSubItem) {
+                                    // 三级菜单
+                                    if (data[item.clientId] && data[item.clientId][subItem.incominglingId] &&
+                                        data[item.clientId][subItem.incominglingId][subSubItem.branchId]
+                                    ) {
+                                        subSubItem.icon = 'indicator-error';
+                                    }
+                                    else {
+                                        subSubItem.icon = 'indicator-normal';
+                                    }
+                                });
+                            }
+                        });
+                    }
+                });
+            }
         });
 
     }
