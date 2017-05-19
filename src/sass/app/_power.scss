@@ -536,3 +536,19 @@ input[type=number]::-webkit-outer-spin-button {
   border-radius: 3px;
   margin-right: 9px;
 }
+
+/*
+  签到
+ */
+
+.checkin .form-control {
+  color: #6b6b6b;
+  background-color: transparent;
+}
+
+/*
+  选择时间的dropdown
+ */
+.datetime-picker-dropdown {
+  min-width: 208px !important;
+}

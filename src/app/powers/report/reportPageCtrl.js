@@ -220,24 +220,21 @@
             Report.query(params,
                 function (data) {
                     // 查询到再下载
-                    if (data.length == 0) {
+                    if (Array.isArray(data) && data.length < 1) {
                         ToastUtils.openToast('warning', '未筛选到文件，请换个条件试试！');
                         return;
                     }
 
-                    var params = '';
+                    var pam = '';
                     for (var Key in $scope.form) {
                         if ($scope.form[Key]) {
-                            params += Key + '=' + $scope.form[Key] + "&";
+                            pam += Key + '=' + $scope.form[Key] + "&";
                         }
                     }
 
-                    var p = params ? params.substring(0, params.length - 2) : '';
+                    var p = pam ? pam.substring(0, pam.length - 1) : '';
 
-                    var link = ExportPrefix.reportAll + p;
-                    if (link) {
-                        $window.location.href = link;
-                    }
+                    $window.location.href = ExportPrefix.reportAll + p;
                 },
                 function (err) {
                     HttpToast.toast(err);

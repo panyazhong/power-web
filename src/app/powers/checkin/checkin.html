@@ -1,7 +1,10 @@
-<div ba-panel ba-panel-class="profile-page">
-    <div class="panel-content">
+<div ba-panel>
+    <div class="item-content-list checkin">
 
-        <h3> 签到查询；checkin </h3>
+        <div include-with-scope="app/powers/checkin/widgets/tableForm.html">
+        </div>
 
+        <div include-with-scope="app/powers/checkin/widgets/table.html"
+             style="padding: 30px;"></div>
     </div>
 </div>

@@ -27,7 +27,7 @@
         .factory('Resource', function ($resource, $httpParamSerializerJQLike, $q) {
 
             // var host = 'http://112.74.175.108:3100/api';
-            var host = 'http://192.168.0.120';
+            var host = 'http://192.168.0.150';
 
             var setAction = function (actions) {
                 var defaultParams = {
@@ -310,6 +310,34 @@
                 },
                 action: {
                     query: {        // 查询报表列表
+                        method: 'GET',
+                        isArray: true
+                    },
+                    queryUser: {    // 管理员查询上上传
+                        method: 'GET',
+                        isArray: true
+                    },
+                    edit: {
+                        method: 'POST'
+                    },
+                    delete: {
+                        method: 'DELETE'
+                    }
+                }
+            };
+            return Resource(config);
+        })
+        // 签到查询
+        .factory('Signin', function (Resource) {
+            var config = {
+                url: 'signin/:client/:clientId/:list',
+                paramsDefault: {
+                    client: '@client',
+                    clientId: '@clientId',
+                    list: '@list',
+                },
+                action: {
+                    query: {        //7.4 选择变电站后获取相应的签到点下拉列表
                         method: 'GET',
                         isArray: true
                     },
