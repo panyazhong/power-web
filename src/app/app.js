@@ -31,6 +31,8 @@ angular.module('BlurAdmin', [
 
     Log.i('ng is run...');
 
+    /*
+
     var userInfo = locals.getObject('user');
 
     if (JSON.stringify(userInfo) == '{}') {
@@ -40,5 +42,6 @@ angular.module('BlurAdmin', [
         // rel
         // window.location.assign('/aa/bb/cc');
     }
+     */
 
 });

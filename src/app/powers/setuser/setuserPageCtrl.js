@@ -59,15 +59,15 @@
                 });
         };
 
-        $scope.print = function () {
-            Log.i('print');
-        };
-
         $scope.export = function () {
-            Log.i('export...');
-
             var strWindowFeatures = "location=yes,height=570,width=520,scrollbars=yes,status=yes";
             var URL = ExportPrefix.userPrefix;
+            window.open(URL, "_blank", strWindowFeatures);
+        };
+
+        $scope.print = function () {
+            var strWindowFeatures = "location=yes,height=570,width=520,scrollbars=yes,status=yes";
+            var URL = ExportPrefix.userPrefixPrint;
             window.open(URL, "_blank", strWindowFeatures);
         };
 

@@ -200,6 +200,32 @@
         $scope.init();
 
         $scope.print = function () {
+            var params = $scope.formatForm();
+            params.list = 'list';
+
+            var downForm = $scope.formatForm();
+
+            Signin.query(params,
+                function (data) {
+                    if (Array.isArray(data) && data.length < 1) {
+                        ToastUtils.openToast('warning', '未筛选到文件，请换个条件试试！');
+                        return;
+                    }
+
+                    var pam = '';
+                    for (var Key in downForm) {
+                        if (downForm[Key]) {
+                            pam += Key + '=' + downForm[Key] + "&";
+                        }
+                    }
+                    var p = pam.substring(0, pam.length - 1);
+
+                    // file exist
+                    $window.location.href = ExportPrefix.checkinAllPrint + p;
+                },
+                function (err) {
+                    HttpToast.toast(err);
+                });
         };
 
         $scope.export = function () {

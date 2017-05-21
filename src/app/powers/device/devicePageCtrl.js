@@ -190,7 +190,14 @@
 
         // 导出excel
         $scope.exportExcel = function () {
+            var p = $scope.allPrpos();
 
+            var strWindowFeatures = "location=yes,height=570,width=520,scrollbars=yes,status=yes";
+            var URL = ExportPrefix.prefix + p;
+            window.open(URL, "_blank", strWindowFeatures);
+        };
+
+        $scope.allPrpos = function () {
             var params = {};
 
             if (!$.isEmptyObject($scope.form.name)) {
@@ -218,17 +225,9 @@
                 params.operationstatus = $scope.form.operationstatus;
             }
 
-            var p = $scope.allPrpos(params);
-
-            var strWindowFeatures = "location=yes,height=570,width=520,scrollbars=yes,status=yes";
-            var URL = ExportPrefix.prefix + p;
-            window.open(URL, "_blank", strWindowFeatures);
-        };
-
-        $scope.allPrpos = function (obj) {
             var names = "";
-            for (var name in obj) {
-                names += name + "=" + obj[name] + "&";
+            for (var Key in params) {
+                names += Key + "=" + params[Key] + "&";
             }
 
             return names ? '?' + names.substring(0, names.length - 1) : "";
@@ -275,7 +274,11 @@
 
         // 打印
         $scope.print = function () {
-            alert('打印。');
+            var p = $scope.allPrpos();
+
+            var strWindowFeatures = "location=yes,height=570,width=520,scrollbars=yes,status=yes";
+            var URL = ExportPrefix.prefixPrint + p;
+            window.open(URL, "_blank", strWindowFeatures);
         };
 
         // dropdown set

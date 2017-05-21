@@ -167,15 +167,23 @@
         var host = 'http://192.168.0.150';
 
         return {
-            prefix: host + '/device/export',   // 设备导出
+            prefix: host + '/device/export',      // 设备导出
+            prefixPrint: host + '/device/print',   // 设备打印
+
             eventPrefix: host + '/message/list/export',  // 事件导出
-            userPrefix: host + '/user/export',  // 用户导出
+            eventPrefixPrint: host + '/message/list/print',  // 事件打印
+
+            userPrefix: host + '/user/export',      // 用户列表导出
+            userPrefixPrint: host + '/user/print',  // 用户列表打印
+
             reportItem: function (rpid) {
                 return host + '/report/' + rpid;    //下载报表 单个
             },
             uploadReport: host + '/report/upload',   // 上传报表文件
             reportAll: host + '/report/multi?',   //下载报表 所有
-            checkinAll: host + '/signin/export?'   //签到下载 所有
+
+            checkinAll: host + '/signin/export?',   // 签到列表导出
+            checkinAllPrint: host + '/signin/print?',   // 签到列表打印
         }
     }
 

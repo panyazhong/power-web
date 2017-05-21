@@ -251,7 +251,14 @@
 
         // 导出excel
         $scope.exportExcel = function () {
+            var p = $scope.allPrpos();
 
+            var strWindowFeatures = "location=yes,height=570,width=520,scrollbars=yes,status=yes";
+            var URL = ExportPrefix.eventPrefix + p;
+            window.open(URL, "_blank", strWindowFeatures);
+        };
+
+        $scope.allPrpos = function () {
             var params = {};
 
             if ($scope.form.client_id) {
@@ -273,20 +280,9 @@
                 params.endDate = moment($scope.show.endDate).format('YYYY-MM-DD HH:mm:ss');
             }
 
-            var p = $scope.allPrpos(params);
-
-            var strWindowFeatures = "location=yes,height=570,width=520,scrollbars=yes,status=yes";
-            var URL = ExportPrefix.eventPrefix + p;
-            window.open(URL, "_blank", strWindowFeatures);
-
-            // test
-            Log.i('导出excel  URL：' + ExportPrefix.eventPrefix + p);
-        };
-
-        $scope.allPrpos = function (obj) {
             var names = "";
-            for (var name in obj) {
-                names += name + "=" + obj[name] + "&";
+            for (var Key in params) {
+                names += Key + "=" + params[Key] + "&";
             }
 
             return names ? '?' + names.substring(0, names.length - 1) : "";
@@ -294,7 +290,11 @@
 
         // 打印
         $scope.print = function () {
-            alert('打印。');
+            var p = $scope.allPrpos();
+
+            var strWindowFeatures = "location=yes,height=570,width=520,scrollbars=yes,status=yes";
+            var URL = ExportPrefix.eventPrefixPrint + p;
+            window.open(URL, "_blank", strWindowFeatures);
         };
 
         // dropdown set
