@@ -6,7 +6,7 @@
         .service('HttpToast', httpToast)
         .service('ModalUtils', modalUtils)
         .service('Log', log)
-        .service('SkipUtils', skipUtils);       // 用来主动跳转！！！！！正式需替换
+        .service('SkipUtils', skipUtils);       // 用来主动跳转（主动退出 或 无权限的跳转）！！！！！正式需替换
 
     function toastUtils(toastr, toastrConfig) {
         var defaultConfig = angular.copy(toastrConfig);

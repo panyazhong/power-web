@@ -221,7 +221,9 @@
                     var p = pam.substring(0, pam.length - 1);
 
                     // file exist
-                    $window.location.href = ExportPrefix.checkinAllPrint + p;
+                    var strWindowFeatures = "location=yes,height=570,width=520,scrollbars=yes,status=yes";
+                    var URL = ExportPrefix.checkinAllPrint + p;
+                    window.open(URL, "_blank", strWindowFeatures);
                 },
                 function (err) {
                     HttpToast.toast(err);
