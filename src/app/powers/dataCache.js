@@ -203,6 +203,8 @@
             user_education: 'user_education',  //用户教育程度
             user_status: 'user_status',  //用户状态
             user_authority: 'user_authority',  //用户权限
+
+            history_querytype: 'history_querytype',  //历史数据，左侧查询类型
         };
         kwCache.create = function (arr) {
             if (Array.isArray(arr)) {
@@ -252,6 +254,9 @@
         };
         kwCache.getUser_authority = function () {
             return getType(groups.user_authority);
+        };
+        kwCache.getHistory_querytype = function () {
+            return getType(groups.history_querytype);
         };
 
         kwCache.isEmpty = function () {

@@ -552,3 +552,26 @@ input[type=number]::-webkit-outer-spin-button {
 .datetime-picker-dropdown {
   min-width: 208px !important;
 }
+
+.date-input {
+  padding-left: 3px !important;
+  padding-right: 3px !important;
+}
+
+.history path {
+  stroke-width: 1 !important;
+}
+
+.history circle {
+  stroke-width: 0 !important;
+  r: 1 !important;
+}
+
+.history .chart-title {
+  margin-right: 0 !important;
+  line-height: 34px;
+  background: #e33361;
+  color: #fff;
+  padding: 0 20px;
+  border-radius: 20px;
+}

@@ -1,7 +1,10 @@
-<div ba-panel ba-panel-class="profile-page">
-    <div class="panel-content">
+<div ba-panel>
+    <div class="item-content-list history">
 
-        <h3> 历史数据；history </h3>
+        <div include-with-scope="app/powers/history/widgets/tableForm.html">
+        </div>
 
+        <div include-with-scope="app/powers/history/widgets/chart.html"
+             style="padding: 30px;"></div>
     </div>
 </div>
