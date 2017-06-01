@@ -145,6 +145,8 @@
             typeId: ''
         };
 
+        // morris
+
         $scope.formatForm = function () {
 
             $scope.form.from_time = '';
