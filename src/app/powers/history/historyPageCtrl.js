@@ -1,7 +1,3 @@
-/**
- * @author v.lugovsky
- * created on 16.12.2015
- */
 (function () {
     'use strict';
 
@@ -10,7 +6,7 @@
 
     /** @ngInject */
     function historyPageCtrl($scope, $state, PageTopCache, Sidebar, SidebarCache, HttpToast, Log,
-                             Keyword, KeywordCache, ToastUtils) {
+                             ToastUtils) {
 
         PageTopCache.cache.state = $state.$current; // active
         $scope.data = {
@@ -97,55 +93,40 @@
             },
         };
 
-        $scope.testQueryArr = [
-            {
-                id: 201,
-                name: '电量'
-            },
-            {
-                id: 202,
-                name: '三项电流'
-            },
-            {
-                id: 203,
-                name: '三相电压'
-            },
-            {
-                id: 204,
-                name: '有功无功'
-            },
-            {
-                id: 205,
-                name: '功率因素'
-            }
-        ];
-
         $scope.show = {
-            // checkinList: [],     // 签到的列表
-
             sidebarArr: [],    //变电站
             clientName: '',
-            // checkPlaceArr: [],  // 签到点
-            // from_time: '',
-            // to_time: '',
-            //
-            // isFirst: true       // 标识第一次、用来加载数据
+
+            from_time: '',
+            to_time: '',
 
             queryArr: [],    //左侧可信息查询
             queryType: ''
         };
-        // $scope.rowCollection = [];
 
         $scope.form = {
             cid: "",  //变电站cid
             from_time: '',
             to_time: ''
         };
-        $scope.queryForm = {
-            typeId: ''
-        };
 
-        // morris
+        $scope.checkForm = function () {
+            if (!$scope.form.cid) {
+                return 0
+            }
+
+            if (!$scope.show.from_time) {
+                return 0
+            }
+
+            if (!$scope.show.to_time) {
+                return 0
+            }
+
+            if (moment($scope.show.to_time).isBefore($scope.show.from_time)) {
+                return 1
+            }
+        };
 
         $scope.formatForm = function () {
 
@@ -169,28 +150,46 @@
         };
 
         $scope.search = function () {
+            var state = $scope.checkForm();
+
+            switch (state) {
+                case 0:
+                    ToastUtils.openToast('warning', '请完善所有查询条件！');
+                    break;
+                case 1:
+                    ToastUtils.openToast('warning', '起始不能小于结束时间！');
+                    break;
+            }
+
             var params = $scope.formatForm();
 
             Log.i('search: \n' + JSON.stringify(params));
         };
 
         $scope.init = function () {
-            $scope.search();
-
-            // 模拟测试返回数据
-            $scope.show.queryArr = $scope.testQueryArr;
-
-            // if (KeywordCache.isEmpty()) {
-            //     Keyword.query({},
-            //         function (data) {
-            //             KeywordCache.create(data);
-            //             $scope.show.queryArr = KeywordCache.getHistory_querytype();
-            //         }, function (err) {
-            //             HttpToast.toast(err);
-            //         });
-            // } else {
-            //     $scope.show.queryArr = KeywordCache.getHistory_querytype();
-            // }
+            // 模拟返回数据
+            $scope.show.queryArr = [
+                {
+                    id: 201,
+                    name: '电量'
+                },
+                {
+                    id: 202,
+                    name: '三项电流'
+                },
+                {
+                    id: 203,
+                    name: '三相电压'
+                },
+                {
+                    id: 204,
+                    name: '有功无功'
+                },
+                {
+                    id: 205,
+                    name: '功率因素'
+                }
+            ];
 
             if (SidebarCache.isEmpty()) {
                 Log.i('empty： ——SidebarCache');
@@ -227,21 +226,19 @@
             }
 
             // set
-            $scope.queryForm.typeId = obj.id;
             $scope.show.queryType = obj.name;
-
-            ToastUtils.openToast('info', '查询的类型，id: ' + $scope.queryForm.typeId + " / 名称: " + $scope.show.queryType);
-            // 发送请求获取图标数据
-            $scope.getInfo(obj.id);
+            $scope.processMorrisData(obj.id);
         };
 
-        $scope.getInfo = function (id) {
+        $scope.processMorrisData = function (id) {
             if (!id) {
                 return
             }
 
-            Log.i('请求的id是：' + id);
-        };
+            ToastUtils.openToast('info', '需要处理的id是：' + id);
+            // 根据唯一标识符处理data，如电量，三项电流等，过滤数据（支线1、支线2....）
+
+        }
 
     }
 
