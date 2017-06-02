@@ -22,110 +22,104 @@
             total: 0
         };
 
-        /*
+        var socket = io.connect('http://192.168.0.120:6688', {resource: 'event/socket.io'});
+        socket.on('alert', function (data) {    // 监听事件
+            var obj = JSON.parse(data);
 
-         var socket = io.connect('http://192.168.0.150:6688', {resource: 'event/socket.io'});
-         socket.on('alert', function (data) {    // 监听事件
-         var obj = JSON.parse(data);
+            socket.emit('received', {mhid: obj.mhid}); // 收到alert事件后响应
+            switch (obj.level) {
+                case 0:
+                    ModalUtils.openMsg('app/powers/modal/warningEvent.html', '',
+                        warningEventCtrl, {
+                            data: obj
+                        },
+                        function (info) {
+                            // 传值走这里
+                            if (info) {
+                                $state.go('events');
+                            }
+                        }, function (empty) {
+                            // 不传值关闭走这里
+                        });
+                    break;
+                case 1:
+                    ModalUtils.openMsg('app/powers/modal/dangerEvent.html', '',
+                        eventCtrl, {
+                            data: obj
+                        },
+                        function (info) {
+                            // 传值走这里
+                            if (info) {
+                                $state.go('events');
+                            }
+                        }, function (empty) {
+                            // 不传值关闭走这里
+                        });
 
-         socket.emit('received', {mhid: obj.mhid}); // 收到alert事件后响应
-         switch (obj.level) {
-         case 0:
-         ModalUtils.openMsg('app/powers/modal/warningEvent.html', '',
-         warningEventCtrl, {
-         data: obj
-         },
-         function (info) {
-         // 传值走这里
-         if (info) {
-         $state.go('events');
-         }
-         }, function (empty) {
-         // 不传值关闭走这里
-         });
-         break;
-         case 1:
-         ModalUtils.openMsg('app/powers/modal/dangerEvent.html', '',
-         eventCtrl, {
-         data: obj
-         },
-         function (info) {
-         // 传值走这里
-         if (info) {
-         $state.go('events');
-         }
-         }, function (empty) {
-         // 不传值关闭走这里
-         });
+                    break;
+            }
 
-         break;
-         }
+            function eventCtrl($scope, params) {
+                $scope.title = params.data.desc;
 
-         function eventCtrl($scope, params) {
-         $scope.title = params.data.desc;
+                $scope.submit = function () {
+                    var data = 'submit';
+                    $scope.$close(data);
+                };
+            }
 
-         $scope.submit = function () {
-         var data = 'submit';
-         $scope.$close(data);
-         };
-         }
+            function warningEventCtrl($scope, params) {
+                $scope.title = params.data.desc;
 
-         function warningEventCtrl($scope, params) {
-         $scope.title = params.data.desc;
+                $scope.submit = function () {
+                    var data = 'submit';
+                    $scope.$close(data);
+                };
+            }
+            /*
+             // 上面正式的
+             ********** 测试 ******************************************************
 
-         $scope.submit = function () {
-         var data = 'submit';
-         $scope.$close(data);
-         };
-         }
-         */
-        /*
-         // 上面正式的
-         ********** 测试 ******************************************************
+             ModalUtils.openMsg('app/powers/modal/dangerEvent.html', '',
+             eventCtrl, {
+             data: obj
+             },
+             function (info) {
+             // 传值走这里
+             if (info) {
+             $state.go('events');
+             }
+             }, function (empty) {
+             // 不传值关闭走这里
+             });
 
-         ModalUtils.openMsg('app/powers/modal/dangerEvent.html', '',
-         eventCtrl, {
-         data: obj
-         },
-         function (info) {
-         // 传值走这里
-         if (info) {
-         $state.go('events');
-         }
-         }, function (empty) {
-         // 不传值关闭走这里
-         });
+             Log.i('alert msg：' + data);
+             */
 
-         Log.i('alert msg：' + data);
-         */
+        });
 
-        /*
-         });
+        socket.on('monitor', function (data) {  // 变电站信息
+            // Log.i('变电站信息: ' + data);
 
-         socket.on('monitor', function (data) {  // 变电站信息
-         // Log.i('变电站信息: ' + data);
+            var obj = JSON.parse(data);
+            var cid = locals.get('cid', '');
+            if (cid && bid) {
+                bCache.branch = (JSON.parse(obj.content)[cid])[bid];
 
-         var obj = JSON.parse(data);
-         var cid = locals.get('cid', '');
-         if (cid && bid) {
-         bCache.branch = (JSON.parse(obj.content)[cid])[bid];
+                // Log.i('支线基本信息: ' + JSON.stringify(bCache.branch));
 
-         // Log.i('支线基本信息: ' + JSON.stringify(bCache.branch));
+                $rootScope.$digest();
+            }
+        });
 
-         $rootScope.$digest();
-         }
-         });
+        socket.on('status', function (data) {   // 预定的数据
+            var obj = JSON.parse(data);
+            count.total = JSON.parse(obj.content).total;    // 未处理的event数量
+            statusCache.status = (JSON.parse(obj.content)).detail;  // 侧边栏和一次系统图
 
-         socket.on('status', function (data) {   // 预定的数据
-         var obj = JSON.parse(data);
-         count.total = JSON.parse(obj.content).total;    // 未处理的event数量
-         statusCache.status = (JSON.parse(obj.content)).detail;  // 侧边栏和一次系统图
-
-         $rootScope.$emit('refresh', statusCache.status);
-         $rootScope.$digest();
-         });
-         */
-        var socket = "";
+            $rootScope.$emit('refresh', statusCache.status);
+            $rootScope.$digest();
+        });
 
         return {
             totalCount: function () {
@@ -159,12 +153,12 @@
 
     function imgPrefix() {
         return {
-            prefix: 'http://192.168.0.150/'
+            prefix: 'http://192.168.0.120/'
         }
     }
 
     function exportPrefix() {
-        var host = 'http://192.168.0.150';
+        var host = 'http://192.168.0.120';
 
         return {
             prefix: host + '/device/export',      // 设备导出

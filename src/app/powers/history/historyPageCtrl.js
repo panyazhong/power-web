@@ -94,14 +94,18 @@
         };
 
         $scope.show = {
-            sidebarArr: [],    //变电站
+            sidebarArr: [],    // 变电站
             clientName: '',
 
             from_time: '',
             to_time: '',
 
-            queryArr: [],    //左侧可信息查询
-            queryType: ''
+            filterData: {},     // 搜索后的数据
+
+            queryArr: [],    // 左侧可信息查询
+            queryType: '',
+
+            bCheckArr: [], // 左侧 底部 checkbox
         };
 
         $scope.form = {
@@ -111,6 +115,10 @@
         };
 
         // morris
+        $scope.lData = [];
+        $scope.lYkeys = [];
+        $scope.lLabels = [];
+        $scope.lColors = [];
 
         $scope.checkForm = function () {
             if (!$scope.form.cid) {
@@ -166,10 +174,10 @@
             var params = $scope.formatForm();
 
             Log.i('search: \n' + JSON.stringify(params));
-        };
 
-        $scope.init = function () {
-            // 模拟返回数据
+            // data => deepClone
+
+            $scope.show.filterData = {data: 'test'};
             $scope.show.queryArr = [
                 {
                     id: 201,
@@ -192,6 +200,9 @@
                     name: '功率因素'
                 }
             ];
+        };
+
+        $scope.init = function () {
 
             if (SidebarCache.isEmpty()) {
                 Log.i('empty： ——SidebarCache');
@@ -238,9 +249,19 @@
             }
 
             ToastUtils.openToast('info', '需要处理的id是：' + id);
-            // 根据唯一标识符处理data，如电量，三项电流等，过滤数据（支线1、支线2....）
+            /*
+             切换数据： 如电量，三项电流等...
+             */
 
-        }
+        };
+
+        /**
+         * 改变支线条数
+         * @param item
+         */
+        $scope.changeBCheck = function (item) {
+            console.log(JSON.stringify($scope.show.bCheckArr));
+        };
 
     }
 

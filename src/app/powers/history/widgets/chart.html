@@ -26,6 +26,10 @@
                                 ng-repeat="info in show.queryArr track by $index">
                                 <a ng-bind="info.name" ng-click="changeQuery(info)"></a>
                             </li>
+
+                            <li role="menuitem" ng-show="show.queryArr.length == 0">
+                                <a>请先筛选变电站信息</a>
+                            </li>
                         </ul>
                     </div>
 
@@ -34,7 +38,24 @@
         </div>
 
         <div class="col-md-12">
+            <div line-chart
+                 line-hide-hover="'auto'"
+                 line-data='lData'
+                 line-xkey='y'
+                 line-ykeys='lYkeys'
+                 line-labels='lLabels'
+                 line-colors='lColors'
+                 line-date-format="lFormat">
+            </div>
 
+        </div>
+
+        <div class="col-md-12">
+            <label class="custom-checkbox" style="padding: 0 3px 0 10px;margin: 3px;"
+                   ng-repeat="item in show.bCheckArr track by $index">
+                <input type="checkbox" ng-model="item.checked" ng-click="changeBCheck(item)">
+                <span>{{item.label}}</span>
+            </label>
         </div>
 
     </div>
