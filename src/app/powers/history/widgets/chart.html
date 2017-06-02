@@ -17,7 +17,7 @@
                     <div class="select-right" uib-dropdown>
                         <button type="button" class="btn-def btn-trans" style="text-align: left"
                                 uib-dropdown-toggle ng-disabled="disabled">
-                            <span class="caret"></span>{{show.queryType}}
+                            <span class="caret"></span>{{show.queryName}}
                         </button>
 
                         <ul class="dropdown-menu common-dp-ul" uib-dropdown-menu role="menu"
@@ -44,8 +44,7 @@
                  line-xkey='y'
                  line-ykeys='lYkeys'
                  line-labels='lLabels'
-                 line-colors='lColors'
-                 line-date-format="lFormat">
+                 line-colors='lColors'>
             </div>
 
         </div>
@@ -54,10 +53,9 @@
             <label class="custom-checkbox" style="padding: 0 3px 0 10px;margin: 3px;"
                    ng-repeat="item in show.bCheckArr track by $index">
                 <input type="checkbox" ng-model="item.checked" ng-click="changeBCheck(item)">
-                <span>{{item.label}}</span>
+                <span>{{item.name}}</span>
             </label>
         </div>
-
     </div>
 
     <div class="col-sm-6 col-md-6 col-lg-6">
