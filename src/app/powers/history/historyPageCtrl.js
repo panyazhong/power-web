@@ -7,7 +7,7 @@
 
     /** @ngInject */
     function historyPageCtrl($scope, $state, PageTopCache, Sidebar, SidebarCache, HttpToast, Log,
-                             ToastUtils) {
+                             ToastUtils, pieChartCache) {
 
         PageTopCache.cache.state = $state.$current; // active
         $scope.data = {
@@ -119,6 +119,35 @@
         $scope.lLabels = [];
         $scope.lColors = [];
         $scope.line = {};   // checkbox 所需data
+
+        // 树状图
+        $scope.tree = [
+            {
+                iName: '总线1',
+                bEle: [
+                    {
+                        branch: '支线1',
+                        val: 40
+                    },
+                    {
+                        branch: '支线2',
+                        val: 50
+                    },
+                    {
+                        branch: '支线3',
+                        val: 10
+                    },
+                    {
+                        branch: '支线4',
+                        val: 70
+                    },
+                    {
+                        branch: '支线5',
+                        val: 120
+                    }
+                ]
+            }
+        ];
 
         $scope.checkForm = function () {
             if (!$scope.form.cid) {
@@ -618,6 +647,44 @@
         $scope.init = function () {
             $scope.setLineData();
 
+            // 模拟饼状图数据
+            pieChartCache.cache.data = [
+                {
+                    branch: '支线1',
+                    val: 40
+                },
+                {
+                    branch: '支线2',
+                    val: 50
+                },
+                {
+                    branch: '支线3',
+                    val: 10
+                },
+                {
+                    branch: '支线4',
+                    val: 70
+                },
+                {
+                    branch: '支线5',
+                    val: 120
+                },
+                {
+                    branch: '支线6',
+                    val: 18
+                },
+                {
+                    branch: '支线7',
+                    val: 110
+                },
+                {
+                    branch: '支线8',
+                    val: 88
+                }
+            ];
+
+            console.log('pie: \n' + JSON.stringify(pieChartCache.cache.data));
+
             if (SidebarCache.isEmpty()) {
                 Log.i('empty： ——SidebarCache');
 
@@ -725,12 +792,10 @@
             });
 
         };
-
-        // Pie
     }
 
     /** @ngInject */
-    function PieChartCtrl($element, layoutPaths, baConfig) {
+    function PieChartCtrl($element, layoutPaths, baConfig, pieChartCache) {
         var layoutColors = baConfig.colors;
         var id = $element[0].getAttribute('id');
         var pieChart = AmCharts.makeChart(id, {
@@ -771,42 +836,9 @@
                     }
                 ]
             },
-            dataProvider: [
-                {
-                    country: 'Lithuania',
-                    litres: 501.9
-                },
-                {
-                    country: 'Czech Republic',
-                    litres: 301.9
-                },
-                {
-                    country: 'Ireland',
-                    litres: 201.1
-                },
-                {
-                    country: 'Germany',
-                    litres: 165.8
-                },
-                {
-                    country: 'Australia',
-                    litres: 139.9
-                },
-                {
-                    country: 'Austria',
-                    litres: 128.3
-                },
-                {
-                    country: 'UK',
-                    litres: 99
-                },
-                {
-                    country: 'Belgium',
-                    litres: 60
-                }
-            ],
-            valueField: 'litres',
-            titleField: 'country',
+            dataProvider: pieChartCache.cache.data,
+            valueField: 'val',
+            titleField: 'branch',
             export: {
                 enabled: true
             },
