@@ -103,7 +103,7 @@
             searchData: {},     // 搜索后的数据
             queryArr: [],    // 左侧可信息查询
             queryName: '',
-            queryKey: 'electricity',
+            queryKey: 'eQuantity',
             bCheckArr: [],   // 左侧 checkbox状态
         };
 
@@ -213,28 +213,28 @@
                     {
                         time: "2017-05-01 12:00:12",
                         a: {
-                            electricity: 78,
+                            eQuantity: 78,
                             current: 48,
                             voltage: 58,
                             reactive: 88,
                             power: 98,
                         },
                         b: {
-                            electricity: 35,
+                            eQuantity: 35,
                             current: 43,
                             voltage: 43,
                             reactive: 46,
                             power: 42,
                         },
                         c: {
-                            electricity: 45,
+                            eQuantity: 45,
                             current: 34,
                             voltage: 34,
                             reactive: 24,
                             power: 25,
                         },
                         d: {
-                            electricity: 25,
+                            eQuantity: 25,
                             current: 36,
                             voltage: 25,
                             reactive: 25,
@@ -244,28 +244,28 @@
                     {
                         time: "2017-05-03 13:13:24",
                         a: {
-                            electricity: 35,
+                            eQuantity: 35,
                             current: 43,
                             voltage: 43,
                             reactive: 46,
                             power: 42,
                         },
                         b: {
-                            electricity: 78,
+                            eQuantity: 78,
                             current: 48,
                             voltage: 58,
                             reactive: 88,
                             power: 98,
                         },
                         c: {
-                            electricity: 25,
+                            eQuantity: 25,
                             current: 36,
                             voltage: 25,
                             reactive: 25,
                             power: 57,
                         },
                         d: {
-                            electricity: 45,
+                            eQuantity: 45,
                             current: 34,
                             voltage: 34,
                             reactive: 24,
@@ -275,28 +275,28 @@
                     {
                         time: "2017-05-05 14:35:33",
                         a: {
-                            electricity: 28,
+                            eQuantity: 28,
                             current: 28,
                             voltage: 58,
                             reactive: 28,
                             power: 28,
                         },
                         b: {
-                            electricity: 55,
+                            eQuantity: 55,
                             current: 53,
                             voltage: 53,
                             reactive: 56,
                             power: 52,
                         },
                         c: {
-                            electricity: 75,
+                            eQuantity: 75,
                             current: 74,
                             voltage: 74,
                             reactive: 74,
                             power: 75,
                         },
                         d: {
-                            electricity: 65,
+                            eQuantity: 65,
                             current: 66,
                             voltage: 65,
                             reactive: 65,
@@ -306,28 +306,28 @@
                     {
                         time: "2017-05-07 15:35:35",
                         a: {
-                            electricity: 38,
+                            eQuantity: 38,
                             current: 38,
                             voltage: 38,
                             reactive: 38,
                             power: 38,
                         },
                         b: {
-                            electricity: 45,
+                            eQuantity: 45,
                             current: 43,
                             voltage: 43,
                             reactive: 46,
                             power: 42,
                         },
                         c: {
-                            electricity: 95,
+                            eQuantity: 95,
                             current: 94,
                             voltage: 94,
                             reactive: 94,
                             power: 95,
                         },
                         d: {
-                            electricity: 15,
+                            eQuantity: 15,
                             current: 16,
                             voltage: 15,
                             reactive: 15,
@@ -337,28 +337,28 @@
                     {
                         time: "2017-05-11 16:23:11",
                         a: {
-                            electricity: 68,
+                            eQuantity: 68,
                             current: 24,
                             voltage: 46,
                             reactive: 46,
                             power: 24,
                         },
                         b: {
-                            electricity: 76,
+                            eQuantity: 76,
                             current: 74,
                             voltage: 71,
                             reactive: 72,
                             power: 70,
                         },
                         c: {
-                            electricity: 80,
+                            eQuantity: 80,
                             current: 87,
                             voltage: 75,
                             reactive: 83,
                             power: 84,
                         },
                         d: {
-                            electricity: 35,
+                            eQuantity: 35,
                             current: 29,
                             voltage: 27,
                             reactive: 21,
@@ -369,7 +369,7 @@
             };
             $scope.show.queryArr = [
                 {
-                    key: 'electricity',
+                    key: 'eQuantity',
                     name: '电量'
                 },
                 {
@@ -464,28 +464,28 @@
                     {
                         time: "2017-05-01 12:00:00",
                         a: {
-                            electricity: 78,
+                            eQuantity: 78,
                             current: 48,
                             voltage: 58,
                             reactive: 88,
                             power: 98,
                         },
                         b: {
-                            electricity: 35,
+                            eQuantity: 35,
                             current: 43,
                             voltage: 43,
                             reactive: 46,
                             power: 42,
                         },
                         c: {
-                            electricity: 45,
+                            eQuantity: 45,
                             current: 34,
                             voltage: 34,
                             reactive: 24,
                             power: 25,
                         },
                         d: {
-                            electricity: 25,
+                            eQuantity: 25,
                             current: 36,
                             voltage: 25,
                             reactive: 25,
@@ -495,28 +495,28 @@
                     {
                         time: "2017-05-03 13:00:00",
                         a: {
-                            electricity: 35,
+                            eQuantity: 35,
                             current: 43,
                             voltage: 43,
                             reactive: 46,
                             power: 42,
                         },
                         b: {
-                            electricity: 78,
+                            eQuantity: 78,
                             current: 48,
                             voltage: 58,
                             reactive: 88,
                             power: 98,
                         },
                         c: {
-                            electricity: 25,
+                            eQuantity: 25,
                             current: 36,
                             voltage: 25,
                             reactive: 25,
                             power: 57,
                         },
                         d: {
-                            electricity: 45,
+                            eQuantity: 45,
                             current: 34,
                             voltage: 34,
                             reactive: 24,
@@ -526,28 +526,28 @@
                     {
                         time: "2017-05-05 14:00:00",
                         a: {
-                            electricity: 28,
+                            eQuantity: 28,
                             current: 28,
                             voltage: 58,
                             reactive: 28,
                             power: 28,
                         },
                         b: {
-                            electricity: 55,
+                            eQuantity: 55,
                             current: 53,
                             voltage: 53,
                             reactive: 56,
                             power: 52,
                         },
                         c: {
-                            electricity: 75,
+                            eQuantity: 75,
                             current: 74,
                             voltage: 74,
                             reactive: 74,
                             power: 75,
                         },
                         d: {
-                            electricity: 65,
+                            eQuantity: 65,
                             current: 66,
                             voltage: 65,
                             reactive: 65,
@@ -557,28 +557,28 @@
                     {
                         time: "2017-05-07 15:00:00",
                         a: {
-                            electricity: 38,
+                            eQuantity: 38,
                             current: 38,
                             voltage: 38,
                             reactive: 38,
                             power: 38,
                         },
                         b: {
-                            electricity: 45,
+                            eQuantity: 45,
                             current: 43,
                             voltage: 43,
                             reactive: 46,
                             power: 42,
                         },
                         c: {
-                            electricity: 95,
+                            eQuantity: 95,
                             current: 94,
                             voltage: 94,
                             reactive: 94,
                             power: 95,
                         },
                         d: {
-                            electricity: 15,
+                            eQuantity: 15,
                             current: 16,
                             voltage: 15,
                             reactive: 15,
@@ -588,28 +588,28 @@
                     {
                         time: "2017-05-11 16:00:00",
                         a: {
-                            electricity: 68,
+                            eQuantity: 68,
                             current: 24,
                             voltage: 46,
                             reactive: 46,
                             power: 24,
                         },
                         b: {
-                            electricity: 76,
+                            eQuantity: 76,
                             current: 74,
                             voltage: 71,
                             reactive: 72,
                             power: 70,
                         },
                         c: {
-                            electricity: 80,
+                            eQuantity: 80,
                             current: 87,
                             voltage: 75,
                             reactive: 83,
                             power: 84,
                         },
                         d: {
-                            electricity: 35,
+                            eQuantity: 35,
                             current: 29,
                             voltage: 27,
                             reactive: 21,
@@ -620,7 +620,7 @@
             };
             $scope.show.queryArr = [
                 {
-                    key: 'electricity',
+                    key: 'eQuantity',
                     name: '电量'
                 },
                 {
