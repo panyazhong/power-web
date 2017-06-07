@@ -28,7 +28,7 @@
             </label>
         </td>
         <td class="table-def-cursor">
-            <span ng-bind="formatDate(item.create_date)"></span>
+            <span ng-bind="formatDate(item.create_time)"></span>
         </td>
         <td ng-click="viewClientDetail(item.cid)">
             <span ng-bind="item.client" class="color-blue"></span>
@@ -47,16 +47,16 @@
         </td>
         <td>
             <button class="btn-def btn-submit-blue" style="width: 68px;"
-                    ng-click="confirmItemEvent(item.msg_id)"
-                    ng-show="!item.confirm_time">确 认
+                    ng-click="confirmItemEvent(item.id)"
+                    ng-show="item.confirm == 0 ">确 认
             </button>
 
             <button class="btn-def btn-submit-gray" style="width: 68px;"
-                    ng-show="item.confirm_time">已确认
+                    ng-show="item.confirm == 1">已确认
             </button>
         </td>
         <td class="table-def-cursor">
-            <span ng-bind="item.confirm_person.name"></span>
+            <span ng-bind="item.confirm_person"></span>
         </td>
         <td class="table-def-cursor">
             <span ng-bind="formatDate(item.confirm_time)"></span>

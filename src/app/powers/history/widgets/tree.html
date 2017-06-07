@@ -137,9 +137,14 @@ Thanks :)*/
     <div class="col-md-12 tree" ng-repeat="item in tree track by $index">
         <ul>
             <li>
-                <a>{{item.iName}}</a>
+                <a>
+                    <div>
+                        <div>{{ item.incomingline }}</div>
+                        <div>{{ item.val }}</div>
+                    </div>
+                </a>
                 <ul>
-                    <li ng-repeat="info in item.bEle track by $index">
+                    <li ng-repeat="info in item.branches track by $index">
                         <a>
                             <div>
                                 <div>{{ info.branch }}</div>

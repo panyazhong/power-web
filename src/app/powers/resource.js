@@ -27,7 +27,7 @@
         .factory('Resource', function ($resource, $httpParamSerializerJQLike, $q) {
 
             // var host = 'http://112.74.175.108:3100/api';
-            var host = 'http://192.168.0.120';
+            var host = 'http://192.168.0.150';
 
             var setAction = function (actions) {
                 var defaultParams = {
@@ -259,7 +259,7 @@
         // 事件
         .factory('Event', function (Resource) {
             var config = {
-                url: 'message/:list/:confirm',
+                url: 'event/:list/:confirm',
                 paramsDefault: {
                     list: '@list',
                     confirm: '@confirm'
@@ -350,6 +350,24 @@
                     },
                     delete: {
                         method: 'DELETE'
+                    }
+                }
+            };
+            return Resource(config);
+        })
+        // 历史数据
+        .factory('History', function (Resource) {
+            var config = {
+                url: 'data/cid/:clientId/:time/:fromTime/:toTime',
+                paramsDefault: {
+                    clientId: '@clientId',
+                    time: '@time',
+                    fromTime: '@fromTime',
+                    toTime: '@toTime'
+                },
+                action: {
+                    query: {        // 4.3 获取历史数据
+                        method: 'GET'
                     }
                 }
             };

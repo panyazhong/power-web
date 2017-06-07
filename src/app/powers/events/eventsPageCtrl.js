@@ -205,7 +205,7 @@
 
             $scope.show.eventsData.events.map(function (item) {
                 if (item.checked && !item.confirm_time) {
-                    parmas.push(item.msg_id);
+                    parmas.push(item.id);
                 }
             });
 
@@ -216,7 +216,7 @@
 
             Log.i('需要确认的事件id：' + JSON.stringify(parmas));
             Event.update({
-                    mhs: parmas,
+                    eid: parmas,
                     confirm: 'confirm'
                 },
                 function (data) {
@@ -236,7 +236,7 @@
 
             Log.i('需要确认的事件id：' + JSON.stringify(parmas));
             Event.update({
-                    mhs: parmas,
+                    eid: parmas,
                     confirm: 'confirm'
                 },
                 function (data) {

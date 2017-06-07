@@ -31,14 +31,14 @@ angular.module('BlurAdmin', [
 
     Log.i('ng is run...');
 
-    // var userInfo = locals.getObject('user');
-    //
-    // if (JSON.stringify(userInfo) == '{}') {
-    //
-    //     // local
-    //     window.location.assign('/auth.html');
-    //     // rel
-    //     // window.location.assign('/aa/bb/cc');
-    // }
+    var userInfo = locals.getObject('user');
+
+    if (JSON.stringify(userInfo) == '{}') {
+
+        // local
+        window.location.assign('/auth.html');
+        // rel
+        // window.location.assign('/aa/bb/cc');
+    }
 
 });
