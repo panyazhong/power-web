@@ -254,7 +254,6 @@
             $scope.tree = sucData.tree;  // set
 
             $rootScope.$emit('pieRefresh', 'update');
-            $rootScope.$digest();
         };
 
         $scope.query = function () {
@@ -289,43 +288,6 @@
         };
 
         $scope.init = function () {
-
-            // 模拟饼状图数据
-            // pieChartCache.cache.data = [
-            //     {
-            //         branch: '支线1',
-            //         val: 40
-            //     },
-            //     {
-            //         branch: '支线2',
-            //         val: 50
-            //     },
-            //     {
-            //         branch: '支线3',
-            //         val: 10
-            //     },
-            //     {
-            //         branch: '支线4',
-            //         val: 70
-            //     },
-            //     {
-            //         branch: '支线5',
-            //         val: 120
-            //     },
-            //     {
-            //         branch: '支线6',
-            //         val: 18
-            //     },
-            //     {
-            //         branch: '支线7',
-            //         val: 110
-            //     },
-            //     {
-            //         branch: '支线8',
-            //         val: 88
-            //     }
-            // ];
-
             if (SidebarCache.isEmpty()) {
                 Log.i('empty： ——SidebarCache');
 

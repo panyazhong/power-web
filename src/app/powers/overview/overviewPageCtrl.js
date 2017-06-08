@@ -89,7 +89,12 @@
 
             function showPop(item, pos) {
 
-                var percentage = parseInt(item.currentmd) / parseInt(item.requiredmd) * 100 + "%";
+                var percentage = "";
+                var c = parseInt(item.currentmd);
+                var r = parseInt(item.requiredmd);
+                if (c != 0 && r != 0) {
+                    percentage = (c / r * 100).toFixed(2) + "%";
+                }
 
                 var custXml = "<div class='map-content'>" +
                     "<div class='map-btn-title'>" + item.name + "</div>" +

@@ -135,19 +135,19 @@
 
     function imgPrefix() {
         return {
-            prefix: 'http://192.168.0.150/'
+            prefix: 'http://192.168.0.120/'
         }
     }
 
     function exportPrefix() {
-        var host = 'http://192.168.0.150';
+        var host = 'http://192.168.0.120';
 
         return {
             prefix: host + '/device/export',      // 设备导出
             prefixPrint: host + '/device/print',   // 设备打印
 
-            eventPrefix: host + '/message/list/export',  // 事件导出
-            eventPrefixPrint: host + '/message/list/print',  // 事件打印
+            eventPrefix: host + '/event/export',  // 事件导出
+            eventPrefixPrint: host + '/event/print',  // 事件打印
 
             userPrefix: host + '/user/export',      // 用户列表导出
             userPrefixPrint: host + '/user/print',  // 用户列表打印
