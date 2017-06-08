@@ -30,8 +30,8 @@
             var obj = JSON.parse(data);
 
             socket.emit('received', {mhid: obj.mhid}); // 收到alert事件后响应
-            switch (obj.level) {
-                case 0:
+            switch (parseInt(obj.level)) {
+                case 1:
                     ModalUtils.openMsg('app/powers/modal/warningEvent.html', '',
                         warningEventCtrl, {
                             data: obj
@@ -45,7 +45,7 @@
                             // 不传值关闭走这里
                         });
                     break;
-                case 1:
+                case 2:
                     ModalUtils.openMsg('app/powers/modal/dangerEvent.html', '',
                         eventCtrl, {
                             data: obj
