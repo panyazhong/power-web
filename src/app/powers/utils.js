@@ -121,7 +121,7 @@
 
     function log() {
 
-        var isDebug = true;     // 开发结束改为false
+        var isDebug = false;     // 开发结束改为false
 
         return {
             i: function (msg) {
@@ -132,18 +132,18 @@
         }
     }
 
+    /**
+     * 用来主动跳转（退出登陆、登陆信息已过期或错误时需要跳转到登陆页）
+     */
     function skipUtils(locals, ToastUtils) {
 
         return {
-            skip: function (data) {
+            exit: function (data) { // 退出登录
                 ToastUtils.openToast('success', data.message);
 
                 locals.clear();
-                // local
-                window.location.assign('/auth.html');
-                // rel
-                // window.location.assign('/aa/bb/cc');
-                return;
+                // 跳转
+                window.location.replace('/auth.html');
             }
         }
     }

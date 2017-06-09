@@ -168,38 +168,7 @@
             return '#' + Math.floor(Math.random() * 16777215).toString(16);
         };
 
-        $scope.setLineData = function (sucData) {
-            /**
-             * data => deepClone
-             */
-
-            // a. morris
-            $scope.show.searchData = {
-                bid: sucData.bid,
-                data: sucData.data
-            };
-            $scope.show.queryArr = [
-                {
-                    key: 'eQuantity',
-                    name: '电量'
-                },
-                {
-                    key: 'current',
-                    name: '三项电流'
-                },
-                {
-                    key: 'voltage',
-                    name: '三相电压'
-                },
-                {
-                    key: 'reactive',
-                    name: '有功无功'
-                },
-                {
-                    key: 'power',
-                    name: '功率因素'
-                }
-            ];
+        $scope.setMorrisData = function () {
 
             // init
             $scope.lData = [];
@@ -245,6 +214,43 @@
             $scope.line.lLabels = _.cloneDeep($scope.lLabels);
             $scope.line.lColors = _.cloneDeep($scope.lColors);
 
+        };
+
+        $scope.setData = function (sucData) {
+            /**
+             * data => deepClone
+             */
+
+            // a. morris
+            $scope.show.searchData = {
+                bid: sucData.bid,
+                data: sucData.data
+            };
+            $scope.show.queryArr = [
+                {
+                    key: 'eQuantity',
+                    name: '电量'
+                },
+                {
+                    key: 'current',
+                    name: '三项电流'
+                },
+                {
+                    key: 'voltage',
+                    name: '三相电压'
+                },
+                {
+                    key: 'reactive',
+                    name: '有功无功'
+                },
+                {
+                    key: 'power',
+                    name: '功率因素'
+                }
+            ];
+
+            $scope.setMorrisData();
+
             // b. pie
             pieChartCache.cache.data = [];  // init
             pieChartCache.cache.data = _.cloneDeep(sucData.pie);    // set
@@ -266,7 +272,8 @@
                     toTime: params.to_time
                 },
                 function (data) {
-                    $scope.setLineData(data);
+                    $scope.setData(data);
+                    ToastUtils.openToast('success', '查询数据成功');
                 }, function (err) {
                     HttpToast.toast(err);
                 });
@@ -316,6 +323,10 @@
             $scope.show.clientName = obj.clientName;
         };
 
+        /**
+         * 切换数据源
+         * @param obj
+         */
         $scope.changeQuery = function (obj) {
             if ($scope.show.queryName == obj.name) {
                 return;
@@ -323,64 +334,10 @@
 
             // set
             $scope.show.queryName = obj.name;
-            $scope.processMorrisData(obj.id);
-        };
+            $scope.show.queryKey = obj.key;
+            // Log.i('click: \n' + JSON.stringify(obj));
 
-        /*
-         切换数据： 如电量，三项电流等...
-         */
-        $scope.processMorrisData = function (key) {
-            if (!key) {
-                return
-            }
-
-            // 更新key
-            $scope.show.queryKey = key;
-
-            // 更新data
-            // init
-            $scope.lData = [];
-            // lYkeys 在下部方法内初始化
-            $scope.lLabels = [];
-            $scope.lColors = [];
-            $scope.show.bCheckArr = [];
-
-            // set
-            $scope.show.searchData.bid.forEach(function (item) {
-                $scope.lLabels.push(item.name);
-                $scope.lColors.push($scope.randomColor());
-                $scope.show.bCheckArr.push({
-                    bid: item.id,
-                    name: item.name,
-                    checked: true
-                })
-            });
-
-            $scope.show.searchData.data.forEach(function (item) {
-                $scope.lYkeys = [];
-                // 1.拿到每一个item，遍历key
-                var obj = {};
-                for (var i in item) {
-                    if (i === 'time') {
-                        obj.y = item[i];
-                    } else {
-                        var info = item[i];
-                        for (var j in info) {
-                            if (j === $scope.show.queryKey) {
-                                obj["" + i + ""] = info[j];
-                                $scope.lYkeys.push(i);
-                            }
-                        }
-
-                    }
-                }
-                $scope.lData.push(obj);
-            });
-
-            $scope.line.lData = _.cloneDeep($scope.lData);
-            $scope.line.lYkeys = _.cloneDeep($scope.lYkeys);
-            $scope.line.lLabels = _.cloneDeep($scope.lLabels);
-            $scope.line.lColors = _.cloneDeep($scope.lColors);
+            $scope.setMorrisData();
         };
 
         /**
@@ -425,92 +382,21 @@
     }
 
     /** @ngInject */
-    function PieChartCtrl($element, layoutPaths, baConfig, pieChartCache, $rootScope) {
+    function PieChartCtrl($element, pieChartCache, $rootScope) {
         $rootScope.$on('pieRefresh', function () {
 
-            var layoutColors = baConfig.colors;
             var id = $element[0].getAttribute('id');
             var pieChart = AmCharts.makeChart(id, {
                 type: 'pie',
-                startDuration: 0,
-                theme: 'blur',
-                addClassNames: true,
-                color: layoutColors.defaultText,
-                labelTickColor: layoutColors.borderDark,
-                legend: {
-                    position: 'right',
-                    marginRight: 100,
-                    autoMargins: false,
-                },
-                innerRadius: '40%',
-                defs: {
-                    filter: [
-                        {
-                            id: 'shadow',
-                            width: '200%',
-                            height: '200%',
-                            feOffset: {
-                                result: 'offOut',
-                                in: 'SourceAlpha',
-                                dx: 0,
-                                dy: 0
-                            },
-                            feGaussianBlur: {
-                                result: 'blurOut',
-                                in: 'offOut',
-                                stdDeviation: 5
-                            },
-                            feBlend: {
-                                in: 'SourceGraphic',
-                                in2: 'blurOut',
-                                mode: 'normal'
-                            }
-                        }
-                    ]
-                },
+                theme: 'light',
                 dataProvider: pieChartCache.cache.data,
                 valueField: 'val',
                 titleField: 'branch',
+                balloon: {
+                    fixedPosition: true
+                },
                 export: {
                     enabled: true
-                },
-                creditsPosition: 'bottom-left',
-
-                autoMargins: false,
-                marginTop: 10,
-                alpha: 0.8,
-                marginBottom: 0,
-                marginLeft: 0,
-                marginRight: 0,
-                pullOutRadius: 0,
-                pathToImages: layoutPaths.images.amChart,
-                responsive: {
-                    enabled: true,
-                    rules: [
-                        // at 900px wide, we hide legend
-                        {
-                            maxWidth: 900,
-                            overrides: {
-                                legend: {
-                                    enabled: false
-                                }
-                            }
-                        },
-
-                        // at 200 px we hide value axis labels altogether
-                        {
-                            maxWidth: 200,
-                            overrides: {
-                                valueAxes: {
-                                    labelsEnabled: false
-                                },
-                                marginTop: 30,
-                                marginBottom: 30,
-                                marginLeft: 30,
-                                marginRight: 30
-                            }
-                        }
-                    ]
                 }
             });
 

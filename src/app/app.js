@@ -22,23 +22,18 @@ angular.module('BlurAdmin', [
     'HttpHelper',
     'ui.bootstrap.datetimepicker',
     'ngFileUpload',
+    'ngLocale',
 
     'BlurAdmin.theme',
-    'BlurAdmin.power',
-    // 'BlurAdmin.pages'
+    'BlurAdmin.power'
 
 ]).run(function (Log, locals) {
 
-    Log.i('ng is run...');
-
     var userInfo = locals.getObject('user');
-
     if (JSON.stringify(userInfo) == '{}') {
 
-        // local
-        window.location.assign('/auth.html');
-        // rel
-        // window.location.assign('/aa/bb/cc');
+        // 跳转
+        window.location.replace('/auth.html');
     }
 
 });

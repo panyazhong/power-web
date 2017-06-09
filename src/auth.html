@@ -45,11 +45,8 @@
                     success: function (data) {
 
                         localStorage.user = JSON.stringify(data);
+                        window.location.replace('/index.html');
 
-                        // local
-                        window.location.assign('/index.html');
-                        // rel
-                        // window.location.assign('/aa/bb/cc');
                     },
                     error: function (err) {
                         if (err.responseJSON && err.responseJSON.message) {

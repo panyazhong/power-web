@@ -94,7 +94,7 @@
             User.exit({
                 logout: 'logout'
             }, function (data) {
-                SkipUtils.skip(data);
+                SkipUtils.exit(data);
             }, function (err) {
                 HttpToast.toast(err);
             })
