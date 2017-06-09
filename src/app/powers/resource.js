@@ -26,8 +26,7 @@
         })
         .factory('Resource', function ($resource, $httpParamSerializerJQLike, $q) {
 
-            // var host = 'http://112.74.175.108:3100/api';
-            var host = 'http://192.168.0.120';
+            var host = 'http://106.14.142.150';
 
             var setAction = function (actions) {
                 var defaultParams = {

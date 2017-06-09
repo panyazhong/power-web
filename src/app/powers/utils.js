@@ -52,23 +52,6 @@
         }
     }
 
-    function httpToast(ToastUtils, SkipUtils) {
-        return {
-            toast: function (err) {
-                if (err.status == 403) {
-                    SkipUtils.skip();
-                    return;
-                }
-
-                if (err.data && err.data.message) {  // 失败msg处理
-                    ToastUtils.openToast('error', err.data.message);
-                } else {
-                    ToastUtils.openToast('error', '很抱歉，无法从服务器获取数据。');
-                }
-            }
-        }
-    }
-
     function modalUtils($uibModal) {
         var modalInstance;
 
@@ -132,18 +115,43 @@
         }
     }
 
+    function httpToast(ToastUtils, SkipUtils) {
+        return {
+            toast: function (err) {
+                if (err.status == 403) {
+                    SkipUtils.errExit();
+                    return;
+                }
+
+                if (err.data && err.data.message) {  // 失败msg处理
+                    ToastUtils.openToast('error', err.data.message);
+                } else {
+                    ToastUtils.openToast('error', '很抱歉，无法从服务器获取数据。');
+                }
+            }
+        }
+    }
+
     /**
      * 用来主动跳转（退出登陆、登陆信息已过期或错误时需要跳转到登陆页）
      */
     function skipUtils(locals, ToastUtils) {
 
+        var link = '/admin/auth.html';
+
         return {
-            exit: function (data) { // 退出登录
+            exit: function (data) { // 退出登录、修改密码退出登录，msg是成功的回调
                 ToastUtils.openToast('success', data.message);
 
                 locals.clear();
                 // 跳转
-                window.location.replace('/auth.html');
+                window.location.replace(link);
+            },
+            errExit: function () {  // 错误处理，test!!!
+
+                locals.clear();
+                // 跳转
+                window.location.replace(link);
             }
         }
     }

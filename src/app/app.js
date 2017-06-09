@@ -33,7 +33,7 @@ angular.module('BlurAdmin', [
     if (JSON.stringify(userInfo) == '{}') {
 
         // 跳转
-        window.location.replace('/auth.html');
+        window.location.replace('/admin/auth.html');
     }
 
 });

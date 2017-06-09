@@ -21,10 +21,7 @@
 
         window.localStorage.clear();    // init local
 
-        //local host
-        var host = 'http://192.168.0.120/user/login';
-        //release host
-        //        var host = 'http://www.lifeperfusor.com/transbox/api';
+        var host = 'http://106.14.142.150/user/login';
 
         var login = function () {
             var account = $('#inputUsername').val();
@@ -45,7 +42,7 @@
                     success: function (data) {
 
                         localStorage.user = JSON.stringify(data);
-                        window.location.replace('/index.html');
+                        window.location.replace('/admin/index.html');
 
                     },
                     error: function (err) {
