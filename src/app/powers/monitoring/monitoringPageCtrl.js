@@ -1,7 +1,3 @@
-/**
- * @author v.lugovsky
- * created on 16.12.2015
- */
 (function () {
     'use strict';
 
@@ -22,10 +18,8 @@
 
         $scope.queryClientImg = function (cid) {
 
-            var id = locals.get('cid', '') ? locals.get('cid', '') : cid;   //cookie不会空取put的，否则默认取第一个
-
-            EventsCache.subscribeMsg(id);
-            $scope.statusCache = EventsCache.subscribeStatus();  // 订阅 一次系统图图片
+            var id = locals.get('cid', '') ? locals.get('cid', '') : cid;   //缓存不为空取缓存，否则默认取第一个
+            EventsCache.subscribeClient(id);   // 订阅变电站信息
 
             Clientimg.query({
                     cid: id
@@ -62,9 +56,8 @@
          */
         $scope.onBeforeShow = function (id) {
 
-            $scope.show.branch = "";    // init
-            $scope.stbranch = {};   // init
-            $scope.subscribeBranch(id);    // subscribe
+            $scope.show.branch = {};    // init
+            EventsCache.subscribeBranch(id);    // 订阅支线信息
 
             Branch.query({
                     bid: id
@@ -90,21 +83,39 @@
             locals.put('bid', id);
         };
 
-
-        $scope.stbranch = {
-            branch: {}  // socket branchInfo
-        };
-        $scope.statusCache = {
-            status: {}  // socket imgsInfo
-        };
+        /* socket refresh*/
         /**
-         *  subscribe
+         * 支线基本信息
          */
-        $scope.subscribeBranch = function (bid) {
-            $scope.stbranch = EventsCache.subscribeBranch(bid); // 订阅 支线基本信息
-        };
+        $rootScope.$on('branchRefresh', function (event, data) {
+            if (!data) {
+                return
+            }
 
-        $rootScope.$on('refresh', function (event, data) {
+            $scope.show.branch.currentA = data.currentA;
+            $scope.show.branch.currentB = data.currentB;
+            $scope.show.branch.currentC = data.currentC;
+            $scope.show.branch.p = data.p;
+            $scope.show.branch.powerFactor = data.powerFactor;
+
+            $scope.show.branch.voltageA = data.voltageA;
+            $scope.show.branch.voltageB = data.voltageB;
+            $scope.show.branch.voltageC = data.voltageC;
+            $scope.show.branch.q = data.q;
+            $scope.show.branch.wp = data.wp;
+            $scope.show.branch.temperature = data.temperature;
+        });
+
+        /**
+         * 一次系统图
+         */
+        $rootScope.$on('refresh', function (event, item) {
+            if (!item.states) {
+                return
+            }
+
+            var data = item.states;
+
             $scope.show.imgs = ClientimgHelper.query($scope.show.imgs, data);
         });
     }

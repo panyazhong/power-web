@@ -12,20 +12,10 @@
         .factory("pieChartCache", pieChartCache);
 
     function eventsCache(Log, ModalUtils, $state, $rootScope) {
-        var bCache = {      // 支线基本信息
-            branch: ""
-        };
         var bid = "";       // 支线 id
-        var statusCache = {    // 侧边栏信息、一次系统图
-            status: ""
-        };
-        var count = {
-            total: 0
-        };
 
         var socket = io.connect('http://192.168.0.120:6688', {resource: 'event/socket.io'});
         socket.on('alert', function (data) {    // 监听事件
-            Log.i('alert: \n' + data);
 
             var obj = JSON.parse(data);
 
@@ -81,43 +71,30 @@
             }
         });
 
-        socket.on('monitor', function (data) {  // 变电站信息
-            Log.i('monitor: \n' + data);
-
+        socket.on('monitor', function (data) {
             var obj = JSON.parse(data);
             if (bid) {
-                bCache.branch = JSON.parse(obj.content)[bid];
-
+                var branchInfo = JSON.parse(obj.content)[bid];
+                $rootScope.$emit('branchRefresh', branchInfo);   // 支线基本信息
                 $rootScope.$digest();
             }
         });
 
-        socket.on('status', function (data) {   // 预定的数据
-            Log.i('status: \n' + data);
-
+        socket.on('status', function (data) {
             var obj = JSON.parse(data);
-            count.total = JSON.parse(obj.content).total;    // 未处理的event数量
-            statusCache.status = (JSON.parse(obj.content)).detail;  // 侧边栏和一次系统图
-
-            $rootScope.$emit('refresh', statusCache.status);
-            $rootScope.$digest();
+            var item = {
+                count: JSON.parse(obj.content).total,  // 未处理的event数量
+                states: (JSON.parse(obj.content)).detail // 侧边栏和一次系统图
+            };
+            $rootScope.$emit('refresh', item);
         });
 
         return {
-            totalCount: function () {
-                return count;
+            subscribeClient: function (cid) {
+                socket.emit('subscribe', {client_id: cid}); // 订阅——变电站信息
             },
-            subscribeMsg: function (cid) {
-                Log.i("sub的变电站id：" + cid);
-                socket.emit('subscribe', {client_id: cid}); // 根据cid，订阅变电站信息，没用到
-            },
-            subscribeBranch: function (id) { // 订阅 支线基本信息
-                Log.i('预定的支线id是：' + id);
+            subscribeBranch: function (id) { // 订阅——支线基本信息
                 bid = id;
-                return bCache;
-            },
-            subscribeStatus: function () { // 订阅侧边栏信息、一次系统图
-                return statusCache;
             }
         }
     }

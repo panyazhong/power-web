@@ -1,7 +1,3 @@
-/**
- * @author v.lugovsky
- * created on 16.12.2015
- */
 (function () {
     'use strict';
 
@@ -9,7 +5,7 @@
         .controller('pageTopCtrl', pageTopCtrl);
 
     /** @ngInject */
-    function pageTopCtrl($scope, $state, PageTopCache, locals, User, HttpToast, SkipUtils, EventsCache) {
+    function pageTopCtrl($scope, $state, PageTopCache, locals, User, HttpToast, SkipUtils, $rootScope) {
 
         $scope.show = {
             topBarData: [
@@ -42,7 +38,7 @@
                     state: 'report'
                 }],
             cache: PageTopCache.cache,
-            eventTotal: EventsCache.totalCount(),
+            eventTotal: 0,// 默认0
             userName: locals.getObject('user').name,
             setData: [
                 {
@@ -99,6 +95,17 @@
                 HttpToast.toast(err);
             })
         };
+
+        /**
+         * 未处理的event数量
+         */
+        $rootScope.$on('refresh', function (event, item) {
+            if (!item.count) {
+                return
+            }
+
+            $scope.show.eventTotal = item.count;
+        });
 
     }
 

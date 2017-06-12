@@ -1,7 +1,3 @@
-/**
- * @author v.lugovksy
- * created on 16.12.2015
- */
 (function () {
     'use strict';
 
@@ -10,7 +6,7 @@
 
     /** @ngInject */
     function BaSidebarCtrl($scope, baSidebarService, $state, locals, SidebarCache, Sidebar, Log,
-                           HttpToast, EventsCache, $rootScope, _) {
+                           HttpToast, $rootScope, _) {
 
         $scope.show = {
             menuItems: []
@@ -72,8 +68,6 @@
         };
 
         $scope.init = function () {
-            $scope.statusCache = EventsCache.subscribeStatus(); // subscribe
-
             $scope.setMenu();
         };
         $scope.init();
@@ -100,7 +94,15 @@
             $state.go('branch', {bid: id}, {reload: true});
         };
 
-        $rootScope.$on('refresh', function (event, data) {
+        /**
+         * 侧边栏states
+         */
+        $rootScope.$on('refresh', function (event, item) {
+            if (!item.states) {
+                return
+            }
+
+            var data = item.states;
 
             if ($scope.show.menuItems && Array.isArray($scope.show.menuItems)) {
                 $scope.show.menuItems.map(function (item) {

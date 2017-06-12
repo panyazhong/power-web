@@ -8,7 +8,7 @@
 
     /** @ngInject */
     function branchPageCtrl($scope, $stateParams, Branch, HttpToast, Device, ToastUtils, BranchimgHelper,
-                            PageTopCache, ModalUtils, locals) {
+                            PageTopCache, ModalUtils, locals, $rootScope) {
 
         PageTopCache.cache.state = 'monitoring';
 
@@ -156,6 +156,29 @@
                 });
 
         };
+
+        /* socket refresh*/
+        /**
+         * 支线基本信息
+         */
+        $rootScope.$on('branchRefresh', function (event, data) {
+            if (!data) {
+                return
+            }
+
+            $scope.show.branchData.currentA = data.currentA;
+            $scope.show.branchData.currentB = data.currentB;
+            $scope.show.branchData.currentC = data.currentC;
+            $scope.show.branchData.p = data.p;
+            $scope.show.branchData.powerFactor = data.powerFactor;
+
+            $scope.show.branchData.voltageA = data.voltageA;
+            $scope.show.branchData.voltageB = data.voltageB;
+            $scope.show.branchData.voltageC = data.voltageC;
+            $scope.show.branchData.q = data.q;
+            $scope.show.branchData.wp = data.wp;
+            $scope.show.branchData.temperature = data.temperature;
+        });
 
     }
 

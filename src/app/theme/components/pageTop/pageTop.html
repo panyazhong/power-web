@@ -2,7 +2,6 @@
      ng-class="{'scrolled': scrolled}">
 
     <div class="page-top-div" style="width: 200px;">
-        <!--<a href="#/dashboard" class="al-logo clearfix"><span>Blur</span>Admin</a>-->
 
         <img src="assets/img/app/power/logo_home.png"
              style="height: 66px;padding: 5px 0 5px 5px;float: left;"/>
@@ -19,9 +18,9 @@
                  uib-dropdown is-open="item.isopen">
                 {{item.title}}
 
-                <span ng-show="item.state == 'events' && show.eventTotal.total > 0"
-                      ng-class="show.eventTotal.total > 9?'event-label-big':'event-label'">
-                    {{show.eventTotal.total}}
+                <span ng-show="item.state == 'events' && show.eventTotal > 0"
+                      ng-class="show.eventTotal > 9?'event-label-big':'event-label'">
+                    {{show.eventTotal}}
                 </span>
 
                 <i class="ion-arrow-down-b" style="margin: 0 5px"
@@ -37,17 +36,6 @@
                 </ul>
 
             </div>
-
-            <!--<div class="page-top-div page-top-content-title" style="width: 12%;"-->
-            <!--ng-repeat="item in show.topBarData"-->
-            <!--ng-class="show.cache.state == item.state ? 'page-top-title-active' : '' "-->
-            <!--ng-click="changeState(item.state)">-->
-            <!--{{item.title}}-->
-
-            <!--<i class="ion-arrow-down-b" style="margin: 0 5px"-->
-            <!--ng-show="$index == show.topBarData.length-1"></i>-->
-            <!--<span class="page-top-divider" ng-show="$index == show.topBarData.length-1"></span>-->
-            <!--</div>-->
 
         </div>
         <div class="page-top-div" style="width: 20%;">
@@ -65,23 +53,4 @@
         </div>
     </div>
 
-    <!--<div class="search">-->
-    <!--<i class="ion-ios-search-strong" ng-click="startSearch()"></i>-->
-    <!--<input id="searchInput" type="text" placeholder="Search for...">-->
-    <!--</div>-->
-
-    <!--<div class="user-profile clearfix">-->
-    <!--<div class="al-user-profile" uib-dropdown>-->
-    <!--<a uib-dropdown-toggle class="profile-toggle-link">-->
-    <!--<img ng-src="{{::( 'Nasta' | profilePicture )}}">-->
-    <!--</a>-->
-    <!--<ul  class="top-dropdown-menu profile-dropdown" uib-dropdown-menu>-->
-    <!--<li><i class="dropdown-arr"></i></li>-->
-    <!--<li><a href="#/profile"><i class="fa fa-user"></i>Profile</a></li>-->
-    <!--<li><a href><i class="fa fa-cog"></i>Settings</a></li>-->
-    <!--<li><a href class="signout"><i class="fa fa-power-off"></i>Sign out</a></li>-->
-    <!--</ul>-->
-    <!--</div>-->
-    <!--<msg-center></msg-center>-->
-    <!--</div>-->
 </div>
