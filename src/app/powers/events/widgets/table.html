@@ -30,20 +30,20 @@
         <td class="table-def-cursor">
             <span ng-bind="formatDate(item.create_time)"></span>
         </td>
-        <td ng-click="viewClientDetail(item.cid)">
+        <td ng-click="viewClientDetail(item.client_id)">
             <span ng-bind="item.client" class="color-blue"></span>
         </td>
         <td class="table-def-cursor">
             <span ng-bind="item.incomingline" class="color-blue"></span>
         </td>
-        <td ng-click="viewBranchDetail(item)">
+        <td ng-click="viewBranchDetail(item.branch_id)">
             <span ng-bind="item.branch" class="color-blue"></span>
         </td>
         <!--<td>-->
         <!--<span ng-bind="item.name" class="color-blue"></span>-->
         <!--</td>-->
         <td class="table-def-cursor">
-            <span ng-bind="item.desc"></span>
+            <div ng-bind="item.desc" style="max-width: 240px;margin: auto;text-align: left"></div>
         </td>
         <td>
             <button class="btn-def btn-submit-blue" style="width: 68px;"

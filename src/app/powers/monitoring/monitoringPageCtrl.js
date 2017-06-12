@@ -10,7 +10,7 @@
 
     /** @ngInject */
     function monitoringPageCtrl($scope, $state, $stateParams, PageTopCache, Clientimg, ClientimgHelper,
-                                Branch, HttpToast, SidebarCache, Sidebar, Log, locals, EventsCache, $rootScope) {
+                                Branch, HttpToast, SidebarCache, Sidebar, Log, locals, EventsCache, $rootScope, ToastUtils) {
 
         PageTopCache.cache.state = $state.$current; // active
         $stateParams.cid ? locals.put('cid', $stateParams.cid) : '';
@@ -19,7 +19,6 @@
             imgs: {},   // images info
             branch: {}  // branch info
         };
-        $scope.cName = '';
 
         $scope.queryClientImg = function (cid) {
 
@@ -34,7 +33,7 @@
                 function (data) {
                     $scope.show.imgs = ClientimgHelper.query(data, {});
                     // Log.i("Clientimg处理后:\n " + JSON.stringify($scope.show.imgs));
-                    $scope.cName = data.client.name;
+                    // data.client.name; 变电站名称，若需要可用
                     PageTopCache.currentState.state = data.client.name + " / 一次系统图";
                 }, function (err) {
                     HttpToast.toast(err);
@@ -81,11 +80,14 @@
          * 查看分支详情
          */
         $scope.viewBranchDetail = function (id) {
+            if (!id) {
+                ToastUtils.openToast('warning', '支线信息异常。稍后再试.');
+                return
+            }
 
             $state.go('branch', {bid: id}, {reload: true});
 
             locals.put('bid', id);
-            locals.put('cName', $scope.cName);
         };
 
 

@@ -346,6 +346,9 @@
         };
 
         // new fn
+        /**
+         * 查看变电站一次系统图
+         */
         $scope.viewClientDetail = function (id) {
             if (!id) {
                 ToastUtils.openToast('warning', '变电站信息异常。稍后再试.');
@@ -357,16 +360,15 @@
         /**
          * 查看分支详情
          */
-        $scope.viewBranchDetail = function (item) {
-            if (!item.bid) {
+        $scope.viewBranchDetail = function (id) {
+            if (!id) {
                 ToastUtils.openToast('warning', '支线信息异常。稍后再试.');
                 return
             }
 
-            $state.go('branch', {bid: item.bid}, {reload: true});
+            $state.go('branch', {bid: id}, {reload: true});
 
-            locals.put('bid', item.bid);
-            locals.put('cName', item.client);
+            locals.put('bid', id);
         }
 
     }

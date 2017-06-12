@@ -8,27 +8,6 @@
     function overviewPageCtrl($scope, Overview, Sidebar, SidebarCache, Log, HttpToast, $timeout,
                               locals, ToastUtils, $state) {
 
-        // $timeout(function () {
-        //     $scope.show.mapData = [
-        //         {
-        //             "cid": "221",
-        //             "name": "时代金33",
-        //             "ico": "http://imgsrc.baidu.com/forum/w%3D580%3B/sign=0bdab4698f35e5dd902ca5d746fda7ef/18d8bc3eb13533fac693c715a2d3fd1f41345be7.jpg",
-        //             "longitude": "121.48",
-        //             "latitude": "31.22"
-        //         },
-        //         {
-        //             "cid": "2",
-        //             "name": "交通大学222",
-        //             "ico": "public/img/client/red.png",
-        //             "longitude": "121.16",
-        //             "latitude": "30.89"
-        //         }
-        //     ];
-        //
-        //     $scope.setMap();
-        // }, 10000);
-
         $scope.show = {
             mapData: []
         };
@@ -157,7 +136,6 @@
                     HttpToast.toast(err);
                 });
 
-            console.log('op................');
         };
         $scope.init();
 

@@ -15,28 +15,28 @@
     </thead>
     <tbody ng-show="!show.isLoading">
     <tr ng-repeat="item in show.branchEqp.devices">
-        <td>
+        <td class="table-def-cursor">
             <span ng-bind="item.name"></span>
         </td>
-        <td>
+        <td class="table-def-cursor">
             <span ng-bind="item.type"></span>
         </td>
-        <td>
+        <td class="table-def-cursor">
             <span ng-bind="item.model"></span>
         </td>
-        <td>
+        <td class="table-def-cursor">
             <span ng-bind="item.manufacturer"></span>
         </td>
-        <td>
+        <td class="table-def-cursor">
             <span ng-bind="item.client_name"></span>
         </td>
-        <td>
+        <td class="table-def-cursor">
             <span ng-bind="item.branch_name"></span>
         </td>
-        <td>
+        <td class="table-def-cursor">
             <span ng-bind="formatDate(item.lastet_date)"></span>
         </td>
-        <td>
+        <td class="table-def-cursor">
             <span ng-bind="item.operationstatus"></span>
         </td>
         <td>
