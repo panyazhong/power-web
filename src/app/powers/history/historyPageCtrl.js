@@ -9,6 +9,12 @@
     function historyPageCtrl($scope, $state, PageTopCache, Sidebar, SidebarCache, HttpToast, Log,
                              ToastUtils, pieChartCache, History, $rootScope) {
 
+        $scope.GetDateStr = function (AddDayCount) {
+            var dd = new Date();
+            dd.setDate(dd.getDate() + AddDayCount);//获取AddDayCount天后的日期
+            return dd;
+        };
+
         PageTopCache.cache.state = $state.$current; // active
         $scope.data = {
             datetimepickerOptions1: {
@@ -97,12 +103,33 @@
         $scope.show = {
             sidebarArr: [],    // 变电站
             clientName: '',
-            from_time: '',
-            to_time: '',
+            from_time: $scope.GetDateStr(-7),  // 默认查询7天之前数据
+            to_time: new Date(),
 
             searchData: {},     // 搜索后的数据
-            queryArr: [],    // 左侧可信息查询
-            queryName: '',
+            queryArr: [
+                {
+                    key: 'eQuantity',
+                    name: '电量'
+                },
+                {
+                    key: 'current',
+                    name: '三项电流'
+                },
+                {
+                    key: 'voltage',
+                    name: '三相电压'
+                },
+                {
+                    key: 'reactive',
+                    name: '有功无功'
+                },
+                {
+                    key: 'power',
+                    name: '功率因素'
+                }
+            ],    // 左侧可信息查询
+            queryName: '电量',    // def 显示的val
             queryKey: 'eQuantity',  // def 显示的key
             bCheckArr: [],   // 左侧 checkbox状态
         };
@@ -226,28 +253,6 @@
                 bid: sucData.bid,
                 data: sucData.data
             };
-            $scope.show.queryArr = [
-                {
-                    key: 'eQuantity',
-                    name: '电量'
-                },
-                {
-                    key: 'current',
-                    name: '三项电流'
-                },
-                {
-                    key: 'voltage',
-                    name: '三相电压'
-                },
-                {
-                    key: 'reactive',
-                    name: '有功无功'
-                },
-                {
-                    key: 'power',
-                    name: '功率因素'
-                }
-            ];
 
             $scope.setMorrisData();
 
@@ -294,6 +299,22 @@
             }
         };
 
+        $scope.initDefData = function () {
+            /* 与签到不同，需要先拿到变电站信息 再搜索*/
+
+            // 1.变电站
+            var client = $scope.show.sidebarArr[0];
+            if (client) {
+                // set
+                $scope.form.cid = client.clientId;
+                $scope.show.clientName = client.clientName;
+            }
+
+            // 2.3 起止时间 show里设置了
+            // 4. 左侧可信息查询 show里设置了
+            $scope.search();
+        };
+
         $scope.init = function () {
             if (SidebarCache.isEmpty()) {
                 Log.i('empty： ——SidebarCache');
@@ -302,12 +323,14 @@
                     function (data) {
                         SidebarCache.create(data);
                         $scope.show.sidebarArr = data.sidebar;
+                        $scope.initDefData();
                     }, function (err) {
                         HttpToast.toast(err);
                     });
             } else {
                 Log.i('exist： ——SidebarCache');
                 $scope.show.sidebarArr = SidebarCache.getData().sidebar;
+                $scope.initDefData();
             }
         };
         $scope.init();

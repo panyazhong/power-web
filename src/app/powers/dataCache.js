@@ -20,37 +20,37 @@
             var obj = JSON.parse(data);
 
             socket.emit('received', {mhid: obj.mhid}); // 收到alert事件后响应
-            switch (parseInt(obj.level)) {
-                case 1:
-                    ModalUtils.openMsg('app/powers/modal/warningEvent.html', '',
-                        warningEventCtrl, {
-                            data: obj
-                        },
-                        function (info) {
-                            // 传值走这里
-                            if (info) {
-                                $state.go('events');
-                            }
-                        }, function (empty) {
-                            // 不传值关闭走这里
-                        });
-                    break;
-                case 2:
-                    ModalUtils.openMsg('app/powers/modal/dangerEvent.html', '',
-                        eventCtrl, {
-                            data: obj
-                        },
-                        function (info) {
-                            // 传值走这里
-                            if (info) {
-                                $state.go('events');
-                            }
-                        }, function (empty) {
-                            // 不传值关闭走这里
-                        });
-
-                    break;
-            }
+            // switch (parseInt(obj.level)) {
+            //     case 1:
+            //         ModalUtils.openMsg('app/powers/modal/warningEvent.html', '',
+            //             warningEventCtrl, {
+            //                 data: obj
+            //             },
+            //             function (info) {
+            //                 // 传值走这里
+            //                 if (info) {
+            //                     $state.go('events');
+            //                 }
+            //             }, function (empty) {
+            //                 // 不传值关闭走这里
+            //             });
+            //         break;
+            //     case 2:
+            //         ModalUtils.openMsg('app/powers/modal/dangerEvent.html', '',
+            //             eventCtrl, {
+            //                 data: obj
+            //             },
+            //             function (info) {
+            //                 // 传值走这里
+            //                 if (info) {
+            //                     $state.go('events');
+            //                 }
+            //             }, function (empty) {
+            //                 // 不传值关闭走这里
+            //             });
+            //
+            //         break;
+            // }
 
             function eventCtrl($scope, params) {
                 $scope.title = params.data.desc;

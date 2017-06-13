@@ -8,6 +8,12 @@
     function checkinPageCtrl($scope, $state, Sidebar, SidebarCache, Log, HttpToast, Signin,
                              PageTopCache, ToastUtils, ExportPrefix, $window) {
 
+        $scope.GetDateStr = function (AddDayCount) {
+            var dd = new Date();
+            dd.setDate(dd.getDate() + AddDayCount);//获取AddDayCount天后的日期
+            return dd;
+        };
+
         PageTopCache.cache.state = $state.$current; // active
         $scope.data = {
             datetimepickerOptions1: {
@@ -99,8 +105,8 @@
             sidebarArr: [],    //变电站
             clientName: '',
             checkPlaceArr: [],  // 签到点
-            from_time: '',
-            to_time: '',
+            from_time: $scope.GetDateStr(-30),  // 默认查询30天之前数据
+            to_time: new Date(),
 
             isFirst: true       // 标识第一次、用来加载数据
         };
@@ -113,32 +119,16 @@
             to_time: '',
         };
 
-        $scope.GetDateStr = function (AddDayCount) {
-            var dd = new Date();
-            dd.setDate(dd.getDate() + AddDayCount);//获取AddDayCount天后的日期
-            var y = dd.getFullYear();
-            var m = (dd.getMonth() + 1) < 10 ? "0" + (dd.getMonth() + 1) : (dd.getMonth() + 1);//获取当前月份的日期，不足10补0
-            var d = dd.getDate() < 10 ? "0" + dd.getDate() : dd.getDate();//获取当前几号，不足10补0
-            return y + "-" + m + "-" + d + " 00:00:00";
-        };
-
         $scope.formatForm = function () {
             // change格式
-            if ($scope.show.isFirst) {
-                var exDate = $scope.GetDateStr(-30);
-                $scope.form.from_time = exDate;
-                $scope.form.to_time = moment(new Date()).format('YYYY-MM-DD HH:mm:ss');
-            } else {
-                $scope.form.from_time = '';
-                $scope.form.to_time = '';
-                if ($scope.show.from_time) {
-                    $scope.form.from_time = moment($scope.show.from_time).format('YYYY-MM-DD HH:mm:ss');
-                }
-                if ($scope.show.to_time) {
-                    $scope.form.to_time = moment($scope.show.to_time).format('YYYY-MM-DD HH:mm:ss');
-                }
+            $scope.form.from_time = '';
+            $scope.form.to_time = '';
+            if ($scope.show.from_time) {
+                $scope.form.from_time = moment($scope.show.from_time).format('YYYY-MM-DD HH:mm:ss');
             }
-            $scope.show.isFirst = false;
+            if ($scope.show.to_time) {
+                $scope.form.to_time = moment($scope.show.to_time).format('YYYY-MM-DD HH:mm:ss');
+            }
 
             var params = {};
             for (var Key in $scope.form) {
