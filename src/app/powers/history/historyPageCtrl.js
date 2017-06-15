@@ -7,7 +7,7 @@
 
     /** @ngInject */
     function historyPageCtrl($scope, $state, PageTopCache, Sidebar, SidebarCache, HttpToast, Log,
-                             ToastUtils, pieChartCache, History, $rootScope) {
+                             ToastUtils, pieChartCache, History, $rootScope, $timeout) {
 
         $scope.GetDateStr = function (AddDayCount) {
             var dd = new Date();
@@ -141,11 +141,65 @@
         };
 
         // morris
-        $scope.lData = [];
-        $scope.lYkeys = [];
-        $scope.lLabels = [];
-        $scope.lColors = [];
         $scope.line = {};   // checkbox 所需data
+
+        $scope.LineData = function (params) {
+            params = params ? params : {};
+            angular.extend(this, params);
+        };
+
+        $scope.setMorrisData = function () {
+
+            if ($scope.show.searchData.bid && $scope.show.searchData.data) {
+
+                // init
+                var _lineData = [];
+                // lYkeys 在下部方法内初始化
+                $scope.lLabels = [];
+                $scope.lColors = [];
+                $scope.show.bCheckArr = [];
+
+                // set
+                $scope.show.searchData.bid.forEach(function (item) {
+                    $scope.lLabels.push(item.name);
+                    $scope.lColors.push($scope.randomColor());
+                    $scope.show.bCheckArr.push({
+                        bid: item.id,
+                        name: item.name,
+                        checked: true
+                    })
+                });
+
+                $scope.show.searchData.data.forEach(function (item) {
+                    $scope.lYkeys = [];
+                    // 1.拿到每一个item，遍历key
+                    var obj = {};
+                    for (var i in item) {
+                        if (i === 'time') {
+                            obj.y = item[i];
+                        } else {
+                            var info = item[i];
+                            for (var j in info) {
+                                if (j === $scope.show.queryKey) {
+                                    obj["" + i + ""] = info[j];
+                                    $scope.lYkeys.push(i);
+                                }
+                            }
+
+                        }
+                    }
+                    _lineData.push(new $scope.LineData(obj));
+                });
+
+                $scope.line.lData = _.cloneDeep(_lineData);
+                $scope.line.lYkeys = _.cloneDeep($scope.lYkeys);
+                $scope.line.lLabels = _.cloneDeep($scope.lLabels);
+                $scope.line.lColors = _.cloneDeep($scope.lColors);
+
+                return _lineData;
+            }
+        };
+        $scope.lData = $scope.setMorrisData();
 
         // 树状图
         $scope.tree = [];
@@ -195,66 +249,16 @@
             return '#' + Math.floor(Math.random() * 16777215).toString(16);
         };
 
-        $scope.setMorrisData = function () {
-
-            // init
-            $scope.lData = [];
-            // lYkeys 在下部方法内初始化
-            $scope.lLabels = [];
-            $scope.lColors = [];
-            $scope.show.bCheckArr = [];
-
-            // set
-            $scope.show.searchData.bid.forEach(function (item) {
-                $scope.lLabels.push(item.name);
-                $scope.lColors.push($scope.randomColor());
-                $scope.show.bCheckArr.push({
-                    bid: item.id,
-                    name: item.name,
-                    checked: true
-                })
-            });
-
-            $scope.show.searchData.data.forEach(function (item) {
-                $scope.lYkeys = [];
-                // 1.拿到每一个item，遍历key
-                var obj = {};
-                for (var i in item) {
-                    if (i === 'time') {
-                        obj.y = item[i];
-                    } else {
-                        var info = item[i];
-                        for (var j in info) {
-                            if (j === $scope.show.queryKey) {
-                                obj["" + i + ""] = info[j];
-                                $scope.lYkeys.push(i);
-                            }
-                        }
-
-                    }
-                }
-                $scope.lData.push(obj);
-            });
-
-            $scope.line.lData = _.cloneDeep($scope.lData);
-            $scope.line.lYkeys = _.cloneDeep($scope.lYkeys);
-            $scope.line.lLabels = _.cloneDeep($scope.lLabels);
-            $scope.line.lColors = _.cloneDeep($scope.lColors);
-
-        };
 
         $scope.setData = function (sucData) {
             /**
              * data => deepClone
              */
 
-            // a. morris
             $scope.show.searchData = {
                 bid: sucData.bid,
                 data: sucData.data
             };
-
-            $scope.setMorrisData();
 
             // b. pie
             pieChartCache.cache.data = [];  // init
@@ -265,6 +269,11 @@
             $scope.tree = sucData.tree;  // set
 
             $rootScope.$emit('pieRefresh', 'update');
+
+            // a. morris
+            $timeout(function () {
+                $scope.lData = $scope.setMorrisData();
+            }, 1600);
         };
 
         $scope.query = function () {
@@ -360,7 +369,7 @@
             $scope.show.queryKey = obj.key;
             // Log.i('click: \n' + JSON.stringify(obj));
 
-            $scope.setMorrisData();
+            $scope.lData = $scope.setMorrisData();
         };
 
         /**
@@ -369,7 +378,7 @@
         $scope.changeBCheck = function (item) {
 
             // init
-            $scope.lData = [];
+            var _lineData = [];
             $scope.lYkeys = [];
             $scope.lLabels = [];
             $scope.lColors = [];
@@ -398,9 +407,10 @@
                         }
                     }
                 }
-                $scope.lData.push(info);
+                _lineData.push(new $scope.LineData(info));
             });
 
+            $scope.lData = _lineData;
         };
     }
 

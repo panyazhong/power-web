@@ -71,35 +71,51 @@
                 var percentage = "";
                 var c = parseInt(item.currentmd);
                 var r = parseInt(item.requiredmd);
-                if (c != 0 && r != 0) {
+                if (c > 0 && r > 0) {
                     percentage = (c / r * 100).toFixed(2) + "%";
                 }
 
+                var name = item.name ? item.name : '';
+                var level = item.level ? item.level : '';
+                var numofppl = item.numofppl ? item.numofppl : '';
+                var address = item.address ? item.address : '';
+                var contactor = item.contactor ? item.contactor : '';
+
+                var contactortel = item.contactortel ? item.contactortel : '';
+                var phonenumber = item.phonenumber ? item.phonenumber : '';
+                var customer_contactor = item.customer_contactor ? item.customer_contactor : '';
+                var customer_contactortel = item.customer_contactortel ? item.customer_contactortel : '';
+                var structurearea = item.structurearea ? item.structurearea : '';
+
+                var safeRunningDays = item.safeRunningDays ? item.safeRunningDays : '';
+                var currentmd = item.currentmd ? item.currentmd : '';
+                var requiredmd = item.requiredmd ? item.requiredmd : '';
+
                 var custXml = "<div class='map-content'>" +
-                    "<div class='map-btn-title'>" + item.name + "</div>" +
-                    "<div class='map-item'>电压等级：" + item.level +
+                    "<div class='map-btn-title'>" + name + "</div>" +
+                    "<div class='map-item'>电压等级：" + level +
                     "</div>" +
-                    "<div class='map-item'>站内规定人数：" + item.numofppl +
+                    "<div class='map-item'>站内规定人数：" + numofppl +
                     "</div>" +
-                    "<div class='map-item'>具体地址：" + item.address +
+                    "<div class='map-item'>具体地址：" + address +
                     "</div>" +
-                    "<div class='map-item'>站长：" + item.contactor +
+                    "<div class='map-item'>站长：" + contactor +
                     "</div>" +
-                    "<div class='map-item'>站长手机：" + item.contactortel +
+                    "<div class='map-item'>站长手机：" + contactortel +
                     "</div>" +
-                    "<div class='map-item'>站内电话：" + item.phonenumber +
+                    "<div class='map-item'>站内电话：" + phonenumber +
                     "</div>" +
-                    "<div class='map-item'>用户联系人：" + item.customer_contactor +
+                    "<div class='map-item'>用户联系人：" + customer_contactor +
                     "</div>" +
-                    "<div class='map-item'>用户联系电话：" + item.customer_contactortel +
+                    "<div class='map-item'>用户联系电话：" + customer_contactortel +
                     "</div>" +
-                    "<div class='map-item'>建筑面积：" + item.structurearea +
+                    "<div class='map-item'>建筑面积：" + structurearea +
                     "</div>" +
-                    "<div class='map-item'>安全运行天数：" + item.safeRunningDays +
+                    "<div class='map-item'>安全运行天数：" + safeRunningDays +
                     "</div>" +
-                    "<div class='map-item'>当前负荷：" + item.currentmd +
+                    "<div class='map-item'>当前负荷：" + currentmd +
                     "</div>" +
-                    "<div class='map-item'>当月申报需量：" + item.requiredmd +
+                    "<div class='map-item'>当月申报需量：" + requiredmd +
                     "</div>" +
                     "<div style='height: 5px;background: #dcdcdc;margin: 5px 0;'>" +
                     "<div style='display: inline-block;background: #1baeb3;height: 5px;float: left;width:" + percentage + ";'></div>" +

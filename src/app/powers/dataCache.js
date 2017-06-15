@@ -14,7 +14,7 @@
     function eventsCache(Log, ModalUtils, $state, $rootScope) {
         var bid = "";       // 支线 id
 
-        var socket = io.connect('http://192.168.0.120:6688', {resource: 'event/socket.io'});
+        var socket = io.connect('http://106.14.142.150:6688', {resource: 'event/socket.io'});
         socket.on('alert', function (data) {    // 监听事件
 
             var obj = JSON.parse(data);
@@ -112,12 +112,12 @@
 
     function imgPrefix() {
         return {
-            prefix: 'http://192.168.0.120/'
+            prefix: 'http://106.14.142.150/'
         }
     }
 
     function exportPrefix() {
-        var host = 'http://192.168.0.120';
+        var host = 'http://106.14.142.150';
 
         return {
             prefix: host + '/device/export',      // 设备导出

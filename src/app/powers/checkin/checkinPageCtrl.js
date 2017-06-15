@@ -108,7 +108,6 @@
             from_time: $scope.GetDateStr(-30),  // 默认查询30天之前数据
             to_time: new Date(),
 
-            isFirst: true       // 标识第一次、用来加载数据
         };
         $scope.rowCollection = [];
 

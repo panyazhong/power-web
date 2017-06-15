@@ -16,12 +16,12 @@
         }
     </style>
 
-    <script src="http://code.jquery.com/jquery-1.4.2.min.js"></script>
+    <script src="https://cdn.bootcss.com/jquery/3.2.1/jquery.min.js"></script>
     <script type="text/javascript">
 
         window.localStorage.clear();    // init local
 
-        var host = 'http://192.168.0.120/user/login';
+        var host = 'http://106.14.142.150/user/login';
 
         var login = function () {
             var account = $('#inputUsername').val();
@@ -40,10 +40,10 @@
                         withCredentials: true
                     },
                     success: function (data) {
-                        if (data.name && data.hasTop) {
+                        if (data.name && data.uid) {
 
                             localStorage.user = JSON.stringify(data);
-                            window.location.replace('/index.html');
+                            window.location.replace('/admin/index.html');
 
                         } else {
                             alert('很抱歉，无法从服务器获取数据。');
@@ -56,6 +56,9 @@
                         } else {
                             alert('很抱歉，无法从服务器获取数据。');
                         }
+                    },
+                    complete: function (xhr, textStatus) {
+                        console.log('complete: ' + xhr.status);
                     }
                 })
 
