@@ -69,10 +69,8 @@
             function showPop(item, pos) {
 
                 var percentage = "";
-                var c = parseInt(item.currentmd);
-                var r = parseInt(item.requiredmd);
-                if (c > 0 && r > 0) {
-                    percentage = (c / r * 100).toFixed(2) + "%";
+                if (item.currentmd && item.requiredmd) {
+                    percentage = (parseInt(item.currentmd) / parseInt(item.requiredmd) * 100).toFixed(2) + "%";
                 }
 
                 var name = item.name ? item.name : '';
