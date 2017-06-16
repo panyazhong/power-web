@@ -97,6 +97,8 @@
                 function (data) {
                     $scope.show.branchData = BranchimgHelper.query(data);
                     PageTopCache.currentState.state = data.client_name + " / " + data.name;
+
+                    locals.put('cid', data.cid);
                 }, function (err) {
                     HttpToast.toast(err);
                 });
