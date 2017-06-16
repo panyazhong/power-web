@@ -21,7 +21,7 @@
 
         window.localStorage.clear();    // init local
 
-        var host = 'http://106.14.142.150/user/login';
+        var host = 'http://monitor.shanghaihenghui.com/api/user/login';
 
         var login = function () {
             var account = $('#inputUsername').val();
@@ -43,7 +43,7 @@
                         if (data.name && data.uid) {
 
                             localStorage.user = JSON.stringify(data);
-                            window.location.replace('/admin/index.html');
+                            window.location.replace('/index.html');
 
                         } else {
                             alert('很抱歉，无法从服务器获取数据。');

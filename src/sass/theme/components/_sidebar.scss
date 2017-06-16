@@ -109,7 +109,8 @@ a.al-sidebar-list-link {
 
 @mixin layout-collapsed() {
   .al-main {
-    margin-left: 50px;
+    //margin-left: 50px;
+    margin-left: 0; // 侧边栏收起来的样式
   }
 
   .al-footer {
@@ -178,7 +179,8 @@ a.al-sidebar-list-link {
 
 @mixin sidebar-collapsed() {
   .al-sidebar {
-    width: 52px;
+    //width: 52px;
+    width: 0; // 侧边栏收起时的宽度
 
     .fa-angle-down, .fa-angle-up {
       opacity: 0;

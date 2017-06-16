@@ -26,7 +26,7 @@
         })
         .factory('Resource', function ($resource, $httpParamSerializerJQLike, $q) {
 
-            var host = 'http://106.14.142.150';
+            var host = 'http://monitor.shanghaihenghui.com/api';
 
             var setAction = function (actions) {
                 var defaultParams = {

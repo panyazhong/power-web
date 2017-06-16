@@ -137,7 +137,7 @@
      */
     function skipUtils(locals, ToastUtils) {
 
-        var link = '/admin/auth.html';
+        var link = '/auth.html';
 
         return {
             exit: function (data) { // 退出登录、修改密码退出登录，msg是成功的回调

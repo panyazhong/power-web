@@ -14,7 +14,7 @@
     function eventsCache(Log, ModalUtils, $state, $rootScope) {
         var bid = "";       // 支线 id
 
-        var socket = io.connect('http://106.14.142.150:6688', {resource: 'event/socket.io'});
+        var socket = io.connect('http://monitor.shanghaihenghui.com:6688', {resource: 'event/socket.io'});
         socket.on('alert', function (data) {    // 监听事件
 
             var obj = JSON.parse(data);
@@ -112,31 +112,31 @@
 
     function imgPrefix() {
         return {
-            prefix: 'http://106.14.142.150/'
+            prefix: 'http://monitor.shanghaihenghui.com/'
         }
     }
 
-    function exportPrefix() {
-        var host = 'http://106.14.142.150';
+    function exportPrefix(ImgPrefix) {
+        var host = ImgPrefix.prefix;
 
         return {
-            prefix: host + '/device/export',      // 设备导出
-            prefixPrint: host + '/device/print',   // 设备打印
+            prefix: host + 'device/export',      // 设备导出
+            prefixPrint: host + 'device/print',   // 设备打印
 
-            eventPrefix: host + '/event/export',  // 事件导出
-            eventPrefixPrint: host + '/event/print',  // 事件打印
+            eventPrefix: host + 'event/export',  // 事件导出
+            eventPrefixPrint: host + 'event/print',  // 事件打印
 
-            userPrefix: host + '/user/export',      // 用户列表导出
-            userPrefixPrint: host + '/user/print',  // 用户列表打印
+            userPrefix: host + 'user/export',      // 用户列表导出
+            userPrefixPrint: host + 'user/print',  // 用户列表打印
 
             reportItem: function (rpid) {
-                return host + '/report/' + rpid;    //下载报表 单个
+                return host + 'report/' + rpid;    //下载报表 单个
             },
-            uploadReport: host + '/report/upload',   // 上传报表文件
-            reportAll: host + '/report/multi?',   //下载报表 所有
+            uploadReport: host + 'report/upload',   // 上传报表文件
+            reportAll: host + 'report/multi?',   //下载报表 所有
 
-            checkinAll: host + '/signin/export?',   // 签到列表导出
-            checkinAllPrint: host + '/signin/print?',   // 签到列表打印
+            checkinAll: host + 'signin/export?',   // 签到列表导出
+            checkinAllPrint: host + 'signin/print?',   // 签到列表打印
         }
     }
 
