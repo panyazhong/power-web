@@ -104,7 +104,11 @@
                 return
             }
 
-            $scope.show.eventTotal = item.count;
+            if (item.count > 500) {
+                $scope.show.eventTotal = '500+';
+            } else {
+                $scope.show.eventTotal = item.count;
+            }
         });
 
     }

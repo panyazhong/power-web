@@ -18,8 +18,8 @@
                  uib-dropdown is-open="item.isopen">
                 {{item.title}}
 
-                <span ng-show="item.state == 'events' && show.eventTotal > 0"
-                      ng-class="show.eventTotal > 9?'event-label-big':'event-label'">
+                <span ng-show="item.state == 'events'"
+                      class="event-label-big">
                     {{show.eventTotal}}
                 </span>
 
