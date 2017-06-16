@@ -114,7 +114,7 @@
                 },
                 {
                     key: 'current',
-                    name: '三项电流'
+                    name: '三相电流'
                 },
                 {
                     key: 'voltage',
@@ -126,7 +126,7 @@
                 },
                 {
                     key: 'power',
-                    name: '功率因素'
+                    name: '功率因数'
                 }
             ],    // 左侧可信息查询
             queryName: '电量',    // def 显示的val
