@@ -4,7 +4,6 @@
         /* pie饼状图*/
         #pieChart {
             width: 100%;
-            /*height: 400px;*/
         }
     </style>
 
@@ -58,15 +57,29 @@
         </div>
 
         <div class="col-md-12">
-            <label class="custom-checkbox" style="padding: 0 3px 0 10px;margin: 3px;"
+            <label class="custom-checkbox"
                    ng-repeat="item in show.bCheckArr track by $index">
                 <input type="checkbox" ng-model="item.checked" ng-click="changeBCheck(item)">
-                <span>{{item.name}}</span>
+                <span ng-style="item.style"
+                      style="padding: 2px;
+                      color: #fff;
+                      border-radius: 3px;">
+                    {{item.name}}
+                </span>
             </label>
         </div>
     </div>
 
     <div class="col-sm-6 col-md-6 col-lg-6">
+        <div class="col-md-12">
+            <div class="form-group col-sm-4 col-md-4 col-lg-4" style="margin-bottom: 10px;">
+                <label class="chart-title">
+                    电量占比
+                </label>
+            </div>
+
+        </div>
+
         <div id="pieChart" class="admin-chart" ng-controller="PieChartCtrl"></div>
     </div>
 

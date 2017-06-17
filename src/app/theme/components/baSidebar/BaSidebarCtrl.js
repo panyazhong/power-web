@@ -20,7 +20,7 @@
                 var i = {};
                 i.clientId = item.clientId;
                 i.title = item.clientName;
-                i.icon = 'indicator-normal';
+                i.icon = 'indicator-normal indicator-one';
                 if (item.incominglineData.length > 0) {
                     i.subMenu = [];
                     item.incominglineData.map(function (subItem) {
@@ -108,10 +108,10 @@
                 $scope.show.menuItems.map(function (item) {
                     // 一级菜单
                     if (data[item.clientId]) {
-                        item.icon = 'indicator-error';
+                        item.icon = 'indicator-error indicator-one';
                     }
                     else {
-                        item.icon = 'indicator-normal';
+                        item.icon = 'indicator-normal indicator-one';
                     }
 
                     if (item.subMenu.length > 0) {

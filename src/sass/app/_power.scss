@@ -527,6 +527,8 @@ input[type=number]::-webkit-outer-spin-button {
   -webkit-border-radius: 3px;
   border-radius: 3px;
   margin-right: 9px;
+  position: absolute;
+  top: 12px;
 }
 
 .indicator-error {
@@ -538,6 +540,35 @@ input[type=number]::-webkit-outer-spin-button {
   -webkit-border-radius: 3px;
   border-radius: 3px;
   margin-right: 9px;
+  position: absolute;
+  top: 12px;
+}
+
+//一级菜单
+.indicator-one {
+  top: 17px !important;
+}
+
+// 指示器文字
+.indicator-desc {
+  overflow: hidden !important;
+  white-space: nowrap !important;
+  text-overflow: ellipsis !important;
+  display: inline-block;
+  padding-left: 10px;
+}
+
+// 文字一二三文字
+.indicator-desc-one {
+  max-width: 150px;
+}
+
+.indicator-desc-two {
+  max-width: 120px;
+}
+
+.indicator-desc-three {
+  max-width: 125px;
 }
 
 /*

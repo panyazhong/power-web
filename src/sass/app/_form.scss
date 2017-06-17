@@ -255,9 +255,9 @@ textarea.form-control {
 }
 
 label.custom-checkbox {
-  padding-right: 0;
+  padding-right: 25px;
   padding-left: 0;
-  margin-bottom: 0;
+  margin-bottom: 8px;
   & > input {
     height: 0;
     z-index: -100 !important;

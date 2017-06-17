@@ -162,11 +162,15 @@
                 // set
                 $scope.show.searchData.bid.forEach(function (item) {
                     $scope.lLabels.push(item.name);
-                    $scope.lColors.push($scope.randomColor());
+                    var color = $scope.randomColor();
+                    $scope.lColors.push(color);
                     $scope.show.bCheckArr.push({
                         bid: item.id,
                         name: item.name,
-                        checked: true
+                        checked: true,
+                        style: {
+                            background: color
+                        }
                     })
                 });
 
