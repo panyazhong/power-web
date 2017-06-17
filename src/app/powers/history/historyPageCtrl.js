@@ -9,9 +9,11 @@
     function historyPageCtrl($scope, $state, PageTopCache, Sidebar, SidebarCache, HttpToast, Log,
                              ToastUtils, pieChartCache, History, $rootScope, $timeout) {
 
-        $scope.GetDateStr = function (AddDayCount) {
+        $scope.GetDateStr = function () {
             var dd = new Date();
-            dd.setDate(dd.getDate() + AddDayCount);//获取AddDayCount天后的日期
+            dd.setHours(0);
+            dd.setMinutes(0);
+            dd.setSeconds(0);
             return dd;
         };
 
@@ -103,7 +105,7 @@
         $scope.show = {
             sidebarArr: [],    // 变电站
             clientName: '',
-            from_time: $scope.GetDateStr(-7),  // 默认查询7天之前数据
+            from_time: $scope.GetDateStr(),  // 默认查询数据
             to_time: new Date(),
 
             searchData: {},     // 搜索后的数据

@@ -117,7 +117,7 @@
     }
 
     function exportPrefix(ImgPrefix) {
-        var host = ImgPrefix.prefix;
+        var host = ImgPrefix.prefix + "/api/";
 
         return {
             prefix: host + 'device/export',      // 设备导出
