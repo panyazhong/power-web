@@ -92,8 +92,8 @@
 
       $scope.$on('$stateChangeSuccess', function (event, toState) {
         if (_isState(toState) && !$element.hasClass('ba-sidebar-item-expanded')) {
-          vm.$expand();
-          $element.addClass('ba-sidebar-item-expanded');
+          // vm.$expand();
+          // $element.addClass('ba-sidebar-item-expanded');
         }
       });
     }
