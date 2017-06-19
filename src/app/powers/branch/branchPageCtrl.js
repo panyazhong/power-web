@@ -8,7 +8,7 @@
 
     /** @ngInject */
     function branchPageCtrl($scope, $stateParams, Branch, HttpToast, Device, ToastUtils, BranchimgHelper,
-                            PageTopCache, ModalUtils, locals, $rootScope, EventsCache) {
+                            PageTopCache, ModalUtils, locals, $rootScope, EventsCache, clientCache) {
 
         PageTopCache.cache.state = 'monitoring';
 
@@ -109,7 +109,7 @@
             }
 
             // 1.缓存取变量信息
-            var obj = locals.getObject('clientInfo');
+            var obj = clientCache.cache.data;
             if (obj && obj.content) {
                 var branchInfo = JSON.parse(obj.content)[$scope.show.bid];
                 if (branchInfo) {

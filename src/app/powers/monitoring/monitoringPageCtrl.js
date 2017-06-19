@@ -6,7 +6,8 @@
 
     /** @ngInject */
     function monitoringPageCtrl($scope, $state, $stateParams, PageTopCache, Clientimg, ClientimgHelper,
-                                Branch, HttpToast, SidebarCache, Sidebar, Log, locals, EventsCache, $rootScope, ToastUtils) {
+                                Branch, HttpToast, SidebarCache, Sidebar, Log, locals, EventsCache,
+                                $rootScope, ToastUtils, clientCache) {
 
         PageTopCache.cache.state = $state.$current; // active
         $stateParams.cid ? locals.put('cid', $stateParams.cid) : '';
@@ -75,11 +76,15 @@
             EventsCache.subscribeBranch(id);    // 订阅支线信息
 
             // 1.缓存取变量信息
-            var obj = locals.getObject('clientInfo');
+            var obj = clientCache.cache.data;
+            console.log('obj: ' + JSON.stringify(obj));
             if (obj && obj.content) {
-                var branchInfo = JSON.parse(obj.content)[$scope.show.bid];
+                console.log('111 obj.content存在...');
+                var branchInfo = JSON.parse(obj.content)[$scope.show.bid+""];
                 if (branchInfo) {
+                    console.log('222 branchInfo存在...' + JSON.stringify(branchInfo));
                     $scope.setBranchInfo(branchInfo);
+                    console.log('333 setBranchInfo结束了...');
                 }
             }
 

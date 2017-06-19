@@ -123,8 +123,12 @@
                     name: '三相电压'
                 },
                 {
-                    key: 'reactive',
-                    name: '有功无功'
+                    key: 'P',
+                    name: '有功'
+                },
+                {
+                    key: 'Q',
+                    name: '无功'
                 },
                 {
                     key: 'power',

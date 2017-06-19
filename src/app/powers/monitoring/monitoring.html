@@ -10,11 +10,11 @@
                      ng-src="{{item.imgLink}}"
                      ng-style="item.style"/>
 
-                <span ng-repeat="item in show.imgs.branch"
+                <span ng-repeat="item in show.imgs.branch track by $index"
                       ng-style="item.style"
                       ng-click="onBeforeShow(item.bid)"
 
-                      data-placement="left"
+                      data-placement="{{$index < 3 ?'right':'left'}}"
                       data-container="body"
                       data-template-url="app/powers/monitoring/widgets/branch-detail.html"
                       data-auto-close="1"

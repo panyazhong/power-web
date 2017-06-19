@@ -9,9 +9,10 @@
         .factory("KeywordCache", keywordCache)  // key
         .factory("SidebarCache", sidebarCache)  // 侧边栏和地图数据
         .factory("locals", locals)
-        .factory("pieChartCache", pieChartCache);
+        .factory("pieChartCache", pieChartCache)
+        .factory("clientCache", clientCache);
 
-    function eventsCache(Log, ModalUtils, $state, $rootScope, locals) {
+    function eventsCache(Log, ModalUtils, $state, $rootScope, clientCache) {
         var bid = "";       // 支线 id
 
         var socket = io.connect('http://monitor.shanghaihenghui.com:6688', {resource: 'event/socket.io'});
@@ -73,7 +74,7 @@
 
         socket.on('monitor', function (data) {
             var obj = JSON.parse(data);
-            locals.putObject('clientInfo', obj);
+            clientCache.cache.data = obj;
 
             if (bid) {
                 var branchInfo = JSON.parse(obj.content)[bid];
@@ -122,7 +123,7 @@
     }
 
     function exportPrefix(ImgPrefix) {
-        var host = ImgPrefix.prefix + "/api/";
+        var host = ImgPrefix.prefix + "api/";
 
         return {
             prefix: host + 'device/export',      // 设备导出
@@ -276,6 +277,14 @@
         return {
             cache: {
                 data: []
+            }
+        }
+    }
+
+    function clientCache() {
+        return {
+            cache: {
+                data: {}
             }
         }
     }
