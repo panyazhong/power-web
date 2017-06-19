@@ -135,7 +135,7 @@
     /**
      * 用来主动跳转（退出登陆、登陆信息已过期或错误时需要跳转到登陆页）
      */
-    function skipUtils(locals, ToastUtils) {
+    function skipUtils(locals, ToastUtils, $timeout) {
 
         var link = '/auth.html';
 
@@ -143,9 +143,12 @@
             exit: function (data) { // 退出登录、修改密码退出登录，msg是成功的回调
                 ToastUtils.openToast('success', data.message);
 
-                locals.clear();
-                // 跳转
-                window.location.replace(link);
+                $timeout(function () {
+                    locals.clear();
+                    // 跳转
+                    window.location.replace(link);
+                }, 1000);
+
             },
             errExit: function () {  // 错误处理，test!!!
 
