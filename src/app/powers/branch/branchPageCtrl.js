@@ -110,7 +110,7 @@
 
             // 1.缓存取变量信息
             var obj = locals.getObject('clientInfo');
-            if (obj) {
+            if (obj && obj.content) {
                 var branchInfo = JSON.parse(obj.content)[$scope.show.bid];
                 if (branchInfo) {
                     $scope.setBranchInfo(branchInfo);
