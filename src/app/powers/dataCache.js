@@ -11,7 +11,7 @@
         .factory("locals", locals)
         .factory("pieChartCache", pieChartCache);
 
-    function eventsCache(Log, ModalUtils, $state, $rootScope) {
+    function eventsCache(Log, ModalUtils, $state, $rootScope, locals) {
         var bid = "";       // 支线 id
 
         var socket = io.connect('http://monitor.shanghaihenghui.com:6688', {resource: 'event/socket.io'});
@@ -73,6 +73,8 @@
 
         socket.on('monitor', function (data) {
             var obj = JSON.parse(data);
+            locals.putObject('clientInfo', obj);
+
             if (bid) {
                 var branchInfo = JSON.parse(obj.content)[bid];
                 $rootScope.$emit('branchRefresh', branchInfo);   // 支线基本信息
@@ -95,6 +97,9 @@
             },
             subscribeBranch: function (id) { // 订阅——支线基本信息
                 bid = id;
+            },
+            login: function () {
+                socket.emit('login', {});
             }
         }
     }

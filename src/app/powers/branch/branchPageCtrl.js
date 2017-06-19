@@ -83,6 +83,21 @@
                 });
         };
 
+        $scope.setBranchInfo = function (data) {
+            $scope.show.branch.currentA = data.currentA;
+            $scope.show.branch.currentB = data.currentB;
+            $scope.show.branch.currentC = data.currentC;
+            $scope.show.branch.p = data.p;
+            $scope.show.branch.powerFactor = data.powerFactor;
+
+            $scope.show.branch.voltageA = data.voltageA;
+            $scope.show.branch.voltageB = data.voltageB;
+            $scope.show.branch.voltageC = data.voltageC;
+            $scope.show.branch.q = data.q;
+            $scope.show.branch.wp = data.wp;
+            $scope.show.branch.temperature = data.temperature;
+        };
+
         $scope.init = function () {
             $scope.show.bid = $stateParams.bid || locals.get('bid', '');
 
@@ -91,12 +106,20 @@
                 return;
             }
 
+            // 1.缓存取变量信息
+            var obj = locals.getObject('clientInfo');
+            var branchInfo = JSON.parse(obj.content)[$scope.show.bid];
+            $scope.setBranchInfo(branchInfo);
+
+            // 2.取，其它信息
             Branch.query({
                     bid: $scope.show.bid
                 },
-                function (data) {
-                    $scope.show.branchData = BranchimgHelper.query(data);
-                    PageTopCache.currentState.state = data.client_name + " / " + data.name;
+                function (suc) {
+                    var data = BranchimgHelper.query(suc);
+                    $scope.show.branchData.dlt_img = data.dlt_img;  // 中间图片
+                    $scope.show.branchData.name = data.name;    // 支线name
+                    PageTopCache.currentState.state = data.client_name + " / " + data.name; // contentTop 变电站name+支线name
 
                     locals.put('cid', data.cid);
                 }, function (err) {
@@ -168,18 +191,7 @@
                 return
             }
 
-            $scope.show.branchData.currentA = data.currentA;
-            $scope.show.branchData.currentB = data.currentB;
-            $scope.show.branchData.currentC = data.currentC;
-            $scope.show.branchData.p = data.p;
-            $scope.show.branchData.powerFactor = data.powerFactor;
-
-            $scope.show.branchData.voltageA = data.voltageA;
-            $scope.show.branchData.voltageB = data.voltageB;
-            $scope.show.branchData.voltageC = data.voltageC;
-            $scope.show.branchData.q = data.q;
-            $scope.show.branchData.wp = data.wp;
-            $scope.show.branchData.temperature = data.temperature;
+            $scope.setBranchInfo(data);
         });
 
     }

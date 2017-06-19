@@ -51,6 +51,21 @@
         };
         $scope.init();
 
+        $scope.setBranchInfo = function (data) {
+            $scope.show.branch.currentA = data.currentA;
+            $scope.show.branch.currentB = data.currentB;
+            $scope.show.branch.currentC = data.currentC;
+            $scope.show.branch.p = data.p;
+            $scope.show.branch.powerFactor = data.powerFactor;
+
+            $scope.show.branch.voltageA = data.voltageA;
+            $scope.show.branch.voltageB = data.voltageB;
+            $scope.show.branch.voltageC = data.voltageC;
+            $scope.show.branch.q = data.q;
+            $scope.show.branch.wp = data.wp;
+            $scope.show.branch.temperature = data.temperature;
+        };
+
         /**
          * 显示前搜索
          */
@@ -59,11 +74,18 @@
             $scope.show.branch = {};    // init
             EventsCache.subscribeBranch(id);    // 订阅支线信息
 
+            // 1.缓存取变量信息
+            var obj = locals.getObject('clientInfo');
+            var branchInfo = JSON.parse(obj.content)[id];
+            $scope.setBranchInfo(branchInfo);
+
+            // 2.取支线名称、id
             Branch.query({
                     bid: id
                 },
                 function (data) {
-                    $scope.show.branch = data;
+                    $scope.show.branch.name = data.name;
+                    $scope.show.branch.bid = data.bid;
                 }, function (err) {
                     HttpToast.toast(err);
                 });
@@ -92,18 +114,7 @@
                 return
             }
 
-            $scope.show.branch.currentA = data.currentA;
-            $scope.show.branch.currentB = data.currentB;
-            $scope.show.branch.currentC = data.currentC;
-            $scope.show.branch.p = data.p;
-            $scope.show.branch.powerFactor = data.powerFactor;
-
-            $scope.show.branch.voltageA = data.voltageA;
-            $scope.show.branch.voltageB = data.voltageB;
-            $scope.show.branch.voltageC = data.voltageC;
-            $scope.show.branch.q = data.q;
-            $scope.show.branch.wp = data.wp;
-            $scope.show.branch.temperature = data.temperature;
+            $scope.setBranchInfo(data);
         });
 
         /**

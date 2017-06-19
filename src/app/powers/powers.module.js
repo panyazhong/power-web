@@ -21,10 +21,11 @@
         .config(routeConfig);
 
     /** @ngInject */
-    function routeConfig($urlRouterProvider) {
+    function routeConfig($urlRouterProvider, EventsCache) {
 
         $urlRouterProvider.otherwise('/overview');  // 默认进入概况总览
 
+        EventsCache.login();    // 登陆订阅
     }
 
 })();
