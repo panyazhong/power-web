@@ -8,7 +8,7 @@
 
     /** @ngInject */
     function branchPageCtrl($scope, $stateParams, Branch, HttpToast, Device, ToastUtils, BranchimgHelper,
-                            PageTopCache, ModalUtils, locals, $rootScope) {
+                            PageTopCache, ModalUtils, locals, $rootScope, EventsCache) {
 
         PageTopCache.cache.state = 'monitoring';
 
@@ -67,6 +67,8 @@
             ],
             branchData: {},      // 支线基本信息
             branchEqp: [],   // 支线 设备列表
+
+            isGetData: false   //标记获取支线信息，ok
         };
         $scope.rowCollection = [];
 
@@ -84,18 +86,18 @@
         };
 
         $scope.setBranchInfo = function (data) {
-            $scope.show.branch.currentA = data.currentA;
-            $scope.show.branch.currentB = data.currentB;
-            $scope.show.branch.currentC = data.currentC;
-            $scope.show.branch.p = data.p;
-            $scope.show.branch.powerFactor = data.powerFactor;
+            $scope.show.branchData.currentA = data.currentA;
+            $scope.show.branchData.currentB = data.currentB;
+            $scope.show.branchData.currentC = data.currentC;
+            $scope.show.branchData.p = data.p;
+            $scope.show.branchData.powerFactor = data.powerFactor;
 
-            $scope.show.branch.voltageA = data.voltageA;
-            $scope.show.branch.voltageB = data.voltageB;
-            $scope.show.branch.voltageC = data.voltageC;
-            $scope.show.branch.q = data.q;
-            $scope.show.branch.wp = data.wp;
-            $scope.show.branch.temperature = data.temperature;
+            $scope.show.branchData.voltageA = data.voltageA;
+            $scope.show.branchData.voltageB = data.voltageB;
+            $scope.show.branchData.voltageC = data.voltageC;
+            $scope.show.branchData.q = data.q;
+            $scope.show.branchData.wp = data.wp;
+            $scope.show.branchData.temperature = data.temperature;
         };
 
         $scope.init = function () {
@@ -108,8 +110,12 @@
 
             // 1.缓存取变量信息
             var obj = locals.getObject('clientInfo');
-            var branchInfo = JSON.parse(obj.content)[$scope.show.bid];
-            $scope.setBranchInfo(branchInfo);
+            if (obj) {
+                var branchInfo = JSON.parse(obj.content)[$scope.show.bid];
+                if (branchInfo) {
+                    $scope.setBranchInfo(branchInfo);
+                }
+            }
 
             // 2.取，其它信息
             Branch.query({
@@ -122,6 +128,10 @@
                     PageTopCache.currentState.state = data.client_name + " / " + data.name; // contentTop 变电站name+支线name
 
                     locals.put('cid', data.cid);
+
+                    EventsCache.subscribeBranch(data.cid);    // 需要更新支线信息，有可能是点的侧边栏
+
+                    $scope.show.isGetData = true;
                 }, function (err) {
                     HttpToast.toast(err);
                 });
@@ -188,6 +198,10 @@
          */
         $rootScope.$on('branchRefresh', function (event, data) {
             if (!data) {
+                return
+            }
+
+            if (!$scope.show.isGetData) {
                 return
             }
 

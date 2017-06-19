@@ -76,8 +76,12 @@
 
             // 1.缓存取变量信息
             var obj = locals.getObject('clientInfo');
-            var branchInfo = JSON.parse(obj.content)[id];
-            $scope.setBranchInfo(branchInfo);
+            if (obj) {
+                var branchInfo = JSON.parse(obj.content)[$scope.show.bid];
+                if (branchInfo) {
+                    $scope.setBranchInfo(branchInfo);
+                }
+            }
 
             // 2.取支线名称、id
             Branch.query({

@@ -6,7 +6,9 @@
 
     /** @ngInject */
     function overviewPageCtrl($scope, Overview, Sidebar, SidebarCache, Log, HttpToast, $timeout,
-                              locals, ToastUtils, $state) {
+                              locals, ToastUtils, $state, EventsCache) {
+
+        EventsCache.login();    // 登陆订阅
 
         $scope.show = {
             mapData: []
