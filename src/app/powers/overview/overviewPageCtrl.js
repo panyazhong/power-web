@@ -6,12 +6,12 @@
 
     /** @ngInject */
     function overviewPageCtrl($scope, Overview, Sidebar, SidebarCache, Log, HttpToast, $timeout,
-                              locals, ToastUtils, $state, EventsCache) {
-
-        EventsCache.login();    // 登陆订阅
+                              locals, ToastUtils, $state, $rootScope, clientCache) {
 
         $scope.show = {
-            mapData: []
+            mapData: [],
+            cid: '',
+            requiredmd: ''
         };
 
         $scope.setMap = function () {
@@ -70,9 +70,15 @@
 
             function showPop(item, pos) {
 
-                var percentage = "";
-                if (item.currentmd && item.requiredmd) {
-                    percentage = (parseInt(item.currentmd) / parseInt(item.requiredmd) * 100).toFixed(2) + "%";
+                var currentmd = '';
+                var percentage = '';
+                if (item.requiredmd) {
+                    var pData = clientCache.cache.p[$scope.show.cid];
+                    if (pData) {
+                        Log.i('p Cache不为空：' + JSON.stringify(pData));
+                        currentmd = pData.P + pData.PUnit;
+                        percentage = (parseInt(currentmd) / parseInt(item.requiredmd) * 100).toFixed(2) + "%";
+                    }
                 }
 
                 var name = item.name ? item.name : '';
@@ -88,7 +94,7 @@
                 var structurearea = item.structurearea ? item.structurearea : '';
 
                 var safeRunningDays = item.safeRunningDays ? item.safeRunningDays : '';
-                var currentmd = item.currentmd ? item.currentmd : '';
+                // var currentmd = item.currentmd ? item.currentmd : '';
                 var requiredmd = item.requiredmd ? item.requiredmd : '';
 
                 var custXml = "<div class='map-content'>" +
@@ -113,14 +119,14 @@
                     "</div>" +
                     "<div class='map-item'>安全运行天数：" + safeRunningDays +
                     "</div>" +
-                    "<div class='map-item'>当前负荷：" + currentmd +
+                    "<div class='map-item' id='currentmd'>当前负荷：" + currentmd +
                     "</div>" +
                     "<div class='map-item'>当月申报需量：" + requiredmd +
                     "</div>" +
                     "<div style='height: 5px;background: #dcdcdc;margin: 5px 0;'>" +
-                    "<div style='display: inline-block;background: #1baeb3;height: 5px;float: left;width:" + percentage + ";'></div>" +
+                    "<div style='display: inline-block;background: #1baeb3;height: 5px;float: left;width:" + percentage + ";' id='percentageW'></div>" +
                     "</div>" +
-                    "<div style='line-height: 25px;padding: 0 10px;text-align: center;color: #1baeb3'>" + "需量占比：" + percentage +
+                    "<div style='line-height: 25px;padding: 0 10px;text-align: center;color: #1baeb3' id='percentage'>" + "需量占比：" + percentage +
                     "</div>" +
                     "<a onclick='viewClientDetail(" + item.cid + ")' class='map-btn-event'>" +
                     "前往该站" +
@@ -156,10 +162,16 @@
         $scope.init();
 
         $scope.getDetail = function (id, pos, cb) {
+            // change init
+            $scope.show.cid = id;
+            $scope.show.requiredmd = '';
+
             Overview.queryDetail({
                     cid: id
                 },
                 function (data) {
+                    $scope.show.requiredmd = parseInt(data.requiredmd);
+
                     cb(data, pos);
                 }, function (err) {
                     HttpToast.toast(err);
@@ -186,6 +198,32 @@
             locals.put('cid', id);      // 也记录下变电站id
         }
 
+        /* socket refresh*/
+        /**
+         * 当前需量
+         */
+        $rootScope.$on('overallRefresh', function (event, data) {
+            if (!data) {
+                return
+            }
+
+            if (!$scope.show.cid || !$scope.show.requiredmd) {
+                return
+            }
+
+            var pData = data[$scope.show.cid];
+            if (pData) {
+                Log.i('p Refresh：' + JSON.stringify(pData));
+
+                var currentmd = pData.P + pData.PUnit;
+                var percentage = (parseInt(currentmd) / parseInt($scope.show.requiredmd) * 100).toFixed(2) + "%";
+
+                $("#currentmd").text("当前负荷：" + currentmd);
+                $("#percentage").text("需量占比：" + percentage);
+                $("#percentageW").css({width: percentage});
+            }
+
+        });
     }
 
 })();

@@ -57,10 +57,21 @@
 
         </div>
 
+        <div class="col-md-12" style="margin: 8px 0;">
+            <button class="btn-def btn-main-blue"
+                    style="line-height: 8px !important;margin-right: 20px"
+                    ng-click="selectAll()">全选
+            </button>
+
+            <button class="btn-def btn-main-blue" style="line-height: 8px !important;"
+                    ng-click="selectNone()">全不选
+            </button>
+        </div>
+
         <div class="col-md-12">
             <label class="custom-checkbox"
                    ng-repeat="item in show.bCheckArr track by $index">
-                <input type="checkbox" ng-model="item.checked" ng-click="changeBCheck(item)">
+                <input type="checkbox" ng-model="item.checked" ng-click="changeBCheck()">
                 <span ng-style="item.style"
                       style="padding: 2px;
                       color: #fff;

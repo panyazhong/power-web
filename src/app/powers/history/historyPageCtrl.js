@@ -166,9 +166,9 @@
                 $scope.show.bCheckArr = [];
 
                 // set
-                $scope.show.searchData.bid.forEach(function (item) {
+                $scope.show.searchData.bid.forEach(function (item, index) {
                     $scope.lLabels.push(item.name);
-                    var color = $scope.randomColor();
+                    var color = $scope.randomColor(index);
                     $scope.lColors.push(color);
                     $scope.show.bCheckArr.push({
                         bid: item.id,
@@ -255,8 +255,16 @@
             return params;
         };
 
-        $scope.randomColor = function () {
-            return '#' + Math.floor(Math.random() * 16777215).toString(16);
+        $scope.randomColor = function (pos) {
+            var safeColor = ['#000000', '#003300', '#330000', '#333300', '#660000', '#663300', '#990000', '#993300', '#CC0000', '#CC3300', '#FF0000', '#FF3300',
+                '#0000FF', '#006699', '#3300FF', '#FF0099', '#FF0033', '#CC9966', '#CC6666', '#CC3366', '#99FF66', '#993366', '#669999', '#663366',
+                '#33FF99', '#333399', '#003333', '#000033', '#333333', '#663333', '#993333', '#CCFF33'];
+
+            if (safeColor[pos]) {
+                return safeColor[pos];
+            } else {
+                return '#' + Math.floor(Math.random() * 16777215).toString(16);
+            }
         };
 
 
@@ -385,7 +393,7 @@
         /**
          * 改变支线条数
          */
-        $scope.changeBCheck = function (item) {
+        $scope.changeBCheck = function () {
 
             // init
             var _lineData = [];
@@ -422,6 +430,24 @@
 
             $scope.lData = _lineData;
         };
+
+        $scope.selectAll = function () {
+
+            $scope.show.bCheckArr.map(function (item) {
+                item.checked = true;
+            });
+
+            $scope.changeBCheck();
+        };
+
+        $scope.selectNone = function () {
+            $scope.show.bCheckArr.map(function (item) {
+                item.checked = false;
+            });
+
+            $scope.changeBCheck();
+        };
+
     }
 
     /** @ngInject */

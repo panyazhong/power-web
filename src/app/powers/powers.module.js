@@ -18,12 +18,18 @@
         'BlurAdmin.power.setalarm',
         'BlurAdmin.power.setpwd'
     ])
-        .config(routeConfig);
+        .config(routeConfig)
+        .run(initialize);
 
     /** @ngInject */
     function routeConfig($urlRouterProvider) {
 
-        $urlRouterProvider.otherwise('/overview');  // 默认进入概况总览
+        $urlRouterProvider.otherwise('/overview');
     }
 
+    function initialize(EventsCache) {
+        console.log('initialize...');
+
+        EventsCache.login();
+    }
 })();

@@ -76,16 +76,10 @@
             EventsCache.subscribeBranch(id);    // 订阅支线信息
 
             // 1.缓存取变量信息
-            var obj = clientCache.cache.data;
-            console.log('obj: ' + JSON.stringify(obj));
-            if (obj && obj.content) {
-                console.log('111 obj.content存在...');
-                var branchInfo = JSON.parse(obj.content)[$scope.show.bid+""];
-                if (branchInfo) {
-                    console.log('222 branchInfo存在...' + JSON.stringify(branchInfo));
-                    $scope.setBranchInfo(branchInfo);
-                    console.log('333 setBranchInfo结束了...');
-                }
+            var branchData = clientCache.cache.data[id];
+            if (branchData) {
+                console.log('branchData Cache不为空：' + JSON.stringify(branchData));
+                $scope.setBranchInfo(branchData);
             }
 
             // 2.取支线名称、id
@@ -114,6 +108,16 @@
             locals.put('bid', id);
         };
 
+        $scope.setBgWidth = function (w) {
+            if (!w) {
+                return
+            }
+
+            return {
+                "min-width": w + "px"
+            }
+        };
+
         /* socket refresh*/
         /**
          * 支线基本信息
@@ -122,6 +126,8 @@
             if (!data) {
                 return
             }
+
+            Log.i('branchData Refresh：' + JSON.stringify(data));
 
             $scope.setBranchInfo(data);
         });

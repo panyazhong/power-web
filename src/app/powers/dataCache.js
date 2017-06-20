@@ -73,12 +73,12 @@
         });
 
         socket.on('monitor', function (data) {
-            var obj = JSON.parse(data);
+            var obj = JSON.parse(JSON.parse(data).content);
             clientCache.cache.data = obj;
 
             if (bid) {
-                var branchInfo = JSON.parse(obj.content)[bid];
-                $rootScope.$emit('branchRefresh', branchInfo);   // 支线基本信息
+                var branchInfo = obj[bid];
+                $rootScope.$emit('branchRefresh', branchInfo);   // 订阅的支线基本信息
                 $rootScope.$digest();
             }
         });
@@ -90,6 +90,14 @@
                 states: (JSON.parse(obj.content)).detail // 侧边栏和一次系统图
             };
             $rootScope.$emit('refresh', item);
+        });
+
+        socket.on('overall', function (data) {
+            var obj = JSON.parse(data);
+            var item = JSON.parse(obj.content);
+            clientCache.cache.p = item;
+
+            $rootScope.$emit('overallRefresh', item);
         });
 
         return {
@@ -284,7 +292,8 @@
     function clientCache() {
         return {
             cache: {
-                data: {}
+                data: {},// 某个变电站
+                p: {}    // 当前负荷
             }
         }
     }
