@@ -138,6 +138,8 @@
             queryName: '电量',    // def 显示的val
             queryKey: 'eQuantity',  // def 显示的key
             bCheckArr: [],   // 左侧 checkbox状态
+
+            isLoadPie: true
         };
 
         $scope.form = {
@@ -200,6 +202,13 @@
                     }
                     _lineData.push(new $scope.LineData(obj));
                 });
+
+                if ($scope.show.isLoadPie) {
+                    pieChartCache.cache.color = _.cloneDeep($scope.lColors);
+                    $rootScope.$emit('pieRefresh', 'update');
+
+                    $scope.show.isLoadPie = false;
+                }
 
                 $scope.line.lData = _.cloneDeep(_lineData);
                 $scope.line.lYkeys = _.cloneDeep($scope.lYkeys);
@@ -286,7 +295,7 @@
             $scope.tree = [];             // init
             $scope.tree = sucData.tree;  // set
 
-            $rootScope.$emit('pieRefresh', 'update');
+            // $rootScope.$emit('pieRefresh', 'update');
 
             // a. morris
             $timeout(function () {
@@ -295,6 +304,9 @@
         };
 
         $scope.query = function () {
+            //init
+            $scope.show.isLoadPie = true;
+
             var params = $scope.formatForm();
 
             History.query({
@@ -451,8 +463,12 @@
     }
 
     /** @ngInject */
-    function PieChartCtrl($element, pieChartCache, $rootScope) {
+    function PieChartCtrl($element, pieChartCache, $rootScope, Log) {
         $rootScope.$on('pieRefresh', function () {
+            pieChartCache.cache.data.map(function (item, index) {
+                item.color = pieChartCache.cache.color[index];
+            });
+            Log.i('pieData:\n' + JSON.stringify(pieChartCache.cache.data));
 
             var id = $element[0].getAttribute('id');
             var pieChart = AmCharts.makeChart(id, {
@@ -461,6 +477,7 @@
                 dataProvider: pieChartCache.cache.data,
                 valueField: 'val',
                 titleField: 'branch',
+                colorField: "color",
                 balloon: {
                     fixedPosition: true
                 },

@@ -15,17 +15,22 @@
         };
 
         $scope.setMap = function () {
+            var limit = locals.getObject('user').hasTop;
 
             var mapLabData = $scope.show.mapData;
 
             var mapObj;
 
             function mapInit() {
+
+                var pos = limit === 0 ? [mapLabData[0].longitude, mapLabData[0].latitude] : [121.473658, 31.230378];
+                var zoomVal = limit === 0 ? 12 : 9;
+
                 mapObj = new AMap.Map('container', {
 //                    dragEnable: false,      //是否可拖拽
 //                    zoomEnable: false,      //是否可缩放
-                    zoom: 9,
-                    center: [121.582888, 31.466200],    // 定义地图中心点
+                    zoom: zoomVal,
+                    center: pos   // 定义地图中心点
                 });
                 AMap.event.addListener(mapObj, "complete", completeEventHandler);
             }
@@ -139,7 +144,7 @@
                 var infoWindow = new AMap.InfoWindow({
                     isCustom: true,
                     closeWhenClickMap: true,
-                    offset: new AMap.Pixel(150, 0),
+                    offset: new AMap.Pixel(200, 215),
                     content: custXml
                 });
                 infoWindow.open(mapObj, pos);

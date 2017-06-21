@@ -284,7 +284,8 @@
     function pieChartCache() {
         return {
             cache: {
-                data: []
+                data: [],
+                color: []
             }
         }
     }
