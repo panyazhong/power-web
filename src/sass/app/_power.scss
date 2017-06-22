@@ -48,6 +48,8 @@
   border: 1px solid transparent;
   border-radius: 4px;
   outline: none;
+  min-width: 80px !important;
+  max-width: 200px !important;
 }
 
 .btn-main-blue {
@@ -88,6 +90,10 @@
   margin: 0 10px;
 }
 
+.form-max {
+  max-width: 200px !important;
+}
+
 .btn-transparent {
   background: transparent !important;
   border: transparent !important;
@@ -119,6 +125,11 @@
   border-radius: 5px;
   background-color: #ffffff;
   box-shadow: none;
+  max-width: 200px !important;
+}
+
+.form-control {
+  max-width: 200px !important;
 }
 
 .form-control-def:focus {

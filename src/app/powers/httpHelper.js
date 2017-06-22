@@ -10,7 +10,7 @@
     function clientimgHelper(ImgPrefix, _) {
 
         return {
-            query: function (obj, statusObj) {
+            query: function (obj, mObj) {
                 // 变电站
                 if (obj.client && obj.client.img) {
                     if (!obj.client.imgLink) {
@@ -24,9 +24,31 @@
                     }
                 }
 
+                // 支线
+                var iArr = [];
+                obj.branch.map(function (item) {
+                    item.style = {
+                        position: 'absolute',
+                        top: item.imgtop + "px",
+                        left: item.imgleft + "px",
+                        width: item.imgw + "px",
+                        height: item.imgh + "px"
+                    };
+
+                    if (mObj && mObj[item.bid] && mObj[item.bid].Itotal == 0) {
+                        item.style.background = 'url(' + ImgPrefix.prefix + item.img + ')';
+                        if (iArr.indexOf(item.inid) === -1) {
+                            iArr.push(item.inid);   // 异常的总进线id
+                        }
+                    }
+                    else {
+                        item.style.background = 'transparent';
+                    }
+                });
+
                 // 总进线
                 obj.incomingline.map(function (item) {
-                    if (statusObj && statusObj[obj.client.cid] && statusObj[obj.client.cid][item.inid]) {
+                    if (iArr.length > 0 && iArr.indexOf(item.inid) !== -1) {
                         item.imgLink = ImgPrefix.prefix + item.img;
                         item.style = {
                             position: 'absolute',
@@ -42,25 +64,6 @@
                         }
                     }
 
-                });
-
-                // 支线
-                obj.branch.map(function (item) {
-                    item.style = {
-                        position: 'absolute',
-                        top: item.imgtop + "px",
-                        left: item.imgleft + "px",
-                        width: item.imgw + "px",
-                        height: item.imgh + "px"
-                    };
-
-                    if (statusObj && statusObj[obj.client.cid] && statusObj[obj.client.cid][item.inid]
-                        && statusObj[obj.client.cid][item.inid][item.bid]) {
-                        item.style.background = 'url(' + ImgPrefix.prefix + item.img + ')';
-                    }
-                    else {
-                        item.style.background = 'transparent';
-                    }
                 });
 
                 return _.cloneDeep(obj);

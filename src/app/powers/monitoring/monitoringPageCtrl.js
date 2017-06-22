@@ -14,7 +14,8 @@
 
         $scope.show = {
             imgs: {},   // images info
-            branch: {}  // branch info
+            branch: {},  // branch info
+            isGetData: false    // 待系统图信息获取OK订阅刷新才有意义
         };
 
         $scope.queryClientImg = function (cid) {
@@ -30,6 +31,8 @@
                     // Log.i("Clientimg处理后:\n " + JSON.stringify($scope.show.imgs));
                     // data.client.name; 变电站名称，若需要可用
                     PageTopCache.currentState.state = data.client.name + " / 一次系统图";
+
+                    $scope.show.isGetData = true;
                 }, function (err) {
                     HttpToast.toast(err);
                 });
@@ -135,12 +138,16 @@
         /**
          * 一次系统图
          */
-        $rootScope.$on('refresh', function (event, item) {
-            if (!item.states) {
+        $rootScope.$on('refreshMonitor', function (event, data) {
+            if (!data) {
                 return
             }
 
-            var data = item.states;
+            if (!$scope.show.isGetData) {
+                return
+            }
+
+            Log.i('refreshMonitor:\n' + JSON.stringify(data));
 
             $scope.show.imgs = ClientimgHelper.query($scope.show.imgs, data);
         });

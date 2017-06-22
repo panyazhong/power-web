@@ -12,67 +12,65 @@
         .factory("pieChartCache", pieChartCache)
         .factory("clientCache", clientCache);
 
-    function eventsCache(Log, ModalUtils, $state, $rootScope, clientCache) {
+    function eventsCache(Log, $state, $rootScope, clientCache, $uibModal) {
         var bid = "";       // 支线 id
 
         var socket = io.connect('http://monitor.shanghaihenghui.com:6688', {resource: 'event/socket.io'});
         socket.on('alert', function (data) {    // 监听事件
+            Log.i('alert : \n' + data);
 
             var obj = JSON.parse(data);
-
             socket.emit('received', {mhid: obj.mhid}); // 收到alert事件后响应
-            // switch (parseInt(obj.level)) {
-            //     case 1:
-            //         ModalUtils.openMsg('app/powers/modal/warningEvent.html', '',
-            //             warningEventCtrl, {
-            //                 data: obj
-            //             },
-            //             function (info) {
-            //                 // 传值走这里
-            //                 if (info) {
-            //                     $state.go('events');
-            //                 }
-            //             }, function (empty) {
-            //                 // 不传值关闭走这里
-            //             });
-            //         break;
-            //     case 2:
-            //         ModalUtils.openMsg('app/powers/modal/dangerEvent.html', '',
-            //             eventCtrl, {
-            //                 data: obj
-            //             },
-            //             function (info) {
-            //                 // 传值走这里
-            //                 if (info) {
-            //                     $state.go('events');
-            //                 }
-            //             }, function (empty) {
-            //                 // 不传值关闭走这里
-            //             });
-            //
-            //         break;
-            // }
+            switch (parseInt(obj.level)) {
+                case 1:
+                    openModal('app/powers/modal/warningEvent.html');
+                    break;
+                case 2:
+                    openModal('app/powers/modal/dangerEvent.html');
+                    break;
+            }
 
-            function eventCtrl($scope, params) {
+            function openModal(path) {
+                $uibModal.open({
+                    animation: true,
+                    templateUrl: path,
+                    size: '',
+                    controller: eventCtrl,
+                    // appendTo: angular.element('#' + eleId),
+                    resolve: {
+                        params: {
+                            data: obj
+                        }
+                    },
+                    windowTopClass: "power-modal-layout"
+                }).result.then(function (result) {
+                    // 传值走这里
+                    if (info) {
+                        $state.go('events');
+                    }
+                }, function (result) {
+                    Log.i('modal 关闭了');
+                });
+            }
+
+            function eventCtrl($scope, params, $timeout) {
                 $scope.title = params.data.desc;
 
                 $scope.submit = function () {
                     var data = 'submit';
                     $scope.$close(data);
                 };
+
+                $timeout(function () {
+                    $scope.$dismiss();
+                }, 5000);
             }
 
-            function warningEventCtrl($scope, params) {
-                $scope.title = params.data.desc;
-
-                $scope.submit = function () {
-                    var data = 'submit';
-                    $scope.$close(data);
-                };
-            }
         });
 
         socket.on('monitor', function (data) {
+            Log.i('monitor : \n' + data);
+
             var obj = JSON.parse(JSON.parse(data).content);
             clientCache.cache.data = obj;
 
@@ -81,9 +79,13 @@
                 $rootScope.$emit('branchRefresh', branchInfo);   // 订阅的支线基本信息
                 $rootScope.$digest();
             }
+
+            $rootScope.$emit('refreshMonitor', obj);    // 一次系统图
         });
 
         socket.on('status', function (data) {
+            Log.i('status : \n' + data);
+
             var obj = JSON.parse(data);
             var item = {
                 count: JSON.parse(obj.content).total,  // 未处理的event数量
@@ -93,6 +95,8 @@
         });
 
         socket.on('overall', function (data) {
+            Log.i('overall : \n' + data);
+
             var obj = JSON.parse(data);
             var item = JSON.parse(obj.content);
             clientCache.cache.p = item;

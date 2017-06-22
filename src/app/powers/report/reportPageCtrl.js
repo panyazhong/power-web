@@ -11,7 +11,7 @@
 
     /** @ngInject */
     function reportPageCtrl($scope, Log, Report, HttpToast, ToastUtils, ExportPrefix, $window,
-                            PageTopCache, $state, Upload, locals, ModalUtils, Device) {
+                            PageTopCache, $state, Upload, locals, ModalUtils, Device, SidebarCache, Sidebar) {
 
         PageTopCache.cache.state = $state.$current; // active
 
@@ -106,7 +106,9 @@
 
             from_time: '',
             to_time: '',
-            upload_user: ''
+            upload_user: '',
+            clientName: '所属变电站',  //变电站
+            sidebarArr: []
         };
         $scope.rowCollection = [];
 
@@ -115,6 +117,10 @@
             to_time: '',
             filename: '',
             upload_user: ''
+        };
+
+        $scope.up = {
+            client_ids: []
         };
 
         $scope.formatForm = function () {
@@ -138,6 +144,45 @@
             return params;
         };
 
+        $scope.init = function () {
+
+            if (SidebarCache.isEmpty()) {
+                Log.i('empty： ——SidebarCache');
+
+                Sidebar.query({},
+                    function (data) {
+                        SidebarCache.create(data);
+                        $scope.show.sidebarArr = data.sidebar;
+                    }, function (err) {
+                        HttpToast.toast(err);
+                    });
+            } else {
+                Log.i('exist： ——SidebarCache');
+                $scope.show.sidebarArr = SidebarCache.getData().sidebar;
+            }
+        };
+        $scope.init();
+
+        $scope.changeClent = function (obj) {
+            obj.state = !obj.state;
+
+            /**
+             * 遍历变电站数组，看那个是选中的
+             */
+            $scope.show.clientName = '';
+            $scope.up.client_ids = [];
+            $scope.show.sidebarArr.map(function (item) {
+                if (item.state) {
+                    $scope.show.clientName += item.clientName + "，";
+                    $scope.up.client_ids.push(item.clientId);
+                }
+            });
+            if ($scope.show.clientName.length > 0) {
+                $scope.show.clientName = $scope.show.clientName.substring(0, $scope.show.clientName.length - 1);
+            }
+
+        };
+
         /**
          * clear form
          */
@@ -151,6 +196,8 @@
             $scope.show.to_time = '';
             $scope.show.upload_user = '';
 
+            $scope.show.clientName = '所属变电站';
+            $scope.up.client_ids = [];
         };
 
         $scope.search = function () {
@@ -186,21 +233,30 @@
         $scope.getReportUser();
 
         $scope.uploadFiles = function (file, errFiles) {
+            if ($scope.up.client_ids.length === 0) {
+                ToastUtils.openToast('warning', '请选择文件所属变电站!');
+                return
+            }
 
             if (file) {
                 file.upload = Upload.upload({
                     url: ExportPrefix.uploadReport,
-                    data: {file: file},
+                    data: {file: file, client_ids: $scope.up.client_ids},
                     withCredentials: true
                 });
 
                 file.upload.then(function (data) {
-                    ToastUtils.openToast('success', data.message);
-                    // 清除下form
-                    $scope.clear();
-                    $scope.search();
+                    if (data.data && data.data.message) {
+                        ToastUtils.openToast('success', data.data.message);
+                        // 清除下form
+                        $scope.clear();
+                        $scope.search();
+                    }
+
                 }, function (err) {
-                    ToastUtils.openToast('error', err.data.message);
+                    if (err.data && err.data.message) {
+                        ToastUtils.openToast('error', err.data.message);
+                    }
                     // if (response.status > 0)
                     //     $scope.errorMsg = response.status + ': ' + response.data;
                 }, function (evt) {

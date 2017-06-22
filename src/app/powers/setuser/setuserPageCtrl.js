@@ -191,7 +191,7 @@
             $scope.form.auth_id = '';
             $scope.show.sidebarArr.map(function (item) {
                 if (item.state) {
-                    $scope.show.clientName += item.clientName + ",";
+                    $scope.show.clientName += item.clientName + "，";
                     $scope.form.auth_id += item.clientId + ",";
                 }
             });
