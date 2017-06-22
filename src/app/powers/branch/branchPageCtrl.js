@@ -14,57 +14,7 @@
 
         $scope.show = {
             bid: '',
-            branchAlarm: [
-                {
-                    desc: '过流一段跳闸',
-                    state: 'normal',
-                    color: '#666666'
-                },
-                {
-                    desc: '二段压变3ZK故障',
-                    state: 'normal',
-                    color: '#666666'
-                },
-                {
-                    desc: '过流二段跳闸',
-                    state: 'danger',
-                    color: '#666666'
-                },
-                {
-                    desc: '2QF在运行位置分闸',
-                    state: 'normal',
-                    color: '#666666'
-                },
-                {
-                    desc: '零流跳闸',
-                    state: 'normal',
-                    color: '#666666'
-                }, {
-                    desc: '1ZK、3ZK小开关故障',
-                    state: 'danger',
-                    color: '#29945b'
-                }, {
-                    desc: '弹簧未储能',
-                    state: 'danger',
-                    color: '#29945b'
-                }, {
-                    desc: '零流二段跳闸',
-                    state: 'caution',
-                    color: '#ef5c62'
-                }, {
-                    desc: '二段计量柜3ZK故障',
-                    state: 'caution',
-                    color: '#ef5c62'
-                }, {
-                    desc: '自切跳闸',
-                    state: 'caution',
-                    color: '#ef5c62'
-                }, {
-                    desc: '3QF电压正常',
-                    state: 'caution',
-                    color: '#ef5c62'
-                },
-            ],
+            branchAlarm: [],
             branchData: {},      // 支线基本信息
             branchEqp: [],   // 支线 设备列表
 
@@ -112,7 +62,11 @@
             var branchData = clientCache.cache.data[$scope.show.bid];
             if (branchData) {
                 console.log('branchData Cache不为空：' + JSON.stringify(branchData));
+                // 支线详情
                 $scope.setBranchInfo(branchData);
+
+                // 继电报警信息
+                $scope.show.branchAlarm = branchData.alerts;
             }
 
             // 2.取，其它信息
@@ -127,7 +81,7 @@
 
                     locals.put('cid', data.cid);
 
-                    EventsCache.subscribeBranch(data.cid);    // 需要更新支线信息，有可能是点的侧边栏
+                    EventsCache.subscribeClient(data.cid);    // 需更新变电站信息，有可能点的是侧边栏
 
                     $scope.show.isGetData = true;
                 }, function (err) {
@@ -190,11 +144,10 @@
 
         };
 
-        /* socket refresh*/
         /**
-         * 支线基本信息
+         * socket
          */
-        $rootScope.$on('branchRefresh', function (event, data) {
+        $rootScope.$on('refreshMonitor', function (event, data) {
             if (!data) {
                 return
             }
@@ -203,9 +156,16 @@
                 return
             }
 
-            Log.i('branchData Refresh：' + JSON.stringify(data));
+            if (!$scope.show.bid) {
+                return
+            }
+            // 支线详情
+            var branchInfo = data[$scope.show.bid];
+            $scope.setBranchInfo(branchInfo);
+            Log.i('refresh Branch：' + JSON.stringify(branchInfo));
 
-            $scope.setBranchInfo(data);
+            // 继电报警信息
+            $scope.show.branchAlarm = branchInfo.alerts;
         });
 
     }

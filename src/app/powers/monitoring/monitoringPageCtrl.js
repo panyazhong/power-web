@@ -76,12 +76,12 @@
         $scope.onBeforeShow = function (id) {
 
             $scope.show.branch = {};    // init
-            EventsCache.subscribeBranch(id);    // 订阅支线信息
 
             // 1.缓存取变量信息
             var branchData = clientCache.cache.data[id];
             if (branchData) {
                 console.log('branchData Cache不为空：' + JSON.stringify(branchData));
+                // 支线详情
                 $scope.setBranchInfo(branchData);
             }
 
@@ -121,22 +121,8 @@
             }
         };
 
-        /* socket refresh*/
         /**
-         * 支线基本信息
-         */
-        $rootScope.$on('branchRefresh', function (event, data) {
-            if (!data) {
-                return
-            }
-
-            Log.i('branchData Refresh：' + JSON.stringify(data));
-
-            $scope.setBranchInfo(data);
-        });
-
-        /**
-         * 一次系统图
+         * socket
          */
         $rootScope.$on('refreshMonitor', function (event, data) {
             if (!data) {
@@ -146,10 +132,18 @@
             if (!$scope.show.isGetData) {
                 return
             }
-
-            Log.i('refreshMonitor:\n' + JSON.stringify(data));
-
+            // 一次系统图
             $scope.show.imgs = ClientimgHelper.query($scope.show.imgs, data);
+            Log.i('refresh Monitor:\n' + JSON.stringify(data));
+
+
+            if (!$scope.show.branch.bid) {
+                return
+            }
+            // 支线详情
+            var branchInfo = data[$scope.show.branch.bid];
+            $scope.setBranchInfo(branchInfo);
+            Log.i('refresh Branch：' + JSON.stringify(branchInfo));
         });
     }
 

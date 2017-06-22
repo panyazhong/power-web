@@ -13,7 +13,6 @@
         .factory("clientCache", clientCache);
 
     function eventsCache(Log, $state, $rootScope, clientCache, $uibModal) {
-        var bid = "";       // 支线 id
 
         var socket = io.connect('http://monitor.shanghaihenghui.com:6688', {resource: 'event/socket.io'});
         socket.on('alert', function (data) {    // 监听事件
@@ -23,10 +22,14 @@
             socket.emit('received', {mhid: obj.mhid}); // 收到alert事件后响应
             switch (parseInt(obj.level)) {
                 case 1:
-                    openModal('app/powers/modal/warningEvent.html');
+                    if (!window.DEBUG) {
+                        openModal('app/powers/modal/warningEvent.html');
+                    }
                     break;
                 case 2:
-                    openModal('app/powers/modal/dangerEvent.html');
+                    if (!window.DEBUG) {
+                        openModal('app/powers/modal/dangerEvent.html');
+                    }
                     break;
             }
 
@@ -74,12 +77,6 @@
             var obj = JSON.parse(JSON.parse(data).content);
             clientCache.cache.data = obj;
 
-            if (bid) {
-                var branchInfo = obj[bid];
-                $rootScope.$emit('branchRefresh', branchInfo);   // 订阅的支线基本信息
-                $rootScope.$digest();
-            }
-
             $rootScope.$emit('refreshMonitor', obj);    // 一次系统图
         });
 
@@ -89,7 +86,7 @@
             var obj = JSON.parse(data);
             var item = {
                 count: JSON.parse(obj.content).total,  // 未处理的event数量
-                states: (JSON.parse(obj.content)).detail // 侧边栏和一次系统图
+                states: (JSON.parse(obj.content)).detail // 侧边栏
             };
             $rootScope.$emit('refresh', item);
         });
@@ -107,9 +104,6 @@
         return {
             subscribeClient: function (cid) {
                 socket.emit('subscribe', {client_id: cid}); // 订阅——变电站信息
-            },
-            subscribeBranch: function (id) { // 订阅——支线基本信息
-                bid = id;
             },
             login: function () {
                 socket.emit('login', {});

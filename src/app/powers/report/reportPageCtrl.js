@@ -11,7 +11,7 @@
 
     /** @ngInject */
     function reportPageCtrl($scope, Log, Report, HttpToast, ToastUtils, ExportPrefix, $window,
-                            PageTopCache, $state, Upload, locals, ModalUtils, Device, SidebarCache, Sidebar) {
+                            PageTopCache, $state, Upload, locals, ModalUtils, Device, SidebarCache, Sidebar, reportHelper) {
 
         PageTopCache.cache.state = $state.$current; // active
 
@@ -206,8 +206,11 @@
             Report.query(params,
                 function (data) {
                     // ToastUtils.openToast('success', '获取报表列表成功！');
-                    $scope.show.reportList = data;
-                    $scope.rowCollection = data;
+
+                    $scope.show.reportList = reportHelper.query(data);
+                    $scope.rowCollection = reportHelper.query(data);
+
+                    console.log('$scope.show.reportList'+JSON.stringify($scope.show.reportList));
                 },
                 function (err) {
                     HttpToast.toast(err);

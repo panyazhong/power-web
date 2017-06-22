@@ -5,7 +5,8 @@
         .factory("ClientimgHelper", clientimgHelper)
         .factory("BranchimgHelper", branchimgHelper)
         .factory("DeviceHelper", deviceHelper)
-        .factory("UserHelper", userHelper);
+        .factory("UserHelper", userHelper)
+        .factory("reportHelper", reportHelper);
 
     function clientimgHelper(ImgPrefix, _) {
 
@@ -139,6 +140,21 @@
                 }
 
                 return params;
+            }
+        }
+    }
+
+    function reportHelper(_) {
+
+        return {
+            query: function (obj) {
+                // 报表列表
+                obj.map(function (item) {
+                    var arr = item.clients.split("/");
+                    item.clientsList = arr;
+                });
+
+                return _.cloneDeep(obj);
             }
         }
     }

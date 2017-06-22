@@ -1,9 +1,10 @@
-<div class="horizontal-scroll">
+<div>
     <table class="table table-bordered table-hover common-table" st-table="show.reportList"
            st-safe-src="rowCollection">
         <thead>
         <tr>
             <th>资料名称</th>
+            <th>所属变电站</th>
             <th>上传时间</th>
             <th>上传者</th>
             <th>操作</th>
@@ -13,6 +14,23 @@
         <tr ng-repeat="item in show.reportList">
             <td class="table-def-cursor">
                 <span ng-bind="item.filename"></span>
+            </td>
+            <td>
+                <div class="select-right" uib-dropdown
+                     style="display: inline-block;min-width: 160px;text-align: right;">
+                    <button type="button" class="btn-def btn-transparent btn-autospace"
+                            uib-dropdown-toggle ng-disabled="disabled">
+                        <span class="caret"></span>{{item.clients}}
+                    </button>
+
+                    <ul class="dropdown-menu common-dp-ul" uib-dropdown-menu role="menu"
+                        aria-labelledby="single-button">
+                        <li role="menuitem"
+                            ng-repeat="info in item.clientsList track by $index">
+                            <a ng-bind="info"></a>
+                        </li>
+                    </ul>
+                </div>
             </td>
             <td class="table-def-cursor">
                 <span ng-bind="item.upload_time"></span>
