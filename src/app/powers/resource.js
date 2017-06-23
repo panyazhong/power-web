@@ -357,12 +357,13 @@
         // 历史数据
         .factory('History', function (Resource) {
             var config = {
-                url: 'data/cid/:clientId/:time/:fromTime/:toTime',
+                url: 'data/cid/:clientId/:time/:fromTime/:toTime/:interval',
                 paramsDefault: {
                     clientId: '@clientId',
                     time: '@time',
                     fromTime: '@fromTime',
-                    toTime: '@toTime'
+                    toTime: '@toTime',
+                    interval: '@interval'
                 },
                 action: {
                     query: {        // 4.3 获取历史数据

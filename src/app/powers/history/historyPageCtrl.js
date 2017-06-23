@@ -139,13 +139,15 @@
             queryKey: 'eQuantity',  // def 显示的key
             bCheckArr: [],   // 左侧 checkbox状态
 
-            isLoadPie: true
+            isLoadPie: true,
+            isLoading: false
         };
 
         $scope.form = {
             cid: "",  //变电站cid
             from_time: '',
-            to_time: ''
+            to_time: '',
+            interval: 3
         };
 
         // morris
@@ -265,15 +267,17 @@
         };
 
         $scope.randomColor = function (pos) {
-            var safeColor = ['#000000', '#003300', '#330000', '#333300', '#660000', '#663300', '#990000', '#993300', '#CC0000', '#CC3300', '#FF0000', '#FF3300',
-                '#0000FF', '#006699', '#3300FF', '#FF0099', '#FF0033', '#CC9966', '#CC6666', '#CC3366', '#99FF66', '#993366', '#669999', '#663366',
-                '#33FF99', '#333399', '#003333', '#000033', '#333333', '#663333', '#993333', '#CCFF33'];
+            // var safeColor = ['#000000', '#003300', '#330000', '#333300', '#660000', '#663300', '#990000', '#993300', '#CC0000', '#CC3300', '#FF0000', '#FF3300',
+            //     '#0000FF', '#006699', '#3300FF', '#FF0099', '#FF0033', '#CC9966', '#CC6666', '#CC3366', '#99FF66', '#993366', '#669999', '#663366',
+            //     '#33FF99', '#333399', '#003333', '#000033', '#333333', '#663333', '#993333', '#CCFF33'];
+            //
+            // if (safeColor[pos]) {
+            //     return safeColor[pos];
+            // } else {
+            //     return '#' + Math.floor(Math.random() * 16777215).toString(16);
+            // }
 
-            if (safeColor[pos]) {
-                return safeColor[pos];
-            } else {
-                return '#' + Math.floor(Math.random() * 16777215).toString(16);
-            }
+            return '#' + ('00000' + (Math.random() * 0x1000000 << 0).toString(16)).slice(-6);
         };
 
 
@@ -306,6 +310,7 @@
         $scope.query = function () {
             //init
             $scope.show.isLoadPie = true;
+            $scope.show.isLoading = true;
 
             var params = $scope.formatForm();
 
@@ -313,12 +318,15 @@
                     clientId: params.cid,
                     time: 'time',
                     fromTime: params.from_time,
-                    toTime: params.to_time
+                    toTime: params.to_time,
+                    interval: $scope.form.interval
                 },
                 function (data) {
+                    $scope.show.isLoading = false;
                     $scope.setData(data);
                     ToastUtils.openToast('success', '查询数据成功');
                 }, function (err) {
+                    $scope.show.isLoading = false;
                     HttpToast.toast(err);
                 });
         };

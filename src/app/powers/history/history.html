@@ -4,11 +4,12 @@
         <div include-with-scope="app/powers/history/widgets/tableForm.html">
         </div>
 
-        <div include-with-scope="app/powers/history/widgets/tree.html"
-             style="padding: 20px;">
+        <div class="text-center" ng-show="show.isLoading">Loading ...</div>
+
+        <div include-with-scope="app/powers/history/widgets/tree.html" ng-show="!show.isLoading">
         </div>
 
         <div include-with-scope="app/powers/history/widgets/chart.html"
-             style="padding-top: 20px"></div>
+             style="padding-top: 20px" ng-show="!show.isLoading"></div>
     </div>
 </div>
