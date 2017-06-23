@@ -12,10 +12,12 @@
 
         return {
             query: function (obj, mObj) {
+
+                var imgCND = 'http://acc-earpktxp.oss-cn-shanghai.aliyuncs.com/';
                 // 变电站
                 if (obj.client && obj.client.img) {
                     if (!obj.client.imgLink) {
-                        obj.client.imgLink = ImgPrefix.prefix + obj.client.img;
+                        obj.client.imgLink = imgCND + obj.client.img;
                     }
                     if (!obj.client.style) {
                         obj.client.style = {
@@ -37,7 +39,7 @@
                     };
 
                     if (mObj && mObj[item.bid] && mObj[item.bid].Itotal == 0) {
-                        item.style.background = 'url(' + ImgPrefix.prefix + item.img + ')';
+                        item.style.background = 'url(' + imgCND + item.img + ')';
                         if (iArr.indexOf(item.inid) === -1) {
                             iArr.push(item.inid);   // 异常的总进线id
                         }
@@ -50,7 +52,7 @@
                 // 总进线
                 obj.incomingline.map(function (item) {
                     if (iArr.length > 0 && iArr.indexOf(item.inid) !== -1) {
-                        item.imgLink = ImgPrefix.prefix + item.img;
+                        item.imgLink = imgCND + item.img;
                         item.style = {
                             position: 'absolute',
                             top: item.imgtop + "px",
