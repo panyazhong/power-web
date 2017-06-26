@@ -134,8 +134,7 @@
             }
             // 一次系统图
             $scope.show.imgs = ClientimgHelper.query($scope.show.imgs, data);
-            Log.i('refresh Monitor:\n' + JSON.stringify(data));
-
+            $rootScope.$digest();
 
             if (!$scope.show.branch.bid) {
                 return
@@ -143,7 +142,7 @@
             // 支线详情
             var branchInfo = data[$scope.show.branch.bid];
             $scope.setBranchInfo(branchInfo);
-            Log.i('refresh Branch：' + JSON.stringify(branchInfo));
+            $rootScope.$digest();
         });
     }
 

@@ -8,7 +8,7 @@
         .factory("UserHelper", userHelper)
         .factory("reportHelper", reportHelper);
 
-    function clientimgHelper(ImgPrefix, _) {
+    function clientimgHelper(_) {
 
         return {
             query: function (obj, mObj) {
@@ -38,20 +38,27 @@
                         height: item.imgh + "px"
                     };
 
+                    // 电流为0时，支线显示绿色
                     if (mObj && mObj[item.bid] && mObj[item.bid].Itotal == 0) {
                         item.style.background = 'url(' + imgCND + item.img + ')';
-                        if (iArr.indexOf(item.inid) === -1) {
-                            iArr.push(item.inid);   // 异常的总进线id
-                        }
                     }
                     else {
                         item.style.background = 'transparent';
+                        // 有一个电流不为零，则显示红的
+                        if (iArr.indexOf(item.inid) === -1) {
+                            iArr.push(item.inid);
+                        }
                     }
                 });
 
                 // 总进线
                 obj.incomingline.map(function (item) {
                     if (iArr.length > 0 && iArr.indexOf(item.inid) !== -1) {
+                        item.style = {
+                            display: 'none'
+                        }
+                    }
+                    else {
                         item.imgLink = imgCND + item.img;
                         item.style = {
                             position: 'absolute',
@@ -59,11 +66,6 @@
                             left: item.imgleft + "px",
                             width: item.imgw + "px",
                             height: item.imgh + "px"
-                        }
-                    }
-                    else {
-                        item.style = {
-                            display: 'none'
                         }
                     }
 

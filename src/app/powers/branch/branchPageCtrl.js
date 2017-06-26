@@ -18,7 +18,8 @@
             branchData: {},      // 支线基本信息
             branchEqp: [],   // 支线 设备列表
 
-            isGetData: false   //标记获取支线信息，ok
+            isGetData: false,   //标记获取支线信息，ok
+            branchImgPrefix: '' // 图片前缀
         };
         $scope.rowCollection = [];
 
@@ -33,6 +34,17 @@
                 }, function (err) {
                     HttpToast.toast(err);
                 });
+        };
+
+        $scope.setBranchImg = function (state) {
+            switch (state) {
+                case 'def': // 默认
+                    return $scope.show.branchImgPrefix + 'red.bmp';
+                    break;
+                case 'err': // 异常
+                    return $scope.show.branchImgPrefix + 'green.bmp';
+                    break;
+            }
         };
 
         $scope.setBranchInfo = function (data) {
@@ -67,6 +79,8 @@
 
                 // 继电报警信息
                 $scope.show.branchAlarm = branchData.alerts;
+
+                // 默认图片不设置，前缀还未拿到
             }
 
             // 2.取，其它信息
@@ -75,7 +89,9 @@
                 },
                 function (suc) {
                     var data = BranchimgHelper.query(suc);
-                    $scope.show.branchData.dlt_img = data.dlt_img;  // 中间图片
+                    $scope.show.branchImgPrefix = data.dlt_img;  // 支线图片前缀
+
+                    $scope.show.branchData.dlt_img = $scope.setBranchImg('def');  // 中间图片
                     $scope.show.branchData.name = data.name;    // 支线name
                     PageTopCache.currentState.state = data.client_name + " / " + data.name; // contentTop 变电站name+支线name
 
@@ -162,10 +178,18 @@
             // 支线详情
             var branchInfo = data[$scope.show.bid];
             $scope.setBranchInfo(branchInfo);
-            Log.i('refresh Branch：' + JSON.stringify(branchInfo));
 
             // 继电报警信息
             $scope.show.branchAlarm = branchInfo.alerts;
+
+            // 设置支线图片
+            if (branchInfo.Itotal == 0) {
+                $scope.show.branchData.dlt_img = $scope.setBranchImg('err');
+            } else {
+                $scope.show.branchData.dlt_img = $scope.setBranchImg('def');
+            }
+
+            $rootScope.$digest();
         });
 
     }
