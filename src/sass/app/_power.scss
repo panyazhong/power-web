@@ -186,7 +186,8 @@ input[type=number]::-webkit-outer-spin-button {
   一次系统图 hovr popover
 */
 .pop-detail {
-  width: 200px;
+  //width: 200px;
+  max-width: 210px;
   min-width: 200px;
 }
 
@@ -200,7 +201,8 @@ input[type=number]::-webkit-outer-spin-button {
 }
 
 .pop-content {
-  padding: 5px 10px 5px 20px;
+  //padding: 5px 10px 5px 20px;
+  padding: 5px 8px 5px 15px;;
 }
 
 .pop-content-div {
@@ -242,6 +244,7 @@ input[type=number]::-webkit-outer-spin-button {
 
 .detail .top-content-div {
   line-height: 40px;
+  padding-right: 0;
 }
 
 .detail .top-middle {
@@ -312,7 +315,7 @@ input[type=number]::-webkit-outer-spin-button {
 */
 .power-modal-layout {
   top: 55px;
-  bottom: auto;
+  //bottom: auto;
 }
 
 .power-modal-layout-msg {

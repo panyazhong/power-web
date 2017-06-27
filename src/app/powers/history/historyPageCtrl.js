@@ -124,11 +124,11 @@
                 },
                 {
                     key: 'P',
-                    name: '有功'
+                    name: '有功功率'
                 },
                 {
                     key: 'Q',
-                    name: '无功'
+                    name: '无功功率'
                 },
                 {
                     key: 'power',
