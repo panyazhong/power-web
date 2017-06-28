@@ -111,15 +111,15 @@
             searchData: {},     // 搜索后的数据
             queryArr: [
                 {
-                    key: 'eQuantity',
+                    key: 'A',
                     name: '电量'
                 },
                 {
-                    key: 'current',
+                    key: 'B',
                     name: '三相电流'
                 },
                 {
-                    key: 'voltage',
+                    key: 'C',
                     name: '三相电压'
                 },
                 {
@@ -131,12 +131,12 @@
                     name: '无功功率'
                 },
                 {
-                    key: 'power',
+                    key: 'D',
                     name: '功率因数'
                 }
             ],    // 左侧可信息查询
             queryName: '电量',    // def 显示的val
-            queryKey: 'eQuantity',  // def 显示的key
+            queryKey: 'A',  // def 显示的key
             bCheckArr: [],   // 左侧 checkbox状态
 
             isLoadPie: true,
@@ -304,7 +304,7 @@
             // a. morris
             $timeout(function () {
                 $scope.lData = $scope.setMorrisData();
-            }, 1600);
+            }, 900);
         };
 
         $scope.query = function () {
@@ -440,9 +440,7 @@
                     if (i === 'y') {
                         info.y = item[i];
                     } else {
-                        if (checkArr.indexOf(i) !== -1) {
-                            info["" + i + ""] = item[i];
-                        }
+                        info["" + i + ""] = item[i];
                     }
                 }
                 _lineData.push(new $scope.LineData(info));
