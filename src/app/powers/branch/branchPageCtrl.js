@@ -39,10 +39,10 @@
         $scope.setBranchImg = function (state) {
             switch (state) {
                 case 'def': // 默认
-                    return $scope.show.branchImgPrefix + 'red.bmp';
+                    return $scope.show.branchImgPrefix + 'red.png';
                     break;
                 case 'err': // 异常
-                    return $scope.show.branchImgPrefix + 'green.bmp';
+                    return $scope.show.branchImgPrefix + 'green.png';
                     break;
             }
         };

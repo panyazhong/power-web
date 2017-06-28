@@ -437,7 +437,7 @@
                 // 1.拿到每一个item，遍历key
                 var info = {};
                 for (var i in item) {
-                    if (i === 'y') {
+                    if (i == 'y') {
                         info.y = item[i];
                     } else {
                         info["" + i + ""] = item[i];
