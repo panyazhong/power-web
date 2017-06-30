@@ -3,12 +3,13 @@
            st-safe-src="rowCollection">
         <thead>
         <tr>
+            <th>所属变电站</th>
+            <th>所属总进线</th>
+            <th>所属支线</th>
             <th>设备名称</th>
             <th>设备类型</th>
             <th>设备型号</th>
             <th>厂家</th>
-            <th>所属变电站</th>
-            <th>所属支线</th>
             <th>上次电试日期</th>
             <th>状态</th>
             <th>操作</th>
@@ -16,6 +17,15 @@
         </thead>
         <tbody>
         <tr ng-repeat="item in show.branchEqp">
+            <td class="table-def-cursor">
+                <span ng-bind="item.client_name"></span>
+            </td>
+            <td class="table-def-cursor">
+                <span ng-bind="item.incomingline_name"></span>
+            </td>
+            <td class="table-def-cursor">
+                <span ng-bind="item.branch_name"></span>
+            </td>
             <td class="table-def-cursor">
                 <span ng-bind="item.name"></span>
             </td>
@@ -27,12 +37,6 @@
             </td>
             <td class="table-def-cursor">
                 <span ng-bind="item.manufacturer"></span>
-            </td>
-            <td class="table-def-cursor">
-                <span ng-bind="item.client_name"></span>
-            </td>
-            <td class="table-def-cursor">
-                <span ng-bind="item.banch_name"></span>
             </td>
             <td class="table-def-cursor">
                 <span ng-bind="formatDate(item.lastet_date)"></span>
