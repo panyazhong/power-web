@@ -76,13 +76,20 @@
             function showPop(item, pos) {
 
                 var currentmd = '';
-                var percentage = '';
+                var percentageW = '';   //进度条
+                var percentage = '';    //占比
                 if (item.requiredmd) {
                     var pData = clientCache.cache.p[$scope.show.cid];
                     if (pData) {
                         Log.i('p Cache不为空：' + JSON.stringify(pData));
                         currentmd = pData.P + pData.PUnit;
-                        percentage = (parseInt(currentmd) / parseInt(item.requiredmd) * 100).toFixed(2) + "%";
+                        var per = (parseInt(currentmd) / parseInt(item.requiredmd) * 100).toFixed(2);
+                        percentage = per + "%";
+                        if (per <= 100) {
+                            percentageW = per + "%";
+                        } else {
+                            percentageW = 100 + "%";
+                        }
                     }
                 }
 
@@ -129,7 +136,7 @@
                     "<div class='map-item'>当月申报需量：" + requiredmd +
                     "</div>" +
                     "<div style='height: 5px;background: #dcdcdc;margin: 5px 0;'>" +
-                    "<div style='display: inline-block;background: #1baeb3;height: 5px;float: left;width:" + percentage + ";' id='percentageW'></div>" +
+                    "<div style='display: inline-block;background: #1baeb3;height: 5px;float: left;width:" + percentageW + ";' id='percentageW'></div>" +
                     "</div>" +
                     "<div style='line-height: 25px;padding: 0 10px;text-align: center;color: #1baeb3' id='percentage'>" + "需量占比：" + percentage +
                     "</div>" +
@@ -218,14 +225,24 @@
 
             var pData = data[$scope.show.cid];
             if (pData) {
-                Log.i('p Refresh：' + JSON.stringify(pData));
-
                 var currentmd = pData.P + pData.PUnit;
-                var percentage = (parseInt(currentmd) / parseInt($scope.show.requiredmd) * 100).toFixed(2) + "%";
+                if (currentmd) {
+                    var per = (parseInt(currentmd) / parseInt($scope.show.requiredmd) * 100).toFixed(2);
+                    var percentageW = '';   //进度条
+                    var percentage = per + "%"; // 占比
+                    if (per <= 100) {
+                        percentageW = per + "%";
+                    } else {
+                        percentageW = 100 + "%";
+                        // 异常时颜色设置红色
+                        $("#percentageW").addClass("bg-red");
+                        $("#percentage").addClass("color-red");
+                    }
 
-                $("#currentmd").text("当前负荷：" + currentmd);
-                $("#percentage").text("需量占比：" + percentage);
-                $("#percentageW").css({width: percentage});
+                    $("#currentmd").text("当前负荷：" + currentmd);
+                    $("#percentage").text("需量占比：" + percentage);
+                    $("#percentageW").css({width: percentageW});
+                }
             }
 
         });
