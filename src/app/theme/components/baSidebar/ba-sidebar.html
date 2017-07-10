@@ -17,7 +17,7 @@
             </a>
 
             <a ng-mouseenter="hoverItem($event, item)" ng-if="::item.subMenu"
-               class="al-sidebar-list-link" ba-ui-sref-toggler>
+               class="al-sidebar-list-link" ba-ui-sref-toggler ng-click="saveCid(item)">
                 <span class="{{ item.icon }}"></span><span
                     class="indicator-desc indicator-desc-one">{{ ::item.title }}</span>
                 <b class="fa fa-angle-down" ui-sref-active="fa-angle-up"
@@ -32,7 +32,7 @@
                     ba-sidebar-toggling-item="subitem" class="ba-sidebar-sublist-item">
                     <a ng-mouseenter="hoverItem($event, item)" ng-if="::subitem.subMenu"
                        ba-ui-sref-toggler
-                       class="al-sidebar-list-link subitem-submenu-link">
+                       class="al-sidebar-list-link subitem-submenu-link" ng-click="saveInid(item,subitem)">
 
                         <!--二级菜单标题-->
                         <span class="{{ subitem.icon }}"></span><span

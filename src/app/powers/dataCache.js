@@ -14,7 +14,7 @@
 
     function eventsCache(Log, $state, $rootScope, clientCache, $uibModal) {
 
-        var socket = io.connect('http://monitor.shanghaihenghui.com:6688', {resource: 'event/socket.io'});
+        var socket = io.connect('http://192.168.1.112:6688', {resource: 'event/socket.io'});
         socket.on('alert', function (data) {    // 监听事件
             Log.i('alert : \n' + data);
 
@@ -124,7 +124,7 @@
 
     function imgPrefix() {
         return {
-            prefix: 'http://monitor.shanghaihenghui.com/'
+            prefix: 'http://192.168.1.112/'
         }
     }
 

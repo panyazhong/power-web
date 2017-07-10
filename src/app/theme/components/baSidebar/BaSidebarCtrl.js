@@ -143,5 +143,29 @@
             }
         });
 
+        $scope.saveCid = function (item) {
+            locals.put('cid', item.clientId);
+            var data = {
+                type: 'cid',
+                cid: item.clientId
+            };
+            $rootScope.$emit('filterInfo', data);
+
+            Log.i('emit cid: ' + JSON.stringify(data));
+        };
+
+        $scope.saveInid = function (cObj, item) {
+            locals.put('cid', cObj.clientId);
+            locals.put('inid', item.incominglingId);
+            var data = {
+                type: 'inid',
+                cid: cObj.clientId,
+                inid: item.incominglingId
+            };
+            $rootScope.$emit('filterInfo', data);
+
+            Log.i('emit Inid: ' + JSON.stringify(data));
+        }
+
     }
 })();
