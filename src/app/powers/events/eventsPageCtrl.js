@@ -6,7 +6,7 @@
 
     /** @ngInject */
     function eventsPageCtrl($scope, $state, PageTopCache, Sidebar, SidebarCache, HttpToast, Log,
-                            Device, ToastUtils, ExportPrefix, Event, locals, $stateParams) {
+                            ToastUtils, ExportPrefix, Event, locals, $stateParams, $rootScope) {
 
         PageTopCache.cache.state = $state.$current; // active
 
@@ -370,6 +370,10 @@
 
             locals.put('bid', id);
         }
+
+        $rootScope.$on('filterInfo', function (event, data) {
+
+        });
 
     }
 

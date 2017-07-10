@@ -6,7 +6,7 @@
 
     /** @ngInject */
     function checkinPageCtrl($scope, $state, Sidebar, SidebarCache, Log, HttpToast, Signin,
-                             PageTopCache, ToastUtils, ExportPrefix, $window) {
+                             PageTopCache, ToastUtils, ExportPrefix, $window, $rootScope) {
 
         $scope.GetDateStr = function (AddDayCount) {
             var dd = new Date();
@@ -281,6 +281,11 @@
             // set
             $scope.form.pos = item
         };
+
+        $rootScope.$on('filterInfo', function (event, data) {
+
+        });
+
     }
 
 })();

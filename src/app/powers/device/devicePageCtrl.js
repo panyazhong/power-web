@@ -9,7 +9,7 @@
 
     /** @ngInject */
     function devicePageCtrl($scope, PageTopCache, $state, ModalUtils, HttpToast, Keyword, KeywordCache,
-                            Sidebar, SidebarCache, Device, ToastUtils, Log, ExportPrefix) {
+                            Sidebar, SidebarCache, Device, ToastUtils, Log, ExportPrefix, $rootScope) {
 
         PageTopCache.cache.state = $state.$current; // active
 
@@ -329,6 +329,10 @@
             $scope.show.deviceType = obj.name;
             $scope.form.type = obj.id;
         }
+
+        $rootScope.$on('filterInfo', function (event, data) {
+
+        });
 
     }
 

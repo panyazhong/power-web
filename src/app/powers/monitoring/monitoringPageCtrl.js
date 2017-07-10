@@ -144,6 +144,11 @@
             $scope.setBranchInfo(branchInfo);
             $rootScope.$digest();
         });
+
+        $rootScope.$on('filterInfo', function (event, data) {
+
+        });
+
     }
 
 })();
