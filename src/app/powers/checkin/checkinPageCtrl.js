@@ -5,8 +5,8 @@
         .controller('checkinPageCtrl', checkinPageCtrl);
 
     /** @ngInject */
-    function checkinPageCtrl($scope, $state, Sidebar, SidebarCache, Log, HttpToast, Signin,
-                             PageTopCache, ToastUtils, ExportPrefix, $window, $rootScope) {
+    function checkinPageCtrl($scope, $state, Sidebar, SidebarCache, Log, HttpToast, Signin, locals,
+                             PageTopCache, ToastUtils, ExportPrefix, $window, $rootScope, $timeout) {
 
         $scope.GetDateStr = function (AddDayCount) {
             var dd = new Date();
@@ -159,7 +159,7 @@
 
             Signin.query(params,
                 function (data) {
-                    ToastUtils.openToast('success', '查询签到列表成功');
+                    // ToastUtils.openToast('success', '查询签到列表成功');
                     $scope.show.checkinList = data;
                     $scope.rowCollection = data;
                 },
@@ -168,8 +168,48 @@
                 });
         };
 
-        $scope.init = function () {
+        // dropdown set 1
+        $scope.changeClent = function (obj) {
+            if ($scope.show.clientName == obj.clientName) {
+                return;
+            }
+
+            // set
+            $scope.form.cid = obj.clientId;
+            $scope.show.clientName = obj.clientName;
+
+            // clear
+            $scope.form.pos = '';
+            $scope.show.checkPlaceArr = [];
+
+            Signin.query({
+                    client: 'client',
+                    clientId: $scope.form.cid
+                },
+                function (data) {
+                    $scope.show.checkPlaceArr = data;
+                }, function (err) {
+                    HttpToast.toast(err);
+                });
+        };
+
+        $scope.initFilterInfo = function () {
+
+            var cid = locals.get('cid', '');
+            if (cid) {
+                for (var i = 0; i < $scope.show.sidebarArr.length; i++) {
+                    var item = $scope.show.sidebarArr[i];
+                    if (item.clientId == cid) {
+                        $scope.changeClent(item);
+                    }
+
+                }
+            }
+
             $scope.search();
+        };
+
+        $scope.init = function () {
 
             if (SidebarCache.isEmpty()) {
                 Log.i('empty： ——SidebarCache');
@@ -178,12 +218,14 @@
                     function (data) {
                         SidebarCache.create(data);
                         $scope.show.sidebarArr = data.sidebar;
+                        $scope.initFilterInfo();
                     }, function (err) {
                         HttpToast.toast(err);
                     });
             } else {
                 Log.i('exist： ——SidebarCache');
                 $scope.show.sidebarArr = SidebarCache.getData().sidebar;
+                $scope.initFilterInfo();
             }
         };
         $scope.init();
@@ -248,31 +290,7 @@
                 });
         };
 
-        // dropdown set
-        $scope.changeClent = function (obj) {
-            if ($scope.show.clientName == obj.clientName) {
-                return;
-            }
-
-            // set
-            $scope.form.cid = obj.clientId;
-            $scope.show.clientName = obj.clientName;
-
-            // clear
-            $scope.form.pos = '';
-            $scope.show.checkPlaceArr = [];
-
-            Signin.query({
-                    client: 'client',
-                    clientId: $scope.form.cid
-                },
-                function (data) {
-                    $scope.show.checkPlaceArr = data;
-                }, function (err) {
-                    HttpToast.toast(err);
-                });
-        };
-
+        // dropdown set 2
         $scope.changeCheckPlace = function (item) {
             if ($scope.form.pos == item) {
                 return;
@@ -283,6 +301,26 @@
         };
 
         $rootScope.$on('filterInfo', function (event, data) {
+            if (!data) {
+                return
+            }
+            if ($state.$current != 'checkin') {
+                return
+            }
+
+            if (data.cid) {
+                for (var i = 0; i < $scope.show.sidebarArr.length; i++) {
+                    var item = $scope.show.sidebarArr[i];
+                    if (item.clientId == data.cid) {
+                        $scope.changeClent(item);
+                    }
+
+                }
+            }
+
+            $timeout(function () {
+                $scope.search();
+            }, 500);
 
         });
 

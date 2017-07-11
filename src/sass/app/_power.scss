@@ -124,7 +124,7 @@
   padding: 6px 12px;
   font-size: 14px;
   line-height: 1.42857143;
-  color: #666666;
+  color: #6b6b6b;
   border: 1px solid #cbcbcb;
   border-radius: 5px;
   background-color: #ffffff;
@@ -141,6 +141,10 @@
   box-shadow: none !important;
   border-color: #4db1a7 !important;
   background: #ffffff !important;
+}
+
+.form-control {
+  color: #6b6b6b !important;
 }
 
 /*
@@ -162,22 +166,22 @@ input[type=number]::-webkit-outer-spin-button {
 */
 /* do not group these rules */
 *::-webkit-input-placeholder {
-  color: #262626 !important;
+  color: #6b6b6b !important;
 }
 
 *:-moz-placeholder {
   /* FF 4-18 */
-  color: #262626 !important;
+  color: #6b6b6b !important;
 }
 
 *::-moz-placeholder {
   /* FF 19+ */
-  color: #262626 !important;
+  color: #6b6b6b !important;
 }
 
 *:-ms-input-placeholder {
   /* IE 10+ */
-  color: #262626 !important;
+  color: #6b6b6b !important;
 }
 
 /*

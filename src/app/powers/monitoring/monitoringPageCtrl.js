@@ -146,6 +146,16 @@
         });
 
         $rootScope.$on('filterInfo', function (event, data) {
+            if (!data) {
+                return
+            }
+            if ($state.$current != 'monitoring') {
+                return
+            }
+
+            if (data.cid) {
+                $scope.queryClientImg(data.cid);
+            }
 
         });
 

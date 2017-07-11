@@ -6,7 +6,7 @@
 
     /** @ngInject */
     function eventsPageCtrl($scope, $state, PageTopCache, Sidebar, SidebarCache, HttpToast, Log,
-                            ToastUtils, ExportPrefix, Event, locals, $stateParams, $rootScope) {
+                            ToastUtils, ExportPrefix, Event, locals, $stateParams, $rootScope, $timeout) {
 
         PageTopCache.cache.state = $state.$current; // active
 
@@ -96,6 +96,66 @@
             }
         };
 
+        // dropdown set 1
+        $scope.changeClent = function (obj) {
+            if ($scope.show.clientName == obj.clientName) {
+                return;
+            }
+
+            $scope.form.client_id = obj.clientId;
+            $scope.form.incomingline_id = '';   //和新增设备不同，需清空子集
+            $scope.form.branch_id = '';
+            // set
+            $scope.show.clientName = obj.clientName;
+            $scope.show.incominglingArr = obj.incominglineData;
+
+            // clear
+            $scope.show.incominglineName = '总进线';
+            $scope.show.branchName = '所处支线';
+            $scope.show.branchArr = [];
+        };
+
+        $scope.changeIncomingling = function (obj) {
+            if ($scope.show.incominglineName == obj.incominglineName) {
+                return;
+            }
+
+            $scope.form.incomingline_id = obj.incominglingId;
+            $scope.form.branch_id = '';   //和新增设备不同，需清空子集
+            // set
+            $scope.show.incominglineName = obj.incominglineName;
+            $scope.show.branchArr = obj.branchData;
+
+            // clear
+            $scope.show.branchName = '所处支线';
+        };
+
+        $scope.initFilterInfo = function () {
+
+            var cid = locals.get('cid', '');
+            if (cid) {
+                for (var i = 0; i < $scope.show.sidebarArr.length; i++) {
+                    var item = $scope.show.sidebarArr[i];
+                    if (item.clientId == cid) {
+                        $scope.changeClent(item);
+                    }
+
+                }
+            }
+
+            var inid = locals.get('inid', '');
+            if (inid) {
+                for (var j = 0; j < $scope.show.incominglingArr.length; j++) {
+                    var inItem = $scope.show.incominglingArr[j];
+                    if (inItem.incominglingId == inid) {
+                        $scope.changeIncomingling(inItem);
+                    }
+
+                }
+            }
+
+        };
+
         $scope.init = function () {
 
             if (SidebarCache.isEmpty()) {
@@ -105,12 +165,14 @@
                     function (data) {
                         SidebarCache.create(data);
                         $scope.show.sidebarArr = data.sidebar;
+                        $scope.initFilterInfo();
                     }, function (err) {
                         HttpToast.toast(err);
                     });
             } else {
                 Log.i('exist： ——SidebarCache');
                 $scope.show.sidebarArr = SidebarCache.getData().sidebar;
+                $scope.initFilterInfo();
             }
 
         };
@@ -297,40 +359,7 @@
             window.open(URL, "_blank", strWindowFeatures);
         };
 
-        // dropdown set
-        $scope.changeClent = function (obj) {
-            if ($scope.show.clientName == obj.clientName) {
-                return;
-            }
-
-            $scope.form.client_id = obj.clientId;
-            $scope.form.incomingline_id = '';   //和新增设备不同，需清空子集
-            $scope.form.branch_id = '';
-            // set
-            $scope.show.clientName = obj.clientName;
-            $scope.show.incominglingArr = obj.incominglineData;
-
-            // clear
-            $scope.show.incominglineName = '';
-            $scope.show.branchName = '';
-            $scope.show.branchArr = [];
-        };
-
-        $scope.changeIncomingling = function (obj) {
-            if ($scope.show.incominglineName == obj.incominglineName) {
-                return;
-            }
-
-            $scope.form.incomingline_id = obj.incominglingId;
-            $scope.form.branch_id = '';   //和新增设备不同，需清空子集
-            // set
-            $scope.show.incominglineName = obj.incominglineName;
-            $scope.show.branchArr = obj.branchData;
-
-            // clear
-            $scope.show.branchName = '';
-        };
-
+        // dropdown set 2
         $scope.setBranch = function (obj) {
             $scope.show.branchName = obj.branchName;
             $scope.form.branch_id = obj.branchId;
@@ -372,6 +401,35 @@
         }
 
         $rootScope.$on('filterInfo', function (event, data) {
+            if (!data) {
+                return
+            }
+            if ($state.$current != 'events') {
+                return
+            }
+
+            if (data.cid) {
+                for (var i = 0; i < $scope.show.sidebarArr.length; i++) {
+                    var item = $scope.show.sidebarArr[i];
+                    if (item.clientId == data.cid) {
+                        $scope.changeClent(item);
+                    }
+
+                }
+            }
+            if (data.inid) {
+                for (var j = 0; j < $scope.show.incominglingArr.length; j++) {
+                    var inItem = $scope.show.incominglingArr[j];
+                    if (inItem.incominglingId == data.inid) {
+                        $scope.changeIncomingling(inItem);
+                    }
+
+                }
+            }
+
+            $timeout(function () {
+                $scope.searchDevice();
+            }, 500);
 
         });
 
