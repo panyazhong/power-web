@@ -373,5 +373,21 @@
             };
             return Resource(config);
         })
+        // 新报警设置
+        .factory('AlertSet', function (Resource) {
+            var config = {
+                url: 'setting/prop/client/:cid',
+                paramsDefault: {
+                    cid: '@cid'
+                },
+                action: {
+                    query: {    // 获取报警list
+                        method: 'GET',
+                        isArray: true
+                    }
+                }
+            };
+            return Resource(config);
+        })
 
 })();

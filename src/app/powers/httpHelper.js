@@ -6,7 +6,8 @@
         .factory("BranchimgHelper", branchimgHelper)
         .factory("DeviceHelper", deviceHelper)
         .factory("UserHelper", userHelper)
-        .factory("reportHelper", reportHelper);
+        .factory("reportHelper", reportHelper)
+        .factory("setalarmHelper", setalarmHelper);
 
     function clientimgHelper(_) {
 
@@ -156,6 +157,37 @@
                 obj.map(function (item) {
                     var arr = item.clients.split("/");
                     item.clientsList = arr;
+                });
+
+                return _.cloneDeep(obj);
+            }
+        }
+    }
+
+    function setalarmHelper(_) {
+        return {
+            query: function (obj) {
+                // 设置报警列表
+                obj.map(function (item) {
+                    item.detail = "";
+
+                    item.data.map(function (subItem) {
+                        var msg = '';
+                        var warning = subItem.warning ? subItem.warning : '';
+                        var error = subItem.error ? subItem.error : '';
+                        var unit = subItem.unit ? subItem.unit : '';
+                        if (warning && error) {
+                            msg = "：预警" + warning + unit + "，报警" + error + unit + "；"
+                        }
+                        if (!warning && !error) {
+                            msg = "：未设置；"
+                        }
+                        if (warning || error) {
+                            msg = warning ? "：预警" + warning + unit + "；" : "：报警" + error + unit + "；";
+                        }
+
+                        item.detail += subItem.branch_name + msg;
+                    })
                 });
 
                 return _.cloneDeep(obj);

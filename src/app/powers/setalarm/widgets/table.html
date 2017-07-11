@@ -1,30 +1,21 @@
-<!--<div class="horizontal-scroll">-->
 <div>
     <table class="table table-bordered table-hover common-table" st-table="show.setList"
            st-safe-src="rowCollection">
         <thead>
         <tr>
             <th>内容</th>
-            <th>预警阈值</th>
-            <th>报警阈值</th>
-            <th>开关</th>
+            <th>详细内容</th>
             <th>操作</th>
         </tr>
         </thead>
         <tbody>
         <tr ng-repeat="item in show.setList">
-            <td class="table-def-cursor">
-                <span ng-bind="item.dsc"></span>
+            <td class="table-def-cursor" width="30%">
+                <span ng-bind="item.desc"></span>
             </td>
-            <td class="table-def-cursor">
-                <span ng-bind="item.early_warning+item.unit"></span>
-            </td>
-            <td class="table-def-cursor">
-                <span ng-bind="item.warning+item.unit"></span>
-            </td>
-            <td>
-                <ba-switcher switcher-style="primary" switcher-value="item.showStatus"
-                             action="submit(item)"></ba-switcher>
+            <td class="table-def-cursor" width="50%">
+                <div ng-bind="item.detail"
+                     style="overflow: hidden;white-space: nowrap;text-overflow: ellipsis;max-width: 500px;"></div>
             </td>
             <td ng-click="edit(item)">
                 <span class="color-green">
