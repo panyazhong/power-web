@@ -143,6 +143,11 @@
   background: #ffffff !important;
 }
 
+.form-control-sm {
+  width: 90px !important;
+  display: inline-block;
+}
+
 .form-control {
   color: #6b6b6b !important;
 }
@@ -354,6 +359,10 @@ input[type=number]::-webkit-outer-spin-button {
   padding: 25px 30px;
 }
 
+.modal-set-i {
+  padding: 25px 30px;
+}
+
 /*
   datepicker
 */
@@ -539,6 +548,10 @@ input[type=number]::-webkit-outer-spin-button {
 
 .table-def-cursor {
   cursor: default !important;
+}
+
+.pointer-none {
+  pointer-events: none !important;
 }
 
 .indicator-normal {

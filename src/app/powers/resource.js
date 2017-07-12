@@ -376,14 +376,18 @@
         // 新报警设置
         .factory('AlertSet', function (Resource) {
             var config = {
-                url: 'setting/prop/client/:cid',
+                url: 'setting/prop/:client/:cid',
                 paramsDefault: {
-                    cid: '@cid'
+                    client: '@client',
+                    cid: '@cid',
                 },
                 action: {
                     query: {    // 获取报警list
                         method: 'GET',
                         isArray: true
+                    },
+                    edit: {  // 修改
+                        method: 'PUT'
                     }
                 }
             };
