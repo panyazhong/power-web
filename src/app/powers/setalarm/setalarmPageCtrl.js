@@ -58,7 +58,6 @@
                     var item = $scope.show.sidebarArr[i];
                     if (item.clientId == cid) {
                         $scope.changeClent(item);
-                        $scope.queryList(cid);
                     }
                 }
             }
@@ -152,7 +151,7 @@
                 for (var i = 0; i < $scope.show.sidebarArr.length; i++) {
                     var item = $scope.show.sidebarArr[i];
                     if (item.clientId == data.cid) {
-                        $scope.queryList(data.cid);
+                        $scope.changeClent(item);
                     }
 
                 }
