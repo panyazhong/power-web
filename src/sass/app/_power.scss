@@ -668,3 +668,32 @@ input[type=number]::-webkit-outer-spin-button {
   color: #000 !important;
   font-weight: 500 !important;
 }
+
+/**
+  报警设置 modal
+ */
+.modal-set-i {
+  max-height: 670px;
+  overflow-y: auto
+}
+
+.modal-set-i .switcher-container .switcher .handle-container .handle {
+  line-height: 26px !important;
+  height: 26px !important;
+}
+
+.modal-set-i .form-control-def {
+  height: 28px !important;
+}
+
+.modal-set-i label {
+  margin-bottom: 0 !important;
+}
+
+.modal-set-i .table > tbody > tr > td {
+  line-height: 1 !important;
+}
+
+.modal-set-i span {
+  line-height: 30px !important;
+}

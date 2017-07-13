@@ -16,10 +16,12 @@
                 <span ng-bind="item.branch_name"></span>
             </td>
             <td class="table-def-cursor text-center">
-                <input type="text" class="form-control-def form-control-sm text-center" ng-model="item.warning">
+                <input type="number" class="form-control-def form-control-sm text-center"
+                       ng-model="item.warning">
             </td>
             <td class="table-def-cursor text-center">
-                <input type="text" class="form-control-def form-control-sm text-center" ng-model="item.error">
+                <input type="number" class="form-control-def form-control-sm text-center"
+                       ng-model="item.error">
             </td>
 
             <td ng-class="{'pointer-none': !item.warning && !item.error}">
@@ -33,7 +35,7 @@
         <tfoot>
         <tr>
             <td colspan="5" class="text-center">
-                <div st-pagination="" st-items-by-page="6" st-displayed-pages="5"></div>
+                <div st-pagination="" st-items-by-page="10" st-displayed-pages="5"></div>
             </td>
         </tr>
         </tfoot>

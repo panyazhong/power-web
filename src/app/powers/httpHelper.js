@@ -187,6 +187,11 @@
                         }
 
                         item.detail += subItem.branch_name + msg;
+
+                        // parse float
+                        subItem.warning = parseFloat(subItem.warning);
+                        subItem.error = parseFloat(subItem.error);
+                        subItem.refVal = parseFloat(subItem.refVal);
                     })
                 });
 

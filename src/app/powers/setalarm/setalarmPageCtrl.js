@@ -8,8 +8,8 @@
         .controller('setIaCtrl', setIaCtrl);
 
     /** @ngInject */
-    function setalarmPageCtrl($scope, PageTopCache, Sidebar, SidebarCache, Log, locals, AlertSet, setalarmHelper,
-                              HttpToast, ModalUtils) {
+    function setalarmPageCtrl($scope, $state, PageTopCache, Sidebar, SidebarCache, Log, locals, AlertSet, setalarmHelper,
+                              HttpToast, ModalUtils, $rootScope) {
         PageTopCache.cache.state = 'settings';
 
         $scope.show = {
@@ -140,9 +140,29 @@
             }
         };
 
+        $rootScope.$on('filterInfo', function (event, data) {
+            if (!data) {
+                return
+            }
+            if ($state.$current != 'setalarm') {
+                return
+            }
+
+            if (data.cid) {
+                for (var i = 0; i < $scope.show.sidebarArr.length; i++) {
+                    var item = $scope.show.sidebarArr[i];
+                    if (item.clientId == data.cid) {
+                        $scope.queryList(data.cid);
+                    }
+
+                }
+            }
+
+        });
+
     }
 
-    function setICtrl($scope, params, Log, AlertSet, HttpToast) {
+    function setICtrl($scope, params, Log, AlertSet, HttpToast, ToastUtils) {
 
         $scope.show = {
             data: params,
@@ -172,6 +192,7 @@
             var params = $scope.formatForm();
             AlertSet.edit(params,
                 function (data) {
+                    ToastUtils.openToast('info', data.message);
                     $scope.$close(data);
                 }, function (err) {
                     HttpToast.toast(err);
@@ -183,7 +204,7 @@
 
     }
 
-    function setUCtrl($scope, params, Log, AlertSet, HttpToast) {
+    function setUCtrl($scope, params, Log, AlertSet, HttpToast, ToastUtils) {
 
         $scope.show = {
             data: params,
@@ -215,6 +236,7 @@
             var params = $scope.formatForm();
             AlertSet.edit(params,
                 function (data) {
+                    ToastUtils.openToast('info', data.message);
                     $scope.$close(data);
                 }, function (err) {
                     HttpToast.toast(err);
@@ -226,7 +248,7 @@
 
     }
 
-    function setIaCtrl($scope, params, Log, AlertSet, HttpToast) {
+    function setIaCtrl($scope, params, Log, AlertSet, HttpToast, ToastUtils) {
 
         $scope.show = {
             data: params,
@@ -254,6 +276,7 @@
             var params = $scope.formatForm();
             AlertSet.edit(params,
                 function (data) {
+                    ToastUtils.openToast('info', data.message);
                     $scope.$close(data);
                 }, function (err) {
                     HttpToast.toast(err);
