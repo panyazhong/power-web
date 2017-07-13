@@ -1,0 +1,76 @@
+<div class="text-center top-content-tile">日报表</div>
+
+<div class="row" style="margin: 0;">
+    <div class="div-item" style="width: 45%;">
+
+        <input ng-click="togglePicker()"
+               uib-datepicker-popup="{{data.beginDate.format}}"
+               is-open="data.beginDate.isOpen"
+               datepicker-options="data.beginDate.options"
+               clear-text="清除"
+               current-text="今天"
+               close-text="关闭"
+               alt-input-formats="data.beginDate.altInputFormats"
+               ng-model="show.beginDate"
+               ng-model-options="data.beginDate.modelOptions"
+               type="text"
+               class="form-control-def text-center"
+               readonly="readonly"
+               placeholder="起始日"
+               style="min-width: 90px;max-width: 100% !important;">
+
+    </div>
+
+    <div class="div-item" style="width: 10%;height: 1px;">
+
+    </div>
+    <div class="div-item" style="width: 45%;">
+
+        <input ng-click="toggleEndPicker()"
+               uib-datepicker-popup="{{data.endDate.format}}"
+               is-open="data.endDate.isOpen"
+               datepicker-options="data.endDate.options"
+               clear-text="清除"
+               current-text="今天"
+               close-text="关闭"
+               alt-input-formats="data.endDate.altInputFormats"
+               ng-model="show.endDate"
+               ng-model-options="data.endDate.modelOptions"
+               type="text"
+               class="form-control-def text-center"
+               readonly="readonly"
+               placeholder="结束日"
+               style="min-width: 90px;max-width: 100% !important;">
+
+    </div>
+</div>
+
+<div class="row" style="margin: 10px 0 0;">
+    <table class="table table-bordered table-hover common-table" st-table="show.setList"
+           st-safe-src="rowCollection">
+        <thead>
+        <tr>
+            <th>序号</th>
+            <th>资料名称</th>
+            <th>操作</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr ng-repeat="item in show.setList track by $index">
+            <td class="table-def-cursor">
+                <span>{{ $index+1 }}</span>
+            </td>
+            <td class="table-def-cursor">
+                <span ng-bind="item.fileName"></span>
+            </td>
+
+            <td>
+                <i class="ion-compose color-red common-table-btn"
+                   ng-click="editItem(item,0)"></i>
+                <i class="ion-archive color-blue common-table-btn"
+                   ng-click="downItem(item,0)"></i>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+</div>

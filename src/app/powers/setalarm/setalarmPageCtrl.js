@@ -23,19 +23,6 @@
             client_id: ''  //变电站cid
         };
 
-        // dropdown set 1
-        $scope.changeClent = function (obj) {
-            if ($scope.show.clientName == obj.clientName) {
-                return;
-            }
-
-            $scope.form.client_id = obj.clientId;
-            $scope.show.clientName = obj.clientName;
-
-            // 更换变电站更新列表
-            $scope.queryList($scope.form.client_id);
-        };
-
         $scope.queryList = function (cid) {
             AlertSet.query({
                     client: 'client',
@@ -48,6 +35,19 @@
                     HttpToast.toast(err);
                 });
 
+        };
+
+        // dropdown set 1
+        $scope.changeClent = function (obj) {
+            if ($scope.show.clientName == obj.clientName) {
+                return;
+            }
+
+            $scope.form.client_id = obj.clientId;
+            $scope.show.clientName = obj.clientName;
+
+            // 更换变电站更新列表
+            $scope.queryList($scope.form.client_id);
         };
 
         $scope.initFilterInfo = function () {

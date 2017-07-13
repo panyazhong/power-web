@@ -506,11 +506,6 @@ input[type=number]::-webkit-outer-spin-button {
   outline: none;
 }
 
-.report .form-control {
-  color: #6b6b6b;
-  background-color: transparent;
-}
-
 .event-label {
   display: inline-block;
   min-width: 10px;
@@ -696,4 +691,18 @@ input[type=number]::-webkit-outer-spin-button {
 
 .modal-set-i span {
   line-height: 30px !important;
+}
+
+/**
+  新报表
+ */
+.report .top-content-tile {
+  padding: 0 0 15px;
+  font-size: 16px;
+  font-weight: 600;
+}
+
+.report .div-item {
+  display: inline-block;
+  float: left;
 }

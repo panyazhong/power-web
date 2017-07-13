@@ -393,5 +393,20 @@
             };
             return Resource(config);
         })
+        // 新报表设置
+        .factory('ReportSet', function (Resource) {
+            var config = {
+                url: 'abcdefgxyz/:cid',
+                paramsDefault: {
+                    cid: '@cid'
+                },
+                action: {
+                    query: {    // 根据变电站id筛选相应报表
+                        method: 'GET'
+                    }
+                }
+            };
+            return Resource(config);
+        })
 
 })();

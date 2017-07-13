@@ -1,84 +1,8 @@
 <form class="form-inline row">
 
     <div class="col-sm-7 col-md-7 col-lg-7">
-
-        <div class="form-group col-sm-6 col-md-6 col-lg-6" style="margin-bottom: 10px;">
-            <label class="col-sm-5"
-                   style="margin-right: 0 !important;line-height: 34px;">起始时间：</label>
-            <div class="col-sm-7">
-
-                <input id="scheduleBeginTime" type="text"
-                       ng-model="show.from_time"
-                       datetime-picker="yyyy-MM-dd HH:mm"
-                       is-open="data.datetimepickerOptions1.datetimepicker.isOpen"
-                       button-bar="data.datetimepickerOptions1.datetimepicker.buttonBar"
-                       timepicker-options="data.datetimepickerOptions1.timepicker"
-                       datepicker-options="data.datetimepickerOptions1.datepicker"
-                       ng-click="data.datetimepickerOptions1.click()"
-                       class="form-control date-input"
-                       readonly/>
-
-            </div>
-        </div>
-        <div class="form-group col-sm-6 col-md-6 col-lg-6" style="margin-bottom: 10px;">
-            <label class="col-sm-5"
-                   style="margin-right: 0 !important;line-height: 34px;">名称：</label>
-            <div class="col-sm-7">
-                <input type="text" class="form-control" ng-model="form.filename">
-            </div>
-        </div>
-
-        <div class="form-group col-sm-6 col-md-6 col-lg-6" style="margin-bottom: 10px;">
-            <label class="col-sm-5"
-                   style="margin-right: 0 !important;line-height: 34px;">结束时间：</label>
-            <div class="col-sm-7">
-
-                <input id="scheduleEndTime" type="text"
-                       ng-model="show.to_time"
-                       datetime-picker="yyyy-MM-dd HH:mm"
-                       is-open="data.datetimepickerOptions2.datetimepicker.isOpen"
-                       button-bar="data.datetimepickerOptions2.datetimepicker.buttonBar"
-                       timepicker-options="data.datetimepickerOptions2.timepicker"
-                       datepicker-options="data.datetimepickerOptions2.datepicker"
-                       ng-click="data.datetimepickerOptions2.datetimepicker.isOpen = true"
-                       class="form-control date-input" readonly/>
-
-            </div>
-        </div>
-        <div class="form-group col-sm-6 col-md-6 col-lg-6" style="margin-bottom: 10px;"
-             ng-show="show.hasTop == '1'">
-            <label class="col-sm-5"
-                   style="margin-right: 0 !important;line-height: 34px;">上传者：</label>
-            <div class="col-sm-7">
-
-                <!-- Single button -->
-                <div class="select-right" uib-dropdown>
-                    <button type="button" class="btn-def btn-trans" style="text-align: left"
-                            uib-dropdown-toggle ng-disabled="disabled">
-                        <span class="caret"></span>{{show.upload_user}}
-                    </button>
-
-                    <ul class="dropdown-menu common-dp-ul" uib-dropdown-menu role="menu"
-                        aria-labelledby="single-button">
-                        <li role="menuitem"
-                            ng-repeat="info in show.uploadUserArr track by $index">
-                            <a ng-bind="info.name" ng-click="setUploadUser(info)"></a>
-                        </li>
-                    </ul>
-                </div>
-            </div>
-        </div>
-
-    </div>
-    <div class="col-sm-5 col-md-5 col-lg-5">
-
         <div class="form-group col-sm-3 col-md-3 col-lg-3" style="margin-bottom: 10px;">
-            <button class="btn-def btn-submit-yellow"
-                    style="width: 100%" ng-click="clear()">清空
-            </button>
-        </div>
-
-        <div class="form-group col-sm-6 col-md-6 col-lg-6 text-center" style="margin-bottom: 10px;">
+            <!--<input type="text" class="form-control" placeholder="变电站" ng-model="form.client_id">-->
 
             <div class="row" style="margin-left: 0;margin-right: 0">
                 <!-- Single button -->
@@ -89,12 +13,10 @@
                     </button>
 
                     <ul class="dropdown-menu common-dp-ul" uib-dropdown-menu role="menu"
-                        aria-labelledby="single-button" style="padding: 0 !important;">
+                        aria-labelledby="single-button">
                         <li role="menuitem"
-                            ng-repeat="info in show.sidebarArr track by $index"
-                            ng-class="info.state? 'dp-multi-hover' : '' "
-                            style="line-height: 30px;padding: 3px 20px;">
-                            <div ng-bind="info.clientName" ng-click="changeClent(info)"></div>
+                            ng-repeat="info in show.sidebarArr track by $index">
+                            <a ng-bind="info.clientName" ng-click="changeClent(info)"></a>
                         </li>
                     </ul>
                 </div>
@@ -102,26 +24,18 @@
 
         </div>
         <div class="form-group col-sm-3 col-md-3 col-lg-3" style="margin-bottom: 10px;">
-
-            <button type="file" class="btn-def btn-main-blue" style="width: 100%"
-                    ngf-select="uploadFiles($file, $invalidFiles)"
-                    ngf-max-size="50MB">
-                上传
-            </button>
-
-        </div>
-
-        <div class="form-group col-sm-3 col-md-3 col-lg-3" style="margin-bottom: 10px;">
             <button class="btn-def btn-submit-blue"
-                    style="width: 100%" ng-click="search()">查询
+                    style="width: 100%;max-width: 90px !important;" ng-click="search()">查询
             </button>
         </div>
 
-        <div class="form-group col-sm-6 col-md-6 col-lg-6" style="margin-bottom: 10px;">
+    </div>
+    <div class="col-sm-5 col-md-5 col-lg-5">
+        <div class="form-group col-sm-9 col-md-9 col-lg-9" style="margin-bottom: 10px;">
         </div>
         <div class="form-group col-sm-3 col-md-3 col-lg-3" style="margin-bottom: 10px;">
             <button class="btn-def btn-main-blue"
-                    style="width: 100%" ng-click="download()">批量下载
+                    style="width: 100%;max-width: 90px !important;" ng-click="download()">批量下载
             </button>
         </div>
 

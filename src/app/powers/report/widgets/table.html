@@ -1,57 +1,24 @@
-<div>
-    <table class="table table-bordered table-hover common-table" st-table="show.reportList"
-           st-safe-src="rowCollection">
-        <thead>
-        <tr>
-            <th>资料名称</th>
-            <th>所属变电站</th>
-            <th>上传时间</th>
-            <th>上传者</th>
-            <th>操作</th>
-        </tr>
-        </thead>
-        <tbody>
-        <tr ng-repeat="item in show.reportList">
-            <td class="table-def-cursor">
-                <span ng-bind="item.filename"></span>
-            </td>
-            <td>
-                <div class="select-right" uib-dropdown
-                     style="display: inline-block;min-width: 160px;text-align: right;">
-                    <button type="button" class="btn-def btn-transparent btn-autospace"
-                            uib-dropdown-toggle ng-disabled="disabled">
-                        <span class="caret"></span>{{item.clients}}
-                    </button>
+<div class="row">
 
-                    <ul class="dropdown-menu common-dp-ul" uib-dropdown-menu role="menu"
-                        aria-labelledby="single-button">
-                        <li role="menuitem"
-                            ng-repeat="info in item.clientsList track by $index">
-                            <a ng-bind="info"></a>
-                        </li>
-                    </ul>
-                </div>
-            </td>
-            <td class="table-def-cursor">
-                <span ng-bind="item.upload_time"></span>
-            </td>
-            <td class="table-def-cursor">
-                <span ng-bind="item.upload_user"></span>
-            </td>
-            <td>
-                <i class="ion-arrow-down-c color-blue common-table-btn"
-                   ng-click="downItem(item.rpid)"></i>
-                <i class="ion-trash-a color-red common-table-btn"
-                   ng-click="delItem(item.rpid)"></i>
-            </td>
-        </tr>
-        </tbody>
-        <tfoot>
-        <tr>
-            <td colspan="4" class="text-center">
-                <div st-pagination="" st-items-by-page="15" st-displayed-pages="5"></div>
-            </td>
-        </tr>
-        </tfoot>
-    </table>
+    <!--日-->
+    <div class="col-sm-4 col-md-4 col-lg-4" style="margin-bottom: 10px;">
+        <div include-with-scope="app/powers/report/widgets/day.html">
+        </div>
+
+    </div>
+
+    <!--月-->
+    <div class="col-sm-4 col-md-4 col-lg-4" style="margin-bottom: 10px;">
+        <div include-with-scope="app/powers/report/widgets/month.html">
+        </div>
+
+    </div>
+
+    <!--年-->
+    <div class="col-sm-4 col-md-4 col-lg-4" style="margin-bottom: 10px;">
+        <div include-with-scope="app/powers/report/widgets/year.html">
+        </div>
+
+    </div>
+
 </div>
