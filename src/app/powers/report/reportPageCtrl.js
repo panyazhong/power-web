@@ -2,11 +2,12 @@
     'use strict';
 
     angular.module('BlurAdmin.power.report')
-        .controller('reportPageCtrl', reportPageCtrl);
+        .controller('reportPageCtrl', reportPageCtrl)
+        .controller('dayCtrl', dayCtrl);
 
     /** @ngInject */
     function reportPageCtrl($scope, $state, PageTopCache, Sidebar, SidebarCache, Log, locals, ReportSet, HttpToast,
-                            $rootScope, ToastUtils) {
+                            $rootScope, ToastUtils, ModalUtils, ExportPrefix, $window) {
         PageTopCache.cache.state = $state.$current; // active
 
         $scope.data = {
@@ -123,10 +124,10 @@
             client_id: '',  //变电站cid
             beginDate: '',
             endDate: '',
-            beginDateMonth: '',
-            endDateMonth: '',
-            beginDateYear: '',
-            endDateYear: ''
+            beginMonth: '',
+            endMonth: '',
+            beginYear: '',
+            endYear: ''
         };
 
         $scope.formatForm = function () {
@@ -134,10 +135,10 @@
             // init form
             $scope.form.beginDate = '';
             $scope.form.endDate = '';
-            $scope.form.beginDateMonth = '';
-            $scope.form.endDateMonth = '';
-            $scope.form.beginDateYear = '';
-            $scope.form.endDateYear = '';
+            $scope.form.beginMonth = '';
+            $scope.form.endMonth = '';
+            $scope.form.beginYear = '';
+            $scope.form.endYear = '';
 
             if ($scope.show.beginDate) {
                 $scope.form.beginDate = moment($scope.show.beginDate).format('YYYY-MM-DD HH:mm:ss');
@@ -146,16 +147,16 @@
                 $scope.form.endDate = moment($scope.show.endDate).format('YYYY-MM-DD HH:mm:ss');
             }
             if ($scope.show.beginDateMonth) {
-                $scope.form.beginDateMonth = moment($scope.show.beginDateMonth).format('YYYY-MM-DD HH:mm:ss');
+                $scope.form.beginMonth = moment($scope.show.beginDateMonth).format('YYYY-MM-DD HH:mm:ss');
             }
             if ($scope.show.endDateMonth) {
-                $scope.form.endDateMonth = moment($scope.show.endDateMonth).format('YYYY-MM-DD HH:mm:ss');
+                $scope.form.endMonth = moment($scope.show.endDateMonth).format('YYYY-MM-DD HH:mm:ss');
             }
             if ($scope.show.beginDateYear) {
-                $scope.form.beginDateYear = moment($scope.show.beginDateYear).format('YYYY-MM-DD HH:mm:ss');
+                $scope.form.beginYear = moment($scope.show.beginDateYear).format('YYYY-MM-DD HH:mm:ss');
             }
             if ($scope.show.endDateYear) {
-                $scope.form.endDateYear = moment($scope.show.endDateYear).format('YYYY-MM-DD HH:mm:ss');
+                $scope.form.endYear = moment($scope.show.endDateYear).format('YYYY-MM-DD HH:mm:ss');
             }
 
             var params = {};
@@ -295,20 +296,30 @@
 
         $scope.downAll = function () {
 
-            var p = $scope.formatDownloadForm();
-            if (p.length === 0) {
+            var params = $scope.formatDownloadForm();
+            if (params.length === 0) {
                 ToastUtils.openToast('warning', '您还没有选择报表!');
                 return
             }
 
-            ToastUtils.openToast('info', '批量下载的id数组是：' + JSON.stringify(p));
-            Log.i('批量下载：' + JSON.stringify(p));
-            
+            $window.location.href = ExportPrefix.reportDown(params);
+
         };
 
         $scope.editItem = function (item, pos) {
             switch (pos) {
                 case 0: // 日
+                    ModalUtils.open('app/powers/report/widgets/dayModal.html', 'lg',
+                        dayCtrl, {},
+                        function (info) {
+                            // 传值走这里
+                            if (info) {
+                                // $scope.queryList();
+                            }
+                        }, function (empty) {
+                            // 不传值关闭走这里
+                        });
+
                     ToastUtils.openToast('info', '编辑 日报表：' + item.fileName);
                     break;
                 case 1: // 月
@@ -321,17 +332,17 @@
         };
 
         $scope.downItem = function (item, pos) {
-            switch (pos) {
-                case 0: // 日
-                    ToastUtils.openToast('info', '下载 日报表：' + item.fileName);
-                    break;
-                case 1: // 月
-                    ToastUtils.openToast('info', '下载 月报表：' + item.fileName);
-                    break;
-                case 2: // 年
-                    ToastUtils.openToast('info', '下载 年报表：' + item.fileName);
-                    break;
+
+            if (!item.id) {
+                ToastUtils.openToast('warning', '报表信息异常!');
+                return;
             }
+
+            var params = [];
+            params.push(item.id);
+
+            $window.location.href = ExportPrefix.reportDown(params);
+
         };
 
         // date picker
@@ -452,6 +463,38 @@
                 {
                     fileName: '时代金融20170712',
                     id: 'id208'
+                },
+                {
+                    fileName: '时代金融20170801',
+                    id: 'id209'
+                },
+                {
+                    fileName: '时代金融20170802',
+                    id: 'id210'
+                },
+                {
+                    fileName: '时代金融20170803',
+                    id: 'id211'
+                },
+                {
+                    fileName: '时代金融20170804',
+                    id: 'id212'
+                },
+                {
+                    fileName: '时代金融20170805',
+                    id: 'id213'
+                },
+                {
+                    fileName: '时代金融20170806',
+                    id: 'id214'
+                },
+                {
+                    fileName: '时代金融20170807',
+                    id: 'id215'
+                },
+                {
+                    fileName: '时代金融20170808',
+                    id: 'id216'
                 }
             ];
             $scope.show.setList = tempData;
@@ -477,6 +520,58 @@
                 {
                     fileName: '时代月201706',
                     id: 'id305'
+                },
+                {
+                    fileName: '时代月201601',
+                    id: 'id306'
+                },
+                {
+                    fileName: '时代月201602',
+                    id: 'id307'
+                },
+                {
+                    fileName: '时代月201603',
+                    id: 'id308'
+                },
+                {
+                    fileName: '时代月201604',
+                    id: 'id309'
+                },
+                {
+                    fileName: '时代月201605',
+                    id: 'id310'
+                },
+                {
+                    fileName: '时代月201606',
+                    id: 'id311'
+                },
+                {
+                    fileName: '时代月201607',
+                    id: 'id312'
+                },
+                {
+                    fileName: '时代月201608',
+                    id: 'id313'
+                },
+                {
+                    fileName: '时代月201609',
+                    id: 'id314'
+                },
+                {
+                    fileName: '时代月201610',
+                    id: 'id315'
+                },
+                {
+                    fileName: '时代月201611',
+                    id: 'id316'
+                },
+                {
+                    fileName: '时代月201612',
+                    id: 'id317'
+                },
+                {
+                    fileName: '时代月201501',
+                    id: 'id318'
                 }
             ];
             $scope.show.setListMonth = tempData;
@@ -542,6 +637,14 @@
                 {
                     fileName: '时代年2025',
                     id: 'id415'
+                },
+                {
+                    fileName: '时代年2026',
+                    id: 'id416'
+                },
+                {
+                    fileName: '时代年2027',
+                    id: 'id417'
                 }
             ];
             $scope.show.setListYear = tempData;
@@ -549,6 +652,10 @@
 
         };
         $scope.demo();
+
+    }
+
+    function dayCtrl($scope, $state) {
 
     }
 

@@ -141,9 +141,17 @@
             userPrefix: host + 'user/export',      // 用户列表导出
             userPrefixPrint: host + 'user/print',  // 用户列表打印
 
-            reportItem: function (rpid) {
-                return host + 'report/' + rpid;    //下载报表 单个
+            reportDown: function (params) {
+
+                // 需要拼接成recordIds[]=xxx&recordIds[]=aaa
+                var p = '';
+                params.map(function (item) {
+                    p += 'recordIds[]=' + item + "&";
+                });
+
+                return host + 'report/record/donwload?' + p.substring(0, p.length - 1); // 下载报表
             },
+
             uploadReport: host + 'report/upload',   // 上传报表文件
             reportAll: host + 'report/multi?',   //下载报表 所有
 

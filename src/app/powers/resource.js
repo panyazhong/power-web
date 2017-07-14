@@ -396,12 +396,12 @@
         // 新报表设置
         .factory('ReportSet', function (Resource) {
             var config = {
-                url: 'abcdefgxyz/:cid',
+                url: 'report/record/:client_id',
                 paramsDefault: {
-                    cid: '@cid'
+                    client_id: '@client_id'
                 },
                 action: {
-                    query: {    // 根据变电站id筛选相应报表
+                    query: {    // 获取报表列表
                         method: 'GET'
                     }
                 }

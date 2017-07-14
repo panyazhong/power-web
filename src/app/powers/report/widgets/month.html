@@ -51,7 +51,7 @@
         <thead>
         <tr>
             <th>
-                <label class="custom-checkbox" style="padding: 0 3px 0 10px;">
+                <label class="custom-checkbox" style="padding: 0 3px 0 10px;margin: 0;">
                     <input type="checkbox" ng-click="monthSelect()" ng-model="show.monthSelect">
                     <span></span>
                 </label>
@@ -63,7 +63,7 @@
         <tbody>
         <tr ng-repeat="item in show.setListMonth track by $index">
             <td class="table-def-cursor">
-                <label class="custom-checkbox" style="padding: 0 3px 0 10px;">
+                <label class="custom-checkbox" style="padding: 0 3px 0 10px;margin: 0;">
                     <input type="checkbox" ng-model="item.checked">
                     <span></span>
                 </label>
@@ -80,5 +80,12 @@
             </td>
         </tr>
         </tbody>
+        <tfoot>
+        <tr>
+            <td colspan="3" class="text-center">
+                <div st-pagination="" st-items-by-page="15" st-displayed-pages="5"></div>
+            </td>
+        </tr>
+        </tfoot>
     </table>
 </div>
