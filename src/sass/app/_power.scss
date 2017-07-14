@@ -306,6 +306,40 @@ input[type=number]::-webkit-outer-spin-button {
   border: none !important;
 }
 
+// 单行文字溢出
+.nowrap-table {
+  border-bottom: none !important;
+  border-left: none !important;
+  border-right: none !important;
+  table-layout: fixed;
+}
+
+.nowrap-table thead tr th {
+  text-align: center;
+  font-size: 15px !important;
+  font-weight: bold !important;
+  color: #333333 !important;
+  padding: 7px 0 !important;
+  line-height: 35px !important;
+}
+
+.nowrap-table tbody tr td {
+  text-overflow: ellipsis;
+  overflow: hidden;
+  white-space: nowrap;
+}
+
+.nowrap-table tbody tr:hover {
+  background-color: #FFFBF0 !important;
+  color: #3b89ce !important;
+  cursor: pointer !important;
+}
+
+.nowrap-table tfoot tr td {
+  padding-top: 15px !important;
+  border: none !important;
+}
+
 .common-table-btn { // iconfont操作
   display: inline-block;
   width: 35px;
@@ -315,6 +349,23 @@ input[type=number]::-webkit-outer-spin-button {
 /*
   smart table end......
 */
+
+/*
+  tooltip css
+ */
+.tooltip.cTip .tooltip-inner {
+  max-width: 300px;
+  color: rgba(255, 255, 255, 0.87);
+  background-color: rgb(97, 97, 97);
+  text-align: left;
+  font-size: 14px;
+  padding-right: 16px;
+  padding-left: 16px;
+}
+
+.tooltip.cTip .tooltip-arrow {
+  display: none;
+}
 
 /*
   angular toast css

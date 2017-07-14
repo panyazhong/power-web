@@ -1,23 +1,25 @@
 <div>
-    <table class="table table-bordered table-hover common-table" st-table="show.setList"
+    <table class="table table-bordered table-hover nowrap-table" st-table="show.setList"
            st-safe-src="rowCollection">
         <thead>
         <tr>
-            <th>内容</th>
+            <th width="230px;">内容</th>
             <th>详细内容</th>
-            <th>操作</th>
+            <th width="130px;">操作</th>
         </tr>
         </thead>
         <tbody>
         <tr ng-repeat="item in show.setList">
-            <td class="table-def-cursor" width="30%">
+            <td class="table-def-cursor">
                 <span ng-bind="item.desc"></span>
             </td>
-            <td class="table-def-cursor" width="50%">
-                <div ng-bind="item.detail"
-                     style="line-height: 20px;padding-top: 7px;padding-left: 15px;text-align: left"></div>
+            <td class="table-def-cursor">
+                <span ng-bind="item.detail"
+                      tooltip-placement="left-top"
+                      uib-tooltip="{{item.detail}}"
+                      tooltip-class="cTip"></span>
             </td>
-            <td ng-click="edit(item)">
+            <td class="text-center" ng-click="edit(item)">
                 <span class="color-green">
                     编辑
                 </span>
@@ -27,7 +29,7 @@
         <tfoot>
         <tr>
             <td colspan="3" class="text-center">
-                <div st-pagination="" st-items-by-page="10" st-displayed-pages="5"></div>
+                <div st-pagination="" st-items-by-page="15" st-displayed-pages="5"></div>
             </td>
         </tr>
         </tfoot>
