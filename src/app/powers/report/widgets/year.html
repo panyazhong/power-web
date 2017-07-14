@@ -50,7 +50,12 @@
            st-safe-src="rowCollectionYear">
         <thead>
         <tr>
-            <th>序号</th>
+            <th>
+                <label class="custom-checkbox" style="padding: 0 3px 0 10px;">
+                    <input type="checkbox" ng-click="yearSelect()" ng-model="show.yearSelect">
+                    <span></span>
+                </label>
+            </th>
             <th>资料名称</th>
             <th>操作</th>
         </tr>
@@ -58,7 +63,10 @@
         <tbody>
         <tr ng-repeat="item in show.setListYear track by $index">
             <td class="table-def-cursor">
-                <span>{{ $index+1 }}</span>
+                <label class="custom-checkbox" style="padding: 0 3px 0 10px;">
+                    <input type="checkbox" ng-model="item.checked">
+                    <span></span>
+                </label>
             </td>
             <td class="table-def-cursor">
                 <span ng-bind="item.fileName"></span>
