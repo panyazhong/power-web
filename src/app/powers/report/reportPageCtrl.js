@@ -548,8 +548,7 @@
 
     }
 
-    function dayCtrl($scope, $state, params) {
-
+    function dayCtrl(params) {
         console.log('id: ' + params.id);
 
     }
