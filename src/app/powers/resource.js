@@ -26,7 +26,7 @@
         })
         .factory('Resource', function ($resource, $httpParamSerializerJQLike, $q) {
 
-            var host = 'http://139.196.82.185/api';
+            var host = 'http://192.168.0.120/api';
 
             var setAction = function (actions) {
                 var defaultParams = {
@@ -396,7 +396,7 @@
         // 新报表设置
         .factory('ReportSet', function (Resource) {
             var config = {
-                url: 'report/record/:client_id',
+                url: 'rpt/record/client/:client_id',
                 paramsDefault: {
                     client_id: '@client_id'
                 },

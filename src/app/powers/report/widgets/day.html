@@ -46,18 +46,18 @@
 </div>
 
 <div class="row" style="margin: 10px 0 0;">
-    <table class="table table-bordered table-hover common-table" st-table="show.setList"
+    <table class="table table-bordered table-hover nowrap-table" st-table="show.setList"
            st-safe-src="rowCollection">
         <thead>
         <tr>
-            <th>
+            <th width="50px;">
                 <label class="custom-checkbox" style="padding: 0 3px 0 10px;margin: 0;">
                     <input type="checkbox" ng-click="daySelect()" ng-model="show.daySelect">
                     <span></span>
                 </label>
             </th>
             <th>资料名称</th>
-            <th>操作</th>
+            <th width="100px;">操作</th>
         </tr>
         </thead>
         <tbody>
@@ -69,10 +69,13 @@
                 </label>
             </td>
             <td class="table-def-cursor">
-                <span ng-bind="item.fileName"></span>
+                <span ng-bind="item.title"
+                      tooltip-placement="bottom-left"
+                      uib-tooltip="{{item.title}}"
+                      tooltip-class="cTip"></span>
             </td>
 
-            <td>
+            <td class="text-center">
                 <i class="ion-compose color-red common-table-btn"
                    ng-click="editItem(item,0)"></i>
                 <i class="ion-archive color-blue common-table-btn"

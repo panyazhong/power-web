@@ -207,7 +207,20 @@
 
                 ReportSet.query(params,
                     function (data) {
+                        if (Array.isArray(data.daily)) {
+                            $scope.show.setList = data.daily;
+                            $scope.rowCollection = data.daily;
+                        }
 
+                        // if (Array.isArray(data.monthly)) {
+                        //     $scope.show.setListMonth = data.monthly;
+                        //     $scope.rowCollectionMonth = data.monthly;
+                        // }
+                        //
+                        // if (Array.isArray(data.yearly)) {
+                        //     $scope.show.setListYear = data.yearly;
+                        //     $scope.rowCollectionYear = data.yearly;
+                        // }
                     },
                     function (err) {
                         HttpToast.toast(err);
@@ -310,7 +323,7 @@
             switch (pos) {
                 case 0: // 日
                     ModalUtils.open('app/powers/report/widgets/dayModal.html', 'lg',
-                        dayCtrl, {},
+                        dayCtrl, item,
                         function (info) {
                             // 传值走这里
                             if (info) {
@@ -497,81 +510,17 @@
                     id: 'id216'
                 }
             ];
-            $scope.show.setList = tempData;
-            $scope.rowCollection = tempData;
+            // $scope.show.setList = tempData;
+            // $scope.rowCollection = tempData;
 
             tempData = [
                 {
-                    fileName: '时代月201702',
+                    title: '时代月201702',
                     id: 'id301'
                 },
                 {
-                    fileName: '时代月201703',
+                    title: '时代月201703',
                     id: 'id302'
-                },
-                {
-                    fileName: '时代月201704',
-                    id: 'id303'
-                },
-                {
-                    fileName: '时代月201705',
-                    id: 'id304'
-                },
-                {
-                    fileName: '时代月201706',
-                    id: 'id305'
-                },
-                {
-                    fileName: '时代月201601',
-                    id: 'id306'
-                },
-                {
-                    fileName: '时代月201602',
-                    id: 'id307'
-                },
-                {
-                    fileName: '时代月201603',
-                    id: 'id308'
-                },
-                {
-                    fileName: '时代月201604',
-                    id: 'id309'
-                },
-                {
-                    fileName: '时代月201605',
-                    id: 'id310'
-                },
-                {
-                    fileName: '时代月201606',
-                    id: 'id311'
-                },
-                {
-                    fileName: '时代月201607',
-                    id: 'id312'
-                },
-                {
-                    fileName: '时代月201608',
-                    id: 'id313'
-                },
-                {
-                    fileName: '时代月201609',
-                    id: 'id314'
-                },
-                {
-                    fileName: '时代月201610',
-                    id: 'id315'
-                },
-                {
-                    fileName: '时代月201611',
-                    id: 'id316'
-                },
-                {
-                    fileName: '时代月201612',
-                    id: 'id317'
-                },
-                {
-                    fileName: '时代月201501',
-                    id: 'id318'
                 }
             ];
             $scope.show.setListMonth = tempData;
@@ -579,72 +528,16 @@
 
             tempData = [
                 {
-                    fileName: '时代年2011',
+                    title: '时代年2011',
                     id: 'id401'
                 },
                 {
-                    fileName: '时代年2012',
+                    title: '时代年2012',
                     id: 'id402'
                 },
                 {
-                    fileName: '时代年2013',
+                    title: '时代年2013',
                     id: 'id403'
-                },
-                {
-                    fileName: '时代年2014',
-                    id: 'id404'
-                },
-                {
-                    fileName: '时代年2015',
-                    id: 'id405'
-                },
-                {
-                    fileName: '时代年2016',
-                    id: 'id406'
-                },
-                {
-                    fileName: '时代年2017',
-                    id: 'id407'
-                },
-                {
-                    fileName: '时代年2018',
-                    id: 'id408'
-                },
-                {
-                    fileName: '时代年2019',
-                    id: 'id409'
-                },
-                {
-                    fileName: '时代年2020',
-                    id: 'id410'
-                },
-                {
-                    fileName: '时代年2021',
-                    id: 'id411'
-                },
-                {
-                    fileName: '时代年2022',
-                    id: 'id412'
-                },
-                {
-                    fileName: '时代年2023',
-                    id: 'id413'
-                },
-                {
-                    fileName: '时代年2024',
-                    id: 'id414'
-                },
-                {
-                    fileName: '时代年2025',
-                    id: 'id415'
-                },
-                {
-                    fileName: '时代年2026',
-                    id: 'id416'
-                },
-                {
-                    fileName: '时代年2027',
-                    id: 'id417'
                 }
             ];
             $scope.show.setListYear = tempData;
@@ -655,7 +548,9 @@
 
     }
 
-    function dayCtrl($scope, $state) {
+    function dayCtrl($scope, $state, params) {
+
+        console.log('id: ' + params.id);
 
     }
 
