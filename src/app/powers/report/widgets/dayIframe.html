@@ -1,0 +1,565 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>日报表</title>
+    <link href="https://cdn.bootcss.com/bootstrap/3.3.5/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://cdn.bootcss.com/angular.js/1.5.11/angular.min.js"></script>
+
+    <style type="text/css">
+        .table {
+            display: table;
+            width: 100%;
+            max-width: 100%;
+            margin-bottom: 20px;
+            border-spacing: 0;
+            border-collapse: collapse;
+            white-space: normal;
+            line-height: normal;
+            font-weight: normal;
+            font-size: medium;
+            font-style: normal;
+            /*color: -internal-quirk-inherit;*/
+            text-align: start;
+            /*font-variant: normal normal;*/
+        }
+
+        .table-bordered {
+            border: 1px solid #ddd;
+        }
+
+        tr {
+            height: 20px;
+            border: 1px solid #ddd;
+        }
+
+        body {
+            font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+            font-size: 14px;
+            line-height: 1.42857143;
+            color: #333;
+            background-color: #fff;
+        }
+
+        .table-bordered > tbody > tr > td, .table-bordered > tbody > tr > th, .table-bordered > tfoot > tr > td, .table-bordered > tfoot > tr > th, .table-bordered > thead > tr > td, .table-bordered > thead > tr > th {
+            border: 1px solid #ddd;
+            height: 18px;
+        }
+
+        .table > tbody > tr > td, .table > tbody > tr > th, .table > tfoot > tr > td, .table > tfoot > tr > th, .table > thead > tr > td, .table > thead > tr > th {
+            padding: 4px;
+            line-height: 1.42857143;
+            vertical-align: top;
+            border-top: 1px solid #ddd;
+            overflow: hidden !important;
+            white-space: nowrap !important;
+            text-overflow: ellipsis !important;
+        }
+
+        .table > tbody > tr > td {
+            font-size: 8px !important;
+            line-height: 21px;
+        }
+
+        #sjs_B20 {
+            height: 54px;
+        }
+
+        .form-control {
+            height: 21px;
+            max-width: 100px;
+        }
+
+        .form-control:focus {
+            outline: none !important;
+            box-shadow: none !important;
+            border-color: #f3b764 !important;
+            background: #ffffff !important;
+        }
+
+        /*
+          数字时 箭头屏蔽掉
+        */
+        input[type=number] {
+            -moz-appearance: textfield;
+        }
+
+        input[type=number]::-webkit-inner-spin-button,
+        input[type=number]::-webkit-outer-spin-button {
+            -webkit-appearance: none;
+            margin: 0;
+        }
+
+        /**
+            btn
+         */
+        .btn-def {
+            display: inline-block;
+            padding: 6px 12px;
+            margin-bottom: 0;
+            font-size: 14px;
+            font-weight: normal;
+            line-height: 1.42857143;
+            text-align: center;
+            white-space: nowrap;
+            vertical-align: middle;
+            -ms-touch-action: manipulation;
+            touch-action: manipulation;
+            cursor: pointer;
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+            user-select: none;
+            background-image: none;
+            border: 1px solid transparent;
+            border-radius: 4px;
+            outline: none;
+            min-width: 80px !important;
+            max-width: 200px !important;
+        }
+
+        .btn-main-blue {
+            border: 1px #3b89ce solid;
+            color: #3b89ce;
+            background: transparent;
+        }
+
+        .btn-submit-blue {
+            color: #FFFFFF !important;
+            background: #3b89ce;
+        }
+
+    </style>
+
+</head>
+<body ng-app="day" ng-controller="dayCtrl">
+
+<div style="margin-bottom: 15px">
+    <button type="button" class="btn-def btn-submit-blue" style="border-radius: 0;">
+        日报表
+    </button>
+
+    <div style="background:#3b89ce;height: 2px"></div>
+</div>
+
+<table class="table table-bordered">
+    <tbody>
+    <tr>
+        <td id="sjs_A1">进线</td>
+        <td id="sjs_B1">支线</td>
+        <td id="sjs_C1">电量（kwh）</td>
+        <td id="sjs_D1">功率因数</td>
+        <td id="sjs_E1">日产量（㎡）</td>
+        <td id="sjs_F1">单耗（kwh/㎡）</td>
+        <td id="sjs_G1">计划单耗（kwh/㎡）</td>
+        <td id="sjs_H1">报警次数</td>
+    </tr>
+    <tr>
+        <td id="sjs_A2">企口四号电源控制柜</td>
+        <td id="sjs_B2">企口四号</td>
+        <td id="sjs_C2" ng-bind="form.sjs_C2"></td>
+        <td id="sjs_D2" ng-bind="form.sjs_D2"></td>
+        <td id="sjs_E2">
+            <input type="number" ng-change="upVal('sjs_E2')" class="form-control" ng-model="form.sjs_E2">
+        </td>
+        <td id="sjs_F2" ng-bind="form.sjs_F2"></td>
+        <td id="sjs_G2">
+            <input type="number" ng-change="upVal('sjs_G2')" class="form-control" ng-model="form.sjs_G2">
+        </td>
+        <td id="sjs_H2" ng-bind="form.sjs_H2"></td>
+    </tr>
+    <tr>
+        <td id="sjs_A3">企口四号电源控制柜</td>
+        <td id="sjs_B3">企口五号长</td>
+        <td id="sjs_C3" ng-bind="form.sjs_C3"></td>
+        <td id="sjs_D3" ng-bind="form.sjs_D3"></td>
+        <td id="sjs_E3">
+            <input type="number" ng-change="upVal('sjs_E3')" class="form-control" ng-model="form.sjs_E3">
+        </td>
+        <td id="sjs_F3" ng-bind="form.sjs_F3"></td>
+        <td id="sjs_G3">
+            <input type="number" ng-change="upVal('sjs_G3')" class="form-control" ng-model="form.sjs_G3">
+        </td>
+        <td id="sjs_H3" ng-bind="form.sjs_H3"></td>
+    </tr>
+    <tr>
+        <td id="sjs_A4">企口四号电源控制柜</td>
+        <td id="sjs_B4">企口五号短</td>
+        <td id="sjs_C4" ng-bind="form.sjs_C4"></td>
+        <td id="sjs_D4" ng-bind="form.sjs_D4"></td>
+        <td id="sjs_E4">
+            <input type="number" ng-change="upVal('sjs_E4')" class="form-control" ng-model="form.sjs_E4">
+        </td>
+        <td id="sjs_F4" ng-bind="form.sjs_F4"></td>
+        <td id="sjs_G4">
+            <input type="number" ng-change="upVal('sjs_G4')" class="form-control" ng-model="form.sjs_G4">
+        </td>
+        <td id="sjs_H4" ng-bind="form.sjs_H4"></td>
+    </tr>
+    <tr>
+        <td id="sjs_A5">六号、七号机电源控制柜</td>
+        <td id="sjs_B5">七号除尘</td>
+        <td id="sjs_C5" ng-bind="form.sjs_C5"></td>
+        <td id="sjs_D5" ng-bind="form.sjs_D5"></td>
+        <td id="sjs_E5">
+            <input type="number" ng-change="upVal('sjs_E5')" class="form-control" ng-model="form.sjs_E5">
+        </td>
+        <td id="sjs_F5" ng-bind="form.sjs_F5"></td>
+        <td id="sjs_G5">
+            <input type="number" ng-change="upVal('sjs_G5')" class="form-control" ng-model="form.sjs_G5">
+        </td>
+        <td id="sjs_H5" ng-bind="form.sjs_H5"></td>
+    </tr>
+    <tr>
+        <td id="sjs_A6">六号、七号机电源控制柜</td>
+        <td id="sjs_B6">企口六</td>
+        <td id="sjs_C6" ng-bind="form.sjs_C6"></td>
+        <td id="sjs_D6" ng-bind="form.sjs_D6"></td>
+        <td id="sjs_E6">
+            <input type="number" ng-change="upVal('sjs_E6')" class="form-control" ng-model="form.sjs_E6">
+        </td>
+        <td id="sjs_F6" ng-bind="form.sjs_F6"></td>
+        <td id="sjs_G6">
+            <input type="number" ng-change="upVal('sjs_G6')" class="form-control" ng-model="form.sjs_G6">
+        </td>
+        <td id="sjs_H6" ng-bind="form.sjs_H6"></td>
+    </tr>
+    <tr>
+        <td id="sjs_A7">六号、七号机电源控制柜</td>
+        <td id="sjs_B7">企口七</td>
+        <td id="sjs_C7" ng-bind="form.sjs_C7"></td>
+        <td id="sjs_D7" ng-bind="form.sjs_D7"></td>
+        <td id="sjs_E7">
+            <input type="number" ng-change="upVal('sjs_E7')" class="form-control" ng-model="form.sjs_E7">
+        </td>
+        <td id="sjs_F7" ng-bind="form.sjs_F7"></td>
+        <td id="sjs_G7">
+            <input type="number" ng-change="upVal('sjs_G7')" class="form-control" ng-model="form.sjs_G7">
+        </td>
+        <td id="sjs_H7" ng-bind="form.sjs_H7"></td>
+    </tr>
+    <tr>
+        <td id="sjs_A8">六号、七号机电源控制柜</td>
+        <td id="sjs_B8">风扇</td>
+        <td id="sjs_C8" ng-bind="form.sjs_C8"></td>
+        <td id="sjs_D8" ng-bind="form.sjs_D8"></td>
+        <td id="sjs_E8">
+            <input type="number" ng-change="upVal('sjs_E8')" class="form-control" ng-model="form.sjs_E8">
+        </td>
+        <td id="sjs_F8" ng-bind="form.sjs_F8"></td>
+        <td id="sjs_G8">
+            <input type="number" ng-change="upVal('sjs_G8')" class="form-control" ng-model="form.sjs_G8">
+        </td>
+        <td id="sjs_H8" ng-bind="form.sjs_H8"></td>
+    </tr>
+    <tr>
+        <td id="sjs_A9">分检1号机电源控制柜</td>
+        <td id="sjs_B9">分检一号线双端锯</td>
+        <td id="sjs_C9" ng-bind="form.sjs_C9"></td>
+        <td id="sjs_D9" ng-bind="form.sjs_D9"></td>
+        <td id="sjs_E9">
+            <input type="number" ng-change="upVal('sjs_E9')" class="form-control" ng-model="form.sjs_E9">
+        </td>
+        <td id="sjs_F9" ng-bind="form.sjs_F9"></td>
+        <td id="sjs_G9">
+            <input type="number" ng-change="upVal('sjs_G9')" class="form-control" ng-model="form.sjs_G9">
+        </td>
+        <td id="sjs_H9" ng-bind="form.sjs_H9"></td>
+    </tr>
+    <tr>
+        <td id="sjs_A10">分检1号机电源控制柜</td>
+        <td id="sjs_B10">分检一号分板机</td>
+        <td id="sjs_C10" ng-bind="form.sjs_C10"></td>
+        <td id="sjs_D10" ng-bind="form.sjs_D10"></td>
+        <td id="sjs_E10">
+            <input type="number" ng-change="upVal('sjs_E10')" class="form-control" ng-model="form.sjs_E10">
+        </td>
+        <td id="sjs_F10" ng-bind="form.sjs_F10"></td>
+        <td id="sjs_G10">
+            <input type="number" ng-change="upVal('sjs_G10')" class="form-control" ng-model="form.sjs_G10">
+        </td>
+        <td id="sjs_H10" ng-bind="form.sjs_H10"></td>
+    </tr>
+    <tr>
+        <td id="sjs_A11">分检1号机电源控制柜</td>
+        <td id="sjs_B11">分检一号线底砂机</td>
+        <td id="sjs_C11" ng-bind="form.sjs_C11"></td>
+        <td id="sjs_D11" ng-bind="form.sjs_D11"></td>
+        <td id="sjs_E11">
+            <input type="number" ng-change="upVal('sjs_E11')" class="form-control" ng-model="form.sjs_E11">
+        </td>
+        <td id="sjs_F11" ng-bind="form.sjs_F11"></td>
+        <td id="sjs_G11">
+            <input type="number" ng-change="upVal('sjs_G11')" class="form-control" ng-model="form.sjs_G11">
+        </td>
+        <td id="sjs_H11" ng-bind="form.sjs_H11"></td>
+    </tr>
+    <tr>
+        <td id="sjs_A12">分检1号机电源控制柜</td>
+        <td id="sjs_B12">分检一号线背槽机</td>
+        <td id="sjs_C12" ng-bind="form.sjs_C12"></td>
+        <td id="sjs_D12" ng-bind="form.sjs_D12"></td>
+        <td id="sjs_E12">
+            <input type="number" ng-change="upVal('sjs_E12')" class="form-control" ng-model="form.sjs_E12">
+        </td>
+        <td id="sjs_F12" ng-bind="form.sjs_F12"></td>
+        <td id="sjs_G12">
+            <input type="number" ng-change="upVal('sjs_G12')" class="form-control" ng-model="form.sjs_G12">
+        </td>
+        <td id="sjs_H12" ng-bind="form.sjs_H12"></td>
+    </tr>
+    <tr>
+        <td id="sjs_A13">分检1号机电源控制柜</td>
+        <td id="sjs_B13">分检一号线面砂机</td>
+        <td id="sjs_C13" ng-bind="form.sjs_C13"></td>
+        <td id="sjs_D13" ng-bind="form.sjs_D13"></td>
+        <td id="sjs_E13">
+            <input type="number" ng-change="upVal('sjs_E13')" class="form-control" ng-model="form.sjs_E13">
+        </td>
+        <td id="sjs_F13" ng-bind="form.sjs_F13"></td>
+        <td id="sjs_G13">
+            <input type="number" ng-change="upVal('sjs_G13')" class="form-control" ng-model="form.sjs_G13">
+        </td>
+        <td id="sjs_H13" ng-bind="form.sjs_H13"></td>
+    </tr>
+    <tr>
+        <td id="sjs_A14">分检2-3号机电源控制柜</td>
+        <td id="sjs_B14">分检三号面砂机</td>
+        <td id="sjs_C14" ng-bind="form.sjs_C14"></td>
+        <td id="sjs_D14" ng-bind="form.sjs_D14"></td>
+        <td id="sjs_E14">
+            <input type="number" ng-change="upVal('sjs_E14')" class="form-control" ng-model="form.sjs_E14">
+        </td>
+        <td id="sjs_F14" ng-bind="form.sjs_F14"></td>
+        <td id="sjs_G14">
+            <input type="number" ng-change="upVal('sjs_G14')" class="form-control" ng-model="form.sjs_G14">
+        </td>
+        <td id="sjs_H14" ng-bind="form.sjs_H14"></td>
+    </tr>
+    <tr>
+        <td id="sjs_A15">分检2-3号机电源控制柜</td>
+        <td id="sjs_B15">分检三号线底砂机</td>
+        <td id="sjs_C15" ng-bind="form.sjs_C15"></td>
+        <td id="sjs_D15" ng-bind="form.sjs_D15"></td>
+        <td id="sjs_E15">
+            <input type="number" ng-change="upVal('sjs_E15')" class="form-control" ng-model="form.sjs_E15">
+        </td>
+        <td id="sjs_F15" ng-bind="form.sjs_F15"></td>
+        <td id="sjs_G15">
+            <input type="number" ng-change="upVal('sjs_G15')" class="form-control" ng-model="form.sjs_G15">
+        </td>
+        <td id="sjs_H15" ng-bind="form.sjs_H15"></td>
+    </tr>
+    <tr>
+        <td id="sjs_A16">分检2-3号机电源控制柜</td>
+        <td id="sjs_B16">分拣二号线底砂机</td>
+        <td id="sjs_C16" ng-bind="form.sjs_C16"></td>
+        <td id="sjs_D16" ng-bind="form.sjs_D16"></td>
+        <td id="sjs_E16">
+            <input type="number" ng-change="upVal('sjs_E16')" class="form-control" ng-model="form.sjs_E16">
+        </td>
+        <td id="sjs_F16" ng-bind="form.sjs_F16"></td>
+        <td id="sjs_G16">
+            <input type="number" ng-change="upVal('sjs_G16')" class="form-control" ng-model="form.sjs_G16">
+        </td>
+        <td id="sjs_H16" ng-bind="form.sjs_H16"></td>
+    </tr>
+    <tr>
+        <td id="sjs_A17">分检2-3号机电源控制柜</td>
+        <td id="sjs_B17">分拣二号面砂机</td>
+        <td id="sjs_C17" ng-bind="form.sjs_C17"></td>
+        <td id="sjs_D17" ng-bind="form.sjs_D17"></td>
+        <td id="sjs_E17">
+            <input type="number" ng-change="upVal('sjs_E17')" class="form-control" ng-model="form.sjs_E17">
+        </td>
+        <td id="sjs_F17" ng-bind="form.sjs_F17"></td>
+        <td id="sjs_G17">
+            <input type="number" ng-change="upVal('sjs_G17')" class="form-control" ng-model="form.sjs_G17">
+        </td>
+        <td id="sjs_H17" ng-bind="form.sjs_H17"></td>
+    </tr>
+    <tr>
+        <td id="sjs_A18">分检2-3号机电源控制柜</td>
+        <td id="sjs_B18">分拣二号线分板机</td>
+        <td id="sjs_C18" ng-bind="form.sjs_C18"></td>
+        <td id="sjs_D18" ng-bind="form.sjs_D18"></td>
+        <td id="sjs_E18">
+            <input type="number" ng-change="upVal('sjs_E18')" class="form-control" ng-model="form.sjs_E18">
+        </td>
+        <td id="sjs_F18" ng-bind="form.sjs_F18"></td>
+        <td id="sjs_G18">
+            <input type="number" ng-change="upVal('sjs_G18')" class="form-control" ng-model="form.sjs_G18">
+        </td>
+        <td id="sjs_H18" ng-bind="form.sjs_H18"></td>
+    </tr>
+    <tr>
+        <td colspan="2" id="sjs_A19">总共</td>
+        <td id="sjs_C19" ng-bind="form.sjs_C19"></td>
+        <td id="sjs_D19" ng-bind="form.sjs_D19"></td>
+        <td id="sjs_E19" ng-bind="form.sjs_E19"></td>
+        <td id="sjs_F19" ng-bind="form.sjs_F19"></td>
+        <td id="sjs_G19" ng-bind="form.sjs_G19"></td>
+        <td id="sjs_H19" ng-bind="form.sjs_H19"></td>
+    </tr>
+    <tr>
+        <td id="sjs_A20">备注：</td>
+        <td id="sjs_B20" colspan="7">
+            <input type="text" ng-change="upVal('sjs_B20')" class="form-control" style="max-width: 100%;height: 48px;"
+                   ng-model="form.sjs_B20">
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+<div style="margin-top: 30px;text-align: center">
+    <button class="btn-def btn-submit-blue" style="width: 80px;margin: 15px;"
+            ng-click="submit('sub')">确定
+    </button>
+
+    <button class="btn-def btn-main-blue" style="width: 80px;margin: 15px;"
+            ng-click="submit('dimiss')">取消
+    </button>
+</div>
+
+</body>
+
+<script type="text/javascript">
+    var appInIframe = angular.module('day', []);
+
+    appInIframe.factory('$parentScope', function ($window) {
+        return $window.parent.angular.element($window.frameElement).scope();
+    });
+
+    appInIframe.controller('dayCtrl', function ($scope, $location, $http, $parentScope) {
+        $scope.host = 'http://192.168.0.120/api';
+        $scope.id = $location.search().id || '';
+        $scope.path = $scope.host + '/rpt/record/' + $scope.id;
+
+        $scope.filterKey = ['sjs_B20']; // 白名单
+        $scope.form = {};
+
+        $scope.init = function () {
+            $http({
+                method: 'GET',
+                url: $scope.path,
+                params: {},
+                withCredentials: true,
+                headers: {
+                    'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8'
+                }
+            }).then(function (suc) {
+
+                if (suc.data.data) {
+                    var d = suc.data.data;
+
+                    for (var Key in d) {
+                        if ($scope.filterKey.indexOf(Key) != -1) {
+                            $scope.form[Key] = d[Key];
+                        } else {
+                            $scope.form[Key] = parseFloat(d[Key]);
+                        }
+                    }
+
+                } else {
+                    alert("很抱歉，无法从服务器获取数据。");
+                }
+
+            }, function (error) {
+                alert("很抱歉，无法从服务器获取数据。");
+            });
+
+        };
+        $scope.init();
+
+        $scope.upVal = function (key) {
+            var type = key.slice(4, 5); // 确定类型，截取第5个字符
+            var num = key.substring(5); // 截取数字，从第6个字符开始，截取到最后
+
+            switch (type) {
+                case 'E':   // 日产量
+
+                    /** 1.总日产量**/
+                    $scope.form.sjs_E19 = 0;
+                    for (var Key in $scope.form) {
+                        if (Key.indexOf('E') != -1 && Key != 'sjs_E19') {   //不包含总日产量
+                            $scope.form.sjs_E19 += parseFloat($scope.form[Key]);
+                        }
+                    }
+
+                    var c = 'sjs_C' + num;
+                    var f = 'sjs_F' + num;
+                    /** 2.动态计算单耗**/
+                    if ($scope.form[c] && $scope.form[key]) {
+                        $scope.form[f] = ($scope.form[c] / $scope.form[key]).toFixed(2);
+                    }
+
+                    /** 3.动态计算总单耗**/
+                    $scope.form.sjs_F19 = 0;
+                    for (var Key in $scope.form) {
+                        if (Key.indexOf('F') != -1 && Key != 'sjs_F19') {   //不包含总单耗
+                            $scope.form.sjs_F19 += parseFloat($scope.form[Key]);
+                        }
+                    }
+
+                    break;
+                case 'G':   // 计划单耗
+
+                    /** 1.总计划单耗**/
+                    $scope.form.sjs_G19 = 0;
+                    for (var Key in $scope.form) {
+                        if (Key.indexOf('G') != -1 && Key != 'sjs_G19') {   //不包含总计划单耗
+                            $scope.form.sjs_G19 += parseFloat($scope.form[Key]);
+                        }
+                    }
+
+                    break;
+            }
+        };
+
+        $scope.submit = function (type) {
+            switch (type) {
+                case 'dimiss':
+                    $parentScope.$apply(function () {
+                        $parentScope.$emit('iframe', 'dimiss');
+                    });
+
+                    break;
+                case 'sub':
+
+                    var params = {
+                        props: $scope.form
+                    };
+
+                    $http({
+                        method: 'PUT',
+                        url: $scope.path,
+                        data: params,
+                        withCredentials: true,
+                        headers: {
+                            'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8'
+                        }
+                    }).then(function (suc) {
+
+                        if (suc.data.message) {
+                            alert(suc.data.message);
+                            $parentScope.$apply(function () {
+                                $parentScope.$emit('iframe', 'sub');
+                            });
+
+                        } else {
+                            alert("很抱歉，无法从服务器获取数据。");
+                        }
+
+                    }, function (error) {
+                        alert("很抱歉，无法从服务器获取数据。");
+                    });
+
+                    break;
+            }
+        }
+
+    });
+
+</script>
+
+</html>

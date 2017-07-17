@@ -149,7 +149,7 @@
                     p += 'recordIds[]=' + item + "&";
                 });
 
-                return host + 'report/record/donwload?' + p.substring(0, p.length - 1); // 下载报表
+                return host + 'rpt/record/download?' + p.substring(0, p.length - 1); // 下载报表
             },
 
             uploadReport: host + 'report/upload',   // 上传报表文件

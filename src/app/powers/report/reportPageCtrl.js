@@ -327,7 +327,7 @@
                         function (info) {
                             // 传值走这里
                             if (info) {
-                                // $scope.queryList();
+                                $scope.queryList($scope.form.client_id);
                             }
                         }, function (empty) {
                             // 不传值关闭走这里
@@ -443,113 +443,25 @@
 
         });
 
-        $scope.demo = function () {
-            var tempData = [
-                {
-                    fileName: '时代金融20170101',
-                    id: 'id201'
-                },
-                {
-                    fileName: '时代金融20170208',
-                    id: 'id202'
-                },
-                {
-                    fileName: '时代金融20170301',
-                    id: 'id203'
-                },
-                {
-                    fileName: '时代金融20170411',
-                    id: 'id204'
-                },
-                {
-                    fileName: '时代金融20170515',
-                    id: 'id205'
-                },
-                {
-                    fileName: '时代金融20170520',
-                    id: 'id206'
-                },
-                {
-                    fileName: '时代金融20170611',
-                    id: 'id207'
-                },
-                {
-                    fileName: '时代金融20170712',
-                    id: 'id208'
-                },
-                {
-                    fileName: '时代金融20170801',
-                    id: 'id209'
-                },
-                {
-                    fileName: '时代金融20170802',
-                    id: 'id210'
-                },
-                {
-                    fileName: '时代金融20170803',
-                    id: 'id211'
-                },
-                {
-                    fileName: '时代金融20170804',
-                    id: 'id212'
-                },
-                {
-                    fileName: '时代金融20170805',
-                    id: 'id213'
-                },
-                {
-                    fileName: '时代金融20170806',
-                    id: 'id214'
-                },
-                {
-                    fileName: '时代金融20170807',
-                    id: 'id215'
-                },
-                {
-                    fileName: '时代金融20170808',
-                    id: 'id216'
-                }
-            ];
-            // $scope.show.setList = tempData;
-            // $scope.rowCollection = tempData;
-
-            tempData = [
-                {
-                    title: '时代月201702',
-                    id: 'id301'
-                },
-                {
-                    title: '时代月201703',
-                    id: 'id302'
-                }
-            ];
-            $scope.show.setListMonth = tempData;
-            $scope.rowCollectionMonth = tempData;
-
-            tempData = [
-                {
-                    title: '时代年2011',
-                    id: 'id401'
-                },
-                {
-                    title: '时代年2012',
-                    id: 'id402'
-                },
-                {
-                    title: '时代年2013',
-                    id: 'id403'
-                }
-            ];
-            $scope.show.setListYear = tempData;
-            $scope.rowCollectionYear = tempData;
-
-        };
-        $scope.demo();
-
     }
 
-    function dayCtrl(params) {
-        console.log('id: ' + params.id);
+    function dayCtrl($scope, params, Log) {
+        Log.i('frame: ' + JSON.stringify(params));
+
+        $scope.path = "app/powers/report/widgets/dayIframe.html" + "#/?id=" + params.id;
+
+        $scope.$on('iframe', function (e, data) {
+            if (!data) {
+                return;
+            }
+
+            if (data == 'dimiss') {
+                $scope.$close();
+            } else if (data == 'sub') {
+                $scope.$close(data);
+            }
+
+        });
 
     }
 

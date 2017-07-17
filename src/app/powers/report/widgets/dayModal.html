@@ -1,4 +1,4 @@
-<div class="modal-create-user" style="max-height: 580px;overflow-y: auto">
+<div class="modal-create-user" style="max-height: 600px;overflow-y: auto">
 
     <style type="text/css" scoped>
 
@@ -8,24 +8,7 @@
 
     </style>
 
-    <div style="margin-bottom: 15px">
-        <button type="button" class="btn-def btn-submit-blue" style="border-radius: 0;">
-            日报表
-        </button>
-
-        <div style="background:#3b89ce;height: 2px"></div>
-    </div>
-
-    <!--<div include-with-scope="app/powers/report/widgets/reportDay.html"></div>-->
-
-    <div style="margin-top: 30px;text-align: center">
-        <button class="btn-def btn-submit-blue" style="width: 80px;margin: 15px;"
-                ng-click="submit()">确定
-        </button>
-
-        <button class="btn-def btn-main-blue" style="width: 80px;margin: 15px;"
-                ng-click="$dismiss()">取消
-        </button>
-    </div>
+    <iframe type="text/html" width="100%" height="775px" allowfullscreen frameborder="0"
+            ng-src="{{path}}"></iframe>
 
 </div>
