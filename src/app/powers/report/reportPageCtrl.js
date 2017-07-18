@@ -322,6 +322,7 @@
         $scope.editItem = function (item, pos) {
             switch (pos) {
                 case 0: // 日
+                case 1: // 月
                     ModalUtils.open('app/powers/report/widgets/dayModal.html', 'lg',
                         dayCtrl, item,
                         function (info) {
@@ -333,10 +334,6 @@
                             // 不传值关闭走这里
                         });
 
-                    ToastUtils.openToast('info', '编辑 日报表：' + item.fileName);
-                    break;
-                case 1: // 月
-                    ToastUtils.openToast('info', '编辑 月报表：' + item.fileName);
                     break;
                 case 2: // 年
                     ToastUtils.openToast('info', '编辑 年报表：' + item.fileName);
@@ -445,10 +442,15 @@
 
     }
 
-    function dayCtrl($scope, params, Log, ToastUtils) {
+    function dayCtrl($scope, params, Log, ToastUtils, $sce) {
         Log.i('frame: ' + JSON.stringify(params));
 
-        $scope.path = "app/powers/report/widgets/dayIframe.html" + "#/?id=" + params.id;
+        // 自己测试path
+        // $scope.path = "app/powers/report/widgets/monthIframe.html" + "#/?id=" + params.id;
+        // $scope.path = $sce.trustAsResourceUrl('http://www.qq.com/');
+
+        $scope.url = params.html + "#/?id=" + params.id;
+        $scope.path = $sce.trustAsResourceUrl($scope.url);
 
         $scope.$on('iframe', function (e, data) {
             if (!data) {
