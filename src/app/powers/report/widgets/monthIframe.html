@@ -2,7 +2,7 @@
 <html>
 <head>
     <meta charset="UTF-8">
-    <title>日报表</title>
+    <title>月报表</title>
     <link href="https://cdn.bootcss.com/bootstrap/3.3.5/css/bootstrap.min.css" rel="stylesheet">
     <script src="https://cdn.bootcss.com/angular.js/1.5.11/angular.min.js"></script>
 
@@ -136,7 +136,7 @@
 
 <div style="margin-bottom: 15px">
     <button type="button" class="btn-def btn-submit-blue" style="border-radius: 0;">
-        日报表
+        月报表
     </button>
 
     <div style="background:#3b89ce;height: 2px"></div>
@@ -149,10 +149,12 @@
         <td id="sjs_B1">支线</td>
         <td id="sjs_C1">电量（kwh）</td>
         <td id="sjs_D1">功率因数</td>
-        <td id="sjs_E1">日产量（㎡）</td>
+        <td id="sjs_E1">月产量（㎡）</td>
         <td id="sjs_F1">单耗（kwh/㎡）</td>
         <td id="sjs_G1">计划单耗（kwh/㎡）</td>
         <td id="sjs_H1">报警次数</td>
+        <td id="sjs_I1">环比上月单耗</td>
+        <td id="sjs_J1">查看本月电流曲线</td>
     </tr>
     <tr>
         <td id="sjs_A2">企口四号电源控制柜</td>
@@ -167,6 +169,8 @@
             <input type="number" ng-change="upVal('sjs_G2')" class="form-control" ng-model="form.sjs_G2">
         </td>
         <td id="sjs_H2" ng-bind="form.sjs_H2"></td>
+        <td id="sjs_I2" ng-bind="form.sjs_I2"></td>
+        <td id="sjs_J2" ng-bind="form.sjs_J2"></td>
     </tr>
     <tr>
         <td id="sjs_A3">企口四号电源控制柜</td>
@@ -181,6 +185,8 @@
             <input type="number" ng-change="upVal('sjs_G3')" class="form-control" ng-model="form.sjs_G3">
         </td>
         <td id="sjs_H3" ng-bind="form.sjs_H3"></td>
+        <td id="sjs_I3" ng-bind="form.sjs_I3"></td>
+        <td id="sjs_J3" ng-bind="form.sjs_J3"></td>
     </tr>
     <tr>
         <td id="sjs_A4">企口四号电源控制柜</td>
@@ -195,6 +201,8 @@
             <input type="number" ng-change="upVal('sjs_G4')" class="form-control" ng-model="form.sjs_G4">
         </td>
         <td id="sjs_H4" ng-bind="form.sjs_H4"></td>
+        <td id="sjs_I4" ng-bind="form.sjs_I4"></td>
+        <td id="sjs_J4" ng-bind="form.sjs_J4"></td>
     </tr>
     <tr>
         <td id="sjs_A5">六号、七号机电源控制柜</td>
@@ -209,6 +217,8 @@
             <input type="number" ng-change="upVal('sjs_G5')" class="form-control" ng-model="form.sjs_G5">
         </td>
         <td id="sjs_H5" ng-bind="form.sjs_H5"></td>
+        <td id="sjs_I5" ng-bind="form.sjs_I5"></td>
+        <td id="sjs_J5" ng-bind="form.sjs_J5"></td>
     </tr>
     <tr>
         <td id="sjs_A6">六号、七号机电源控制柜</td>
@@ -223,6 +233,8 @@
             <input type="number" ng-change="upVal('sjs_G6')" class="form-control" ng-model="form.sjs_G6">
         </td>
         <td id="sjs_H6" ng-bind="form.sjs_H6"></td>
+        <td id="sjs_I6" ng-bind="form.sjs_I6"></td>
+        <td id="sjs_J6" ng-bind="form.sjs_J6"></td>
     </tr>
     <tr>
         <td id="sjs_A7">六号、七号机电源控制柜</td>
@@ -237,6 +249,8 @@
             <input type="number" ng-change="upVal('sjs_G7')" class="form-control" ng-model="form.sjs_G7">
         </td>
         <td id="sjs_H7" ng-bind="form.sjs_H7"></td>
+        <td id="sjs_I7" ng-bind="form.sjs_I7"></td>
+        <td id="sjs_J7" ng-bind="form.sjs_J7"></td>
     </tr>
     <tr>
         <td id="sjs_A8">六号、七号机电源控制柜</td>
@@ -251,6 +265,8 @@
             <input type="number" ng-change="upVal('sjs_G8')" class="form-control" ng-model="form.sjs_G8">
         </td>
         <td id="sjs_H8" ng-bind="form.sjs_H8"></td>
+        <td id="sjs_I8" ng-bind="form.sjs_I8"></td>
+        <td id="sjs_J8" ng-bind="form.sjs_J8"></td>
     </tr>
     <tr>
         <td id="sjs_A9">分检1号机电源控制柜</td>
@@ -265,6 +281,8 @@
             <input type="number" ng-change="upVal('sjs_G9')" class="form-control" ng-model="form.sjs_G9">
         </td>
         <td id="sjs_H9" ng-bind="form.sjs_H9"></td>
+        <td id="sjs_I9" ng-bind="form.sjs_I9"></td>
+        <td id="sjs_J9" ng-bind="form.sjs_J9"></td>
     </tr>
     <tr>
         <td id="sjs_A10">分检1号机电源控制柜</td>
@@ -279,6 +297,8 @@
             <input type="number" ng-change="upVal('sjs_G10')" class="form-control" ng-model="form.sjs_G10">
         </td>
         <td id="sjs_H10" ng-bind="form.sjs_H10"></td>
+        <td id="sjs_I10" ng-bind="form.sjs_I10"></td>
+        <td id="sjs_J10" ng-bind="form.sjs_J10"></td>
     </tr>
     <tr>
         <td id="sjs_A11">分检1号机电源控制柜</td>
@@ -293,6 +313,8 @@
             <input type="number" ng-change="upVal('sjs_G11')" class="form-control" ng-model="form.sjs_G11">
         </td>
         <td id="sjs_H11" ng-bind="form.sjs_H11"></td>
+        <td id="sjs_I11" ng-bind="form.sjs_I11"></td>
+        <td id="sjs_J11" ng-bind="form.sjs_J11"></td>
     </tr>
     <tr>
         <td id="sjs_A12">分检1号机电源控制柜</td>
@@ -307,6 +329,8 @@
             <input type="number" ng-change="upVal('sjs_G12')" class="form-control" ng-model="form.sjs_G12">
         </td>
         <td id="sjs_H12" ng-bind="form.sjs_H12"></td>
+        <td id="sjs_I12" ng-bind="form.sjs_I12"></td>
+        <td id="sjs_J12" ng-bind="form.sjs_J12"></td>
     </tr>
     <tr>
         <td id="sjs_A13">分检1号机电源控制柜</td>
@@ -321,6 +345,8 @@
             <input type="number" ng-change="upVal('sjs_G13')" class="form-control" ng-model="form.sjs_G13">
         </td>
         <td id="sjs_H13" ng-bind="form.sjs_H13"></td>
+        <td id="sjs_I13" ng-bind="form.sjs_I13"></td>
+        <td id="sjs_J13" ng-bind="form.sjs_J13"></td>
     </tr>
     <tr>
         <td id="sjs_A14">分检2-3号机电源控制柜</td>
@@ -335,6 +361,8 @@
             <input type="number" ng-change="upVal('sjs_G14')" class="form-control" ng-model="form.sjs_G14">
         </td>
         <td id="sjs_H14" ng-bind="form.sjs_H14"></td>
+        <td id="sjs_I14" ng-bind="form.sjs_I14"></td>
+        <td id="sjs_J14" ng-bind="form.sjs_J14"></td>
     </tr>
     <tr>
         <td id="sjs_A15">分检2-3号机电源控制柜</td>
@@ -349,6 +377,8 @@
             <input type="number" ng-change="upVal('sjs_G15')" class="form-control" ng-model="form.sjs_G15">
         </td>
         <td id="sjs_H15" ng-bind="form.sjs_H15"></td>
+        <td id="sjs_I15" ng-bind="form.sjs_I15"></td>
+        <td id="sjs_J15" ng-bind="form.sjs_J15"></td>
     </tr>
     <tr>
         <td id="sjs_A16">分检2-3号机电源控制柜</td>
@@ -363,6 +393,8 @@
             <input type="number" ng-change="upVal('sjs_G16')" class="form-control" ng-model="form.sjs_G16">
         </td>
         <td id="sjs_H16" ng-bind="form.sjs_H16"></td>
+        <td id="sjs_I16" ng-bind="form.sjs_I16"></td>
+        <td id="sjs_J16" ng-bind="form.sjs_J16"></td>
     </tr>
     <tr>
         <td id="sjs_A17">分检2-3号机电源控制柜</td>
@@ -377,6 +409,8 @@
             <input type="number" ng-change="upVal('sjs_G17')" class="form-control" ng-model="form.sjs_G17">
         </td>
         <td id="sjs_H17" ng-bind="form.sjs_H17"></td>
+        <td id="sjs_I17" ng-bind="form.sjs_I17"></td>
+        <td id="sjs_J17" ng-bind="form.sjs_J17"></td>
     </tr>
     <tr>
         <td id="sjs_A18">分检2-3号机电源控制柜</td>
@@ -391,6 +425,8 @@
             <input type="number" ng-change="upVal('sjs_G18')" class="form-control" ng-model="form.sjs_G18">
         </td>
         <td id="sjs_H18" ng-bind="form.sjs_H18"></td>
+        <td id="sjs_I18" ng-bind="form.sjs_I18"></td>
+        <td id="sjs_J18" ng-bind="form.sjs_J18"></td>
     </tr>
     <tr>
         <td colspan="2" id="sjs_A19">总共</td>
@@ -400,10 +436,12 @@
         <td id="sjs_F19" ng-bind="form.sjs_F19"></td>
         <td id="sjs_G19" ng-bind="form.sjs_G19"></td>
         <td id="sjs_H19" ng-bind="form.sjs_H19"></td>
+        <td id="sjs_I19" ng-bind="form.sjs_I19"></td>
+        <td id="sjs_J19" ng-bind="form.sjs_J19"></td>
     </tr>
     <tr>
         <td id="sjs_A20">备注：</td>
-        <td id="comment" colspan="7">
+        <td id="comment" colspan="9">
             <input type="text" ng-change="upVal('comment')" class="form-control" style="max-width: 100%;height: 48px;"
                    ng-model="form.comment">
         </td>
