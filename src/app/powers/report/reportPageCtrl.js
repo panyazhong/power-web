@@ -445,7 +445,7 @@
 
     }
 
-    function dayCtrl($scope, params, Log) {
+    function dayCtrl($scope, params, Log, ToastUtils) {
         Log.i('frame: ' + JSON.stringify(params));
 
         $scope.path = "app/powers/report/widgets/dayIframe.html" + "#/?id=" + params.id;
@@ -458,6 +458,7 @@
             if (data == 'dimiss') {
                 $scope.$close();
             } else if (data == 'sub') {
+                ToastUtils.openToast('success', '更新报表成功');
                 $scope.$close(data);
             }
 

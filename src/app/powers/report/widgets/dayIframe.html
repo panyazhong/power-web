@@ -61,7 +61,7 @@
             line-height: 21px;
         }
 
-        #sjs_B20 {
+        #comment {
             height: 54px;
         }
 
@@ -403,9 +403,9 @@
     </tr>
     <tr>
         <td id="sjs_A20">备注：</td>
-        <td id="sjs_B20" colspan="7">
-            <input type="text" ng-change="upVal('sjs_B20')" class="form-control" style="max-width: 100%;height: 48px;"
-                   ng-model="form.sjs_B20">
+        <td id="comment" colspan="7">
+            <input type="text" ng-change="upVal('comment')" class="form-control" style="max-width: 100%;height: 48px;"
+                   ng-model="form.comment">
         </td>
     </tr>
     </tbody>
@@ -435,7 +435,7 @@
         $scope.id = $location.search().id || '';
         $scope.path = $scope.host + '/rpt/record/' + $scope.id;
 
-        $scope.filterKey = ['sjs_B20']; // 白名单
+        $scope.filterKey = ['comment']; // 白名单
         $scope.form = {};
 
         $scope.init = function () {
@@ -541,7 +541,6 @@
                     }).then(function (suc) {
 
                         if (suc.data.message) {
-                            alert(suc.data.message);
                             $parentScope.$apply(function () {
                                 $parentScope.$emit('iframe', 'sub');
                             });
