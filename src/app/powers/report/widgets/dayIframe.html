@@ -472,8 +472,8 @@
         $scope.init();
 
         $scope.upVal = function (key) {
-            var type = key.slice(4, 5); // 确定类型，截取第5个字符
-            var num = key.substring(5); // 截取数字，从第6个字符开始，截取到最后
+            var type = key.slice(4, 5); // 确定类型
+            var num = key.substring(5); // 截取数字
 
             switch (type) {
                 case 'E':   // 日产量
@@ -501,6 +501,12 @@
                         }
                     }
 
+                    // 小数
+                    var n = new Number($scope.form.sjs_E19);
+                    $scope.form.sjs_E19 = n.toFixed(2);
+                    n = new Number($scope.form.sjs_F19);
+                    $scope.form.sjs_F19 = n.toFixed(2);
+
                     break;
                 case 'G':   // 计划单耗
 
@@ -511,6 +517,10 @@
                             $scope.form.sjs_G19 += parseFloat($scope.form[Key]);
                         }
                     }
+
+                    // 小数
+                    var n = new Number($scope.form.sjs_G19);
+                    $scope.form.sjs_G19 = n.toFixed(2);
 
                     break;
             }
