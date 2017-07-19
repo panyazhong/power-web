@@ -6,7 +6,8 @@
         .controller('setICtrl', setICtrl)
         .controller('setUCtrl', setUCtrl)
         .controller('setIaCtrl', setIaCtrl)
-        .controller('setTCtrl', setTCtrl);
+        .controller('setTCtrl', setTCtrl)
+        .controller('setPCtrl', setPCtrl);
 
     /** @ngInject */
     function setalarmPageCtrl($scope, $state, PageTopCache, Sidebar, SidebarCache, Log, locals, AlertSet, setalarmHelper,
@@ -109,6 +110,10 @@
                 d.data.showStatus = d.data.status == '1';
                 d.data.showMsgFlag = d.data.msgFlag == '1';
             }
+            else if (item.prop == "pSum") {
+                d.data.showStatus = d.data.status == '1';
+                d.data.showMsgFlag = d.data.msgFlag == '1';
+            }
             else {
                 d.data.map(function (subItem) {
                     subItem.showStatus = subItem.status == '1';
@@ -147,6 +152,13 @@
                 case 'Tsc': //距离检修周期时间
                     path = 'app/powers/setalarm/widgets/setTModal.html';
                     ctrl = setTCtrl;
+                    d.cid = $scope.form.client_id;  // diff
+                    $scope.openModal(path, ctrl, d);
+                    break;
+                case 'pSum': //当前用电需量占比
+                    path = 'app/powers/setalarm/widgets/setPModal.html';
+                    ctrl = setPCtrl;
+                    d.cid = $scope.form.client_id;  // diff
                     $scope.openModal(path, ctrl, d);
                     break;
             }
@@ -279,6 +291,113 @@
                 data.props[item.prop_id]['status'] = item.showStatus ? '1' : '0';
                 data.props[item.prop_id]['msgFlag'] = item.showMsgFlag ? '1' : '0';
             });
+
+            return data;
+        };
+
+        $scope.submit = function () {
+
+            var params = $scope.formatForm();
+            AlertSet.edit(params,
+                function (data) {
+                    ToastUtils.openToast('info', data.message);
+                    $scope.$close(data);
+                }, function (err) {
+                    HttpToast.toast(err);
+                });
+
+            Log.i('请求的参数是：' + JSON.stringify(params));
+
+        };
+
+    }
+
+    function setTCtrl($scope, params, Log, AlertSet, HttpToast, ToastUtils) {
+        $scope.show = params;
+
+        $scope.data = {
+            beginDate: {
+                options: {
+                    formatYear: 'yyyy',
+                    startingDay: 1,
+                    showWeeks: false,
+                    language: 'zh-CN',
+                },
+                isOpen: false,
+                altInputFormats: ['yyyy-MM-dd'],
+                format: 'yyyy-MM-dd',
+                modelOptions: {
+                    timezone: 'Asia/beijing'
+                }
+            },
+        };
+
+        $scope.init = function () {
+            // title
+            $scope.show.title = $scope.show.prop == 'Tet' ? '电试日期' : '检修时间';
+
+            // date
+            $scope.show.data.showDate = new Date($scope.show.data.date);
+            $scope.show.data.upDate = moment($scope.show.data.date).format('YYYY-MM-DD');
+
+        };
+        $scope.init();
+
+        $scope.formatForm = function () {
+            var data = {};
+
+            data['status'] = $scope.show.data.showStatus ? '1' : '0';
+            data['msgFlag'] = $scope.show.data.showMsgFlag ? '1' : '0';
+            data['advancePeriod'] = $scope.show.data.advancePeriod;
+            data['date'] = $scope.show.data.upDate;
+            data['cid'] = $scope.show.cid;
+            data['type'] = $scope.show.prop;
+
+            return data;
+        };
+
+        $scope.submit = function () {
+
+            var params = $scope.formatForm();
+            AlertSet.edit(params,
+                function (data) {
+                    ToastUtils.openToast('info', data.message);
+                    $scope.$close(data);
+                }, function (err) {
+                    HttpToast.toast(err);
+                });
+
+            Log.i('请求的参数是：' + JSON.stringify(params));
+
+        };
+
+        $scope.changeUpDate = function () {
+            if ($scope.show.data.showDate) {
+                $scope.show.data.upDate = moment($scope.show.data.showDate).format('YYYY-MM-DD');
+            } else {
+                $scope.show.data.upDate = ""
+            }
+        };
+
+        // date picker
+        $scope.togglePicker = function () {
+            $scope.data.beginDate.isOpen = !$scope.data.beginDate.isOpen;
+        };
+
+    }
+
+    function setPCtrl($scope, params, Log, AlertSet, HttpToast, ToastUtils) {
+        $scope.show = params;
+
+        $scope.formatForm = function () {
+            var data = {};
+
+            data['status'] = $scope.show.data.showStatus ? '1' : '0';
+            data['msgFlag'] = $scope.show.data.showMsgFlag ? '1' : '0';
+            data['warning'] = $scope.show.data.warning;
+            data['error'] = $scope.show.data.error;
+            data['cid'] = $scope.show.cid;
+            data['type'] = $scope.show.prop;
 
             return data;
         };

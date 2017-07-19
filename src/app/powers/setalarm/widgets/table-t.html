@@ -1,0 +1,46 @@
+<div>
+    <table class="table table-bordered table-hover common-table">
+        <thead>
+        <tr>
+            <th>下次{{show.title}}</th>
+            <th>提前报警时间{{show.data.unit ? "（"+show.data.unit+"）" : ""}}</th>
+            <th>开关</th>
+            <th>短信通知</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr>
+            <td class="table-def-cursor text-center">
+                <input ng-click="togglePicker()"
+                       uib-datepicker-popup="{{data.beginDate.format}}"
+                       is-open="data.beginDate.isOpen"
+                       datepicker-options="data.beginDate.options"
+                       clear-text="清除"
+                       current-text="今天"
+                       close-text="关闭"
+                       alt-input-formats="data.beginDate.altInputFormats"
+                       ng-model="show.data.showDate"
+                       ng-model-options="data.beginDate.modelOptions"
+                       type="text"
+                       class="form-control-def text-center"
+                       readonly="readonly"
+                       placeholder="{{show.title}}"
+                       ng-change="changeUpDate()"
+                       style="min-width: 90px;max-width: 120px;display: inline-block">
+
+            </td>
+            <td class="table-def-cursor text-center">
+                <input type="number" class="form-control-def form-control-sm text-center"
+                       ng-model="show.data.advancePeriod">
+            </td>
+
+            <td ng-class="{'pointer-none': !show.data.upDate || !show.data.advancePeriod}">
+                <ba-switcher switcher-style="primary" switcher-value="show.data.showStatus"></ba-switcher>
+            </td>
+            <td ng-class="{'pointer-none': !show.data.upDate || !show.data.advancePeriod}">
+                <ba-switcher switcher-style="primary" switcher-value="show.data.showMsgFlag"></ba-switcher>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+</div>

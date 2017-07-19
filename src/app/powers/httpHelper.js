@@ -178,33 +178,46 @@
 
                         // parse float
                         item.data.advancePeriod = parseFloat(item.data.advancePeriod);
-                        return
                     }
+                    else if (item.prop == "pSum") {
 
-                    item.data.map(function (subItem) {
-                        var msg = '';
-                        var warning = subItem.warning ? subItem.warning : '';
-                        var error = subItem.error ? subItem.error : '';
-                        var unit = subItem.unit ? subItem.unit : '';
-                        if (warning && error) {
-                            msg = "：预警" + warning + unit + "，报警" + error + unit + "；"
-                        }
-                        if (!warning && !error) {
-                            msg = "：未设置；"
-                        }
-                        if (warning || error) {
-                            msg = warning ? "：预警" + warning + unit + "；" : "：报警" + error + unit + "；";
-                        }
+                        var w = item.data.warning || '';
+                        var e = item.data.error || '';
+                        var u = item.data.unit || '';
 
-                        if (subItem.branch_name) {
-                            item.detail += subItem.branch_name + msg;
-                        }
+                        item.detail = '预警 ' + w + u + '，报警 ' + e + u;
 
                         // parse float
-                        subItem.warning = parseFloat(subItem.warning);
-                        subItem.error = parseFloat(subItem.error);
-                        subItem.refVal = parseFloat(subItem.refVal);
-                    })
+                        item.data.warning = parseFloat(item.data.warning);
+                        item.data.error = parseFloat(item.data.error);
+                    }
+                    else {
+                        item.data.map(function (subItem) {
+                            var msg = '';
+                            var warning = subItem.warning ? subItem.warning : '';
+                            var error = subItem.error ? subItem.error : '';
+                            var unit = subItem.unit ? subItem.unit : '';
+                            if (warning && error) {
+                                msg = "：预警" + warning + unit + "，报警" + error + unit + "；"
+                            }
+                            if (!warning && !error) {
+                                msg = "：未设置；"
+                            }
+                            if (warning || error) {
+                                msg = warning ? "：预警" + warning + unit + "；" : "：报警" + error + unit + "；";
+                            }
+
+                            if (subItem.branch_name) {
+                                item.detail += subItem.branch_name + msg;
+                            }
+
+                            // parse float
+                            subItem.warning = parseFloat(subItem.warning);
+                            subItem.error = parseFloat(subItem.error);
+                            subItem.refVal = parseFloat(subItem.refVal);
+                        })
+
+                    }
                 });
 
                 return _.cloneDeep(obj);
