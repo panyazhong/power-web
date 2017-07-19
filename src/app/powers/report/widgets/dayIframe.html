@@ -494,18 +494,13 @@
                     }
 
                     /** 3.动态计算总单耗**/
-                    $scope.form.sjs_F19 = 0;
-                    for (var Key in $scope.form) {
-                        if (Key.indexOf('F') != -1 && Key != 'sjs_F19') {   //不包含总单耗
-                            $scope.form.sjs_F19 += parseFloat($scope.form[Key]);
-                        }
-                    }
+                    if ($scope.form.sjs_C19 && $scope.form.sjs_E19) {
+                        $scope.form.sjs_F19 = ($scope.form.sjs_C19 / $scope.form.sjs_E19).toFixed(2);
 
-                    // 小数
-                    var n = new Number($scope.form.sjs_E19);
-                    $scope.form.sjs_E19 = n.toFixed(2);
-                    n = new Number($scope.form.sjs_F19);
-                    $scope.form.sjs_F19 = n.toFixed(2);
+                        // 小数
+                        var n = new Number($scope.form.sjs_E19);
+                        $scope.form.sjs_E19 = n.toFixed(2);
+                    }
 
                     break;
                 case 'G':   // 计划单耗
