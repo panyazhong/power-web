@@ -312,7 +312,7 @@
 
     }
 
-    function setTCtrl($scope, params, Log, AlertSet, HttpToast, ToastUtils) {
+    function setTCtrl($scope, params, Log, AlertSetting, HttpToast, ToastUtils) {
         $scope.show = params;
 
         $scope.data = {
@@ -359,7 +359,7 @@
         $scope.submit = function () {
 
             var params = $scope.formatForm();
-            AlertSet.edit(params,
+            AlertSetting.edit(params,
                 function (data) {
                     ToastUtils.openToast('info', data.message);
                     $scope.$close(data);
@@ -386,7 +386,7 @@
 
     }
 
-    function setPCtrl($scope, params, Log, AlertSet, HttpToast, ToastUtils) {
+    function setPCtrl($scope, params, Log, AlertSetting, HttpToast, ToastUtils) {
         $scope.show = params;
 
         $scope.formatForm = function () {
@@ -405,7 +405,7 @@
         $scope.submit = function () {
 
             var params = $scope.formatForm();
-            AlertSet.edit(params,
+            AlertSetting.edit(params,
                 function (data) {
                     ToastUtils.openToast('info', data.message);
                     $scope.$close(data);

@@ -393,6 +393,19 @@
             };
             return Resource(config);
         })
+        // 新报警设置2
+        .factory('AlertSetting', function (Resource) {
+            var config = {
+                url: 'setting/client/test',
+                paramsDefault: {},
+                action: {
+                    edit: {  // 修改
+                        method: 'PUT'
+                    }
+                }
+            };
+            return Resource(config);
+        })
         // 新报表设置
         .factory('ReportSet', function (Resource) {
             var config = {
