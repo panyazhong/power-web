@@ -351,7 +351,7 @@
             data['advancePeriod'] = $scope.show.data.advancePeriod;
             data['date'] = $scope.show.data.upDate;
             data['cid'] = $scope.show.cid;
-            data['type'] = $scope.show.prop;
+            data['prop'] = $scope.show.prop;
 
             return data;
         };
@@ -397,7 +397,7 @@
             data['warning'] = $scope.show.data.warning;
             data['error'] = $scope.show.data.error;
             data['cid'] = $scope.show.cid;
-            data['type'] = $scope.show.prop;
+            data['prop'] = $scope.show.prop;
 
             return data;
         };
