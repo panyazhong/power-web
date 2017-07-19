@@ -19,7 +19,10 @@
             <a ng-mouseenter="hoverItem($event, item)" ng-if="::item.subMenu"
                class="al-sidebar-list-link" ba-ui-sref-toggler ng-click="saveCid(item)">
                 <span class="{{ item.icon }}"></span><span
-                    class="indicator-desc indicator-desc-one">{{ ::item.title }}</span>
+                    class="indicator-desc indicator-desc-one"
+                    tooltip-placement="bottom-left"
+                    uib-tooltip="{{item.title}}"
+                    tooltip-class="cTip">{{ ::item.title }}</span>
                 <b class="fa fa-angle-down" ui-sref-active="fa-angle-up"
                    ng-if="::item.subMenu"></b>
             </a>
@@ -36,7 +39,10 @@
 
                         <!--二级菜单标题-->
                         <span class="{{ subitem.icon }}"></span><span
-                            class="indicator-desc indicator-desc-two">{{ ::subitem.title }}</span>
+                            class="indicator-desc indicator-desc-two"
+                            tooltip-placement="bottom-left"
+                            uib-tooltip="{{subitem.title}}"
+                            tooltip-class="cTip">{{ ::subitem.title }}</span>
 
                         <b class="fa"
                            ng-class="{'fa-angle-up': subitem.expanded, 'fa-angle-down': !subitem.expanded}"
@@ -55,10 +61,13 @@
                                ng-if="::!subSubitem.disabled"
                                style="cursor:pointer;">
 
-                                <div style="pointer-events: none;">
+                                <div>
                                     <span class="{{ subSubitem.icon }}">
                                     </span>
-                                    <span class="page-sb-item indicator-desc indicator-desc-three">
+                                    <span class="page-sb-item indicator-desc indicator-desc-three"
+                                          tooltip-placement="bottom-left"
+                                          uib-tooltip="{{subSubitem.title}}"
+                                          tooltip-class="cTip">
                                 	    {{ ::subSubitem.title }}
                                     </span>
                                 </div>

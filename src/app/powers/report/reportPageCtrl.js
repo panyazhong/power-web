@@ -445,11 +445,8 @@
     function dayCtrl($scope, params, Log, ToastUtils, $sce) {
         Log.i('frame: ' + JSON.stringify(params));
 
-        // 自己测试path
-        // $scope.path = "app/powers/report/widgets/monthIframe.html" + "#/?id=" + params.id;
-        // $scope.path = $sce.trustAsResourceUrl('http://www.qq.com/');
-
-        $scope.url = params.html + "#/?id=" + params.id;
+        // $scope.url = params.html + "#/?id=" + params.id;
+        $scope.url = "app/powers/report/widgets/dayIframe.html" + "#/?id=" + params.id;
         $scope.path = $sce.trustAsResourceUrl($scope.url);
 
         $scope.$on('iframe', function (e, data) {

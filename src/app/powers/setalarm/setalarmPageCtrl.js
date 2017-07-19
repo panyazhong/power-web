@@ -5,7 +5,8 @@
         .controller('setalarmPageCtrl', setalarmPageCtrl)
         .controller('setICtrl', setICtrl)
         .controller('setUCtrl', setUCtrl)
-        .controller('setIaCtrl', setIaCtrl);
+        .controller('setIaCtrl', setIaCtrl)
+        .controller('setTCtrl', setTCtrl);
 
     /** @ngInject */
     function setalarmPageCtrl($scope, $state, PageTopCache, Sidebar, SidebarCache, Log, locals, AlertSet, setalarmHelper,
@@ -104,10 +105,16 @@
         $scope.edit = function (item) {
             var d = _.cloneDeep(item);
             // 开关flag
-            d.data.map(function (subItem) {
-                subItem.showStatus = subItem.status == '1';
-                subItem.showMsgFlag = subItem.msgFlag == '1';
-            });
+            if (item.prop == "Tet" || item.prop == "Tsc") {
+                d.data.showStatus = d.data.status == '1';
+                d.data.showMsgFlag = d.data.msgFlag == '1';
+            }
+            else {
+                d.data.map(function (subItem) {
+                    subItem.showStatus = subItem.status == '1';
+                    subItem.showMsgFlag = subItem.msgFlag == '1';
+                });
+            }
 
             var path = '';
             var ctrl = '';
@@ -134,6 +141,12 @@
                 case 'IcOC':
                     path = 'app/powers/setalarm/widgets/setIaModal.html';
                     ctrl = setIaCtrl;
+                    $scope.openModal(path, ctrl, d);
+                    break;
+                case 'Tet': //距离电试周期时间
+                case 'Tsc': //距离检修周期时间
+                    path = 'app/powers/setalarm/widgets/setTModal.html';
+                    ctrl = setTCtrl;
                     $scope.openModal(path, ctrl, d);
                     break;
             }

@@ -29,8 +29,7 @@
 
                 <ul class="dropdown-menu common-dp-ul" uib-dropdown-menu role="menu"
                     aria-labelledby="single-button" ng-show="isSetting">
-                    <li role="menuitem"
-                        ng-repeat="info in show.setData track by $index">
+                    <li role="menuitem" ng-repeat="info in show.setData track by $index" ng-show="checkUserType(info)">
                         <a ng-bind="info.title" ng-click="changeSetState(info)"></a>
                     </li>
                 </ul>

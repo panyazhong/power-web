@@ -36,10 +36,13 @@
                 {
                     title: '报表查询',
                     state: 'report'
+                },
+                {
+                    title: '平台设置',
+                    state: 'settings'
                 }],
             cache: PageTopCache.cache,
             eventTotal: 0,// 默认0
-            userName: locals.getObject('user').name,
             setData: [
                 {
                     title: '用户设置',
@@ -53,7 +56,9 @@
                     title: '管理员设置',
                     state: 'setpwd'
                 }
-            ]
+            ],
+            userName: locals.getObject('user').name,
+            userType: locals.getObject('user').hasTop
         };
 
         $scope.init = function () {
@@ -67,7 +72,21 @@
             }
 
         };
-        $scope.init();
+        // $scope.init();
+
+        $scope.checkUserType = function (item) {
+            switch (item.state) {
+                case "setuser":
+                    return $scope.show.userType == 1 ? true : false;
+                    break;
+                case "setalarm":
+                    return true;
+                    break;
+                case "setpwd":
+                    return $scope.show.userType == 1 ? true : false;
+                    break;
+            }
+        };
 
         $scope.changeState = function (item) {
             PageTopCache.cache.state = item.state;

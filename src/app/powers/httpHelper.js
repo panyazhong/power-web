@@ -170,6 +170,16 @@
                 // 设置报警列表
                 obj.map(function (item) {
                     item.detail = "";
+                    if (item.prop == "Tet" || item.prop == "Tsc") {
+                        var advancePeriod = item.data.advancePeriod || '';
+                        var unit = item.data.unit || '';
+
+                        item.detail = '提前报警时间' + advancePeriod + unit + '，下次电试日期' + item.data.date;
+
+                        // parse float
+                        item.data.advancePeriod = parseFloat(item.data.advancePeriod);
+                        return
+                    }
 
                     item.data.map(function (subItem) {
                         var msg = '';
@@ -186,7 +196,9 @@
                             msg = warning ? "：预警" + warning + unit + "；" : "：报警" + error + unit + "；";
                         }
 
-                        item.detail += subItem.branch_name + msg;
+                        if (subItem.branch_name) {
+                            item.detail += subItem.branch_name + msg;
+                        }
 
                         // parse float
                         subItem.warning = parseFloat(subItem.warning);
