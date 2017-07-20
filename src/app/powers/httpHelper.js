@@ -179,7 +179,7 @@
                         // parse float
                         item.data.advancePeriod = parseFloat(item.data.advancePeriod);
                     }
-                    else if (item.prop == "pSum") {
+                    else if (item.prop == "PSum") {
 
                         var w = item.data.warning || '';
                         var e = item.data.error || '';

@@ -110,7 +110,7 @@
                 d.data.showStatus = d.data.status == '1';
                 d.data.showMsgFlag = d.data.msgFlag == '1';
             }
-            else if (item.prop == "pSum") {
+            else if (item.prop == "PSum") {
                 d.data.showStatus = d.data.status == '1';
                 d.data.showMsgFlag = d.data.msgFlag == '1';
             }
@@ -155,7 +155,7 @@
                     d.cid = $scope.form.client_id;  // diff
                     $scope.openModal(path, ctrl, d);
                     break;
-                case 'pSum': //当前用电需量占比
+                case 'PSum': //当前用电需量占比
                     path = 'app/powers/setalarm/widgets/setPModal.html';
                     ctrl = setPCtrl;
                     d.cid = $scope.form.client_id;  // diff

@@ -445,8 +445,8 @@
     function dayCtrl($scope, params, Log, ToastUtils, $sce) {
         Log.i('frame: ' + JSON.stringify(params));
 
-        // $scope.url = params.html + "#/?id=" + params.id;
-        $scope.url = "app/powers/report/widgets/dayIframe.html" + "#/?id=" + params.id;
+        $scope.url = params.html + "#/?id=" + params.id;
+        // $scope.url = "app/powers/report/widgets/dayIframe.html" + "#/?id=" + params.id;
         $scope.path = $sce.trustAsResourceUrl($scope.url);
 
         $scope.$on('iframe', function (e, data) {

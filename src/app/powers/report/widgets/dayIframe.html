@@ -57,7 +57,7 @@
         }
 
         .table > tbody > tr > td {
-            font-size: 8px !important;
+            font-size: 14px !important;
             line-height: 21px;
         }
 
@@ -404,8 +404,10 @@
     <tr>
         <td id="sjs_A20">备注：</td>
         <td id="comment" colspan="7">
-            <input type="text" ng-change="upVal('comment')" class="form-control" style="max-width: 100%;height: 48px;"
-                   ng-model="form.comment">
+            <textarea class="form-control" rows="2" style="resize: none;max-width: 100%;line-height: 18px;"
+                      maxlength="100" placeholder="最多输入100个字！"
+                      ng-change="upVal('comment')" ng-model="form.comment"></textarea>
+
         </td>
     </tr>
     </tbody>
@@ -431,7 +433,7 @@
     });
 
     appInIframe.controller('dayCtrl', function ($scope, $location, $http, $parentScope) {
-        $scope.host = 'http://192.168.0.120/api';
+        $scope.host = 'http://monitor.shanghaihenghui.com/api';
         $scope.id = $location.search().id || '';
         $scope.path = $scope.host + '/rpt/record/' + $scope.id;
 
