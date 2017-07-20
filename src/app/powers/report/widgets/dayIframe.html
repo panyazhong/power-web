@@ -484,7 +484,9 @@
                     $scope.form.sjs_E19 = 0;
                     for (var Key in $scope.form) {
                         if (Key.indexOf('E') != -1 && Key != 'sjs_E19') {   //不包含总日产量
-                            $scope.form.sjs_E19 += parseFloat($scope.form[Key]);
+                            if ($scope.form[Key]) {
+                                $scope.form.sjs_E19 += parseFloat($scope.form[Key]);
+                            }
                         }
                     }
 
@@ -511,13 +513,17 @@
                     $scope.form.sjs_G19 = 0;
                     for (var Key in $scope.form) {
                         if (Key.indexOf('G') != -1 && Key != 'sjs_G19') {   //不包含总计划单耗
-                            $scope.form.sjs_G19 += parseFloat($scope.form[Key]);
+                            if ($scope.form[Key]) {
+                                $scope.form.sjs_G19 += parseFloat($scope.form[Key]);
+                            }
                         }
                     }
 
                     // 小数
-                    var n = new Number($scope.form.sjs_G19);
-                    $scope.form.sjs_G19 = n.toFixed(2);
+                    if ($scope.form.sjs_G19) {
+                        var n = new Number($scope.form.sjs_G19);
+                        $scope.form.sjs_G19 = n.toFixed(2);
+                    }
 
                     break;
             }
