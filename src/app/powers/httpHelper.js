@@ -194,17 +194,17 @@
                     else {
                         item.data.map(function (subItem) {
                             var msg = '';
-                            var warning = subItem.warning ? subItem.warning : '';
-                            var error = subItem.error ? subItem.error : '';
-                            var unit = subItem.unit ? subItem.unit : '';
-                            if (warning && error) {
-                                msg = "：预警" + warning + unit + "，报警" + error + unit + "；"
-                            }
+                            var warning = subItem.warning || '';
+                            var error = subItem.error || '';
+                            var unit = subItem.unit || '';
+
                             if (!warning && !error) {
-                                msg = "：未设置；"
+                                msg = ": 未设置；"
                             }
-                            if (warning || error) {
-                                msg = warning ? "：预警" + warning + unit + "；" : "：报警" + error + unit + "；";
+                            else {
+                                var w = warning ? ' 预警' + warning + unit : '';
+                                var e = error ? ' 报警' + error + unit : '';
+                                msg = ":" + w + e + "；";
                             }
 
                             if (subItem.branch_name) {
