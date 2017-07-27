@@ -127,6 +127,7 @@
                 case 'Ia':  //电流
                 case 'Ib':
                 case 'Ic':
+                case 'Iavg':   //电流平均值最大值
                 case 'PF':  //功率因数
                 case 'P':   //有功
                 case 'Q':   //无功
