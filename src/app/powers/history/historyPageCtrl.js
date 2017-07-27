@@ -112,27 +112,33 @@
             queryArr: [
                 {
                     key: 'A',
-                    name: '电量'
+                    name: '电量',
+                    unit :'KW.h'
                 },
                 {
                     key: 'B',
-                    name: '三相电流'
+                    name: '三相电流',
+                    unit :'A'
                 },
                 {
                     key: 'C',
-                    name: '三相电压'
+                    name: '三相电压',
+                    unit :'V'
                 },
                 {
                     key: 'P',
-                    name: '有功功率'
+                    name: '有功功率',
+                    unit :'kW'
                 },
                 {
                     key: 'Q',
-                    name: '无功功率'
+                    name: '无功功率',
+                    unit :'kvar'
                 },
                 {
                     key: 'D',
-                    name: '功率因数'
+                    name: '功率因数',
+                    unit :''
                 }
             ],    // 左侧可信息查询
             queryName: '电量',    // def 显示的val
@@ -140,7 +146,8 @@
             bCheckArr: [],   // 左侧 checkbox状态
 
             isLoadPie: true,
-            isLoading: false
+            isLoading: false,
+            unitKey : '单位：KW.h' // def 单位
         };
 
         $scope.form = {
@@ -405,6 +412,7 @@
             // set
             $scope.show.queryName = obj.name;
             $scope.show.queryKey = obj.key;
+            $scope.show.unitKey = '单位：'+obj.unit;
             // Log.i('click: \n' + JSON.stringify(obj));
 
             $scope.lData = $scope.setMorrisData();
