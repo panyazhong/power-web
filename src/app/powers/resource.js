@@ -441,5 +441,24 @@
             };
             return Resource(config);
         })
+        // 巡检查询——异常
+        .factory('Exception', function (Resource) {
+            var config = {
+                url: 'exception/:list/:clientIDs/:timeStart/:timeEnd',
+                paramsDefault: {
+                    list: '@list',
+                    clientIDs: '@clientIDs',
+                    timeStart: '@timeStart',
+                    timeEnd: '@timeEnd'
+                },
+                action: {
+                    query: {    // 获取异常列表
+                        method: 'GET',
+                        isArray: true
+                    }
+                }
+            };
+            return Resource(config);
+        })
 
 })();

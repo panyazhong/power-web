@@ -31,6 +31,88 @@
                     timezone: 'Asia/beijing'
                 }
             },
+
+            datetimepickerOptions1: {
+                datetimepicker: {
+                    popupPlacement: 'bottom',
+                    isOpen: false,
+                    buttonBar: {
+                        show: true,
+                        now: {
+                            show: true,
+                            text: '现在'
+                        },
+                        today: {
+                            show: true,
+                            text: '今天'
+                        },
+                        clear: {
+                            show: true,
+                            text: '清除'
+                        },
+                        date: {
+                            show: true,
+                            text: '日期'
+                        },
+                        time: {
+                            show: true,
+                            text: '时间'
+                        },
+                        close: {
+                            show: true,
+                            text: '关闭'
+                        }
+                    }
+                },
+                datepicker: {
+                    showWeeks: false
+                },
+                timepicker: {
+                    showMeridian: false
+                },
+                click: function () {
+                    $scope.data.datetimepickerOptions1.datetimepicker.isOpen = true;
+                }
+            },
+            datetimepickerOptions2: {
+                datetimepicker: {
+                    popupPlacement: 'bottom',
+                    isOpen: false,
+                    buttonBar: {
+                        show: true,
+                        now: {
+                            show: true,
+                            text: '现在'
+                        },
+                        today: {
+                            show: true,
+                            text: '今天'
+                        },
+                        clear: {
+                            show: true,
+                            text: '清除'
+                        },
+                        date: {
+                            show: true,
+                            text: '日期'
+                        },
+                        time: {
+                            show: true,
+                            text: '时间'
+                        },
+                        close: {
+                            show: true,
+                            text: '关闭'
+                        }
+                    }
+                },
+                datepicker: {
+                    showWeeks: false
+                },
+                timepicker: {
+                    showMeridian: false
+                }
+            },
         };
 
         $scope.show = {
@@ -38,7 +120,11 @@
             clientName: '',  //变电站
             sidebarArr: [],   //变电站数组
             setList: [],        // 实时
-            setListHistory: []   // 历史
+            setListHistory: [],   // 历史
+            currentState: 'main',    // 页面state
+
+            timeStart: '', // 异常起始时间
+            timeEnd: ''     // 异常结束时间
         };
         $scope.rowCollection = [];
         $scope.rowCollectionHistory = [];
@@ -46,7 +132,10 @@
         $scope.form = {
             client_id: '',  //变电站cid
             beginDate: '',
-            endDate: ''
+            endDate: '',
+
+            imeStart: '', // 异常起始时间
+            timeEnd: ''     // 异常结束时间
         };
 
         $scope.formatForm = function () {
@@ -61,11 +150,9 @@
             }
 
             var params = {};
-            for (var Key in $scope.form) {
-                // if ($scope.form[Key]) {
-                params[Key] = $scope.form[Key];
-                // }
-            }
+            params["client_id"] = $scope.form.client_id;
+            params["beginDate"] = $scope.form.beginDate;
+            params["endDate"] = $scope.form.endDate;
 
             return params;
         };
@@ -171,6 +258,10 @@
             };
         };
 
+        $scope.viewException = function () {
+            $scope.show.currentState = 'excep';
+        };
+
         // date picker
         $scope.togglePicker = function () {
             $scope.data.beginDate.isOpen = !$scope.data.beginDate.isOpen;
@@ -195,6 +286,51 @@
             }
 
         });
+
+        // 异常列表
+        $scope.formatFormExcep = function () {
+
+            $scope.form.client_id = $scope.form.client_id || 0;
+            $scope.form.timeStart = $scope.show.timeStart ? moment(moment($scope.show.timeStart).format('YYYY-MM-DD HH:mm:ss')).unix() : 0;
+            $scope.form.timeEnd = $scope.show.timeEnd ? moment(moment($scope.show.timeEnd).format('YYYY-MM-DD HH:mm:ss')).unix() : 0;
+
+            var params = {};
+            params["clientIDs"] = $scope.form.client_id;
+            params["timeStart"] = $scope.form.timeStart;
+            params["timeEnd"] = $scope.form.timeEnd;
+
+            return params;
+        };
+
+        $scope.clearExcep = function () {
+            $scope.show.clientName = '';
+
+            $scope.form = {
+                client_id: ''  //变电站cid
+            };
+        };
+
+        $scope.searchExcep = function () {
+            Log.i('searchExcep...');
+        };
+
+        $scope.backMain = function () {
+            $scope.show.currentState = 'main';
+        };
+
+        // dropdown set 1
+        $scope.changeClentExcep = function (obj) {
+            if ($scope.show.clientName == obj.clientName) {
+                return;
+            }
+
+            $scope.form.client_id = obj.clientId;
+            $scope.show.clientName = obj.clientName;
+
+            // 获取异常列表
+            Log.i("异常列表：" + obj.clientName + "      id：" + obj.clientId);
+            // 请求服务器
+        };
 
     }
 
