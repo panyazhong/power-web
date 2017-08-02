@@ -26,7 +26,7 @@
         })
         .factory('Resource', function ($resource, $httpParamSerializerJQLike, $q) {
 
-            var host = 'http://monitor.shanghaihenghui.com/api';
+            var host = 'http://192.168.0.155/power';
 
             var setAction = function (actions) {
                 var defaultParams = {
@@ -416,6 +416,26 @@
                 action: {
                     query: {    // 获取报表列表
                         method: 'GET'
+                    }
+                }
+            };
+            return Resource(config);
+        })
+        // 巡检查询
+        .factory('Task', function (Resource) {
+            var config = {
+                url: 'task/:history/:real_time/:client_id/:beginDate/:endDate',
+                paramsDefault: {
+                    history: '@history',
+                    real_time: '@real_time',
+                    client_id: '@client_id',
+                    beginDate: '@beginDate',
+                    endDate: '@endDate'
+                },
+                action: {
+                    query: {    // 获取任务列表
+                        method: 'GET',
+                        isArray: true
                     }
                 }
             };

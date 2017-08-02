@@ -9,7 +9,7 @@
     $stateProvider
         .state('checkin', {
           url: '/checkin',
-          title: '签到查询',
+          title: '巡检查询',
           templateUrl: 'app/powers/checkin/checkin.html',
           controller: 'checkinPageCtrl',
         });

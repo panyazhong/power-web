@@ -14,99 +14,99 @@
 
     function eventsCache(Log, $state, $rootScope, clientCache, $uibModal) {
 
-        var socket = io.connect('http://monitor.shanghaihenghui.com:6688', {resource: 'event/socket.io'});
-        socket.on('alert', function (data) {    // 监听事件
-            Log.i('alert : \n' + data);
-
-            var obj = JSON.parse(data);
-            socket.emit('received', {mhid: obj.mhid}); // 收到alert事件后响应
-            switch (parseInt(obj.level)) {
-                case 1:
-                    if (!window.DEBUG) {
-                        openModal('app/powers/modal/warningEvent.html');
-                    }
-                    break;
-                case 2:
-                    if (!window.DEBUG) {
-                        openModal('app/powers/modal/dangerEvent.html');
-                    }
-                    break;
-            }
-
-            function openModal(path) {
-                $uibModal.open({
-                    animation: true,
-                    templateUrl: path,
-                    size: '',
-                    controller: eventCtrl,
-                    // appendTo: angular.element('#' + eleId),
-                    resolve: {
-                        params: {
-                            data: obj
-                        }
-                    },
-                    windowTopClass: "power-modal-layout"
-                }).result.then(function (result) {
-                    // 传值走这里
-                    if (info) {
-                        $state.go('events');
-                    }
-                }, function (result) {
-                    Log.i('modal 关闭了');
-                });
-            }
-
-            function eventCtrl($scope, params, $timeout) {
-                $scope.title = params.data.desc;
-
-                $scope.submit = function () {
-                    var data = 'submit';
-                    $scope.$close(data);
-                };
-
-                $timeout(function () {
-                    $scope.$dismiss();
-                }, 5000);
-            }
-
-        });
-
-        socket.on('monitor', function (data) {
-            Log.i('monitor : \n' + data);
-
-            var obj = JSON.parse(JSON.parse(data).content);
-            clientCache.cache.data = obj;
-
-            $rootScope.$emit('refreshMonitor', obj);    // 一次系统图
-        });
-
-        socket.on('status', function (data) {
-            Log.i('status : \n' + data);
-
-            var obj = JSON.parse(data);
-            var item = {
-                count: JSON.parse(obj.content).total,  // 未处理的event数量
-                states: (JSON.parse(obj.content)).detail // 侧边栏
-            };
-            $rootScope.$emit('refresh', item);
-        });
-
-        socket.on('overall', function (data) {
-            Log.i('overall : \n' + data);
-
-            var obj = JSON.parse(data);
-            var item = JSON.parse(obj.content);
-            clientCache.cache.p = item;
-
-            $rootScope.$emit('overallRefresh', item);
-        });
+        // var socket = io.connect('http://192.168.0.155:6688', {resource: 'event/socket.io'});
+        // socket.on('alert', function (data) {    // 监听事件
+        //     Log.i('alert : \n' + data);
+        //
+        //     var obj = JSON.parse(data);
+        //     socket.emit('received', {mhid: obj.mhid}); // 收到alert事件后响应
+        //     switch (parseInt(obj.level)) {
+        //         case 1:
+        //             if (!window.DEBUG) {
+        //                 openModal('app/powers/modal/warningEvent.html');
+        //             }
+        //             break;
+        //         case 2:
+        //             if (!window.DEBUG) {
+        //                 openModal('app/powers/modal/dangerEvent.html');
+        //             }
+        //             break;
+        //     }
+        //
+        //     function openModal(path) {
+        //         $uibModal.open({
+        //             animation: true,
+        //             templateUrl: path,
+        //             size: '',
+        //             controller: eventCtrl,
+        //             // appendTo: angular.element('#' + eleId),
+        //             resolve: {
+        //                 params: {
+        //                     data: obj
+        //                 }
+        //             },
+        //             windowTopClass: "power-modal-layout"
+        //         }).result.then(function (result) {
+        //             // 传值走这里
+        //             if (info) {
+        //                 $state.go('events');
+        //             }
+        //         }, function (result) {
+        //             Log.i('modal 关闭了');
+        //         });
+        //     }
+        //
+        //     function eventCtrl($scope, params, $timeout) {
+        //         $scope.title = params.data.desc;
+        //
+        //         $scope.submit = function () {
+        //             var data = 'submit';
+        //             $scope.$close(data);
+        //         };
+        //
+        //         $timeout(function () {
+        //             $scope.$dismiss();
+        //         }, 5000);
+        //     }
+        //
+        // });
+        //
+        // socket.on('monitor', function (data) {
+        //     Log.i('monitor : \n' + data);
+        //
+        //     var obj = JSON.parse(JSON.parse(data).content);
+        //     clientCache.cache.data = obj;
+        //
+        //     $rootScope.$emit('refreshMonitor', obj);    // 一次系统图
+        // });
+        //
+        // socket.on('status', function (data) {
+        //     Log.i('status : \n' + data);
+        //
+        //     var obj = JSON.parse(data);
+        //     var item = {
+        //         count: JSON.parse(obj.content).total,  // 未处理的event数量
+        //         states: (JSON.parse(obj.content)).detail // 侧边栏
+        //     };
+        //     $rootScope.$emit('refresh', item);
+        // });
+        //
+        // socket.on('overall', function (data) {
+        //     Log.i('overall : \n' + data);
+        //
+        //     var obj = JSON.parse(data);
+        //     var item = JSON.parse(obj.content);
+        //     clientCache.cache.p = item;
+        //
+        //     $rootScope.$emit('overallRefresh', item);
+        // });
 
         return {
             subscribeClient: function (cid) {
-                socket.emit('subscribe', {client_id: cid}); // 订阅——变电站信息
+                // socket.emit('subscribe', {client_id: cid}); // 订阅——变电站信息
             },
             login: function () {
-                socket.emit('login', {});
+                // socket.emit('login', {});
             }
         }
     }
@@ -124,12 +124,12 @@
 
     function imgPrefix() {
         return {
-            prefix: 'http://monitor.shanghaihenghui.com/'
+            prefix: 'http://192.168.0.155/'
         }
     }
 
     function exportPrefix(ImgPrefix) {
-        var host = ImgPrefix.prefix + "api/";
+        var host = ImgPrefix.prefix + "power/";
 
         return {
             prefix: host + 'device/export',      // 设备导出

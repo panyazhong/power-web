@@ -27,63 +27,23 @@
 
         <div class="form-group col-sm-6 col-md-6 col-lg-6" style="margin-bottom: 10px;">
             <label class="col-sm-5"
-                   style="margin-right: 0 !important;line-height: 34px;">起始时间：</label>
+                   style="margin-right: 0 !important;line-height: 34px;">日期：</label>
             <div class="col-sm-7">
 
-                <input id="scheduleBeginTime" type="text"
-                       ng-model="show.from_time"
-                       datetime-picker="yyyy-MM-dd HH:mm"
-                       is-open="data.datetimepickerOptions1.datetimepicker.isOpen"
-                       button-bar="data.datetimepickerOptions1.datetimepicker.buttonBar"
-                       timepicker-options="data.datetimepickerOptions1.timepicker"
-                       datepicker-options="data.datetimepickerOptions1.datepicker"
-                       ng-click="data.datetimepickerOptions1.click()"
-                       class="form-control date-input"
-                       readonly/>
-
-            </div>
-        </div>
-
-        <div class="form-group col-sm-6 col-md-6 col-lg-6" style="margin-bottom: 10px;">
-            <label class="col-sm-5"
-                   style="margin-right: 0 !important;line-height: 34px;">签到点：</label>
-            <div class="col-sm-7">
-
-                <!-- Single button -->
-                <div class="select-right" uib-dropdown>
-                    <button type="button" class="btn-def btn-trans" style="text-align: left"
-                            uib-dropdown-toggle ng-disabled="disabled">
-                        <span class="caret"></span>{{form.pos}}
-                    </button>
-
-                    <ul class="dropdown-menu common-dp-ul" uib-dropdown-menu role="menu"
-                        aria-labelledby="single-button">
-                        <li role="menuitem"
-                            ng-repeat="info in show.checkPlaceArr track by $index">
-                            <a ng-bind="info" ng-click="changeCheckPlace(info)"></a>
-                        </li>
-                        <li role="menuitem" ng-show="show.checkPlaceArr.length ==0 ">
-                            <a>请先选择变电站信息</a>
-                        </li>
-                    </ul>
-                </div>
-            </div>
-        </div>
-
-        <div class="form-group col-sm-6 col-md-6 col-lg-6" style="margin-bottom: 10px;">
-            <label class="col-sm-5"
-                   style="margin-right: 0 !important;line-height: 34px;">结束时间：</label>
-            <div class="col-sm-7">
-
-                <input id="scheduleEndTime" type="text"
-                       ng-model="show.to_time"
-                       datetime-picker="yyyy-MM-dd HH:mm"
-                       is-open="data.datetimepickerOptions2.datetimepicker.isOpen"
-                       button-bar="data.datetimepickerOptions2.datetimepicker.buttonBar"
-                       timepicker-options="data.datetimepickerOptions2.timepicker"
-                       datepicker-options="data.datetimepickerOptions2.datepicker"
-                       ng-click="data.datetimepickerOptions2.datetimepicker.isOpen = true"
-                       class="form-control date-input" readonly/>
+                <input ng-click="togglePicker()"
+                       uib-datepicker-popup="{{data.beginDate.format}}"
+                       is-open="data.beginDate.isOpen"
+                       datepicker-options="data.beginDate.options"
+                       clear-text="清除"
+                       current-text="今天"
+                       close-text="关闭"
+                       alt-input-formats="data.beginDate.altInputFormats"
+                       ng-model="show.beginDate"
+                       ng-model-options="data.beginDate.modelOptions"
+                       type="text"
+                       class="form-control-def text-center"
+                       readonly="readonly"
+                       style="min-width: 90px;max-width: 100% !important;">
 
             </div>
         </div>
@@ -93,7 +53,7 @@
 
         <div class="form-group col-sm-3 col-md-3 col-lg-3" style="margin-bottom: 10px;">
             <button class="btn-def btn-submit-yellow"
-                    style="width: 100%" ng-click="clear()">清空
+                    style="width: 100%;max-width: 90px !important;" ng-click="clear()">清空
             </button>
         </div>
 
@@ -106,25 +66,14 @@
 
         <div class="form-group col-sm-3 col-md-3 col-lg-3" style="margin-bottom: 10px;">
             <button class="btn-def btn-main-blue"
-                    style="width: 100%" ng-click="print()">打印
+                    style="width: 100%;min-width: 110px !important;max-width: 120px;" ng-click="print()">
+                查看所有异常
             </button>
         </div>
 
         <div class="form-group col-sm-3 col-md-3 col-lg-3" style="margin-bottom: 10px;">
             <button class="btn-def btn-submit-blue"
-                    style="width: 100%" ng-click="search()">查询
-            </button>
-        </div>
-
-        <div class="form-group col-sm-3 col-md-3 col-lg-3" style="margin-bottom: 10px;">
-        </div>
-
-        <div class="form-group col-sm-3 col-md-3 col-lg-3" style="margin-bottom: 10px;">
-        </div>
-
-        <div class="form-group col-sm-3 col-md-3 col-lg-3" style="margin-bottom: 10px;">
-            <button class="btn-def btn-main-blue"
-                    style="width: 100%" ng-click="export()">导出
+                    style="width: 100%;max-width: 90px !important;" ng-click="search()">查询
             </button>
         </div>
 

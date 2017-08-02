@@ -26,7 +26,7 @@
                     state: 'events'
                 },
                 {
-                    title: '签到查询',
+                    title: '巡检查询',
                     state: 'checkin'
                 },
                 {

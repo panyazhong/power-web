@@ -1,10 +1,26 @@
 <div ba-panel>
     <div class="item-content-list checkin" auto-height>
 
+        <style type="text/css">
+
+            .panel {
+                box-shadow: none !important;
+            }
+
+        </style>
+
         <div include-with-scope="app/powers/checkin/widgets/tableForm.html">
         </div>
 
-        <div include-with-scope="app/powers/checkin/widgets/table.html"
-             style="padding: 30px;"></div>
+        <div ba-panel ba-panel-title="实时巡检">
+            <div include-with-scope="app/powers/checkin/widgets/table.html"
+                 style="padding: 30px;"></div>
+        </div>
+
+        <div ba-panel ba-panel-title="历史巡检">
+            <div include-with-scope="app/powers/checkin/widgets/tableHistory.html"
+                 style="padding: 30px;"></div>
+        </div>
+
     </div>
 </div>

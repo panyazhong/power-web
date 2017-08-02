@@ -5,163 +5,100 @@
         .controller('checkinPageCtrl', checkinPageCtrl);
 
     /** @ngInject */
-    function checkinPageCtrl($scope, $state, Sidebar, SidebarCache, Log, HttpToast, Signin, locals,
-                             PageTopCache, ToastUtils, ExportPrefix, $window, $rootScope, $timeout) {
+    function checkinPageCtrl($scope, $state, PageTopCache, Sidebar, SidebarCache, Log, locals, Task, HttpToast, $rootScope) {
+        PageTopCache.cache.state = $state.$current; // active
 
-        $scope.GetDateStr = function (AddDayCount) {
+        $scope.GetDateStr = function () {
             var dd = new Date();
-            dd.setDate(dd.getDate() + AddDayCount);//获取AddDayCount天后的日期
+            dd.setHours(0);
+            dd.setMinutes(0);
+            dd.setSeconds(0);
             return dd;
         };
 
-        PageTopCache.cache.state = $state.$current; // active
         $scope.data = {
-            datetimepickerOptions1: {
-                datetimepicker: {
-                    popupPlacement: 'bottom',
-                    isOpen: false,
-                    buttonBar: {
-                        show: true,
-                        now: {
-                            show: true,
-                            text: '现在'
-                        },
-                        today: {
-                            show: true,
-                            text: '今天'
-                        },
-                        clear: {
-                            show: true,
-                            text: '清除'
-                        },
-                        date: {
-                            show: true,
-                            text: '日期'
-                        },
-                        time: {
-                            show: true,
-                            text: '时间'
-                        },
-                        close: {
-                            show: true,
-                            text: '关闭'
-                        }
-                    }
+            beginDate: {
+                options: {
+                    formatYear: 'yyyy',
+                    startingDay: 1,
+                    showWeeks: false,
+                    language: 'zh-CN',
                 },
-                datepicker: {
-                    showWeeks: false
-                },
-                timepicker: {
-                    showMeridian: false
-                },
-                click: function () {
-                    $scope.data.datetimepickerOptions1.datetimepicker.isOpen = true;
-                }
-            },
-            datetimepickerOptions2: {
-                datetimepicker: {
-                    popupPlacement: 'bottom',
-                    isOpen: false,
-                    buttonBar: {
-                        show: true,
-                        now: {
-                            show: true,
-                            text: '现在'
-                        },
-                        today: {
-                            show: true,
-                            text: '今天'
-                        },
-                        clear: {
-                            show: true,
-                            text: '清除'
-                        },
-                        date: {
-                            show: true,
-                            text: '日期'
-                        },
-                        time: {
-                            show: true,
-                            text: '时间'
-                        },
-                        close: {
-                            show: true,
-                            text: '关闭'
-                        }
-                    }
-                },
-                datepicker: {
-                    showWeeks: false
-                },
-                timepicker: {
-                    showMeridian: false
+                isOpen: false,
+                altInputFormats: ['yyyy-MM-dd'],
+                format: 'yyyy-MM-dd',
+                modelOptions: {
+                    timezone: 'Asia/beijing'
                 }
             },
         };
 
         $scope.show = {
-            checkinList: [],     // 签到的列表
-
-            sidebarArr: [],    //变电站
-            clientName: '',
-            checkPlaceArr: [],  // 签到点
-            from_time: $scope.GetDateStr(-30),  // 默认查询30天之前数据
-            to_time: new Date(),
-
+            beginDate: $scope.GetDateStr(),
+            clientName: '',  //变电站
+            sidebarArr: [],   //变电站数组
+            setList: [],        // 实时
+            setListHistory: []   // 历史
         };
         $scope.rowCollection = [];
+        $scope.rowCollectionHistory = [];
 
         $scope.form = {
-            cid: "",  //变电站cid
-            pos: '',
-            from_time: '',
-            to_time: '',
+            client_id: '',  //变电站cid
+            beginDate: '',
+            endDate: ''
         };
 
         $scope.formatForm = function () {
-            // change格式
-            $scope.form.from_time = '';
-            $scope.form.to_time = '';
-            if ($scope.show.from_time) {
-                $scope.form.from_time = moment($scope.show.from_time).format('YYYY-MM-DD HH:mm:ss');
-            }
-            if ($scope.show.to_time) {
-                $scope.form.to_time = moment($scope.show.to_time).format('YYYY-MM-DD HH:mm:ss');
+
+            $scope.form.client_id = $scope.form.client_id || 0;
+            if ($scope.show.beginDate) {
+                $scope.form.beginDate = moment(moment($scope.show.beginDate).format('YYYY-MM-DD HH:mm:ss')).unix();
+                $scope.form.endDate = moment(moment($scope.show.beginDate).format('YYYY-MM-DD') + " 23:59:59").unix();
+            } else {
+                $scope.form.beginDate = 0;
+                $scope.form.endDate = 0;
             }
 
             var params = {};
             for (var Key in $scope.form) {
-                if ($scope.form[Key]) {
-                    params[Key] = $scope.form[Key];
-                }
+                // if ($scope.form[Key]) {
+                params[Key] = $scope.form[Key];
+                // }
             }
 
             return params;
         };
 
-        $scope.clear = function () {
-            $scope.show.clientName = '';
-            $scope.show.checkPlaceArr = [];
-            $scope.show.from_time = '';
-            $scope.show.to_time = '';
+        $scope.queryList = function (cid) {
 
-            $scope.form = {
-                cid: "",  //变电站cid
-                pos: '',
-                from_time: '',
-                to_time: '',
-            };
-        };
-
-        $scope.search = function () {
             var params = $scope.formatForm();
-            params.list = 'list';
+            Log.i('query params : ' + JSON.stringify(params));
 
-            Signin.query(params,
+            // 历史
+            params.history = 'history';
+            Task.query(params,
                 function (data) {
-                    // ToastUtils.openToast('success', '查询签到列表成功');
-                    $scope.show.checkinList = data;
-                    $scope.rowCollection = data;
+                    if (Array.isArray(data)) {
+                        $scope.show.setListHistory = data;
+                        $scope.rowCollectionHistory = data;
+                    }
+                },
+                function (err) {
+                    HttpToast.toast(err);
+                });
+
+            // 实时
+            var p = {
+                real_time: 'real-time',
+                client_id: $scope.form.client_id
+            };
+            Task.query(p,
+                function (data) {
+                    if (Array.isArray(data)) {
+                        $scope.show.setList = data;
+                        $scope.rowCollection = data;
+                    }
                 },
                 function (err) {
                     HttpToast.toast(err);
@@ -174,39 +111,25 @@
                 return;
             }
 
-            // set
-            $scope.form.cid = obj.clientId;
+            $scope.form.client_id = obj.clientId;
             $scope.show.clientName = obj.clientName;
 
-            // clear
-            $scope.form.pos = '';
-            $scope.show.checkPlaceArr = [];
-
-            Signin.query({
-                    client: 'client',
-                    clientId: $scope.form.cid
-                },
-                function (data) {
-                    $scope.show.checkPlaceArr = data;
-                }, function (err) {
-                    HttpToast.toast(err);
-                });
+            // 更换变电站更新列表
+            $scope.queryList($scope.form.client_id);
         };
 
         $scope.initFilterInfo = function () {
 
-            var cid = locals.get('cid', '');
+            var cid = locals.get('cid', '') ? locals.get('cid', '') : SidebarCache.getData().sidebar[0].clientId;
             if (cid) {
                 for (var i = 0; i < $scope.show.sidebarArr.length; i++) {
                     var item = $scope.show.sidebarArr[i];
                     if (item.clientId == cid) {
                         $scope.changeClent(item);
                     }
-
                 }
             }
 
-            $scope.search();
         };
 
         $scope.init = function () {
@@ -227,77 +150,30 @@
                 $scope.show.sidebarArr = SidebarCache.getData().sidebar;
                 $scope.initFilterInfo();
             }
+
         };
         $scope.init();
 
-        $scope.print = function () {
-            var params = $scope.formatForm();
-            params.list = 'list';
+        // 逻辑code
+        $scope.search = function () {
+            $scope.queryList($scope.form.client_id);
 
-            var downForm = $scope.formatForm();
-
-            Signin.query(params,
-                function (data) {
-                    if (Array.isArray(data) && data.length < 1) {
-                        ToastUtils.openToast('warning', '未筛选到文件，请换个条件试试！');
-                        return;
-                    }
-
-                    var pam = '';
-                    for (var Key in downForm) {
-                        if (downForm[Key]) {
-                            pam += Key + '=' + downForm[Key] + "&";
-                        }
-                    }
-                    var p = pam.substring(0, pam.length - 1);
-
-                    // file exist
-                    var strWindowFeatures = "location=yes,height=570,width=520,scrollbars=yes,status=yes";
-                    var URL = ExportPrefix.checkinAllPrint + p;
-                    window.open(URL, "_blank", strWindowFeatures);
-                },
-                function (err) {
-                    HttpToast.toast(err);
-                });
         };
 
-        $scope.export = function () {
-            var params = $scope.formatForm();
-            params.list = 'list';
+        $scope.clear = function () {
+            $scope.show.beginDate = null;
+            $scope.show.clientName = '';
 
-            var downForm = $scope.formatForm();
-
-            Signin.query(params,
-                function (data) {
-                    if (Array.isArray(data) && data.length < 1) {
-                        ToastUtils.openToast('warning', '未筛选到文件，请换个条件试试！');
-                        return;
-                    }
-
-                    var pam = '';
-                    for (var Key in downForm) {
-                        if (downForm[Key]) {
-                            pam += Key + '=' + downForm[Key] + "&";
-                        }
-                    }
-                    var p = pam.substring(0, pam.length - 1);
-
-                    // file exist
-                    $window.location.href = ExportPrefix.checkinAll + p;
-                },
-                function (err) {
-                    HttpToast.toast(err);
-                });
+            $scope.form = {
+                client_id: '',  //变电站cid
+                beginDate: '',
+                endDate: ''
+            };
         };
 
-        // dropdown set 2
-        $scope.changeCheckPlace = function (item) {
-            if ($scope.form.pos == item) {
-                return;
-            }
-
-            // set
-            $scope.form.pos = item
+        // date picker
+        $scope.togglePicker = function () {
+            $scope.data.beginDate.isOpen = !$scope.data.beginDate.isOpen;
         };
 
         $rootScope.$on('filterInfo', function (event, data) {
@@ -317,10 +193,6 @@
 
                 }
             }
-
-            $timeout(function () {
-                $scope.search();
-            }, 500);
 
         });
 

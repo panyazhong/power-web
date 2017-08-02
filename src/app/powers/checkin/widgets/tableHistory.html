@@ -1,35 +1,31 @@
 <div class="horizontal-scroll">
-    <table class="table table-bordered table-hover common-table" st-table="show.setList"
-           st-safe-src="rowCollection">
+    <table class="table table-bordered table-hover common-table" st-table="show.setListHistory"
+           st-safe-src="rowCollectionHistory">
         <thead>
         <tr>
             <th>客户名称</th>
-            <th>当前巡检点</th>
-            <th>当前巡检点抵达时间</th>
-            <th>下个巡检点</th>
-            <th>当前设备</th>
+            <th>巡检任务</th>
             <th>异常数量</th>
+            <th>开始时间</th>
+            <th>结束时间</th>
         </tr>
         </thead>
         <tbody>
-        <tr ng-repeat="item in show.setList">
+        <tr ng-repeat="item in show.setListHistory">
             <td class="table-def-cursor">
-                <span ng-bind="item.clientName"></span>
+                <span ng-bind="item.client"></span>
             </td>
             <td class="table-def-cursor">
-                <span ng-bind="item.currentPlace"></span>
-            </td>
-            <td class="table-def-cursor">
-                <span ng-bind="item.currentTime"></span>
-            </td>
-            <td class="table-def-cursor">
-                <span ng-bind="item.nextPlace"></span>
-            </td>
-            <td class="table-def-cursor">
-                <span ng-bind="item.deviceName"></span>
+                <span ng-bind="item.name"></span>
             </td>
             <td class="table-def-cursor">
                 <span ng-bind="item.exceptionNum"></span>
+            </td>
+            <td class="table-def-cursor">
+                <span ng-bind="item.timeStart"></span>
+            </td>
+            <td class="table-def-cursor">
+                <span ng-bind="item.timeEnd"></span>
             </td>
         </tr>
         </tbody>

@@ -104,7 +104,7 @@
 
     function log() {
 
-        var isDebug = false;     // 开发结束改为false
+        var isDebug = true;     // 开发结束改为false
 
         return {
             i: function (msg) {
