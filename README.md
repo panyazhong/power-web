@@ -3,5 +3,4 @@
 
 create dev branch 0626
 
-0727：
-	历史数据模块 添加 单位ui
+0802：巡检模块，polling branch
