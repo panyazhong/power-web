@@ -178,6 +178,7 @@
             user_authority: 'user_authority',  //用户权限
 
             history_querytype: 'history_querytype',  //历史数据，左侧查询类型
+            inspect_exception_type: 'inspect_exception_type' //异常类型
         };
         kwCache.create = function (arr) {
             if (Array.isArray(arr)) {
@@ -230,6 +231,9 @@
         };
         kwCache.getHistory_querytype = function () {
             return getType(groups.history_querytype);
+        };
+        kwCache.getInspect_exception_type = function () {
+            return getType(groups.inspect_exception_type);
         };
 
         kwCache.isEmpty = function () {

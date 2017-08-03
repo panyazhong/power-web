@@ -5,7 +5,8 @@
         .controller('checkinPageCtrl', checkinPageCtrl);
 
     /** @ngInject */
-    function checkinPageCtrl($scope, $state, PageTopCache, Sidebar, SidebarCache, Log, locals, Task, HttpToast, $rootScope) {
+    function checkinPageCtrl($scope, $state, PageTopCache, Sidebar, SidebarCache, Log, locals, Task, HttpToast,
+                             $rootScope, Exception, KeywordCache, Keyword) {
         PageTopCache.cache.state = $state.$current; // active
 
         $scope.GetDateStr = function () {
@@ -124,10 +125,16 @@
             currentState: 'main',    // 页面state
 
             timeStart: '', // 异常起始时间
-            timeEnd: ''     // 异常结束时间
+            timeEnd: '',     // 异常结束时间
+
+            excepListTitle: ['客户名称', '当前巡检点', '设备名称', '异常名称', '异常等级', '建议完成期限', '状态', '最后更新时间', '最后更新人'],
+            excepList: [],
+
+            exceptionTypeArr: []    // 异常类型keyword
         };
         $scope.rowCollection = [];
         $scope.rowCollectionHistory = [];
+        $scope.rowExcepList = [];
 
         $scope.form = {
             client_id: '',  //变电站cid
@@ -201,7 +208,7 @@
             $scope.form.client_id = obj.clientId;
             $scope.show.clientName = obj.clientName;
 
-            // 更换变电站更新列表
+            // 更新列表
             $scope.queryList($scope.form.client_id);
         };
 
@@ -220,6 +227,18 @@
         };
 
         $scope.init = function () {
+
+            if (KeywordCache.isEmpty()) {
+                Keyword.query({},
+                    function (data) {
+                        KeywordCache.create(data);
+                        $scope.show.exceptionTypeArr = KeywordCache.getInspect_exception_type();
+                    }, function (err) {
+                        HttpToast.toast(err);
+                    });
+            } else {
+                $scope.show.exceptionTypeArr = KeywordCache.getInspect_exception_type();
+            }
 
             if (SidebarCache.isEmpty()) {
                 Log.i('empty： ——SidebarCache');
@@ -260,6 +279,8 @@
 
         $scope.viewException = function () {
             $scope.show.currentState = 'excep';
+            // get list
+            $scope.searchExcep();
         };
 
         // date picker
@@ -292,7 +313,7 @@
 
             $scope.form.client_id = $scope.form.client_id || 0;
             $scope.form.timeStart = $scope.show.timeStart ? moment(moment($scope.show.timeStart).format('YYYY-MM-DD HH:mm:ss')).unix() : 0;
-            $scope.form.timeEnd = $scope.show.timeEnd ? moment(moment($scope.show.timeEnd).format('YYYY-MM-DD HH:mm:ss')).unix() : 0;
+            $scope.form.timeEnd = $scope.show.timeEnd ? moment(moment($scope.show.timeEnd).format('YYYY-MM-DD HH:mm:ss')).unix() : 9999999999;
 
             var params = {};
             params["clientIDs"] = $scope.form.client_id;
@@ -304,18 +325,50 @@
 
         $scope.clearExcep = function () {
             $scope.show.clientName = '';
+            $scope.show.timeStart = null;
+            $scope.show.timeEnd = null;
 
-            $scope.form = {
-                client_id: ''  //变电站cid
-            };
+            $scope.form.client_id = ''; //变电站cid
+            $scope.form.timeStart = '';
+            $scope.form.timeEnd = '';
         };
 
         $scope.searchExcep = function () {
-            Log.i('searchExcep...');
+
+            var params = $scope.formatFormExcep();
+            Log.i('query params : ' + JSON.stringify(params));
+
+            params.list = 'list';
+            Exception.query(params,
+                function (data) {
+                    if (Array.isArray(data)) {
+                        $scope.show.excepList = data;
+                        $scope.rowExcepList = data;
+                    }
+                },
+                function (err) {
+                    HttpToast.toast(err);
+                });
         };
 
         $scope.backMain = function () {
             $scope.show.currentState = 'main';
+            // get list
+            $scope.queryList($scope.form.client_id);
+        };
+
+        $scope.getExcepType = function (type) {
+
+            for (var i = 0; i < $scope.show.exceptionTypeArr.length; i++) {
+                var item = $scope.show.exceptionTypeArr[i];
+                if (item.id = type) {
+                    return item.name;
+                }
+            }
+        };
+
+        $scope.viewExcepDetail = function (id) {
+            Log.i("viewExcepDetail：" + id);
         };
 
         // dropdown set 1
@@ -327,9 +380,8 @@
             $scope.form.client_id = obj.clientId;
             $scope.show.clientName = obj.clientName;
 
-            // 获取异常列表
-            Log.i("异常列表：" + obj.clientName + "      id：" + obj.clientId);
-            // 请求服务器
+            // 更新列表
+            $scope.searchExcep();
         };
 
     }
