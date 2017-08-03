@@ -2,11 +2,12 @@
     'use strict';
 
     angular.module('BlurAdmin.power.checkin')
-        .controller('checkinPageCtrl', checkinPageCtrl);
+        .controller('checkinPageCtrl', checkinPageCtrl)
+        .controller('excepDetailCtrl', excepDetailCtrl);
 
     /** @ngInject */
     function checkinPageCtrl($scope, $state, PageTopCache, Sidebar, SidebarCache, Log, locals, Task, HttpToast,
-                             $rootScope, Exception, KeywordCache, Keyword) {
+                             $rootScope, Exception, KeywordCache, Keyword, ModalUtils) {
         PageTopCache.cache.state = $state.$current; // active
 
         $scope.GetDateStr = function () {
@@ -368,7 +369,19 @@
         };
 
         $scope.viewExcepDetail = function (id) {
-            Log.i("viewExcepDetail：" + id);
+            ModalUtils.open('app/powers/checkin/widgets/excepDetailModal.html', 'lg',
+                excepDetailCtrl, {
+                    id: id,
+                    keys: $scope.show.exceptionTypeArr
+                },
+                function (info) {
+                    // 传值走这里
+                    if (info) {
+                        // $scope.init();
+                    }
+                }, function (empty) {
+                    // 不传值关闭走这里
+                });
         };
 
         // dropdown set 1
@@ -382,6 +395,114 @@
 
             // 更新列表
             $scope.searchExcep();
+        };
+
+    }
+
+    function excepDetailCtrl($scope, $state, params, Log, Exception, HttpToast) {
+
+        $scope.show = {
+            id: params.id,
+            exceptionTypeArr: params.keys,
+
+            processStateArr: [
+                {
+                    status: 1,
+                    statusDesc: '已提交'
+                },
+                {
+                    status: 2,
+                    statusDesc: '已确认'
+                },
+                {
+                    status: 3,
+                    statusDesc: '已有方案'
+                },
+                {
+                    status: 4,
+                    statusDesc: '已修复'
+                }
+            ]
+        };
+        $scope.form = {};
+
+        $scope.init = function () {
+
+            var params = {
+                exceptionID: $scope.show.id
+            };
+
+            Exception.detail(params,
+                function (data) {
+                    for (var i = 0; i < $scope.show.exceptionTypeArr.length; i++) {
+                        var item = $scope.show.exceptionTypeArr[i];
+                        if (item.id = data.exceptionLevel) {
+                            data.excepLevel = item.name;
+                        }
+                    }
+
+                    if (Array.isArray(data.handleHistory) && data.handleHistory.length > 0) {
+
+                    } else {
+                        data.handleHistory.push({
+                            manufacturer: data.device.manufacturer,
+                            manufacturercontact: data.device.manufacturercontact,
+                            manufacturer_tel: data.device.manufacturer_tel,
+
+                            timeDesc: null,
+                            description: '',
+                            statusDesc: '',
+
+                            // date config
+                            date: {
+                                options: {
+                                    formatYear: 'yyyy',
+                                    startingDay: 1,
+                                    showWeeks: false,
+                                    language: 'zh-CN',
+                                },
+                                isOpen: false,
+                                altInputFormats: ['yyyy-MM-dd'],
+                                format: 'yyyy-MM-dd',
+                                modelOptions: {
+                                    timezone: 'Asia/beijing'
+                                }
+                            }
+                        });
+                    }
+
+                    $scope.form = data;
+
+                    console.log('handleHistory：' + JSON.stringify($scope.form));
+                },
+                function (err) {
+                    HttpToast.toast(err);
+                });
+        };
+        $scope.init();
+
+        $scope.submit = function () {
+            Log.i('位置：' + $scope.form.position);
+            Log.i('保护名称：' + $scope.form.protectName);
+            Log.i('详细描述：' + $scope.form.description);
+        };
+
+        $scope.addProcessItem = function () {
+            Log.i('$scope.addProcessItem...');
+        };
+
+        $scope.changeStatus = function (item, pos) {
+            if ($scope.handleHistory[pos].status == item.status) {
+                return
+            }
+
+            $scope.handleHistory[pos].status = item.status;
+            $scope.handleHistory[pos].statusDesc = item.statusDesc;
+        };
+
+        // date picker
+        $scope.togglePicker = function (pos) {
+            $scope.handleHistory[pos].date.isOpen = !$scope.handleHistory[pos].date.isOpen;
         };
 
     }

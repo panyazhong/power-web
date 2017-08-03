@@ -444,17 +444,21 @@
         // 巡检查询——异常
         .factory('Exception', function (Resource) {
             var config = {
-                url: 'exception/:list/:clientIDs/:timeStart/:timeEnd',
+                url: 'exception/:list/:clientIDs/:timeStart/:timeEnd/:exceptionID',
                 paramsDefault: {
                     list: '@list',
                     clientIDs: '@clientIDs',
                     timeStart: '@timeStart',
-                    timeEnd: '@timeEnd'
+                    timeEnd: '@timeEnd',
+                    exceptionID: '@exceptionID'
                 },
                 action: {
                     query: {    // 获取异常列表
                         method: 'GET',
                         isArray: true
+                    },
+                    detail: {    // 获取异常详情
+                        method: 'GET'
                     }
                 }
             };

@@ -418,6 +418,25 @@ input[type=number]::-webkit-outer-spin-button {
   padding: 25px 30px;
 }
 
+.modal-excep-detail {
+  padding: 25px 30px;
+}
+
+.modal-excep-detail .add-content {
+  display: inline-block;
+  float: left;
+  width: calc(100% - 80px);
+}
+
+.modal-excep-detail .add-icon {
+  display: inline-block;
+  float: left;
+  width: 80px;
+  height: 55px;
+  line-height: 55px;
+  text-align: center;
+}
+
 /*
   datepicker
 */

@@ -1,0 +1,138 @@
+<div class="row">
+    <div class="form-group col-md-3">
+        <label>异常名称</label>
+        <input type="text" class="form-control" ng-model="form.exceptionName" disabled>
+    </div>
+    <div class="form-group col-md-3">
+        <label>变电站</label>
+        <input type="text" class="form-control" ng-model="form.clientName" disabled>
+    </div>
+    <div class="form-group col-md-3">
+        <label>位置</label>
+        <input type="text" class="form-control" ng-model="form.position">
+    </div>
+    <div class="form-group col-md-3">
+        <label>设备名称</label>
+        <input type="text" class="form-control" ng-model="form.device.name" disabled>
+    </div>
+
+    <div class="form-group col-md-3">
+        <label>当前扫码点</label>
+        <input type="text" class="form-control" ng-model="form.currentPlace" disabled>
+    </div>
+    <div class="form-group col-md-3">
+        <label>异常等级</label>
+        <input type="text" class="form-control" ng-model="form.excepLevel" disabled>
+    </div>
+    <div class="form-group col-md-3">
+        <label>时间</label>
+        <input type="text" class="form-control" ng-model="form.time" disabled>
+    </div>
+    <div class="form-group col-md-3">
+        <label>建议完成期限</label>
+        <input type="text" class="form-control" ng-model="form.timeSuggested" disabled>
+    </div>
+
+    <div class="form-group col-md-3">
+        <label>保护名称</label>
+        <input type="text" class="form-control" ng-model="form.protectName">
+    </div>
+    <div style="float: left;width: 100%">
+    </div>
+
+    <div class="form-group col-md-12">
+        <label>详细描述</label>
+        <textarea class="form-control" rows="2"
+                  style="resize: none;max-width: 100% !important;height: auto;" ng-model="form.description"></textarea>
+    </div>
+    <div style="float: left;width: 100%">
+    </div>
+
+    <div class="form-group col-md-3">
+        <label>图片展示</label>
+        <input type="text" class="form-control" ng-model="form.xxxxx">
+    </div>
+    <div style="float: left;width: 100%">
+    </div>
+
+    <!--异常详情-->
+    <div class="form-group col-md-12" style="margin-bottom: 15px">
+        <button type="button" class="btn-def btn-submit-blue" style="border-radius: 0;">
+            处理详情
+        </button>
+
+        <div style="background:#3b89ce;height: 2px"></div>
+    </div>
+
+    <div class="form-group">
+        <div class="add-content">
+            <div ng-repeat="item in form.handleHistory track by $index" ng-init="outerIndex = $index">
+
+                <div class="form-group col-md-3">
+                    <label>厂家</label>
+                    <input type="text" class="form-control" ng-model="item.manufacturer">
+                </div>
+                <div class="form-group col-md-3">
+                    <label>联系人</label>
+                    <input type="text" class="form-control" ng-model="item.manufacturer_contact">
+                </div>
+                <div class="form-group col-md-3">
+                    <label>电话</label>
+                    <input type="text" class="form-control" ng-model="item.manufacturer_tel">
+                </div>
+                <div class="form-group col-md-3">
+                    <label>处理时间</label>
+
+                    <input ng-click="togglePicker(outerIndex)"
+                           uib-datepicker-popup="{{item.date.format}}"
+                           is-open="item.date.isOpen"
+                           datepicker-options="item.date.options"
+                           clear-text="清除"
+                           current-text="今天"
+                           close-text="关闭"
+                           alt-input-formats="item.date.altInputFormats"
+                           ng-model="item.timeDesc"
+                           ng-model-options="item.date.modelOptions"
+                           type="text"
+                           class="form-control-def text-center"
+                           readonly="readonly"
+                           style="min-width: 90px;max-width: 200px !important;">
+                </div>
+
+                <div class="form-group col-md-9">
+                    <label>处理详细描述</label>
+                    <textarea class="form-control" rows="2"
+                              style="resize: none;max-width: 100% !important;height: auto;"
+                              ng-model="item.description"></textarea>
+                </div>
+                <div class="form-group col-md-3">
+                    <label>处理状态</label>
+
+                    <div class="row" style="margin-left: 0;margin-right: 0">
+                        <!-- Single button -->
+                        <div class="select-right" uib-dropdown>
+                            <button type="button" class="btn-def btn-trans" style="text-align: left"
+                                    uib-dropdown-toggle ng-disabled="disabled">
+                                <span class="caret"></span>{{item.statusDesc}}
+                            </button>
+
+                            <ul class="dropdown-menu common-dp-ul" uib-dropdown-menu role="menu"
+                                aria-labelledby="single-button">
+                                <li role="menuitem"
+                                    ng-repeat="info in show.processStateArr track by $index">
+                                    <a ng-bind="info.statusDesc" ng-click="changeStatus(info , outerIndex)"></a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+        <div class="add-icon">
+            <i class="ion-plus-circled color-blue common-table-btn" ng-click="addProcessItem()"></i>
+        </div>
+    </div>
+
+</div>
