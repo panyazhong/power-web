@@ -350,6 +350,32 @@
                 function (err) {
                     HttpToast.toast(err);
                 });
+
+            /**
+             * test data
+             */
+            var d = [
+                {
+                    "id": "1",
+                    "clientName": "大连军区",
+                    "currentPlace": "特朗普办公室",
+                    "device": {
+                        "id": "10001",
+                        "name": "歼-10（1）",
+                        "manufacturer": "上海恒汇供用电设备运行管理有限公司",
+                        "manufacturercontact": "成明",
+                        "manufacturer_tel": "6620"
+                    },
+                    "exceptionName": "炮筒被堵",
+                    "exceptionLevel": "3800",
+                    "timeSuggested": "2017-07-31 14:00:00",
+                    "status": "已提交",
+                    "updateAt": "-",
+                    "updateBy": "-"
+                }
+            ];
+            $scope.show.excepList = d;
+            $scope.rowExcepList = d;
         };
 
         $scope.backMain = function () {
@@ -426,6 +452,81 @@
         };
         $scope.form = {};
 
+        $scope.detailHelper = function (data) {
+
+            // 异常等级
+            for (var i = 0; i < $scope.show.exceptionTypeArr.length; i++) {
+                var item = $scope.show.exceptionTypeArr[i];
+                if (item.id = data.exceptionLevel) {
+                    data.excepLevel = item.name;
+                }
+            }
+
+            // 处理详情数组
+            if (Array.isArray(data.handleHistory) && data.handleHistory.length > 0) {
+                data.handleHistory.map(function (item) {
+                    // 处理时间、处理状态
+                    item.timeDesc = new Date(item.time);
+
+                    for (var i = 0; i < $scope.show.processStateArr.length; i++) {
+                        var itemStatus = $scope.show.processStateArr[i];
+                        if (itemStatus.status == item.status) {
+                            item.statusDesc = itemStatus.statusDesc;
+                        }
+                    }
+
+                    // config
+                    item.date = {
+                        options: {
+                            formatYear: 'yyyy',
+                            startingDay: 1,
+                            showWeeks: false,
+                            language: 'zh-CN',
+                        },
+                        isOpen: false,
+                        altInputFormats: ['yyyy-MM-dd'],
+                        format: 'yyyy-MM-dd',
+                        modelOptions: {
+                            timezone: 'Asia/beijing'
+                        }
+                    };
+                });
+
+            }
+            else {
+                // 初始插入一条
+                data.handleHistory.push({
+                    // 设备基本信息
+                    manufacturer: data.device.manufacturer,
+                    manufacturercontact: data.device.manufacturercontact,
+                    manufacturer_tel: data.device.manufacturer_tel,
+
+                    // 处理时间、处理状态、处理描述
+                    timeDesc: null,
+                    statusDesc: '',
+                    description: '',
+
+                    // config
+                    date: {
+                        options: {
+                            formatYear: 'yyyy',
+                            startingDay: 1,
+                            showWeeks: false,
+                            language: 'zh-CN',
+                        },
+                        isOpen: false,
+                        altInputFormats: ['yyyy-MM-dd'],
+                        format: 'yyyy-MM-dd',
+                        modelOptions: {
+                            timezone: 'Asia/beijing'
+                        }
+                    }
+                });
+            }
+
+            return data;
+        };
+
         $scope.init = function () {
 
             var params = {
@@ -434,50 +535,51 @@
 
             Exception.detail(params,
                 function (data) {
-                    for (var i = 0; i < $scope.show.exceptionTypeArr.length; i++) {
-                        var item = $scope.show.exceptionTypeArr[i];
-                        if (item.id = data.exceptionLevel) {
-                            data.excepLevel = item.name;
-                        }
-                    }
-
-                    if (Array.isArray(data.handleHistory) && data.handleHistory.length > 0) {
-
-                    } else {
-                        data.handleHistory.push({
-                            manufacturer: data.device.manufacturer,
-                            manufacturercontact: data.device.manufacturercontact,
-                            manufacturer_tel: data.device.manufacturer_tel,
-
-                            timeDesc: null,
-                            description: '',
-                            statusDesc: '',
-
-                            // date config
-                            date: {
-                                options: {
-                                    formatYear: 'yyyy',
-                                    startingDay: 1,
-                                    showWeeks: false,
-                                    language: 'zh-CN',
-                                },
-                                isOpen: false,
-                                altInputFormats: ['yyyy-MM-dd'],
-                                format: 'yyyy-MM-dd',
-                                modelOptions: {
-                                    timezone: 'Asia/beijing'
-                                }
-                            }
-                        });
-                    }
-
-                    $scope.form = data;
-
-                    console.log('handleHistory：' + JSON.stringify($scope.form));
+                    $scope.form = $scope.detailHelper(data);
                 },
                 function (err) {
                     HttpToast.toast(err);
                 });
+
+            /**
+             * test data
+             */
+            var d = {
+                "id": "1",
+                "clientName": "大连军区",
+                "currentPlace": "特朗普办公室",
+                "device": {
+                    "id": "10001",
+                    "name": "歼-10（1）",
+                    "manufacturer": "上海恒汇供用电设备运行管理有限公司",
+                    "manufacturercontact": "成明",
+                    "manufacturer_tel": "6620"
+                },
+                "exceptionName": "炮筒被堵",
+                "exceptionLevel": "3800",
+                "timeSuggested": "2017-07-31 14:00:00",
+                "status": "已提交",
+                "time": "2017-07-31 12:02:00",
+                "position": "",
+                "protectName": "",
+                "description": "长期没打仗炮筒闲坏了",
+                "pictures": "[\"http://combatace.com/uploads/monthly_12_2012/post-15260-0-43213600-1355684125.jpg\", \"http://image2.sina.com.cn/jc/2005-01-17/U28P27T1D259154F318DT20050117102423.jpg\"]",
+                "handleHistory": [
+                    {
+                        "id": "1",
+                        "manufacturer": "上海恒汇",
+                        "manufacturer_contact": "成明",
+                        "manufacturer_tel": "1123",
+                        "time": "2017-09-01 10:18:46",
+                        "description": "没搞什么名堂",
+                        "status": "2"
+                    }
+                ]
+            };
+
+            $scope.form = $scope.detailHelper(d);
+            console.log('handleHistory: ' + JSON.stringify($scope.form.handleHistory));
+
         };
         $scope.init();
 
