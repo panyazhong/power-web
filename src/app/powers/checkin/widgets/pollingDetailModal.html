@@ -1,0 +1,22 @@
+<div class="modal-polling-detail" style="max-height: 600px;overflow-y: auto">
+
+    <div style="margin-bottom: 15px">
+        <button type="button" class="btn-def btn-submit-blue" style="border-radius: 0;">
+            巡检详情
+        </button>
+
+        <div style="background:#3b89ce;height: 2px"></div>
+    </div>
+
+    <div include-with-scope="app/powers/checkin/widgets/tablePolling.html"></div>
+
+    <div include-with-scope="app/powers/checkin/widgets/tablePollingSub.html"
+         style="padding-left: 30px;"></div>
+
+    <div style="margin-top: 30px;text-align: center">
+        <button class="btn-def btn-main-blue" style="width: 80px;margin: 15px;"
+                ng-click="$dismiss()">关闭
+        </button>
+    </div>
+
+</div>

@@ -11,7 +11,7 @@
         </tr>
         </thead>
         <tbody>
-        <tr ng-repeat="item in show.setListHistory">
+        <tr ng-repeat="item in show.setListHistory" ng-click="viewPollingDetail(item.id)">
             <td class="table-def-cursor">
                 <span ng-bind="item.client"></span>
             </td>

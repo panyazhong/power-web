@@ -424,18 +424,22 @@
         // 巡检查询
         .factory('Task', function (Resource) {
             var config = {
-                url: 'task/:history/:real_time/:client_id/:beginDate/:endDate',
+                url: 'task/:history/:real_time/:client_id/:beginDate/:endDate/:mainTaskID',
                 paramsDefault: {
                     history: '@history',
                     real_time: '@real_time',
                     client_id: '@client_id',
                     beginDate: '@beginDate',
-                    endDate: '@endDate'
+                    endDate: '@endDate',
+                    mainTaskID: '@mainTaskID'
                 },
                 action: {
                     query: {    // 获取任务列表
                         method: 'GET',
                         isArray: true
+                    },
+                    queryPolling: {    // 获取巡检详情
+                        method: 'GET'
                     }
                 }
             };

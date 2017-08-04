@@ -3,11 +3,13 @@
 
     angular.module('BlurAdmin.power.checkin')
         .controller('checkinPageCtrl', checkinPageCtrl)
-        .controller('excepDetailCtrl', excepDetailCtrl);
+        .controller('excepDetailCtrl', excepDetailCtrl)
+        .controller('pollingDetailCtrl', pollingDetailCtrl)
+        .controller('imgSlideCtrl', imgSlideCtrl);
 
     /** @ngInject */
     function checkinPageCtrl($scope, $state, PageTopCache, Sidebar, SidebarCache, Log, locals, Task, HttpToast,
-                             $rootScope, Exception, KeywordCache, Keyword, ModalUtils) {
+                             $rootScope, Exception, KeywordCache, Keyword, ModalUtils, $timeout) {
         PageTopCache.cache.state = $state.$current; // active
 
         $scope.GetDateStr = function () {
@@ -123,7 +125,7 @@
             sidebarArr: [],   //变电站数组
             setList: [],        // 实时
             setListHistory: [],   // 历史
-            currentState: 'excep',    // 页面state
+            currentState: 'main',    // 页面state
 
             timeStart: '', // 异常起始时间
             timeEnd: '',     // 异常结束时间
@@ -131,7 +133,8 @@
             excepListTitle: ['客户名称', '当前巡检点', '设备名称', '异常名称', '异常等级', '建议完成期限', '状态', '最后更新时间', '最后更新人'],
             excepList: [],
 
-            exceptionTypeArr: []    // 异常类型keyword
+            exceptionTypeArr: [],    // 异常类型keyword
+            inspectTypeArr: []   // 任务类型keyword
         };
         $scope.rowCollection = [];
         $scope.rowCollectionHistory = [];
@@ -234,11 +237,13 @@
                     function (data) {
                         KeywordCache.create(data);
                         $scope.show.exceptionTypeArr = KeywordCache.getInspect_exception_type();
+                        $scope.show.inspectTypeArr = KeywordCache.getInspect_type();
                     }, function (err) {
                         HttpToast.toast(err);
                     });
             } else {
                 $scope.show.exceptionTypeArr = KeywordCache.getInspect_exception_type();
+                $scope.show.inspectTypeArr = KeywordCache.getInspect_type();
             }
 
             if (SidebarCache.isEmpty()) {
@@ -282,6 +287,24 @@
             $scope.show.currentState = 'excep';
             // get list
             $scope.searchExcep();
+        };
+
+        $scope.viewPollingDetail = function (id) {
+            ModalUtils.open('app/powers/checkin/widgets/pollingDetailModal.html', 'lg',
+                pollingDetailCtrl, {
+                    id: id,
+                    keys: $scope.show.inspectTypeArr
+                },
+                function (info) {
+                    // 传值走这里
+                    if (info) {
+                        $timeout(function () {
+                            $scope.viewExcepDetail(info);
+                        }, 500);
+                    }
+                }, function (empty) {
+                    // 不传值关闭走这里
+                });
         };
 
         // date picker
@@ -400,7 +423,7 @@
 
     }
 
-    function excepDetailCtrl($scope, $state, params, Log, Exception, HttpToast, ToastUtils) {
+    function excepDetailCtrl($scope, params, Log, Exception, HttpToast, ToastUtils, ModalUtils, $timeout) {
 
         $scope.show = {
             id: params.id,
@@ -713,9 +736,177 @@
         };
 
         $scope.showImg = function () {
-            ToastUtils.openToast('info', 'show img....');
+
+            ModalUtils.open('app/powers/checkin/widgets/imageSildeModal.html', 'lg',
+                imgSlideCtrl, {
+                    imgs: $scope.form.picturesArr
+                },
+                function (info) {
+                    // 传值走这里
+                    if (info) {
+
+                    }
+                }, function (empty) {
+                    // 不传值关闭走这里
+                });
+
+            $timeout(function () {
+                $scope.$close();
+            }, 800);
         };
 
+    }
+
+    function pollingDetailCtrl($scope, params, Task, HttpToast) {
+
+        $scope.show = {
+            id: params.id,
+            inspectTypeArr: params.keys,
+            data: {},  // response data
+
+            itemListTitle: ['客户名称', '巡检任务', '异常数量', '开始时间', '结束时间', '用时'],
+            subItemListTitle: ['签到点名称', '签到时间', '签到状态', '共用时'],
+            subSubItemListTitle: ['设备名称', '步骤内容', '步骤结果', '完成时间', '异常详情'],
+            subItemList: []
+        };
+
+        $scope.formatTime = function (seconds) {
+            var min = Math.floor(seconds / 60),
+                second = seconds % 60,
+                hour, newMin, time;
+
+            if (min > 60) {
+                hour = Math.floor(min / 60);
+                newMin = min % 60;
+            }
+
+            if (second < 10) {
+                second = '0' + second;
+            }
+            if (min < 10) {
+                min = '0' + min;
+            }
+
+            return time = hour ? (hour + ':' + newMin + ':' + second) : (min + ':' + second);
+        };
+
+        $scope.init = function () {
+
+            var params = {
+                history: 'history',
+                mainTaskID: $scope.show.id
+            };
+
+            Task.queryPolling(params,
+                function (data) {
+                    // item
+                    for (var i = 0; i < $scope.show.inspectTypeArr.length; i++) {
+                        var item = $scope.show.inspectTypeArr[i];
+                        if (item.id = data.type) {
+                            data.typeDesc = item.name;
+                        }
+                    }
+                    data.timeUsedDesc = $scope.formatTime(data.timeUsed);
+                    $scope.show.data = data;
+
+                    //  list
+                    data.smallTasks.map(function (item) {
+                        item.timeUsedDesc = $scope.formatTime(item.timeUsed);
+
+                        item.steps.map(function (subItem) {
+                            var str = subItem.result_str ? '，' + subItem.result_str : '';
+                            subItem.result = subItem.result_bool != 0 ? '正常' : "异常" + str;
+                        })
+                    });
+
+                    $scope.show.subItemList = data.smallTasks;
+                },
+                function (err) {
+                    HttpToast.toast(err);
+                });
+        };
+        $scope.init();
+
+        $scope.viewExcepDetail = function (id) {
+            $scope.$close(id);
+        };
+
+    }
+
+    function imgSlideCtrl($scope, params) {
+
+        $scope.show = {
+            imgs: params.imgs
+        };
+
+        $scope.init = function () {
+            var imageArr = [];
+            for (var i = 0; i < $scope.show.imgs.length; i++) {
+                var img = $scope.show.imgs[i];
+                imageArr.push({
+                    image: img
+                })
+            }
+
+        };
+        $scope.init();
+
+
+        $scope.myInterval = 5000;
+        $scope.noWrapSlides = false;
+        $scope.active = 0;
+        var slides = $scope.slides = [];
+        var currIndex = 0;
+
+        $scope.addSlide = function() {
+            var newWidth = 600 + slides.length + 1;
+            slides.push({
+                image: '//unsplash.it/' + newWidth + '/300',
+                text: ['Nice image','Awesome photograph','That is so cool','I love that'][slides.length % 4],
+                id: currIndex++
+            });
+        };
+
+        $scope.randomize = function() {
+            var indexes = generateIndexesArray();
+            assignNewIndexesToSlides(indexes);
+        };
+
+        for (var i = 0; i < 4; i++) {
+            $scope.addSlide();
+        }
+
+        // Randomize logic below
+
+        function assignNewIndexesToSlides(indexes) {
+            for (var i = 0, l = slides.length; i < l; i++) {
+                slides[i].id = indexes.pop();
+            }
+        }
+
+        function generateIndexesArray() {
+            var indexes = [];
+            for (var i = 0; i < currIndex; ++i) {
+                indexes[i] = i;
+            }
+            return shuffle(indexes);
+        }
+
+        // http://stackoverflow.com/questions/962802#962890
+        function shuffle(array) {
+            var tmp, current, top = array.length;
+
+            if (top) {
+                while (--top) {
+                    current = Math.floor(Math.random() * (top + 1));
+                    tmp = array[current];
+                    array[current] = array[top];
+                    array[top] = tmp;
+                }
+            }
+
+            return array;
+        }
     }
 
 })();

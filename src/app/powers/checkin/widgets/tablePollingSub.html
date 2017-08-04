@@ -1,0 +1,60 @@
+<div class="horizontal-scroll" ng-repeat="info in show.subItemList">
+    <table class="table table-bordered table-hover common-table" style="table-layout: fixed;margin-bottom: 10px;">
+        <thead>
+        <tr>
+            <th ng-repeat="item in show.subItemListTitle" ng-bind="item"
+                style="line-height: 19px !important;color: #7d7d7d !important;"></th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr>
+            <td class="table-def-cursor">
+                <span ng-bind="info.place"></span>
+            </td>
+            <td class="table-def-cursor">
+                <span ng-bind="info.time"></span>
+            </td>
+            <td class="table-def-cursor">
+                <span ng-bind="info.status"></span>
+            </td>
+            <td class="table-def-cursor">
+                <span ng-bind="info.timeUsedDesc"></span>
+            </td>
+
+        </tr>
+        </tbody>
+    </table>
+
+    <div class="horizontal-scroll" ng-repeat="step in info.steps" style="padding-left: 30px;margin-bottom: 10px;">
+        <table class="table table-bordered table-hover common-table" style="table-layout: fixed;">
+            <thead>
+            <tr>
+                <th ng-repeat="item in show.subSubItemListTitle" ng-bind="item"
+                    style="line-height: 19px !important;color: #7d7d7d !important;"></th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr>
+                <td class="table-def-cursor">
+                    <span ng-bind="step.device"></span>
+                </td>
+                <td class="table-def-cursor">
+                    <span ng-bind="step.content"></span>
+                </td>
+                <td class="table-def-cursor">
+                    <span ng-bind="step.result"></span>
+                </td>
+
+                <td class="table-def-cursor">
+                    <span ng-bind="step.time"></span>
+                </td>
+                <td ng-click="viewExcepDetail(step.id)">
+                    查看异常
+                </td>
+
+            </tr>
+            </tbody>
+        </table>
+    </div>
+
+</div>
