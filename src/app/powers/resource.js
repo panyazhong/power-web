@@ -444,13 +444,14 @@
         // 巡检查询——异常
         .factory('Exception', function (Resource) {
             var config = {
-                url: 'exception/:list/:clientIDs/:timeStart/:timeEnd/:exceptionID',
+                url: 'exception/:list/:clientIDs/:timeStart/:timeEnd/:exceptionID/:handle',
                 paramsDefault: {
                     list: '@list',
                     clientIDs: '@clientIDs',
                     timeStart: '@timeStart',
                     timeEnd: '@timeEnd',
-                    exceptionID: '@exceptionID'
+                    exceptionID: '@exceptionID',
+                    handle: '@handle'
                 },
                 action: {
                     query: {    // 获取异常列表
@@ -459,6 +460,15 @@
                     },
                     detail: {    // 获取异常详情
                         method: 'GET'
+                    },
+                    edit: { // 修改异常详情
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json'
+                        },
+                        transformRequest: function (data) {
+                            return JSON.stringify(data);
+                        }
                     }
                 }
             };

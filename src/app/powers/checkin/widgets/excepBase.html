@@ -48,9 +48,14 @@
     <div style="float: left;width: 100%">
     </div>
 
-    <div class="form-group col-md-3">
+    <div class="form-group col-md-12">
         <label>图片展示</label>
-        <input type="text" class="form-control" ng-model="form.xxxxx">
+        <div ng-click="showImg()">
+
+            <img ng-repeat="item in form.picturesArr"
+                 ng-src="{{item}}"
+                 style="height: 50px;width: 10%;margin-right: 10px;margin-bottom: 5px;"/>
+        </div>
     </div>
     <div style="float: left;width: 100%">
     </div>
@@ -66,7 +71,8 @@
 
     <div class="form-group">
         <div class="add-content">
-            <div ng-repeat="item in form.handleHistory track by $index" ng-init="outerIndex = $index">
+            <div ng-repeat="item in form.handleHistory track by $index" ng-init="outerIndex = $index"
+                 style="float: left;margin-bottom: 10px;">
 
                 <div class="form-group col-md-3">
                     <label>厂家</label>
@@ -83,20 +89,17 @@
                 <div class="form-group col-md-3">
                     <label>处理时间</label>
 
-                    <input ng-click="togglePicker(outerIndex)"
-                           uib-datepicker-popup="{{item.date.format}}"
-                           is-open="item.date.isOpen"
-                           datepicker-options="item.date.options"
-                           clear-text="清除"
-                           current-text="今天"
-                           close-text="关闭"
-                           alt-input-formats="item.date.altInputFormats"
-                           ng-model="item.timeDesc"
-                           ng-model-options="item.date.modelOptions"
-                           type="text"
-                           class="form-control-def text-center"
-                           readonly="readonly"
-                           style="min-width: 90px;max-width: 200px !important;">
+                    <input id="scheduleBeginTime" type="text"
+                           ng-model="item.time"
+                           datetime-picker="yyyy-MM-dd HH:mm"
+                           is-open="item.date.datetimepicker.isOpen"
+                           button-bar="item.date.datetimepicker.buttonBar"
+                           timepicker-options="item.date.timepicker"
+                           datepicker-options="item.date.datepicker"
+                           ng-click="item.date.click()"
+                           class="form-control date-input text-center"
+                           style="min-width: 130px;"
+                           readonly/>
                 </div>
 
                 <div class="form-group col-md-9">
@@ -105,10 +108,12 @@
                               style="resize: none;max-width: 100% !important;height: auto;"
                               ng-model="item.description"></textarea>
                 </div>
-                <div class="form-group col-md-3">
-                    <label>处理状态</label>
+                <div class="form-group col-md-3" style="line-height: 75px !important;">
 
-                    <div class="row" style="margin-left: 0;margin-right: 0">
+                    <label class="col-sm-5"
+                           style="margin-right: 0 !important;padding: 0;">处理状态：</label>
+                    <div class="col-sm-7" style="padding: 0;">
+
                         <!-- Single button -->
                         <div class="select-right" uib-dropdown>
                             <button type="button" class="btn-def btn-trans" style="text-align: left"
@@ -125,6 +130,7 @@
                             </ul>
                         </div>
                     </div>
+
                 </div>
 
             </div>

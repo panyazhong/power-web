@@ -123,7 +123,7 @@
             sidebarArr: [],   //变电站数组
             setList: [],        // 实时
             setListHistory: [],   // 历史
-            currentState: 'main',    // 页面state
+            currentState: 'excep',    // 页面state
 
             timeStart: '', // 异常起始时间
             timeEnd: '',     // 异常结束时间
@@ -378,7 +378,7 @@
                 function (info) {
                     // 传值走这里
                     if (info) {
-                        // $scope.init();
+                        $scope.searchExcep();
                     }
                 }, function (empty) {
                     // 不传值关闭走这里
@@ -400,7 +400,7 @@
 
     }
 
-    function excepDetailCtrl($scope, $state, params, Log, Exception, HttpToast) {
+    function excepDetailCtrl($scope, $state, params, Log, Exception, HttpToast, ToastUtils) {
 
         $scope.show = {
             id: params.id,
@@ -437,32 +437,66 @@
                 }
             }
 
+            // 图片处理
+            data.picturesArr = JSON.parse(data.pictures);
+
             // 处理详情数组
             if (Array.isArray(data.handleHistory) && data.handleHistory.length > 0) {
                 data.handleHistory.map(function (item) {
-                    // 处理时间、处理状态
-                    item.timeDesc = new Date(item.time);
+                    // 设备基本信息
+                    item.manufacturer = item.manufacturer || data.device.manufacturer;
+                    item.manufacturer_contact = item.manufacturer_contact || data.device.manufacturer_contact;
+                    item.manufacturer_tel = item.manufacturer_tel || data.device.manufacturer_tel;
 
+                    // 处理时间、状态
+                    item.time = new Date(item.time);
                     for (var i = 0; i < $scope.show.processStateArr.length; i++) {
-                        var itemStatus = $scope.show.processStateArr[i];
-                        if (itemStatus.status == item.status) {
-                            item.statusDesc = itemStatus.statusDesc;
+                        var statusItem = $scope.show.processStateArr[i];
+                        if (statusItem.status == item.status) {
+                            item.statusDesc = statusItem.statusDesc;
                         }
                     }
 
-                    // config
                     item.date = {
-                        options: {
-                            formatYear: 'yyyy',
-                            startingDay: 1,
-                            showWeeks: false,
-                            language: 'zh-CN',
+                        datetimepicker: {
+                            popupPlacement: 'bottom',
+                            isOpen: false,
+                            buttonBar: {
+                                show: true,
+                                now: {
+                                    show: true,
+                                    text: '现在'
+                                },
+                                today: {
+                                    show: true,
+                                    text: '今天'
+                                },
+                                clear: {
+                                    show: true,
+                                    text: '清除'
+                                },
+                                date: {
+                                    show: true,
+                                    text: '日期'
+                                },
+                                time: {
+                                    show: true,
+                                    text: '时间'
+                                },
+                                close: {
+                                    show: true,
+                                    text: '关闭'
+                                }
+                            }
                         },
-                        isOpen: false,
-                        altInputFormats: ['yyyy-MM-dd'],
-                        format: 'yyyy-MM-dd',
-                        modelOptions: {
-                            timezone: 'Asia/beijing'
+                        datepicker: {
+                            showWeeks: false
+                        },
+                        timepicker: {
+                            showMeridian: false
+                        },
+                        click: function () {
+                            this.datetimepicker.isOpen = !this.datetimepicker.isOpen;
                         }
                     };
                 });
@@ -473,27 +507,55 @@
                 data.handleHistory.push({
                     // 设备基本信息
                     manufacturer: data.device.manufacturer,
-                    manufacturercontact: data.device.manufacturercontact,
+                    manufacturer_contact: data.device.manufacturer_contact,
                     manufacturer_tel: data.device.manufacturer_tel,
 
-                    // 处理时间、处理状态、处理描述
-                    timeDesc: null,
-                    statusDesc: '',
+                    // 处理时间、描述、状态
+                    time: new Date(),   // 服务器返回的需要转date
                     description: '',
+                    status: '', // 状态
 
                     // config
                     date: {
-                        options: {
-                            formatYear: 'yyyy',
-                            startingDay: 1,
-                            showWeeks: false,
-                            language: 'zh-CN',
+                        datetimepicker: {
+                            popupPlacement: 'bottom',
+                            isOpen: false,
+                            buttonBar: {
+                                show: true,
+                                now: {
+                                    show: true,
+                                    text: '现在'
+                                },
+                                today: {
+                                    show: true,
+                                    text: '今天'
+                                },
+                                clear: {
+                                    show: true,
+                                    text: '清除'
+                                },
+                                date: {
+                                    show: true,
+                                    text: '日期'
+                                },
+                                time: {
+                                    show: true,
+                                    text: '时间'
+                                },
+                                close: {
+                                    show: true,
+                                    text: '关闭'
+                                }
+                            }
                         },
-                        isOpen: false,
-                        altInputFormats: ['yyyy-MM-dd'],
-                        format: 'yyyy-MM-dd',
-                        modelOptions: {
-                            timezone: 'Asia/beijing'
+                        datepicker: {
+                            showWeeks: false
+                        },
+                        timepicker: {
+                            showMeridian: false
+                        },
+                        click: function () {
+                            this.datetimepicker.isOpen = !this.datetimepicker.isOpen;
                         }
                     }
                 });
@@ -518,28 +580,140 @@
         };
         $scope.init();
 
+        $scope.formatForm = function () {
+
+            var params = {};
+            params.id = $scope.form.id;
+
+            // 基本
+            params.position = $scope.form.position;
+            params.protectName = $scope.form.protectName;
+            params.description = $scope.form.description;
+
+            // 处理
+            params.handleHistory = [];
+            $scope.form.handleHistory.map(function (item) {
+                var i = {};
+
+                i.id = item.id || 0;
+                i.manufacturer = item.manufacturer;
+                i.manufacturer_contact = item.manufacturer_contact;
+                i.manufacturer_tel = item.manufacturer_tel;
+
+                i.time = moment(item.time).unix();
+                i.description = item.description;
+                i.status = item.status;
+
+                params.handleHistory.push(i);
+            });
+
+            return params;
+        };
+
+        $scope.checkForm = function () {
+
+            for (var i = 0; i < $scope.form.handleHistory.length; i++) {
+                var item = $scope.form.handleHistory[i];
+                if (!item.time || !item.description || !item.status) {
+                    ToastUtils.openToast('warning', '处理时间、详细描述、处理状态 不能为空!');
+                    return false;
+                }
+            }
+
+            return true
+        };
+
         $scope.submit = function () {
-            Log.i('位置：' + $scope.form.position);
-            Log.i('保护名称：' + $scope.form.protectName);
-            Log.i('详细描述：' + $scope.form.description);
-        };
 
-        $scope.addProcessItem = function () {
-            Log.i('$scope.addProcessItem...');
-        };
-
-        $scope.changeStatus = function (item, pos) {
-            if ($scope.handleHistory[pos].status == item.status) {
+            if (!$scope.checkForm()) {
                 return
             }
 
-            $scope.handleHistory[pos].status = item.status;
-            $scope.handleHistory[pos].statusDesc = item.statusDesc;
+            var params = $scope.formatForm();
+            Log.i('edit params : ' + JSON.stringify(params));
+
+            params.handle = 'handle';
+            Exception.edit(params,
+                function (data) {
+                    $scope.$close(data);
+                },
+                function (err) {
+                    HttpToast.toast(err);
+                });
         };
 
-        // date picker
-        $scope.togglePicker = function (pos) {
-            $scope.handleHistory[pos].date.isOpen = !$scope.handleHistory[pos].date.isOpen;
+        $scope.addProcessItem = function () {
+
+            // 初始插入一条
+            $scope.form.handleHistory.push({
+                // 设备基本信息
+                manufacturer: $scope.form.device.manufacturer,
+                manufacturer_contact: $scope.form.device.manufacturer_contact,
+                manufacturer_tel: $scope.form.device.manufacturer_tel,
+
+                // 处理时间、描述、状态
+                time: new Date(),   // 服务器返回的需要转date
+                description: '',
+                status: '', // 状态
+
+                // config
+                date: {
+                    datetimepicker: {
+                        popupPlacement: 'bottom',
+                        isOpen: false,
+                        buttonBar: {
+                            show: true,
+                            now: {
+                                show: true,
+                                text: '现在'
+                            },
+                            today: {
+                                show: true,
+                                text: '今天'
+                            },
+                            clear: {
+                                show: true,
+                                text: '清除'
+                            },
+                            date: {
+                                show: true,
+                                text: '日期'
+                            },
+                            time: {
+                                show: true,
+                                text: '时间'
+                            },
+                            close: {
+                                show: true,
+                                text: '关闭'
+                            }
+                        }
+                    },
+                    datepicker: {
+                        showWeeks: false
+                    },
+                    timepicker: {
+                        showMeridian: false
+                    },
+                    click: function () {
+                        this.datetimepicker.isOpen = !this.datetimepicker.isOpen;
+                    }
+                }
+            });
+
+        };
+
+        $scope.changeStatus = function (item, pos) {
+            if ($scope.form.handleHistory[pos].status == item.status) {
+                return
+            }
+
+            $scope.form.handleHistory[pos].status = item.status;
+            $scope.form.handleHistory[pos].statusDesc = item.statusDesc;
+        };
+
+        $scope.showImg = function () {
+            ToastUtils.openToast('info', 'show img....');
         };
 
     }
