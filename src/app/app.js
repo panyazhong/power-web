@@ -29,11 +29,11 @@ angular.module('BlurAdmin', [
 
 ]).run(function (Log, locals) {
 
-    // var userInfo = locals.getObject('user');
-    // if (JSON.stringify(userInfo) == '{}') {
-    //
-    //     // 跳转
-    //     window.location.replace('/auth.html');
-    // }
+    var userInfo = locals.getObject('user');
+    if (JSON.stringify(userInfo) == '{}') {
+
+        // 跳转
+        window.location.replace('/auth.html');
+    }
 
 });
