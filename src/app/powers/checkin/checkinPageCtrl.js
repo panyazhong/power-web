@@ -362,17 +362,44 @@
             var params = $scope.formatFormExcep();
             Log.i('query params : ' + JSON.stringify(params));
 
-            params.list = 'list';
-            Exception.query(params,
-                function (data) {
-                    if (Array.isArray(data)) {
-                        $scope.show.excepList = data;
-                        $scope.rowExcepList = data;
-                    }
-                },
-                function (err) {
-                    HttpToast.toast(err);
-                });
+            // params.list = 'list';
+            // Exception.query(params,
+            //     function (data) {
+            //         if (Array.isArray(data)) {
+            //             $scope.show.excepList = data;
+            //             $scope.rowExcepList = data;
+            //         }
+            //     },
+            //     function (err) {
+            //         HttpToast.toast(err);
+            //     });
+
+            /**
+             * test data
+             */
+            var d = [
+                {
+                    "id": "1",
+                    "clientName": "大连军区",
+                    "currentPlace": "特朗普办公室",
+                    "device": {
+                        "id": "10001",
+                        "name": "歼-10（1）",
+                        "manufacturer": "上海恒汇供用电设备运行管理有限公司",
+                        "manufacturercontact": "成明",
+                        "manufacturer_tel": "6620"
+                    },
+                    "exceptionName": "炮筒被堵",
+                    "exceptionLevel": "3800",
+                    "timeSuggested": "2017-07-31 14:00:00",
+                    "status": "已提交",
+                    "updateAt": "-",
+                    "updateBy": "-"
+                }
+            ];
+
+            $scope.show.excepList = d;
+            $scope.rowExcepList = d;
 
         };
 
@@ -589,17 +616,56 @@
 
         $scope.init = function () {
 
-            var params = {
-                exceptionID: $scope.show.id
+            // var params = {
+            //     exceptionID: $scope.show.id
+            // };
+            //
+            // Exception.detail(params,
+            //     function (data) {
+            //         $scope.form = $scope.detailHelper(data);
+            //     },
+            //     function (err) {
+            //         HttpToast.toast(err);
+            //     });
+
+            /**
+             * test data
+             */
+            var d = {
+                "id": "1",
+                "clientName": "大连军区",
+                "currentPlace": "特朗普办公室",
+                "device": {
+                    "id": "10001",
+                    "name": "歼-10（1）",
+                    "manufacturer": "上海恒汇供用电设备运行管理有限公司",
+                    "manufacturercontact": "成明",
+                    "manufacturer_tel": "6620"
+                },
+                "exceptionName": "炮筒被堵",
+                "exceptionLevel": "3800",
+                "timeSuggested": "2017-07-31 14:00:00",
+                "status": "已提交",
+                "time": "2017-07-31 12:02:00",
+                "position": "",
+                "protectName": "",
+                "description": "长期没打仗炮筒闲坏了",
+                "pictures": "[\"http://combatace.com/uploads/monthly_12_2012/post-15260-0-43213600-1355684125.jpg\", \"http://image2.sina.com.cn/jc/2005-01-17/U28P27T1D259154F318DT20050117102423.jpg\"]",
+                "handleHistory": [
+                    {
+                        "id": "1",
+                        "manufacturer": "上海恒汇",
+                        "manufacturer_contact": "成明",
+                        "manufacturer_tel": "1123",
+                        "time": "2017-09-01 10:18:46",
+                        "description": "没搞什么名堂",
+                        "status": "2"
+                    }
+                ]
             };
 
-            Exception.detail(params,
-                function (data) {
-                    $scope.form = $scope.detailHelper(data);
-                },
-                function (err) {
-                    HttpToast.toast(err);
-                });
+            $scope.form = $scope.detailHelper(d);
+
         };
         $scope.init();
 
@@ -834,79 +900,34 @@
     }
 
     function imgSlideCtrl($scope, params) {
-
-        $scope.show = {
-            imgs: params.imgs
-        };
-
-        $scope.init = function () {
-            var imageArr = [];
-            for (var i = 0; i < $scope.show.imgs.length; i++) {
-                var img = $scope.show.imgs[i];
-                imageArr.push({
-                    image: img
-                })
-            }
-
-        };
-        $scope.init();
-
-
         $scope.myInterval = 5000;
         $scope.noWrapSlides = false;
         $scope.active = 0;
         var slides = $scope.slides = [];
-        var currIndex = 0;
 
-        $scope.addSlide = function() {
-            var newWidth = 600 + slides.length + 1;
-            slides.push({
-                image: '//unsplash.it/' + newWidth + '/300',
-                text: ['Nice image','Awesome photograph','That is so cool','I love that'][slides.length % 4],
-                id: currIndex++
-            });
+        $scope.addSlide = function () {
+            var imgs = params.imgs;
+
+            var d = [
+                'http://imgsrc.baidu.com/forum/w%3D580%3B/sign=1c9190961a3853438ccf8729a328b27e/d4628535e5dde711b954200cadefce1b9c166141.jpg',
+                'http://imgsrc.baidu.com/forum/w%3D580%3B/sign=a266f78ea7345982c58ae59a3ccf33ad/b58f8c5494eef01f0f927b3feafe9925bd317d41.jpg',
+                'http://imgsrc.baidu.com/forum/w%3D580%3B/sign=3f62dbda0be9390156028d364bd756e7/48540923dd54564ed1e387c3b9de9c82d0584f41.jpg'
+            ];
+            var dd = [
+                '异常图片15',
+                '异常图片78',
+                '异常图片104'
+            ];
+
+            for (var i = 0; i < d.length; i++) {
+                slides.push({
+                    image: d[i],
+                    text: dd[i]
+                })
+            }
         };
+        $scope.addSlide();
 
-        $scope.randomize = function() {
-            var indexes = generateIndexesArray();
-            assignNewIndexesToSlides(indexes);
-        };
-
-        for (var i = 0; i < 4; i++) {
-            $scope.addSlide();
-        }
-
-        // Randomize logic below
-
-        function assignNewIndexesToSlides(indexes) {
-            for (var i = 0, l = slides.length; i < l; i++) {
-                slides[i].id = indexes.pop();
-            }
-        }
-
-        function generateIndexesArray() {
-            var indexes = [];
-            for (var i = 0; i < currIndex; ++i) {
-                indexes[i] = i;
-            }
-            return shuffle(indexes);
-        }
-
-        // http://stackoverflow.com/questions/962802#962890
-        function shuffle(array) {
-            var tmp, current, top = array.length;
-
-            if (top) {
-                while (--top) {
-                    current = Math.floor(Math.random() * (top + 1));
-                    tmp = array[current];
-                    array[current] = array[top];
-                    array[top] = tmp;
-                }
-            }
-
-            return array;
-        }
     }
 
 })();
