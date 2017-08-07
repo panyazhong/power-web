@@ -804,7 +804,7 @@
                     // item
                     for (var i = 0; i < $scope.show.inspectTypeArr.length; i++) {
                         var item = $scope.show.inspectTypeArr[i];
-                        if (item.id = data.type) {
+                        if (item.id == data.type) {
                             data.typeDesc = item.name;
                         }
                     }
