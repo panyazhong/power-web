@@ -362,44 +362,17 @@
             var params = $scope.formatFormExcep();
             Log.i('query params : ' + JSON.stringify(params));
 
-            // params.list = 'list';
-            // Exception.query(params,
-            //     function (data) {
-            //         if (Array.isArray(data)) {
-            //             $scope.show.excepList = data;
-            //             $scope.rowExcepList = data;
-            //         }
-            //     },
-            //     function (err) {
-            //         HttpToast.toast(err);
-            //     });
-
-            /**
-             * test data
-             */
-            var d = [
-                {
-                    "id": "1",
-                    "clientName": "大连军区",
-                    "currentPlace": "特朗普办公室",
-                    "device": {
-                        "id": "10001",
-                        "name": "歼-10（1）",
-                        "manufacturer": "上海恒汇供用电设备运行管理有限公司",
-                        "manufacturercontact": "成明",
-                        "manufacturer_tel": "6620"
-                    },
-                    "exceptionName": "炮筒被堵",
-                    "exceptionLevel": "3800",
-                    "timeSuggested": "2017-07-31 14:00:00",
-                    "status": "已提交",
-                    "updateAt": "-",
-                    "updateBy": "-"
-                }
-            ];
-
-            $scope.show.excepList = d;
-            $scope.rowExcepList = d;
+            params.list = 'list';
+            Exception.query(params,
+                function (data) {
+                    if (Array.isArray(data)) {
+                        $scope.show.excepList = data;
+                        $scope.rowExcepList = data;
+                    }
+                },
+                function (err) {
+                    HttpToast.toast(err);
+                });
 
         };
 
@@ -616,55 +589,17 @@
 
         $scope.init = function () {
 
-            // var params = {
-            //     exceptionID: $scope.show.id
-            // };
-            //
-            // Exception.detail(params,
-            //     function (data) {
-            //         $scope.form = $scope.detailHelper(data);
-            //     },
-            //     function (err) {
-            //         HttpToast.toast(err);
-            //     });
-
-            /**
-             * test data
-             */
-            var d = {
-                "id": "1",
-                "clientName": "大连军区",
-                "currentPlace": "特朗普办公室",
-                "device": {
-                    "id": "10001",
-                    "name": "歼-10（1）",
-                    "manufacturer": "上海恒汇供用电设备运行管理有限公司",
-                    "manufacturercontact": "成明",
-                    "manufacturer_tel": "6620"
-                },
-                "exceptionName": "炮筒被堵",
-                "exceptionLevel": "3800",
-                "timeSuggested": "2017-07-31 14:00:00",
-                "status": "已提交",
-                "time": "2017-07-31 12:02:00",
-                "position": "",
-                "protectName": "",
-                "description": "长期没打仗炮筒闲坏了",
-                "pictures": "[\"http://combatace.com/uploads/monthly_12_2012/post-15260-0-43213600-1355684125.jpg\", \"http://image2.sina.com.cn/jc/2005-01-17/U28P27T1D259154F318DT20050117102423.jpg\"]",
-                "handleHistory": [
-                    {
-                        "id": "1",
-                        "manufacturer": "上海恒汇",
-                        "manufacturer_contact": "成明",
-                        "manufacturer_tel": "1123",
-                        "time": "2017-09-01 10:18:46",
-                        "description": "没搞什么名堂",
-                        "status": "2"
-                    }
-                ]
+            var params = {
+                exceptionID: $scope.show.id
             };
 
-            $scope.form = $scope.detailHelper(d);
+            Exception.detail(params,
+                function (data) {
+                    $scope.form = $scope.detailHelper(data);
+                },
+                function (err) {
+                    HttpToast.toast(err);
+                });
 
         };
         $scope.init();
@@ -724,6 +659,7 @@
             params.handle = 'handle';
             Exception.edit(params,
                 function (data) {
+                    ToastUtils.openToast('success', data.message);
                     $scope.$close(data);
                 },
                 function (err) {
@@ -908,20 +844,14 @@
         $scope.addSlide = function () {
             var imgs = params.imgs;
 
-            var d = [
-                'http://imgsrc.baidu.com/forum/w%3D580%3B/sign=1c9190961a3853438ccf8729a328b27e/d4628535e5dde711b954200cadefce1b9c166141.jpg',
-                'http://imgsrc.baidu.com/forum/w%3D580%3B/sign=a266f78ea7345982c58ae59a3ccf33ad/b58f8c5494eef01f0f927b3feafe9925bd317d41.jpg',
-                'http://imgsrc.baidu.com/forum/w%3D580%3B/sign=3f62dbda0be9390156028d364bd756e7/48540923dd54564ed1e387c3b9de9c82d0584f41.jpg'
-            ];
             var dd = [
-                '异常图片15',
-                '异常图片78',
-                '异常图片104'
+                '异常图片001',
+                '异常图片007'
             ];
 
-            for (var i = 0; i < d.length; i++) {
+            for (var i = 0; i < imgs.length; i++) {
                 slides.push({
-                    image: d[i],
+                    image: imgs[i],
                     text: dd[i]
                 })
             }
