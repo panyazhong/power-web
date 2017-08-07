@@ -752,9 +752,9 @@
                     // 不传值关闭走这里
                 });
 
-            $timeout(function () {
-                $scope.$close();
-            }, 800);
+            // $timeout(function () {
+            //     $scope.$close();
+            // }, 800);
         };
 
     }
