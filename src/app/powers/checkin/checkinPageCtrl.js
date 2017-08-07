@@ -386,7 +386,7 @@
 
             for (var i = 0; i < $scope.show.exceptionTypeArr.length; i++) {
                 var item = $scope.show.exceptionTypeArr[i];
-                if (item.id = type) {
+                if (item.id == type) {
                     return item.name;
                 }
             }
@@ -455,7 +455,7 @@
             // 异常等级
             for (var i = 0; i < $scope.show.exceptionTypeArr.length; i++) {
                 var item = $scope.show.exceptionTypeArr[i];
-                if (item.id = data.exceptionLevel) {
+                if (item.id == data.exceptionLevel) {
                     data.excepLevel = item.name;
                 }
             }
