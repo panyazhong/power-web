@@ -540,20 +540,14 @@ input[type=number]::-webkit-outer-spin-button {
 }
 
 .setpwd {
-  height: 500px;
-  display: -webkit-box;
-  display: -ms-flexbox;
-  display: flex;
-  //-webkit-box-align: center;
-  //-ms-flex-align: center;
-  //align-items: center;
-  padding-top: 50px;
+
 }
 
 .setpwd .setpwd-block {
   text-align: center;
   width: 450px !important;
   margin: 0 auto;
+  padding-top: 100px;
 }
 
 /*
@@ -788,4 +782,18 @@ input[type=number]::-webkit-outer-spin-button {
 .report .div-item {
   display: inline-block;
   float: left;
+}
+
+/**
+btn 不可用
+ */
+.btn_unable {
+  background: #E6E6E6 !important;
+  color: #666666 !important;
+}
+
+.set-user-div {
+  text-align: justify;
+  text-align-last: justify;
+  width: 130px !important;
 }

@@ -168,8 +168,7 @@
             return params;
         };
 
-        $scope.queryList = function (cid) {
-
+        $scope.queryHistory = function () {
             var params = $scope.formatForm();
             Log.i('query params : ' + JSON.stringify(params));
 
@@ -185,7 +184,9 @@
                 function (err) {
                     HttpToast.toast(err);
                 });
+        };
 
+        $scope.queryReal = function () {
             // 实时
             var p = {
                 real_time: 'real-time',
@@ -201,6 +202,11 @@
                 function (err) {
                     HttpToast.toast(err);
                 });
+        };
+
+        $scope.queryList = function (cid) {
+            $scope.queryHistory();
+            $scope.queryReal();
         };
 
         // dropdown set 1
@@ -328,6 +334,28 @@
                     }
 
                 }
+            }
+
+        });
+
+        $rootScope.$on('inspectRefresh', function (event, data) {
+            if (!data) {
+                return
+            }
+            if ($state.$current != 'checkin') {
+                return
+            }
+
+            console.log('inspectRefresh: \n' + JSON.stringify(data));
+
+            switch (data.isEnd) {
+                case 0:
+                    $scope.queryReal();
+                    break;
+                case 1:
+                    // 更新列表
+                    $scope.queryList($scope.form.client_id);
+                    break;
             }
 
         });

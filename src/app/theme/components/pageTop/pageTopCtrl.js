@@ -53,7 +53,7 @@
                     state: 'setalarm'
                 },
                 {
-                    title: '管理员设置',
+                    title: '账号设置',
                     state: 'setpwd'
                 }
             ],
@@ -83,7 +83,8 @@
                     return true;
                     break;
                 case "setpwd":
-                    return $scope.show.userType == 1 ? true : false;
+                    // return $scope.show.userType == 1 ? true : false;
+                    return true;
                     break;
             }
         };

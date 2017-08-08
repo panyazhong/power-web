@@ -9,7 +9,7 @@
     $stateProvider
         .state('setpwd', {
           url: '/setpwd',
-          title: '平台设置 / 管理员设置',
+          title: '平台设置 / 账号设置',
           templateUrl: 'app/powers/setpwd/setpwd.html',
           controller: 'setpwdPageCtrl',
         });

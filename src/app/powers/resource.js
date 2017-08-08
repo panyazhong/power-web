@@ -90,11 +90,13 @@
         // 用户
         .factory('User', function (Resource) {
             var config = {
-                url: 'user/:psw/:logout/:uid',
+                url: 'user/:pwd/:logout/:uid/:verify/:modify',
                 paramsDefault: {
-                    psw: '@psw',
+                    pwd: '@pwd',
                     logout: '@logout',
                     uid: '@uid',
+                    verify: '@verify',
+                    modify: '@modify'
                 },
                 action: {
                     login: {
@@ -118,6 +120,12 @@
                     },
                     queryDetail: {
                         method: 'GET'
+                    },
+                    getCode: {  // 获取验证码
+                        method: 'POST'
+                    },
+                    editPhone: {    // 修改手机号
+                        method: 'POST'
                     }
                 }
             };

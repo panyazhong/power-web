@@ -101,6 +101,15 @@
             $rootScope.$emit('overallRefresh', item);
         });
 
+        socket.on('inspect', function (data) {  // 巡检模块刷新
+            Log.i('inspect : \n' + data);
+
+            var obj = JSON.parse(data);
+            var item = JSON.parse(obj.content);
+
+            $rootScope.$emit('inspectRefresh', item);
+        });
+
         return {
             subscribeClient: function (cid) {
                 socket.emit('subscribe', {client_id: cid}); // 订阅——变电站信息
