@@ -212,15 +212,15 @@
                             $scope.rowCollection = data.daily;
                         }
 
-                        // if (Array.isArray(data.monthly)) {
-                        //     $scope.show.setListMonth = data.monthly;
-                        //     $scope.rowCollectionMonth = data.monthly;
-                        // }
-                        //
-                        // if (Array.isArray(data.yearly)) {
-                        //     $scope.show.setListYear = data.yearly;
-                        //     $scope.rowCollectionYear = data.yearly;
-                        // }
+                        if (Array.isArray(data.monthly)) {
+                            $scope.show.setListMonth = data.monthly;
+                            $scope.rowCollectionMonth = data.monthly;
+                        }
+
+                        if (Array.isArray(data.yearly)) {
+                            $scope.show.setListYear = data.yearly;
+                            $scope.rowCollectionYear = data.yearly;
+                        }
                     },
                     function (err) {
                         HttpToast.toast(err);
