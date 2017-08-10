@@ -51,6 +51,12 @@
                 phone: '',
                 code: ''
             };
+
+            var code = $('#code');
+            clearInterval($scope.t);
+            code.html("重新获取");
+            $scope.data.validCode = true;
+            code.removeClass("btn_unable");
         };
 
         // 修改手机号
@@ -95,11 +101,11 @@
             if ($scope.data.validCode) {
                 $scope.data.validCode = false;
                 code.addClass("btn_unable");
-                var t = setInterval(function () {
+                $scope.t = setInterval(function () {
                     time--;
                     code.html(time + "秒");
                     if (time == 0) {
-                        clearInterval(t);
+                        clearInterval($scope.t);
                         code.html("重新获取");
                         $scope.data.validCode = true;
                         code.removeClass("btn_unable");

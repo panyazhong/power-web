@@ -6,7 +6,9 @@
 
     /** @ngInject */
     function overviewPageCtrl($scope, Overview, Sidebar, SidebarCache, Log, HttpToast, $timeout,
-                              locals, ToastUtils, $state, $rootScope, clientCache) {
+                              locals, ToastUtils, $state, $rootScope, clientCache, PageTopCache) {
+
+        PageTopCache.cache.state = $state.$current; // active
 
         $scope.show = {
             mapData: [],

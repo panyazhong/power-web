@@ -90,7 +90,6 @@
         };
 
         $scope.changeState = function (item) {
-            PageTopCache.cache.state = item.state;
 
             if (item.state == 'settings') {
                 $scope.isSetting = true;
@@ -98,6 +97,7 @@
                 return;
             }
 
+            PageTopCache.cache.state = item.state;
             $scope.isSetting = false;
             $state.go(item.state);
         };
