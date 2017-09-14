@@ -24,9 +24,9 @@
             });
 
         })
-        .factory('Resource', function ($resource, $httpParamSerializerJQLike, $q) {
+        .factory('Resource', function ($resource, $httpParamSerializerJQLike, $q, coreConfig) {
 
-            var host = 'http://monitor.shanghaihenghui.com/api';
+            var host = coreConfig.httpHost;
 
             var setAction = function (actions) {
                 var defaultParams = {

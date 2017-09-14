@@ -21,7 +21,8 @@
 
         window.localStorage.clear();    // init local
 
-        var host = 'http://monitor.shanghaihenghui.com/api/user/login';
+        var host = 'http://192.168.0.155/power';
+        var path = host + '/api/user/login';
 
         var login = function () {
             var account = $('#inputUsername').val();
@@ -32,15 +33,15 @@
                     psw: pwd
                 };
                 $.ajax({
-                    url: host,
-                    data: params,
-                    contentType: 'application/x-www-form-urlencoded',
+                    url: path,
+                    data: JSON.stringify(params),
+                    contentType: 'application/json',
                     type: 'POST',
                     xhrFields: {
                         withCredentials: true
                     },
                     success: function (data) {
-                        if (data.name && data.uid) {
+                        if (data.id && data.name && data.admin) {
 
                             localStorage.user = JSON.stringify(data);
                             window.location.replace('/index.html');

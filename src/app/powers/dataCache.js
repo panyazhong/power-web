@@ -10,11 +10,12 @@
         .factory("SidebarCache", sidebarCache)  // 侧边栏和地图数据
         .factory("locals", locals)
         .factory("pieChartCache", pieChartCache)
-        .factory("clientCache", clientCache);
+        .factory("clientCache", clientCache)
+        .service("coreConfig", coreConfig);
 
-    function eventsCache(Log, $state, $rootScope, clientCache, $uibModal) {
+    function eventsCache(Log, $state, $rootScope, clientCache, $uibModal, coreConfig) {
 
-        var socket = io.connect('http://monitor.shanghaihenghui.com:6688', {resource: 'event/socket.io'});
+        var socket = io.connect(coreConfig.host + ':6688', {resource: 'event/socket.io'});
         socket.on('alert', function (data) {    // 监听事件
             Log.i('alert : \n' + data);
 
@@ -131,14 +132,14 @@
         }
     }
 
-    function imgPrefix() {
+    function imgPrefix(coreConfig) {
         return {
-            prefix: 'http://monitor.shanghaihenghui.com/'
+            prefix: coreConfig.host + '/'
         }
     }
 
-    function exportPrefix(ImgPrefix) {
-        var host = ImgPrefix.prefix + "api/";
+    function exportPrefix(coreConfig) {
+        var host = coreConfig.httpHost;
 
         return {
             prefix: host + 'device/export',      // 设备导出
@@ -320,6 +321,23 @@
                 p: {}    // 当前负荷
             }
         }
+    }
+
+    function coreConfig() {
+
+        // var host = 'http://www.shanghaihenghui.com';
+        var host = 'http://192.168.0.155';
+
+        // var httpHost = host + '/api';
+        var httpHost = host + '/power/api';
+
+        var service = {
+            host: host,
+            httpHost: httpHost
+        };
+
+        return service;
+
     }
 
 })();
