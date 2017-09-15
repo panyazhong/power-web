@@ -58,6 +58,7 @@
 
                             <a ng-mouseenter="hoverItem($event, item)"
                                ng-if="::!subSubitem.disabled"
+                               ng-click="goState($event,subSubitem.branchId)"
                                style="cursor:pointer;">
 
                                 <div>
