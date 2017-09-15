@@ -486,5 +486,23 @@
             };
             return Resource(config);
         })
+        // 变电站
+        .factory('Client', function (Resource) {
+            var config = {
+                url: 'client/:id/:attr/:tree',
+                paramsDefault: {
+                    id: '@id',
+                    attr: '@attr',
+                    tree: '@tree'
+                },
+                action: {
+                    query: {
+                        method: 'GET',
+                        isArray: true
+                    }
+                }
+            };
+            return Resource(config);
+        })
 
 })();

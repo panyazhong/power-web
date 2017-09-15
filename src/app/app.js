@@ -28,12 +28,12 @@ angular.module('BlurAdmin', [
     'BlurAdmin.power'
 
 ]).run(function (Log, locals) {
-
+    /*
     var userInfo = locals.getObject('user');
     if (JSON.stringify(userInfo) == '{}') {
 
         // 跳转
         window.location.replace('/auth.html');
     }
-
+    */
 });

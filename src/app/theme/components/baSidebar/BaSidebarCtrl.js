@@ -6,12 +6,13 @@
 
     /** @ngInject */
     function BaSidebarCtrl($scope, baSidebarService, $state, locals, SidebarCache, Sidebar, Log,
-                           HttpToast, $rootScope, _) {
+                           HttpToast, $rootScope, _, clientCache) {
 
         $scope.show = {
             menuItems: []
         };
 
+        /*
         $scope.setLeftMenu = function (obj) {
             var data = obj;
             var menuData = [];
@@ -51,24 +52,111 @@
             });
             return menuData;
         };
+        */
+
+        $scope.setLineData = function (i, t) {
+            i["id"] = t.id;
+            i["name"] = t.name;
+            i["category"] = t.category;
+            i["icon"] = t.category == '-1' ? 'indicator-normal indicator-one' : 'indicator-normal'; //是否是变电站
+            i["stateRef"] = t.category == '-1' ? '' : 'branch';
+            i["lines"] = [];
+
+            return i;
+        };
+
+        $scope.setLeftMenu = function (treeNodes) {
+            if (!treeNodes || !treeNodes.length) return;
+
+            var menuData = [];
+            treeNodes.map(function (t) {
+                // 一级菜单
+                var i = $scope.setLineData({}, t);
+                t.lines.map(function (subT) {
+                    // 二级菜单
+                    var j = $scope.setLineData({}, subT);
+                    subT.lines.map(function (subSubT) {
+                        // 三级菜单
+                        var k = $scope.setLineData({}, subSubT);
+                        j.lines.push(k);
+                    });
+                    i.lines.push(j);
+                });
+                menuData.push(i);
+            });
+
+            return menuData;
+        };
 
         $scope.setMenu = function () {
-            if (SidebarCache.isEmpty()) {
-                Sidebar.query({},
-                    function (data) {
-                        SidebarCache.create(data);
-                        locals.putObject('sidebar', data.sidebar);
-                        $scope.show.menuItems = $scope.setLeftMenu(data.sidebar);
-                    }, function (err) {
-                        HttpToast.toast(err);
-                    });
-            } else {
-                $scope.show.menuItems = $scope.setLeftMenu(locals.getObject('sidebar'));
-            }
+            // if (SidebarCache.isEmpty()) {
+            //     Sidebar.query({},
+            //         function (data) {
+            //             SidebarCache.create(data);
+            //             locals.putObject('sidebar', data.sidebar);
+            //             $scope.show.menuItems = $scope.setLeftMenu(data.sidebar);
+            //         }, function (err) {
+            //             HttpToast.toast(err);
+            //         });
+            // } else {
+            //     $scope.show.menuItems = $scope.setLeftMenu(locals.getObject('sidebar'));
+            // }
+
+            var pm = clientCache.getTree();
+            pm.then(function (data) {
+
+                $scope.show.menuItems = $scope.setLeftMenu(data);
+            });
         };
 
         $scope.init = function () {
-            $scope.setMenu();
+            // $scope.setMenu();
+
+            // 测试数据
+            var data = [
+                {
+                    "id": "1",
+                    "name": "南京军区",
+                    "category": "-1",
+                    "lines": [
+                        {
+                            "id": "1",
+                            "name": "第1师",
+                            "category": "0",
+                            "lines": [
+                                {
+                                    "id": "2",
+                                    "name": "第1-1旅",
+                                    "category": "1",
+                                    "lines": []
+                                },
+                                {
+                                    "id": "3",
+                                    "name": "第1-2旅",
+                                    "category": "1",
+                                    "lines": []
+                                }
+                            ]
+                        },
+                        {
+                            "id": "8",
+                            "name": "第2师",
+                            "category": "0",
+                            "lines": []
+                        }
+                    ]
+                },
+                {
+                    "id": "2",
+                    "name": "成都军区",
+                    "category": "-1",
+                    "lines": []
+                }
+            ];
+
+            $scope.show.menuItems = $scope.setLeftMenu(data);
+            Log.i('menuItems : \n' + JSON.stringify($scope.show.menuItems));
+
         };
         $scope.init();
 

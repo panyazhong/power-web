@@ -10,11 +10,11 @@
         .factory("SidebarCache", sidebarCache)  // 侧边栏和地图数据
         .factory("locals", locals)
         .factory("pieChartCache", pieChartCache)
-        .factory("clientCache", clientCache)
+        .service("clientCache", clientCache)
         .service("coreConfig", coreConfig);
 
     function eventsCache(Log, $state, $rootScope, clientCache, $uibModal, coreConfig) {
-
+        /*
         var socket = io.connect(coreConfig.host + ':6688', {resource: 'event/socket.io'});
         socket.on('alert', function (data) {    // 监听事件
             Log.i('alert : \n' + data);
@@ -110,13 +110,16 @@
 
             $rootScope.$emit('inspectRefresh', item);
         });
+        */
 
+        //========> 测试
+        var socket ='';
         return {
             subscribeClient: function (cid) {
                 socket.emit('subscribe', {client_id: cid}); // 订阅——变电站信息
             },
             login: function () {
-                socket.emit('login', {});
+                // socket.emit('login', {});
             }
         }
     }
@@ -301,6 +304,9 @@
             },
             clear: function () {
                 $window.localStorage.clear();
+            },
+            removeItem: function (key) {
+                $window.localStorage.removeItem(key);
             }
         }
     }
@@ -314,13 +320,68 @@
         }
     }
 
-    function clientCache() {
-        return {
-            cache: {
-                data: {},// 某个变电站
-                p: {}    // 当前负荷
-            }
+    // function clientCache() {
+    //     return {
+    //         cache: {
+    //             data: {},// 某个变电站
+    //             p: {}    // 当前负荷
+    //         }
+    //     }
+    // }
+
+    function clientCache(Client, HttpToast, locals, $q) {
+
+        var key = 'tree';   //变电站树
+        var k = 'client';   //选中的变电站信息
+
+        var service = {
+            init: init,
+            getTree: getTree,
+            putClient: putClient,
+            getClient: getClient
+        };
+
+        return service;
+
+        function init() {
+            locals.removeItem(key);
+            locals.removeItem(k);
         }
+
+        function getTree() {
+            var deferred = $q.defer();
+
+            var clientTree = locals.getObject(key);
+
+            if (JSON.stringify(clientTree) == '{}' || JSON.stringify(clientTree) == '[]') {
+                var p = {tree: "tree"};
+                Client.query(p,
+                    function (data) {
+                        if (Array.isArray(data)) {
+                            deferred.resolve(data);
+                            locals.putObject(key, data);
+                        }
+                    },
+                    function (err) {
+                        deferred.reject();
+                        HttpToast.toast(err);
+                    })
+            }
+            else {
+                deferred.resolve(clientTree);
+            }
+
+            return deferred.promise;
+        }
+
+        function putClient(data) {
+            locals.putObject(k, data);
+        }
+
+        function getClient() {
+            return locals.getObject(k);
+        }
+
     }
 
     function coreConfig() {
