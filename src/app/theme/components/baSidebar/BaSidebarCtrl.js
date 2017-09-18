@@ -10,7 +10,8 @@
 
         $scope.show = {
             menuItems: [],
-            menuTwo: []
+            menuTwo: [],    // 第二侧边栏
+            menuTwoTop: {}  // 选中的线数据
         };
 
         /*
@@ -106,18 +107,6 @@
         };
 
         $scope.setMenu = function () {
-            // if (SidebarCache.isEmpty()) {
-            //     Sidebar.query({},
-            //         function (data) {
-            //             SidebarCache.create(data);
-            //             locals.putObject('sidebar', data.sidebar);
-            //             $scope.show.menuItems = $scope.setLeftMenu(data.sidebar);
-            //         }, function (err) {
-            //             HttpToast.toast(err);
-            //         });
-            // } else {
-            //     $scope.show.menuItems = $scope.setLeftMenu(locals.getObject('sidebar'));
-            // }
 
             var pm = clientCache.getTree();
             pm.then(function (data) {
@@ -127,57 +116,8 @@
         };
 
         $scope.init = function () {
-            // $scope.setMenu();
-
-            /* */
-            // 测试数据
-            var data = [{
-                "id": "1",
-                "name": "\u5357\u4eac\u519b\u533a",
-                "category": "-1",
-                "lines": [{
-                    "id": "1",
-                    "name": "\u7b2c1\u5e08",
-                    "category": "0",
-                    "lines": [{
-                        "id": "2",
-                        "name": "\u7b2c1-1\u65c5",
-                        "category": "1",
-                        "lines": [{
-                            "id": "4",
-                            "name": "\u7b2c1-1-1\u56e2",
-                            "category": "0",
-                            "lines": []
-                        }, {
-                            "id": "5",
-                            "name": "\u7b2c1-1-2\u56e2",
-                            "category": "0",
-                            "lines": []
-                        }]
-                    }, {
-                        "id": "3",
-                        "name": "\u7b2c1-2\u65c5",
-                        "category": "1",
-                        "lines": []
-                    }]
-                }, {
-                    "id": "2",
-                    "name": "测试哟",
-                    "category": "0",
-                    "lines": []
-                }]
-            }, {
-                "id": "2",
-                "name": "\u6210\u90fd\u519b\u533a",
-                "category": "-1",
-                "lines": []
-            }];
-
             $timeout(function () {
-                $scope.show.menuItems = $scope.setLeftMenu(data);
-                Log.i('menuItems : \n' + JSON.stringify($scope.show.menuItems));
-
-                // $scope.setMenu();
+                $scope.setMenu();
             });
 
         };
@@ -261,6 +201,12 @@
         });
 
         $scope.saveCid = function (item) {
+            // 点击的id若等于缓存的id return
+            var cid = locals.get('cid', '');
+            if (cid && cid == item.id) {
+                return;
+            }
+
             locals.put('cid', item.id);
             var data = {
                 type: 'cid',
@@ -271,6 +217,7 @@
             Log.i('emit cid: ' + JSON.stringify(data));
         };
 
+        /* 记录总进线，过时
         $scope.saveInid = function (cObj, item) {
             locals.put('cid', cObj.clientId);
             locals.put('inid', item.incominglingId);
@@ -283,6 +230,58 @@
 
             Log.i('emit Inid: ' + JSON.stringify(data));
         }
+        */
 
+        $scope.iterator = function (treeNodes, choiceId) {
+            if (!treeNodes || !treeNodes.length) return;
+
+            var stack = [];
+
+            for (var i = 0; i < treeNodes.length; i++) {
+                stack.push(treeNodes[i]);
+            }
+
+            var item;
+
+            while (stack.length) {
+                item = stack.shift();
+
+                if (item.category == "1" && item.id == choiceId) {
+                    $scope.show.menuTwo = $scope.setLeftMenu(item.lines);
+
+                    $scope.show.menuTwoTop = {
+                        id: item.id,
+                        name: item.name
+                    };
+                }
+
+                if (item.lines && item.lines.length) {
+                    stack = item.lines.concat(stack);
+                }
+            }
+        };
+
+        /**
+         * 查看第二侧边栏
+         */
+        $scope.viewMenuTwo = function (item) {
+            // 点击的id若等于缓存的id return
+            if ($scope.show.menuTwoTop && $scope.show.menuTwoTop.id && $scope.show.menuTwoTop.id == item.id) {
+                return;
+            }
+
+            var pm = clientCache.getTree();
+            pm.then(function (data) {
+                $scope.iterator(data, item.id);
+            });
+        };
+
+        /**
+         * 关闭第二侧边栏
+         */
+        $scope.closeMenuTwo = function () {
+            $scope.show.menuTwo = [];
+            $scope.show.menuTwoTop = {};
+        };
     }
 })();

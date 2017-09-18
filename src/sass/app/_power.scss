@@ -681,6 +681,18 @@ input[type=number]::-webkit-outer-spin-button {
   width: 112px;
 }
 
+.twoTop {
+  color: #fff;
+  max-width: 175px;
+  width: 175px;
+  overflow: hidden !important;
+  white-space: nowrap !important;
+  text-overflow: ellipsis !important;
+  display: inline-flex;
+  padding: 6px 7px;
+  cursor: pointer;
+}
+
 /*
   签到
  */
