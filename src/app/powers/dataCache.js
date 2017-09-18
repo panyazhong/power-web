@@ -11,7 +11,8 @@
         .factory("locals", locals)
         .factory("pieChartCache", pieChartCache)
         .service("clientCache", clientCache)
-        .service("coreConfig", coreConfig);
+        .service("coreConfig", coreConfig)
+        .service("mapImgCache", mapImgCache);
 
     function eventsCache(Log, $state, $rootScope, clientCache, $uibModal, coreConfig) {
         /**/
@@ -137,7 +138,8 @@
 
     function imgPrefix(coreConfig) {
         return {
-            prefix: coreConfig.host + '/'
+            // prefix: coreConfig.host + '/'
+            prefix: coreConfig.host + '/power/'
         }
     }
 
@@ -399,6 +401,24 @@
 
         return service;
 
+    }
+
+    function mapImgCache(_, ImgPrefix) {
+
+        var service = {
+            create: create
+        };
+
+        return service;
+
+        function create(data) {
+
+            data.map(function (t) {
+                t.ico = ImgPrefix.prefix + t.icon; // 变电站icon
+            });
+
+            return _.cloneDeep(data);
+        }
     }
 
 })();

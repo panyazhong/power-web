@@ -489,11 +489,12 @@
         // 变电站
         .factory('Client', function (Resource) {
             var config = {
-                url: 'client/:id/:attr/:tree',
+                url: 'client/:id/:attr/:tree/:preview',
                 paramsDefault: {
                     id: '@id',
                     attr: '@attr',
-                    tree: '@tree'
+                    tree: '@tree',
+                    preview: '@preview'
                 },
                 action: {
                     query: {

@@ -6,7 +6,7 @@
 
     /** @ngInject */
     function overviewPageCtrl($scope, Overview, Sidebar, SidebarCache, Log, HttpToast, $timeout,
-                              locals, ToastUtils, $state, $rootScope, clientCache, PageTopCache) {
+                              locals, ToastUtils, $state, $rootScope, clientCache, PageTopCache, Client, mapImgCache) {
 
         PageTopCache.cache.state = $state.$current; // active
 
@@ -50,11 +50,13 @@
                         "</div>" +
                         "</div>";
 
-                    var marker = new AMap.Marker({
-                        position: new AMap.LngLat(item.longitude, item.latitude),
-                        content: content,
-                        extData: item.cid
-                    });
+                    if (item.longitude && item.latitude) {
+                        var marker = new AMap.Marker({
+                            position: new AMap.LngLat(item.longitude, item.latitude),
+                            content: content,
+                            extData: item.cid
+                        });
+                    }
 
                     // map events
                     var _onmouseover = function (e) {
@@ -162,6 +164,7 @@
 
         // 2s refresh
         $scope.init = function () {
+            /*
             Sidebar.query({},
                 function (data) {
                     SidebarCache.create(data);
@@ -171,7 +174,21 @@
                 }, function (err) {
                     HttpToast.toast(err);
                 });
+                */
 
+            var p = {preview: 'preview'};
+            Client.query(p,
+                function (data) {
+                    if (Array.isArray(data)) {
+                        $scope.show.mapData = mapImgCache.create(data);
+                        $scope.setMap();
+
+                        Log.i('变电站预览信息：' + JSON.stringify($scope.show.mapData));
+                    }
+                },
+                function (err) {
+                    HttpToast.toast(err);
+                })
         };
         $scope.init();
 
