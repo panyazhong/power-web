@@ -10,18 +10,18 @@
 
             <!--一级菜单标题-->
 
+            <a ng-mouseenter="hoverItem($event, item)" ng-if="::item.subMenu"
+               class="al-sidebar-list-link" ba-ui-sref-toggler>
+                <span class="{{ item.icon }}"></span>
+                <span class="indicator-desc indicator-desc-one" ng-click="saveCid(item)">{{ ::item.title }}</span>
+                <b class="fa fa-angle-down" ui-sref-active="fa-angle-up"
+                   ng-if="::item.subMenu"></b>
+            </a>
+
             <a ng-mouseenter="hoverItem($event, item)" ng-if="::!item.subMenu"
                class="al-sidebar-list-link">
                 <span class="{{ item.icon }}"></span>
-                <span class="indicator-desc indicator-desc-one">{{ ::item.title }}</span>
-            </a>
-
-            <a ng-mouseenter="hoverItem($event, item)" ng-if="::item.subMenu"
-               class="al-sidebar-list-link" ba-ui-sref-toggler ng-click="saveCid(item)">
-                <span class="{{ item.icon }}"></span>
-                <span class="indicator-desc indicator-desc-one">{{ ::item.title }}</span>
-                <b class="fa fa-angle-down" ui-sref-active="fa-angle-up"
-                   ng-if="::item.subMenu"></b>
+                <span class="indicator-desc indicator-desc-one" ng-click="saveCid(item)">{{ ::item.title }}</span>
             </a>
 
             <ul ng-if="::item.subMenu" class="al-sidebar-sublist"
@@ -32,12 +32,16 @@
                     ba-sidebar-toggling-item="subitem" class="ba-sidebar-sublist-item">
 
                     <!--二级菜单标题-->
-                    <a ng-mouseenter="hoverItem($event, item)" ng-if="::subitem.subMenu"
-                       ba-ui-sref-toggler
-                       class="al-sidebar-list-link subitem-submenu-link" ng-click="saveInid(item,subitem)">
+                    <a ng-mouseenter="hoverItem($event, item)"
+                       ng-if="::subitem.subMenu"
+                       class="al-sidebar-list-link subitem-submenu-link"
+                       ba-ui-sref-toggler>
 
                         <span class="{{ subitem.icon }}"></span>
-                        <span class="indicator-desc indicator-desc-two">{{ ::subitem.title }}</span>
+                        <span class="indicator-desc indicator-desc-two"
+                              ng-click="goBranch($event,subitem)">
+                            {{ subitem.title }}
+                        </span>
 
                         <b class="fa"
                            ng-class="{'fa-angle-up': subitem.expanded, 'fa-angle-down': !subitem.expanded}"
@@ -52,19 +56,20 @@
                             <!--三级菜单标题-->
 
                             <a ng-mouseenter="hoverItem($event, item)"
-                               ng-if="::!subSubitem.disabled"
-                               ng-click="goState($event,subSubitem.branchId)"
+                               class="al-sidebar-list-link subitem-submenu-link"
                                style="cursor:pointer;">
 
                                 <div>
-                                    <span class="{{ subSubitem.icon }}">
-                                    </span>
+                                    <span class="{{ subSubitem.icon }}"></span>
                                     <span class="page-sb-item indicator-desc indicator-desc-three"
-                                          tooltip-placement="bottom-left"
-                                          uib-tooltip="{{subSubitem.title}}"
-                                          tooltip-class="cTip">
-                                	    {{ ::subSubitem.title }}
+                                          ng-click="goBranch($event,subSubitem)">
+                                	    {{ subSubitem.title }}
                                     </span>
+
+                                    <b class="fa"
+                                       ng-class="{'fa-angle-up': subSubitem.expanded, 'fa-angle-down': !subSubitem.expanded}"
+                                       ng-if="subSubitem.subMenu"></b>
+
                                 </div>
 
                             </a>
@@ -72,8 +77,15 @@
                     </ul>
 
                     <a ng-mouseenter="hoverItem($event, item)"
-                       ng-if="!subitem.subMenu">
-                        {{ ::subitem.title}}
+                       ng-if="!subitem.subMenu"
+                       class="al-sidebar-list-link subitem-submenu-link">
+
+                        <span class="{{ subitem.icon }}"></span>
+                        <span class="indicator-desc indicator-desc-two"
+                              ng-click="goBranch($event,subitem)">
+                            {{ subitem.title }}
+                        </span>
+
                     </a>
                 </li>
             </ul>

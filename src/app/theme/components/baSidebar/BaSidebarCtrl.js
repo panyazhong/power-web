@@ -9,7 +9,8 @@
                            HttpToast, $rootScope, _, clientCache, $timeout) {
 
         $scope.show = {
-            menuItems: []
+            menuItems: [],
+            menuTwo: []
         };
 
         /*
@@ -128,51 +129,55 @@
         $scope.init = function () {
             // $scope.setMenu();
 
+            /* */
             // 测试数据
-            var data = [
-                {
+            var data = [{
+                "id": "1",
+                "name": "\u5357\u4eac\u519b\u533a",
+                "category": "-1",
+                "lines": [{
                     "id": "1",
-                    "name": "南京军区",
-                    "category": "-1",
-                    "lines": [
-                        {
-                            "id": "1",
-                            "name": "第1师",
-                            "category": "0",
-                            "lines": [
-                                {
-                                    "id": "2",
-                                    "name": "第1-1旅",
-                                    "category": "1",
-                                    "lines": []
-                                },
-                                {
-                                    "id": "3",
-                                    "name": "第1-2旅",
-                                    "category": "1",
-                                    "lines": []
-                                }
-                            ]
-                        },
-                        {
-                            "id": "8",
-                            "name": "第2师",
+                    "name": "\u7b2c1\u5e08",
+                    "category": "0",
+                    "lines": [{
+                        "id": "2",
+                        "name": "\u7b2c1-1\u65c5",
+                        "category": "1",
+                        "lines": [{
+                            "id": "4",
+                            "name": "\u7b2c1-1-1\u56e2",
                             "category": "0",
                             "lines": []
-                        }
-                    ]
-                },
-                {
+                        }, {
+                            "id": "5",
+                            "name": "\u7b2c1-1-2\u56e2",
+                            "category": "0",
+                            "lines": []
+                        }]
+                    }, {
+                        "id": "3",
+                        "name": "\u7b2c1-2\u65c5",
+                        "category": "1",
+                        "lines": []
+                    }]
+                }, {
                     "id": "2",
-                    "name": "成都军区",
-                    "category": "-1",
+                    "name": "测试哟",
+                    "category": "0",
                     "lines": []
-                }
-            ];
+                }]
+            }, {
+                "id": "2",
+                "name": "\u6210\u90fd\u519b\u533a",
+                "category": "-1",
+                "lines": []
+            }];
 
             $timeout(function () {
                 $scope.show.menuItems = $scope.setLeftMenu(data);
                 Log.i('menuItems : \n' + JSON.stringify($scope.show.menuItems));
+
+                // $scope.setMenu();
             });
 
         };
@@ -193,11 +198,17 @@
             $scope.hoverElemTop = $event.currentTarget.getBoundingClientRect().top - menuTopValue;
         };
 
-        $scope.goState = function (e, id) {
-            $('.page-sb-item').removeClass('color-purple');
-            $(e.target.firstElementChild.lastElementChild).addClass('color-purple');
+        /**
+         * 进入支线详情
+         * @param e
+         * @param item
+         */
+        $scope.goBranch = function (e, item) {
+            // $('.page-sb-item').removeClass('color-purple');
+            // $(e.target.firstElementChild.lastElementChild).addClass('color-purple');
 
-            $state.go('branch', {bid: id}, {reload: true});
+            Log.i('check line: ' + item.id);
+            $state.go('branch', {bid: item.id}, {reload: true});
         };
 
         /**
@@ -250,10 +261,10 @@
         });
 
         $scope.saveCid = function (item) {
-            locals.put('cid', item.clientId);
+            locals.put('cid', item.id);
             var data = {
                 type: 'cid',
-                cid: item.clientId
+                cid: item.id
             };
             $rootScope.$emit('filterInfo', data);
 

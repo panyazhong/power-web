@@ -14,7 +14,7 @@
         .service("coreConfig", coreConfig);
 
     function eventsCache(Log, $state, $rootScope, clientCache, $uibModal, coreConfig) {
-        /*
+        /**/
         var socket = io.connect(coreConfig.host + ':6688', {resource: 'event/socket.io'});
         socket.on('alert', function (data) {    // 监听事件
             Log.i('alert : \n' + data);
@@ -110,10 +110,10 @@
 
             $rootScope.$emit('inspectRefresh', item);
         });
-        */
 
+        /*
         //========> 测试
-        var socket ='';
+        var socket ='';*/
         return {
             subscribeClient: function (cid) {
                 socket.emit('subscribe', {client_id: cid}); // 订阅——变电站信息

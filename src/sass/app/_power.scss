@@ -667,15 +667,18 @@ input[type=number]::-webkit-outer-spin-button {
 
 // 文字一二三文字
 .indicator-desc-one {
-  max-width: 150px;
+  max-width: 160px;
+  width: 160px;
 }
 
 .indicator-desc-two {
-  max-width: 120px;
+  max-width: 135px;
+  width: 135px;
 }
 
 .indicator-desc-three {
-  max-width: 125px;
+  max-width: 112px;
+  width: 112px;
 }
 
 /*
