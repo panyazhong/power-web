@@ -6,7 +6,7 @@
 
     /** @ngInject */
     function BaSidebarCtrl($scope, baSidebarService, $state, locals, SidebarCache, Sidebar, Log,
-                           HttpToast, $rootScope, _, clientCache) {
+                           HttpToast, $rootScope, _, clientCache, $timeout) {
 
         $scope.show = {
             menuItems: []
@@ -56,11 +56,11 @@
 
         $scope.setLineData = function (i, t) {
             i["id"] = t.id;
-            i["name"] = t.name;
+            i["title"] = t.name;
             i["category"] = t.category;
             i["icon"] = t.category == '-1' ? 'indicator-normal indicator-one' : 'indicator-normal'; //是否是变电站
             i["stateRef"] = t.category == '-1' ? '' : 'branch';
-            i["lines"] = [];
+            // i["subMenu"] = [];
 
             return i;
         };
@@ -72,17 +72,33 @@
             treeNodes.map(function (t) {
                 // 一级菜单
                 var i = $scope.setLineData({}, t);
-                t.lines.map(function (subT) {
-                    // 二级菜单
-                    var j = $scope.setLineData({}, subT);
-                    subT.lines.map(function (subSubT) {
-                        // 三级菜单
-                        var k = $scope.setLineData({}, subSubT);
-                        j.lines.push(k);
+                if (t.lines.length) {
+                    i["subMenu"] = [];
+                    t.lines.map(function (subT) {
+                        // 二级菜单
+                        var j = $scope.setLineData({}, subT);
+                        if (subT.lines.length) {
+                            j["subMenu"] = [];
+                            subT.lines.map(function (subSubT) {
+                                // 三级菜单
+                                var k = $scope.setLineData({}, subSubT);
+                                /** 差异需要判断是否有子树 **/
+                                if (subSubT.lines.length) {
+                                    k["subMenu"] = [];  // 无需添加树结构，[]即可
+                                    j.subMenu.push(k);
+                                } else {
+                                    j.subMenu.push(k);
+                                }
+                            });
+                            i.subMenu.push(j);
+                        } else {
+                            i.subMenu.push(j);
+                        }
                     });
-                    i.lines.push(j);
-                });
-                menuData.push(i);
+                    menuData.push(i);
+                } else {
+                    menuData.push(i);
+                }
             });
 
             return menuData;
@@ -154,8 +170,10 @@
                 }
             ];
 
-            $scope.show.menuItems = $scope.setLeftMenu(data);
-            Log.i('menuItems : \n' + JSON.stringify($scope.show.menuItems));
+            $timeout(function () {
+                $scope.show.menuItems = $scope.setLeftMenu(data);
+                Log.i('menuItems : \n' + JSON.stringify($scope.show.menuItems));
+            });
 
         };
         $scope.init();

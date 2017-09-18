@@ -10,19 +10,16 @@
 
             <!--一级菜单标题-->
 
-            <a ng-mouseenter="hoverItem($event, item)" ui-state="item.stateRef || ''"
-               ng-href="{{::(item.fixedHref ? item.fixedHref: '')}}" ng-if="::!item.subMenu"
+            <a ng-mouseenter="hoverItem($event, item)" ng-if="::!item.subMenu"
                class="al-sidebar-list-link">
-                <span class="{{ item.icon }}"></span><span>{{ ::item.title }}</span>
+                <span class="{{ item.icon }}"></span>
+                <span class="indicator-desc indicator-desc-one">{{ ::item.title }}</span>
             </a>
 
             <a ng-mouseenter="hoverItem($event, item)" ng-if="::item.subMenu"
                class="al-sidebar-list-link" ba-ui-sref-toggler ng-click="saveCid(item)">
-                <span class="{{ item.icon }}"></span><span
-                    class="indicator-desc indicator-desc-one"
-                    tooltip-placement="bottom-left"
-                    uib-tooltip="{{item.title}}"
-                    tooltip-class="cTip">{{ ::item.title }}</span>
+                <span class="{{ item.icon }}"></span>
+                <span class="indicator-desc indicator-desc-one">{{ ::item.title }}</span>
                 <b class="fa fa-angle-down" ui-sref-active="fa-angle-up"
                    ng-if="::item.subMenu"></b>
             </a>
@@ -33,16 +30,14 @@
                 <li ng-repeat="subitem in ::item.subMenu"
                     ng-class="::{'with-sub-menu': subitem.subMenu}" ui-sref-active="selected"
                     ba-sidebar-toggling-item="subitem" class="ba-sidebar-sublist-item">
+
+                    <!--二级菜单标题-->
                     <a ng-mouseenter="hoverItem($event, item)" ng-if="::subitem.subMenu"
                        ba-ui-sref-toggler
                        class="al-sidebar-list-link subitem-submenu-link" ng-click="saveInid(item,subitem)">
 
-                        <!--二级菜单标题-->
-                        <span class="{{ subitem.icon }}"></span><span
-                            class="indicator-desc indicator-desc-two"
-                            tooltip-placement="bottom-left"
-                            uib-tooltip="{{subitem.title}}"
-                            tooltip-class="cTip">{{ ::subitem.title }}</span>
+                        <span class="{{ subitem.icon }}"></span>
+                        <span class="indicator-desc indicator-desc-two">{{ ::subitem.title }}</span>
 
                         <b class="fa"
                            ng-class="{'fa-angle-up': subitem.expanded, 'fa-angle-down': !subitem.expanded}"
@@ -75,16 +70,9 @@
                             </a>
                         </li>
                     </ul>
-                    <a ng-mouseenter="hoverItem($event, item)" href
-                       ng-if="::(!subitem.subMenu && subitem.disabled)"
-                       class="al-sidebar-list-link">
-                        {{ ::subitem.title }}
-                    </a>
+
                     <a ng-mouseenter="hoverItem($event, item)"
-                       target="{{::(subitem.blank ? '_blank' : '_self')}}"
-                       ng-if="::(!subitem.subMenu && !subitem.disabled)"
-                       ui-state="subitem.stateRef || ''"
-                       ng-href="{{::(subitem.fixedHref ? subitem.fixedHref: '')}}">
+                       ng-if="!subitem.subMenu">
                         {{ ::subitem.title}}
                     </a>
                 </li>
