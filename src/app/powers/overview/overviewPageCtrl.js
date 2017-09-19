@@ -50,13 +50,11 @@
                         "</div>" +
                         "</div>";
 
-                    if (item.longitude && item.latitude) {
-                        var marker = new AMap.Marker({
-                            position: new AMap.LngLat(item.longitude, item.latitude),
-                            content: content,
-                            extData: item.cid
-                        });
-                    }
+                    var marker = new AMap.Marker({
+                        position: new AMap.LngLat(item.longitude, item.latitude),
+                        content: content,
+                        extData: item.cid
+                    });
 
                     // map events
                     var _onmouseover = function (e) {
@@ -164,17 +162,6 @@
 
         // 2s refresh
         $scope.init = function () {
-            /*
-            Sidebar.query({},
-                function (data) {
-                    SidebarCache.create(data);
-                    locals.putObject('sidebar', data.sidebar);
-                    $scope.show.mapData = SidebarCache.getData().clients;
-                    $scope.setMap();
-                }, function (err) {
-                    HttpToast.toast(err);
-                });
-                */
 
             var p = {preview: 'preview'};
             Client.query(p,
