@@ -58,7 +58,7 @@
                 }
             ],
             userName: locals.getObject('user').name,
-            userType: locals.getObject('user').hasTop
+            userType: locals.getObject('user').admin
         };
 
         $scope.init = function () {
@@ -67,7 +67,7 @@
                 state: 'settings'
             };
 
-            if (locals.getObject('user').hasTop == 1) {
+            if (locals.getObject('user').admin == 1) {
                 $scope.show.topBarData.push(item);
             }
 

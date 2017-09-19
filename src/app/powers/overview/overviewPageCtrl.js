@@ -17,7 +17,7 @@
         };
 
         $scope.setMap = function () {
-            var limit = locals.getObject('user').hasTop;
+            var limit = locals.getObject('user').admin;
 
             var mapLabData = $scope.show.mapData;
 

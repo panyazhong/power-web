@@ -500,6 +500,9 @@
                     query: {
                         method: 'GET',
                         isArray: true
+                    },
+                    queryDetail: {
+                        method: 'GET'
                     }
                 }
             };
