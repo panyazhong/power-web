@@ -6,7 +6,7 @@
 
     /** @ngInject */
     function overviewPageCtrl($scope, Overview, Sidebar, SidebarCache, Log, HttpToast, $timeout,
-                              locals, ToastUtils, $state, $rootScope, clientCache, PageTopCache, Client, mapImgCache) {
+                              locals, ToastUtils, $state, $rootScope, clientCache, PageTopCache, Client, mapImgCache, userCache) {
 
         PageTopCache.cache.state = $state.$current; // active
 
@@ -17,7 +17,7 @@
         };
 
         $scope.setMap = function () {
-            var limit = locals.getObject('user').admin;
+            var limit = userCache.getUserType();
 
             var mapLabData = $scope.show.mapData;
 

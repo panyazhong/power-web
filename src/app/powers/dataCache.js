@@ -12,7 +12,8 @@
         .factory("pieChartCache", pieChartCache)
         .service("clientCache", clientCache)
         .service("coreConfig", coreConfig)
-        .service("mapImgCache", mapImgCache);
+        .service("mapImgCache", mapImgCache)
+        .service("userCache", userCache);
 
     function eventsCache(Log, $state, $rootScope, clientCache, $uibModal, coreConfig) {
         /**/
@@ -419,6 +420,25 @@
 
             return _.cloneDeep(data);
         }
+    }
+
+    function userCache(locals) {
+
+        var service = {
+            getName: getName,
+            getUserType: getUserType
+        };
+
+        return service;
+
+        function getName() {
+            return locals.getObject('user').name;
+        }
+
+        function getUserType() {
+            return locals.getObject('user').admin;
+        }
+
     }
 
 })();

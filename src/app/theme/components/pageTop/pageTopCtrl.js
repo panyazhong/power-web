@@ -5,7 +5,7 @@
         .controller('pageTopCtrl', pageTopCtrl);
 
     /** @ngInject */
-    function pageTopCtrl($scope, $state, PageTopCache, locals, User, HttpToast, SkipUtils, $rootScope) {
+    function pageTopCtrl($scope, $state, PageTopCache, User, HttpToast, SkipUtils, $rootScope, userCache) {
 
         $scope.show = {
             topBarData: [
@@ -57,8 +57,8 @@
                     state: 'setpwd'
                 }
             ],
-            userName: locals.getObject('user').name,
-            userType: locals.getObject('user').admin
+            userName: userCache.getName(),
+            userType: userCache.getUserType()
         };
 
         $scope.init = function () {
@@ -67,7 +67,7 @@
                 state: 'settings'
             };
 
-            if (locals.getObject('user').admin == 1) {
+            if (userCache.getUserType() == 1) {
                 $scope.show.topBarData.push(item);
             }
 
