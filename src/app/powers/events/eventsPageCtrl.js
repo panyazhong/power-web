@@ -252,6 +252,25 @@
             });
         };
 
+        $scope.eventConfirm = function (parmas) {
+
+            Log.i('需要确认的事件id：' + JSON.stringify(parmas));
+            Event.update({
+                    event_ids: parmas,
+                    confirm: 'confirm'
+                },
+                function (data) {
+
+                    ToastUtils.openToast('success', data.message);
+                    $scope.clearForm(); // 确认完需要初始化表单状态
+                    $scope.searchDevice();
+                },
+                function (err) {
+                    HttpToast.toast(err);
+                });
+
+        };
+
         // 批量确认
         $scope.batchConfirm = function () {
             var parmas = [];
@@ -267,19 +286,7 @@
                 return;
             }
 
-            Log.i('需要确认的事件id：' + JSON.stringify(parmas));
-            Event.update({
-                    eid: parmas,
-                    confirm: 'confirm'
-                },
-                function (data) {
-
-                    ToastUtils.openToast('success', data.message);
-                    $scope.clearForm(); // 确认完需要初始化表单状态
-                    $scope.searchDevice();
-                }, function (err) {
-                    HttpToast.toast(err);
-                });
+            $scope.eventConfirm(parmas);
         };
 
         // 单个确认
@@ -287,19 +294,7 @@
             var parmas = [];
             parmas.push(id);
 
-            Log.i('需要确认的事件id：' + JSON.stringify(parmas));
-            Event.update({
-                    eid: parmas,
-                    confirm: 'confirm'
-                },
-                function (data) {
-
-                    ToastUtils.openToast('success', data.message);
-                    $scope.clearForm(); // 确认完需要初始化表单状态
-                    $scope.searchDevice();
-                }, function (err) {
-                    HttpToast.toast(err);
-                });
+            $scope.eventConfirm(parmas);
         };
 
         // 导出excel

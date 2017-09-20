@@ -40,7 +40,7 @@
                         withCredentials: true,
                         timeout: 30000,
                         headers: {
-                            'Content-Type': 'application/x-www-form-urlencoded'
+                            'Content-Type': 'application/json'
                         },
                         /*
                          transformResponse: function(data) {
@@ -49,7 +49,7 @@
                          },
                          */
                         transformRequest: function (data) {
-                            return $httpParamSerializerJQLike(data);
+                            return JSON.stringify(data);
                         }
                     };
                     action.params = action.params || {};
