@@ -74,7 +74,7 @@
     }
 
     function addUserCtrl($scope, Keyword, KeywordCache, HttpToast, Sidebar, SidebarCache, locals,
-                         ToastUtils, UserHelper, EditUser) {
+                         ToastUtils, UserHelper, EditUser, treeCache) {
 
         $scope.show = {
             userContracttyptArr: [],//合同类型
@@ -119,7 +119,17 @@
                         $scope.show.userContracttyptArr = KeywordCache.getUser_contracttypt();
                         $scope.show.userEducationArr = KeywordCache.getUser_education();
                         $scope.show.userAuthorityArr = KeywordCache.getUser_authority();
-                        $scope.show.userStatusArr = KeywordCache.getUser_status();
+                        // $scope.show.userStatusArr = KeywordCache.getUser_status();
+                        $scope.show.userStatusArr = [
+                            {
+                                "id": "1",
+                                "name": "在岗"
+                            },
+                            {
+                                "id": "2",
+                                "name": "离职"
+                            }
+                        ];
                     }, function (err) {
                         HttpToast.toast(err);
                     });
@@ -127,9 +137,20 @@
                 $scope.show.userContracttyptArr = KeywordCache.getUser_contracttypt();
                 $scope.show.userEducationArr = KeywordCache.getUser_education();
                 $scope.show.userAuthorityArr = KeywordCache.getUser_authority();
-                $scope.show.userStatusArr = KeywordCache.getUser_status();
+                // $scope.show.userStatusArr = KeywordCache.getUser_status();
+                $scope.show.userStatusArr = [
+                    {
+                        "id": "1",
+                        "name": "在岗"
+                    },
+                    {
+                        "id": "2",
+                        "name": "离职"
+                    }
+                ];
             }
 
+            /*
             if (SidebarCache.isEmpty()) {
                 Sidebar.query({},
                     function (data) {
@@ -143,6 +164,12 @@
             } else {
                 $scope.show.sidebarArr = locals.getObject('sidebar');
             }
+            */
+
+            var pm = treeCache.getTree();
+            pm.then(function (data) {
+                $scope.show.sidebarArr = treeCache.createClientArr(data);
+            });
 
         };
         $scope.init();
