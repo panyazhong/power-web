@@ -342,7 +342,8 @@
             init: init,
             getTree: getTree,
             putClient: putClient,
-            getClient: getClient
+            getClient: getClient,
+            createClientArr: createClientArr
         };
 
         return service;
@@ -384,6 +385,20 @@
 
         function getClient() {
             return locals.getObject(k);
+        }
+
+        function createClientArr(data) {    // 根据树，创建变电站数组，下拉筛选需要
+            if (!data || !data.length) return [];
+
+            var clientArr = [];
+            data.map(function (t) {
+                clientArr.push({
+                    clientName: t.name,
+                    clientId: t.id
+                })
+            });
+
+            return clientArr;
         }
 
     }

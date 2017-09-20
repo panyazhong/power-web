@@ -6,7 +6,7 @@
 
     /** @ngInject */
     function eventsPageCtrl($scope, $state, PageTopCache, Sidebar, SidebarCache, HttpToast, Log,
-                            ToastUtils, ExportPrefix, Event, locals, $stateParams, $rootScope, $timeout) {
+                            ToastUtils, ExportPrefix, Event, locals, $stateParams, $rootScope, $timeout, treeCache, timeUtil) {
 
         PageTopCache.cache.state = $state.$current; // active
 
@@ -103,16 +103,16 @@
             }
 
             $scope.form.client_id = obj.clientId;
-            $scope.form.incomingline_id = '';   //和新增设备不同，需清空子集
-            $scope.form.branch_id = '';
+            // $scope.form.incomingline_id = '';   //和新增设备不同，需清空子集
+            // $scope.form.branch_id = '';
             // set
             $scope.show.clientName = obj.clientName;
-            $scope.show.incominglingArr = obj.incominglineData;
+            // $scope.show.incominglingArr = obj.incominglineData;
 
             // clear
-            $scope.show.incominglineName = '总进线';
-            $scope.show.branchName = '所处支线';
-            $scope.show.branchArr = [];
+            // $scope.show.incominglineName = '总进线';
+            // $scope.show.branchName = '所处支线';
+            // $scope.show.branchArr = [];
         };
 
         $scope.changeIncomingling = function (obj) {
@@ -158,22 +158,11 @@
 
         $scope.init = function () {
 
-            if (SidebarCache.isEmpty()) {
-                Log.i('empty： ——SidebarCache');
-
-                Sidebar.query({},
-                    function (data) {
-                        SidebarCache.create(data);
-                        $scope.show.sidebarArr = data.sidebar;
-                        $scope.initFilterInfo();
-                    }, function (err) {
-                        HttpToast.toast(err);
-                    });
-            } else {
-                Log.i('exist： ——SidebarCache');
-                $scope.show.sidebarArr = SidebarCache.getData().sidebar;
+            var pm = treeCache.getTree();
+            pm.then(function (data) {
+                $scope.show.sidebarArr = treeCache.createClientArr(data);
                 $scope.initFilterInfo();
-            }
+            });
 
         };
         $scope.init();
@@ -189,8 +178,7 @@
 
             var params = {
                 start: start,
-                number: number,
-                list: 'list'
+                number: number
             };
 
             if ($scope.form.client_id) {
@@ -206,18 +194,21 @@
                 params.name = $scope.form.name;
             }
             if ($scope.show.beginDate) {
-                params.beginDate = moment($scope.show.beginDate).format('YYYY-MM-DD HH:mm:ss');
+                params.timeStart = moment($scope.show.beginDate).unix();
             }
             if ($scope.show.endDate) {
-                params.endDate = moment($scope.show.endDate).format('YYYY-MM-DD HH:mm:ss');
+                params.timeEnd = timeUtil.lastUTS(moment($scope.show.endDate).unix());
             }
 
             Event.query(params,
                 function (obj) {
-                    $scope.show.isLoading = false;
+                    $timeout(function () {
+                        $scope.show.isLoading = false;
+                    }, 300);
+
                     $scope.show.eventsData = obj;
-                    tableState.pagination.numberOfPages = obj.total_page;
-                    $scope.show.displayedPages = Math.ceil(parseFloat(obj.total_count) / parseInt(obj.total_page));
+                    tableState.pagination.numberOfPages = obj.totalPage;
+                    $scope.show.displayedPages = Math.ceil(parseFloat(obj.totalCount) / parseInt(obj.totalPage));
                     $scope.show.eventsData.tableState = tableState;
                 }, function (err) {
                     $scope.show.isLoading = false;
@@ -227,7 +218,7 @@
         };
 
         $scope.refreshTable = function () {
-            if (parseInt($scope.show.eventsData.total_page) <= 1 && $scope.show.eventsData.tableState) {
+            if (parseInt($scope.show.eventsData.totalPage) <= 1 && $scope.show.eventsData.tableState) {
                 $scope.getData($scope.show.eventsData.tableState);
             } else {
                 angular

@@ -10,9 +10,7 @@
         </th>
         <th>时间</th>
         <th>所属变电站</th>
-        <th>所属总进线</th>
         <th>所属支线</th>
-        <!--<th>设备名称</th>-->
         <th>描述</th>
         <th>确认</th>
         <th>操作员</th>
@@ -28,20 +26,14 @@
             </label>
         </td>
         <td class="table-def-cursor">
-            <span ng-bind="formatDate(item.create_time)"></span>
+            <span ng-bind="formatDate(item.createAt)"></span>
         </td>
         <td ng-click="viewClientDetail(item.client_id)">
-            <span ng-bind="item.client" class="color-blue"></span>
+            <span ng-bind="item.clientName" class="color-blue"></span>
         </td>
-        <td class="table-def-cursor">
-            <span ng-bind="item.incomingline" class="color-blue"></span>
+        <td ng-click="viewBranchDetail(item.line_id)">
+            <span ng-bind="item.lineName" class="color-blue"></span>
         </td>
-        <td ng-click="viewBranchDetail(item.branch_id)">
-            <span ng-bind="item.branch" class="color-blue"></span>
-        </td>
-        <!--<td>-->
-        <!--<span ng-bind="item.name" class="color-blue"></span>-->
-        <!--</td>-->
         <td class="table-def-cursor" style="max-width: 230px !important;">
             <div ng-bind="item.desc"
                  style="line-height: 20px;padding-top: 7px;padding-left: 15px;text-align: left"></div>
@@ -49,25 +41,25 @@
         <td>
             <button class="btn-def btn-submit-blue" style="width: 68px;"
                     ng-click="confirmItemEvent(item.id)"
-                    ng-show="item.confirm == 0 ">确 认
+                    ng-show="item.isConfirm == 0 ">确 认
             </button>
 
             <button class="btn-def btn-submit-gray" style="width: 68px;"
-                    ng-show="item.confirm == 1">已确认
+                    ng-show="item.isConfirm == 1">已确认
             </button>
         </td>
         <td class="table-def-cursor">
-            <span ng-bind="item.confirm_person"></span>
+            <span ng-bind="item.confirmBy"></span>
         </td>
         <td class="table-def-cursor">
-            <span ng-bind="formatDate(item.confirm_time)"></span>
+            <span ng-bind="formatDate(item.confirmAt)"></span>
         </td>
 
     </tr>
     </tbody>
     <tbody ng-show="show.isLoading">
     <tr>
-        <td colspan="10" class="text-center">Loading ...</td>
+        <td colspan="8" class="text-center">Loading ...</td>
     </tr>
     </tbody>
     <tfoot>
@@ -77,7 +69,7 @@
                 class="text-center" st-pagination=""
                 st-items-by-page="show.maxSize"
                 st-displayed-pages="show.displayedPages"
-                colspan="9">
+                colspan="8">
         </td>
     </tr>
     </tfoot>

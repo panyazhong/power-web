@@ -7,7 +7,8 @@
         .service('ModalUtils', modalUtils)
         .service('Log', log)
         .service('SkipUtils', skipUtils)
-        .service('arrUtil', arrUtil);
+        .service('arrUtil', arrUtil)
+        .service('timeUtil', timeUtil);
 
     function toastUtils(toastr, toastrConfig) {
         var defaultConfig = angular.copy(toastrConfig);
@@ -169,6 +170,53 @@
                 return _.cloneDeep(arr.filter(function (obj) {
                     return id !== obj.id;
                 }));
+            }
+        }
+    }
+
+    function timeUtil() {
+        return {
+            lastUTS: function (uts) {   //根据unix时间戳获取当前日期23:59:59的时间戳
+                var dd = new Date(uts * 1000);
+                dd.setHours(23);
+                dd.setMinutes(59);
+                dd.setSeconds(59);
+
+                var dateTime = dd.getTime();
+                return Math.floor(dateTime / 1000);
+            },
+            zeroUTS: function (uts) {   //根据unix时间戳获取当前日期00:00:00的时间戳
+                var dd = new Date(uts * 1000);
+                dd.setHours(0);
+                dd.setMinutes(0);
+                dd.setSeconds(0);
+
+                var dateTime = dd.getTime();
+                return Math.floor(dateTime / 1000);
+            },
+            getDateUTS: function (uts, AddDayCount) {
+                var dd = new Date(uts * 1000);
+                dd.setDate(dd.getDate() + AddDayCount);//获取AddDayCount天后的日期
+
+                var dateTime = dd.getTime();
+                return Math.floor(dateTime / 1000);
+            },
+            getMonthUTS: function (uts, AddMonthCount) {
+                var dd = new Date(uts * 1000);
+                dd.setMonth(dd.getMonth() + AddMonthCount);//获取AddMonthCount月后的日期
+                dd.setDate(1);
+
+                var dateTime = dd.getTime();
+                return Math.floor(dateTime / 1000);
+            },
+            getYearUTS: function (uts, AddYearCount) {
+                var dd = new Date(uts * 1000);
+                dd.setFullYear(dd.getFullYear() + AddYearCount);//获取AddYearCount年后的日期
+                dd.setMonth(0);
+                dd.setDate(1);
+
+                var dateTime = dd.getTime();
+                return Math.floor(dateTime / 1000);
             }
         }
     }
