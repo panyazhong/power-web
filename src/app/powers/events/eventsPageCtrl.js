@@ -322,10 +322,10 @@
                 params.name = $scope.form.name;
             }
             if ($scope.show.beginDate) {
-                params.beginDate = moment($scope.show.beginDate).format('YYYY-MM-DD HH:mm:ss');
+                params.timeStart = moment($scope.show.beginDate).unix();
             }
             if ($scope.show.endDate) {
-                params.endDate = moment($scope.show.endDate).format('YYYY-MM-DD HH:mm:ss');
+                params.timeEnd = timeUtil.lastUTS(moment($scope.show.endDate).unix());
             }
 
             var names = "";

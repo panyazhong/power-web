@@ -146,7 +146,7 @@
     }
 
     function exportPrefix(coreConfig) {
-        var host = coreConfig.httpHost;
+        var host = coreConfig.httpHost + "/";
 
         return {
             prefix: host + 'device/export',      // 设备导出
