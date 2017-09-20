@@ -10,13 +10,13 @@
         .factory("SidebarCache", sidebarCache)  // 侧边栏和地图数据
         .factory("locals", locals)
         .factory("pieChartCache", pieChartCache)
-        .service("clientCache", clientCache)            // 树缓存
-        .service("eventClientCache", eventClientCache)  // 变电站事件缓存
+        .service("treeCache", treeCache)    // 树cache
+        .service("clientCache", clientCache)    // 变电站事件
         .service("coreConfig", coreConfig)
         .service("mapImgCache", mapImgCache)
         .service("userCache", userCache);
 
-    function eventsCache(Log, $state, $rootScope, eventClientCache, $uibModal, coreConfig) {
+    function eventsCache(Log, $state, $rootScope, clientCache, $uibModal, coreConfig) {
         /**/
         var socket = io.connect(coreConfig.host + ':6688', {resource: 'event/socket.io'});
         socket.on('alert', function (data) {    // 监听事件
@@ -79,7 +79,7 @@
             Log.i('monitor : \n' + data);
 
             var obj = JSON.parse(JSON.parse(data).content);
-            eventClientCache.cache.data = obj;
+            clientCache.cache.data = obj;
 
             $rootScope.$emit('refreshMonitor', obj);    // 一次系统图
         });
@@ -100,7 +100,7 @@
 
             var obj = JSON.parse(data);
             var item = JSON.parse(obj.content);
-            eventClientCache.cache.p = item;
+            clientCache.cache.p = item;
 
             $rootScope.$emit('overallRefresh', item);
         });
@@ -324,8 +324,7 @@
         }
     }
 
-    // 变电站事件cache ---> 替代之前的变电站cache
-    function eventClientCache() {
+    function clientCache() {
         return {
             cache: {
                 data: {},// 某个变电站
@@ -334,8 +333,7 @@
         }
     }
 
-    // 变电站cache
-    function clientCache(Client, HttpToast, locals, $q) {
+    function treeCache(Client, HttpToast, locals, $q) {
 
         var key = 'tree';   //变电站树
         var k = 'client';   //选中的变电站信息

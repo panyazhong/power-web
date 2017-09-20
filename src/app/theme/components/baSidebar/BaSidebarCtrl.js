@@ -6,7 +6,7 @@
 
     /** @ngInject */
     function BaSidebarCtrl($scope, baSidebarService, $state, locals, SidebarCache, Sidebar, Log,
-                           HttpToast, $rootScope, _, clientCache, $timeout) {
+                           HttpToast, $rootScope, _, treeCache, $timeout) {
 
         $scope.show = {
             menuItems: [],
@@ -108,7 +108,7 @@
 
         $scope.setMenu = function () {
 
-            var pm = clientCache.getTree();
+            var pm = treeCache.getTree();
             pm.then(function (data) {
 
                 $scope.show.menuItems = $scope.setLeftMenu(data);
@@ -270,7 +270,7 @@
                 return;
             }
 
-            var pm = clientCache.getTree();
+            var pm = treeCache.getTree();
             pm.then(function (data) {
                 $scope.iterator(data, item.id);
             });

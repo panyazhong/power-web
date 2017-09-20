@@ -508,5 +508,22 @@
             };
             return Resource(config);
         })
+        // 节点
+        .factory('line', function (Resource) {
+            var config = {
+                url: 'line/:id/:device',
+                paramsDefault: {
+                    id: '@id',
+                    device: '@device'
+                },
+                action: {
+                    query: {
+                        method: 'GET',
+                        isArray: true
+                    }
+                }
+            };
+            return Resource(config);
+        })
 
 })();

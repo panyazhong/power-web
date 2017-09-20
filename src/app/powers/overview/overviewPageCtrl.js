@@ -6,7 +6,7 @@
 
     /** @ngInject */
     function overviewPageCtrl($scope, Overview, Sidebar, SidebarCache, Log, HttpToast, $timeout,
-                              locals, ToastUtils, $state, $rootScope, clientCache, PageTopCache, Client, mapImgCache, userCache, eventClientCache) {
+                              locals, ToastUtils, $state, $rootScope, clientCache, PageTopCache, Client, mapImgCache, userCache) {
 
         PageTopCache.cache.state = $state.$current; // active
 
@@ -81,7 +81,6 @@
                 var percentageW = '';   //进度条
                 var percentage = '';    //占比
                 if (item.requiredmd) {
-                    /*
                     var pData = clientCache.cache.p[$scope.show.cid];
                     if (pData) {
                         Log.i('p Cache不为空：' + JSON.stringify(pData));
@@ -94,7 +93,6 @@
                             percentageW = 100 + "%";
                         }
                     }
-                    */
                 }
 
                 var name = item.name ? item.name : '';
@@ -240,7 +238,6 @@
 
             var pData = data[$scope.show.cid];
             if (pData) {
-                /*
                 var currentmd = pData.P + pData.PUnit;
                 if (currentmd) {
                     var per = (parseInt(currentmd) / parseInt($scope.show.requiredmd) * 100).toFixed(2);
@@ -259,7 +256,6 @@
                     $("#percentage").text("需量占比：" + percentage);
                     $("#percentageW").css({width: percentageW});
                 }
-                */
             }
 
         });
