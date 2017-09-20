@@ -6,7 +6,8 @@
         .service('HttpToast', httpToast)
         .service('ModalUtils', modalUtils)
         .service('Log', log)
-        .service('SkipUtils', skipUtils);
+        .service('SkipUtils', skipUtils)
+        .service('arrUtil', arrUtil);
 
     function toastUtils(toastr, toastrConfig) {
         var defaultConfig = angular.copy(toastrConfig);
@@ -155,6 +156,19 @@
                     // 跳转
                     window.location.replace(link);
                 }, 2000);
+            }
+        }
+    }
+
+    function arrUtil(_) {
+
+        return {
+            delObjById: function (arr, id) { // 根据id，删除数组中某个对象
+                if (!arr || !arr.length) return;
+
+                return _.cloneDeep(arr.filter(function (obj) {
+                    return id !== obj.id;
+                }));
             }
         }
     }

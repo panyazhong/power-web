@@ -8,7 +8,7 @@
 
     /** @ngInject */
     function branchPageCtrl($scope, $stateParams, Branch, HttpToast, Device, ToastUtils, BranchimgHelper,
-                            PageTopCache, ModalUtils, locals, $rootScope, EventsCache, clientCache, Log) {
+                            PageTopCache, ModalUtils, locals, $rootScope, EventsCache, clientCache, Log, Line) {
 
         PageTopCache.cache.state = 'monitoring';
 
@@ -24,14 +24,17 @@
         $scope.rowCollection = [];
 
         $scope.queryList = function () {
-            Branch.queryList({
-                    bid: $scope.show.bid,
-                    device: 'device'
-                },
+
+            var p = {
+                id: $scope.show.bid,
+                device: 'device'
+            };
+            Line.query(p,
                 function (data) {
                     $scope.show.branchEqp = data;
                     $scope.rowCollection = data;
-                }, function (err) {
+                },
+                function (err) {
                     HttpToast.toast(err);
                 });
         };

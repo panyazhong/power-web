@@ -509,7 +509,7 @@
             return Resource(config);
         })
         // 节点
-        .factory('line', function (Resource) {
+        .factory('Line', function (Resource) {
             var config = {
                 url: 'line/:id/:device',
                 paramsDefault: {
