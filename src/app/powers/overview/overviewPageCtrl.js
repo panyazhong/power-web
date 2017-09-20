@@ -6,7 +6,7 @@
 
     /** @ngInject */
     function overviewPageCtrl($scope, Overview, Sidebar, SidebarCache, Log, HttpToast, $timeout,
-                              locals, ToastUtils, $state, $rootScope, clientCache, PageTopCache, Client, mapImgCache, userCache) {
+                              locals, ToastUtils, $state, $rootScope, clientCache, PageTopCache, Client, mapImgCache, userCache, eventClientCache) {
 
         PageTopCache.cache.state = $state.$current; // active
 
@@ -53,7 +53,7 @@
                     var marker = new AMap.Marker({
                         position: new AMap.LngLat(item.longitude, item.latitude),
                         content: content,
-                        extData: item.cid
+                        extData: item.id
                     });
 
                     // map events
@@ -81,6 +81,7 @@
                 var percentageW = '';   //进度条
                 var percentage = '';    //占比
                 if (item.requiredmd) {
+                    /*
                     var pData = clientCache.cache.p[$scope.show.cid];
                     if (pData) {
                         Log.i('p Cache不为空：' + JSON.stringify(pData));
@@ -93,6 +94,7 @@
                             percentageW = 100 + "%";
                         }
                     }
+                    */
                 }
 
                 var name = item.name ? item.name : '';
@@ -142,10 +144,10 @@
                     "</div>" +
                     "<div style='line-height: 25px;padding: 0 10px;text-align: center;color: #1baeb3' id='percentage'>" + "需量占比：" + percentage +
                     "</div>" +
-                    "<a onclick='viewClientDetail(" + item.cid + ")' class='map-btn-event'>" +
+                    "<a onclick='viewClientDetail(" + item.id + ")' class='map-btn-event'>" +
                     "前往该站" +
                     "</a>" +
-                    "<a onclick='viewClientEvent(" + item.cid + ")' class='map-btn-event'>" +
+                    "<a onclick='viewClientEvent(" + item.id + ")' class='map-btn-event'>" +
                     "查看该站事件" +
                     "</a>" +
                     "</div>";
@@ -160,7 +162,9 @@
             }
         };
 
-        // 2s refresh
+        /**
+         * 获取变电站预览信息
+         */
         $scope.init = function () {
 
             var p = {preview: 'preview'};
@@ -179,19 +183,25 @@
         };
         $scope.init();
 
+        /**
+         * 获取变电站详细信息
+         * @param id    变电站的id
+         * @param pos   当前选择点的位置
+         * @param cb    拿到数据后的回调
+         */
         $scope.getDetail = function (id, pos, cb) {
             // change init
             $scope.show.cid = id;
             $scope.show.requiredmd = '';
 
-            Overview.queryDetail({
-                    cid: id
-                },
+            var p = {id: id};
+            Client.queryDetail(p,
                 function (data) {
                     $scope.show.requiredmd = parseInt(data.requiredmd);
 
                     cb(data, pos);
-                }, function (err) {
+                },
+                function (err) {
                     HttpToast.toast(err);
                 });
         };
@@ -214,9 +224,8 @@
             $state.go('events', {cid: id});
 
             locals.put('cid', id);      // 也记录下变电站id
-        }
+        };
 
-        /* socket refresh*/
         /**
          * 当前需量
          */
@@ -231,6 +240,7 @@
 
             var pData = data[$scope.show.cid];
             if (pData) {
+                /*
                 var currentmd = pData.P + pData.PUnit;
                 if (currentmd) {
                     var per = (parseInt(currentmd) / parseInt($scope.show.requiredmd) * 100).toFixed(2);
@@ -249,6 +259,7 @@
                     $("#percentage").text("需量占比：" + percentage);
                     $("#percentageW").css({width: percentageW});
                 }
+                */
             }
 
         });
