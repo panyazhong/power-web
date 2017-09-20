@@ -455,6 +455,10 @@
             return locals.getObject('user').admin;
         }
 
+        function getUserId() {
+            return locals.getObject('user').id;
+        }
+
     }
 
 })();

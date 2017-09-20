@@ -131,6 +131,7 @@
             };
             return Resource(config);
         })
+        /*
         // 新建修改user
         .factory('EditUser', function (Resource) {
             var config = {
@@ -144,6 +145,7 @@
             };
             return Resource(config);
         })
+        */
 
         // 侧边栏
         .factory('Sidebar', function (Resource) {

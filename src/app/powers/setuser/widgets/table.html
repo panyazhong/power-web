@@ -14,16 +14,16 @@
         </thead>
         <tbody>
         <tr ng-repeat="item in show.userList">
-            <td ng-click="edit(item.uid)">
+            <td ng-click="edit(item.id)">
                 <span ng-bind="item.name"></span>
             </td>
-            <td ng-click="edit(item.uid)">
+            <td ng-click="edit(item.id)">
                 <span ng-bind="item.account"></span>
             </td>
-            <td ng-click="edit(item.uid)">
+            <td ng-click="edit(item.id)">
                 <span ng-bind="item.authority"></span>
             </td>
-            <td ng-click="edit(item.uid)">
+            <td ng-click="edit(item.id)">
                 <span ng-bind="item.code"></span>
             </td>
             <td>
@@ -31,19 +31,19 @@
                      style="display: inline-block;min-width: 160px;text-align: right;">
                     <button type="button" class="btn-def btn-transparent btn-autospace"
                             uib-dropdown-toggle ng-disabled="disabled">
-                        <span class="caret"></span>{{item.auth_id}}
+                        <span class="caret"></span>{{item.clients}}
                     </button>
 
                     <ul class="dropdown-menu common-dp-ul" uib-dropdown-menu role="menu"
                         aria-labelledby="single-button">
                         <li role="menuitem"
-                            ng-repeat="info in item.authList track by $index">
+                            ng-repeat="info in item.clientsList track by $index">
                             <a ng-bind="info"></a>
                         </li>
                     </ul>
                 </div>
             </td>
-            <td ng-click="edit(item.uid)">
+            <td ng-click="edit(item.id)">
                 <span ng-bind="item.status"></span>
             </td>
         </tr>

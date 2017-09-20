@@ -120,8 +120,7 @@
             query: function (obj) {
                 // 用户列表
                 obj.map(function (item) {
-                    var arr = item.auth_id.split("/");
-                    item.authList = arr;
+                    item.clientsList = item.clients.split("/");
                 });
 
                 return _.cloneDeep(obj);
