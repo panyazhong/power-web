@@ -7,7 +7,7 @@
 
     /** @ngInject */
     function historyPageCtrl($scope, $state, PageTopCache, Sidebar, SidebarCache, HttpToast, Log,
-                             ToastUtils, pieChartCache, History, $rootScope, $timeout) {
+                             ToastUtils, pieChartCache, History, $rootScope, $timeout, treeCache) {
 
         $scope.GetDateStr = function () {
             var dd = new Date();
@@ -113,32 +113,32 @@
                 {
                     key: 'A',
                     name: '电量',
-                    unit :'KW.h'
+                    unit: 'KW.h'
                 },
                 {
                     key: 'B',
                     name: '三相电流',
-                    unit :'A'
+                    unit: 'A'
                 },
                 {
                     key: 'C',
                     name: '三相电压',
-                    unit :'V'
+                    unit: 'V'
                 },
                 {
                     key: 'P',
                     name: '有功功率',
-                    unit :'kW'
+                    unit: 'kW'
                 },
                 {
                     key: 'Q',
                     name: '无功功率',
-                    unit :'kvar'
+                    unit: 'kvar'
                 },
                 {
                     key: 'D',
                     name: '功率因数',
-                    unit :''
+                    unit: ''
                 }
             ],    // 左侧可信息查询
             queryName: '电量',    // def 显示的val
@@ -147,7 +147,7 @@
 
             isLoadPie: true,
             isLoading: false,
-            unitKey : '单位：KW.h' // def 单位
+            unitKey: '单位：KW.h' // def 单位
         };
 
         $scope.form = {
@@ -257,10 +257,10 @@
             $scope.form.from_time = '';
             $scope.form.to_time = '';
             if ($scope.show.from_time) {
-                $scope.form.from_time = moment($scope.show.from_time).format('YYYY-MM-DD HH:mm:ss');
+                $scope.form.from_time = moment($scope.show.from_time).unix();
             }
             if ($scope.show.to_time) {
-                $scope.form.to_time = moment($scope.show.to_time).format('YYYY-MM-DD HH:mm:ss');
+                $scope.form.to_time = moment($scope.show.to_time).unix();
             }
 
             var params = {};
@@ -370,22 +370,13 @@
         };
 
         $scope.init = function () {
-            if (SidebarCache.isEmpty()) {
-                Log.i('empty： ——SidebarCache');
 
-                Sidebar.query({},
-                    function (data) {
-                        SidebarCache.create(data);
-                        $scope.show.sidebarArr = data.sidebar;
-                        $scope.initDefData();
-                    }, function (err) {
-                        HttpToast.toast(err);
-                    });
-            } else {
-                Log.i('exist： ——SidebarCache');
-                $scope.show.sidebarArr = SidebarCache.getData().sidebar;
+            var pm = treeCache.getTree();
+            pm.then(function (data) {
+                $scope.show.sidebarArr = treeCache.createClientArr(data);
                 $scope.initDefData();
-            }
+            });
+
         };
         $scope.init();
 
@@ -412,7 +403,7 @@
             // set
             $scope.show.queryName = obj.name;
             $scope.show.queryKey = obj.key;
-            $scope.show.unitKey = '单位：'+obj.unit;
+            $scope.show.unitKey = '单位：' + obj.unit;
             // Log.i('click: \n' + JSON.stringify(obj));
 
             $scope.lData = $scope.setMorrisData();

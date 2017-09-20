@@ -365,7 +365,7 @@
         // 历史数据
         .factory('History', function (Resource) {
             var config = {
-                url: 'data/cid/:clientId/:time/:fromTime/:toTime/:interval',
+                url: 'data/id/:clientId/:time/:fromTime/:toTime/:interval',
                 paramsDefault: {
                     clientId: '@clientId',
                     time: '@time',
