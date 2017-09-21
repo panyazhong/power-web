@@ -110,13 +110,16 @@
                         method: 'PUT'
                     },
                     editpwd: {
-                        method: 'POST'
+                        method: 'PUT'
                     },
                     exit: {
                         method: 'GET',
                     },
                     create: {
                         method: 'POST'
+                    },
+                    edit: {
+                        method: 'PUT'
                     },
                     queryDetail: {
                         method: 'GET'

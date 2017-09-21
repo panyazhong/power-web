@@ -7,8 +7,8 @@
         .controller('editUserCtrl', editUserCtrl);
 
     /** @ngInject */
-    function setuserPageCtrl($scope, PageTopCache, Log, User, UserHelper, HttpToast, ExportPrefix,
-                             ModalUtils, locals, ToastUtils) {
+    function setuserPageCtrl($scope, PageTopCache, User, UserHelper, ToastUtils, HttpToast, ExportPrefix,
+                             ModalUtils, userCache) {
         PageTopCache.cache.state = 'settings';
 
         $scope.show = {
@@ -42,13 +42,13 @@
         };
 
         $scope.edit = function (id) {
-            if (id == locals.getObject('user').uid) {
+            if (id == userCache.getUserId()) {
                 ToastUtils.openToast('warning', '您不能操作自己！');
                 return;
             }
 
             ModalUtils.open('app/powers/setuser/widgets/editUserModal.html', 'lg',
-                editUserCtrl, {uid: id},
+                editUserCtrl, {id: id},
                 function (info) {
                     // 传值走这里
                     if (info) {
@@ -184,7 +184,74 @@
         }
     }
 
-    function editUserCtrl($scope, treeCache, kCache, User, UserHelper, HttpToast, ToastUtils) {
+    function editUserCtrl($scope, treeCache, kCache, User, UserHelper, HttpToast, ToastUtils, params, arrUtil) {
+
+        $scope.id = params.id;
+        $scope.setDefChoiceState = function (arr) {
+            if (!arr || !arr.length) return;
+
+            $scope.show.sidebarArr.map(function (item) {
+                arr.indexOf(item.clientId) == -1 ? item.state = false : item.state = true;
+            });
+
+        };
+        $scope.queryUserDetail = function () {
+            var p = {
+                uid: $scope.id
+            };
+            User.queryDetail(p,
+                function (data) {
+
+                    // a. 赋值
+                    $scope.form.name = data.name;
+                    $scope.form.code = data.code;
+                    $scope.form.position = data.position;
+                    $scope.form.tipLine = data.tipLine;
+
+                    // b. 赋值keyword
+                    $scope.form.authority = data.authority;
+                    $scope.show.authority = arrUtil.getValById($scope.show.userAuthorityArr, data.authority);
+
+                    $scope.form.status = data.status;
+                    $scope.show.status = arrUtil.getValById($scope.show.userStatusArr, data.status);
+
+                    $scope.form.contractType = data.contractType;
+                    $scope.show.contractType = arrUtil.getValById($scope.show.userContracttyptArr, data.contractType);
+
+                    $scope.form.education = data.education;
+                    $scope.show.education = arrUtil.getValById($scope.show.userEducationArr, data.education);
+
+                    // c. 赋值 账号相关
+                    $scope.form.phone1 = data.phone1;
+                    $scope.form.phone2 = data.phone2;
+                    $scope.form.msgLevel = data.msgLevel;
+                    $scope.show.msgLevel = data.msgLevel == '1';
+                    $scope.form.account = data.account;
+                    // pwd不需要
+
+                    // d. 变电站状态
+                    $scope.show.clientName = '';
+                    $scope.form.client_ids = [];
+                    data.clients.map(function (item) {
+                        $scope.show.clientName += item.name + "，";
+                        $scope.form.client_ids.push(item.id);
+                    });
+                    if ($scope.show.clientName.length > 0) {
+                        $scope.show.clientName = $scope.show.clientName.substring(0, $scope.show.clientName.length - 1);
+                    }
+
+                    $scope.setDefChoiceState($scope.form.client_ids);    // 设置默认选中的状态
+
+                    // e. 提交，不允许修改账号
+                    $scope.show.isAllowEdit = true;
+
+                },
+                function (err) {
+                    HttpToast.toast(err);
+                })
+        };
+
+        //↑ ↑ ↑ ↑ ↑ ↑ ↑ ↑ ↑ ↑ ↑ 编辑与新建不同之处
 
         $scope.show = {
             userContracttyptArr: [],//合同类型
@@ -234,19 +301,22 @@
                 $scope.show.userEducationArr = kCache.getUser_education(data);
                 $scope.show.userAuthorityArr = kCache.getUser_authority(data);
                 $scope.show.userStatusArr = kCache.getUser_status();
+
+                $scope.queryUserDetail();
             });
 
         };
         $scope.init();
 
         $scope.submit = function () {
+            $scope.form.id = $scope.id;   // 编辑与新建不同之处
             $scope.show.msgLevel ? $scope.form.msgLevel = '1' : $scope.form.msgLevel = '0';
 
             var p = UserHelper.add($scope.show.isMustArr, $scope.form);
 
 
             if (p) {
-                User.create(p,
+                User.edit(p,    // 编辑与新建不同之处，这里是PUT请求
                     function (data) {
                         ToastUtils.openToast('success', data.message);
                         $scope.$close(data);

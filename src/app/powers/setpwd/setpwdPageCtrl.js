@@ -167,7 +167,7 @@
                 }
             }
 
-            if ($scope.form.pwd.length < 6 || $scope.form.newpwd.length < 6) {
+            if ($scope.form.newpwd.length < 6 || $scope.form.renewpwd.length < 6) {
                 ToastUtils.openToast('warning', '新密码至少6位！');
                 return false;
             }

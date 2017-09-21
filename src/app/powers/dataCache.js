@@ -541,7 +541,8 @@
 
         var service = {
             getName: getName,
-            getUserType: getUserType
+            getUserType: getUserType,
+            getUserId: getUserId
         };
 
         return service;
