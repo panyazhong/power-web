@@ -74,7 +74,7 @@
 
     }
 
-    function addUserCtrl($scope, Keyword, KeywordCache, HttpToast, ToastUtils, User, UserHelper, treeCache) {
+    function addUserCtrl($scope, Keyword, KeywordCache, HttpToast, ToastUtils, User, UserHelper, treeCache, kCache) {
 
         $scope.show = {
             userContracttyptArr: [],//合同类型
@@ -112,63 +112,18 @@
         };
 
         $scope.init = function () {
-            if (KeywordCache.isEmpty()) {
-                Keyword.query({},
-                    function (data) {
-                        KeywordCache.create(data);
-                        $scope.show.userContracttyptArr = KeywordCache.getUser_contracttypt();
-                        $scope.show.userEducationArr = KeywordCache.getUser_education();
-                        $scope.show.userAuthorityArr = KeywordCache.getUser_authority();
-                        // $scope.show.userStatusArr = KeywordCache.getUser_status();
-                        $scope.show.userStatusArr = [
-                            {
-                                "id": "1",
-                                "name": "在岗"
-                            },
-                            {
-                                "id": "2",
-                                "name": "离职"
-                            }
-                        ];
-                    }, function (err) {
-                        HttpToast.toast(err);
-                    });
-            } else {
-                $scope.show.userContracttyptArr = KeywordCache.getUser_contracttypt();
-                $scope.show.userEducationArr = KeywordCache.getUser_education();
-                $scope.show.userAuthorityArr = KeywordCache.getUser_authority();
-                // $scope.show.userStatusArr = KeywordCache.getUser_status();
-                $scope.show.userStatusArr = [
-                    {
-                        "id": "1",
-                        "name": "在岗"
-                    },
-                    {
-                        "id": "2",
-                        "name": "离职"
-                    }
-                ];
-            }
-
-            /*
-            if (SidebarCache.isEmpty()) {
-                Sidebar.query({},
-                    function (data) {
-                        SidebarCache.create(data);
-                        locals.putObject('sidebar', data.sidebar);
-
-                        $scope.show.sidebarArr = data.sidebar;
-                    }, function (err) {
-                        HttpToast.toast(err);
-                    });
-            } else {
-                $scope.show.sidebarArr = locals.getObject('sidebar');
-            }
-            */
 
             var pm = treeCache.getTree();
             pm.then(function (data) {
                 $scope.show.sidebarArr = treeCache.createClientArr(data);
+            });
+
+            var pmKey = kCache.getKey();
+            pmKey.then(function (data) {
+                $scope.show.userContracttyptArr = kCache.getUser_contracttypt(data);
+                $scope.show.userEducationArr = kCache.getUser_education(data);
+                $scope.show.userAuthorityArr = kCache.getUser_authority(data);
+                $scope.show.userStatusArr = kCache.getUser_status();
             });
 
         };

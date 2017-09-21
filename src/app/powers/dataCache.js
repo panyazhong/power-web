@@ -11,6 +11,7 @@
         .factory("locals", locals)
         .factory("pieChartCache", pieChartCache)
         .service("treeCache", treeCache)    // 树cache
+        .service("kCache", kCache)    // key cache
         .service("clientCache", clientCache)    // 变电站事件
         .service("coreConfig", coreConfig)
         .service("mapImgCache", mapImgCache)
@@ -399,6 +400,104 @@
             });
 
             return clientArr;
+        }
+
+    }
+
+    function kCache(Keyword, HttpToast, locals, $q, _) {
+        var groups = {
+            user_position: "user_position",
+            client_type: "client_type",
+            client_level: "client_level",
+            device_type: "device_type",
+            device_operationstatus: "device_operationstatus",
+            device_phasenum: "device_phasenum",
+            device_usecondition: "device_usecondition",
+            device_insulationclass: "device_insulationclass",
+            user_contracttypt: 'user_contracttypt',  //用户合同类型
+            user_education: 'user_education',  //用户教育程度
+            user_status: 'user_status',  //用户状态
+            user_authority: 'user_authority',  //用户权限
+
+            history_querytype: 'history_querytype',  //历史数据，左侧查询类型
+            inspect_exception_type: 'inspect_exception_type', //异常类型
+            inspect_type: 'inspect_type', //巡检任务
+        };
+
+        function getType(data, type) {
+            return _.cloneDeep(_.filter(data, function (kw) {
+                return kw.group === type;
+            }));
+        }
+
+        // pm
+
+        var key = 'keyword';   //keyword
+
+        var service = {
+            init: init,
+            getKey: getKey,
+            getUser_contracttypt: getUser_contracttypt,
+            getUser_education: getUser_education,
+            getUser_authority: getUser_authority,
+            getUser_status: getUser_status
+        };
+
+        return service;
+
+        function init() {
+            locals.removeItem(key);
+        }
+
+        function getKey() {
+            var deferred = $q.defer();
+
+            var kCache = locals.getObject(key);
+
+            if (JSON.stringify(kCache) == '{}' || JSON.stringify(kCache) == '[]') {
+
+                Keyword.query({},
+                    function (data) {
+                        if (Array.isArray(data)) {
+                            deferred.resolve(data);
+                            locals.putObject(key, data);
+                        }
+                    },
+                    function (err) {
+                        deferred.reject();
+                        HttpToast.toast(err);
+                    })
+            }
+            else {
+                deferred.resolve(kCache);
+            }
+
+            return deferred.promise;
+        }
+
+        function getUser_contracttypt(data) {
+            return getType(data, groups.user_contracttypt);
+        }
+
+        function getUser_education(data) {
+            return getType(data, groups.user_education);
+        }
+
+        function getUser_authority(data) {
+            return getType(data, groups.user_authority);
+        }
+
+        function getUser_status() {
+            return [
+                {
+                    "id": "1",
+                    "name": "在岗"
+                },
+                {
+                    "id": "2",
+                    "name": "离职"
+                }
+            ]
         }
 
     }
