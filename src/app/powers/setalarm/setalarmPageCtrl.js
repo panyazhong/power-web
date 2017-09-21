@@ -11,7 +11,7 @@
 
     /** @ngInject */
     function setalarmPageCtrl($scope, $state, PageTopCache, Sidebar, SidebarCache, Log, locals, AlertSet, setalarmHelper,
-                              HttpToast, ModalUtils, $rootScope) {
+                              HttpToast, ModalUtils, $rootScope, treeCache) {
         PageTopCache.cache.state = 'settings';
 
         $scope.show = {
@@ -54,7 +54,7 @@
 
         $scope.initFilterInfo = function () {
 
-            var cid = locals.get('cid', '') ? locals.get('cid', '') : SidebarCache.getData().sidebar[0].clientId;
+            var cid = locals.get('cid', '') || $scope.show.sidebarArr[0].clientId;
             if (cid) {
                 for (var i = 0; i < $scope.show.sidebarArr.length; i++) {
                     var item = $scope.show.sidebarArr[i];
@@ -68,22 +68,11 @@
 
         $scope.init = function () {
 
-            if (SidebarCache.isEmpty()) {
-                Log.i('empty： ——SidebarCache');
-
-                Sidebar.query({},
-                    function (data) {
-                        SidebarCache.create(data);
-                        $scope.show.sidebarArr = data.sidebar;
-                        $scope.initFilterInfo();
-                    }, function (err) {
-                        HttpToast.toast(err);
-                    });
-            } else {
-                Log.i('exist： ——SidebarCache');
-                $scope.show.sidebarArr = SidebarCache.getData().sidebar;
+            var pm = treeCache.getTree();
+            pm.then(function (data) {
+                $scope.show.sidebarArr = treeCache.createClientArr(data);
                 $scope.initFilterInfo();
-            }
+            });
 
         };
         $scope.init();
