@@ -7,7 +7,7 @@
 
     /** @ngInject */
     function reportPageCtrl($scope, $state, PageTopCache, Sidebar, SidebarCache, Log, locals, ReportSet, HttpToast,
-                            $rootScope, ToastUtils, ModalUtils, ExportPrefix, $window) {
+                            $rootScope, ToastUtils, ModalUtils, ExportPrefix, $window, treeCache) {
         PageTopCache.cache.state = $state.$current; // active
 
         $scope.data = {
@@ -141,22 +141,22 @@
             $scope.form.endYear = '';
 
             if ($scope.show.beginDate) {
-                $scope.form.beginDate = moment($scope.show.beginDate).format('YYYY-MM-DD HH:mm:ss');
+                $scope.form.beginDate = moment($scope.show.beginDate).unix();
             }
             if ($scope.show.endDate) {
-                $scope.form.endDate = moment($scope.show.endDate).format('YYYY-MM-DD HH:mm:ss');
+                $scope.form.endDate = moment($scope.show.endDate).unix();
             }
             if ($scope.show.beginDateMonth) {
-                $scope.form.beginMonth = moment($scope.show.beginDateMonth).format('YYYY-MM-DD HH:mm:ss');
+                $scope.form.beginMonth = moment($scope.show.beginDateMonth).unix();
             }
             if ($scope.show.endDateMonth) {
-                $scope.form.endMonth = moment($scope.show.endDateMonth).format('YYYY-MM-DD HH:mm:ss');
+                $scope.form.endMonth = moment($scope.show.endDateMonth).unix();
             }
             if ($scope.show.beginDateYear) {
-                $scope.form.beginYear = moment($scope.show.beginDateYear).format('YYYY-MM-DD HH:mm:ss');
+                $scope.form.beginYear = moment($scope.show.beginDateYear).unix();
             }
             if ($scope.show.endDateYear) {
-                $scope.form.endYear = moment($scope.show.endDateYear).format('YYYY-MM-DD HH:mm:ss');
+                $scope.form.endYear = moment($scope.show.endDateYear).unix();
             }
 
             var params = {};
@@ -245,7 +245,7 @@
 
         $scope.initFilterInfo = function () {
 
-            var cid = locals.get('cid', '') ? locals.get('cid', '') : SidebarCache.getData().sidebar[0].clientId;
+            var cid = locals.get('cid', '') || $scope.show.sidebarArr[0].clientId;
             if (cid) {
                 for (var i = 0; i < $scope.show.sidebarArr.length; i++) {
                     var item = $scope.show.sidebarArr[i];
@@ -259,22 +259,11 @@
 
         $scope.init = function () {
 
-            if (SidebarCache.isEmpty()) {
-                Log.i('empty： ——SidebarCache');
-
-                Sidebar.query({},
-                    function (data) {
-                        SidebarCache.create(data);
-                        $scope.show.sidebarArr = data.sidebar;
-                        $scope.initFilterInfo();
-                    }, function (err) {
-                        HttpToast.toast(err);
-                    });
-            } else {
-                Log.i('exist： ——SidebarCache');
-                $scope.show.sidebarArr = SidebarCache.getData().sidebar;
+            var pm = treeCache.getTree();
+            pm.then(function (data) {
+                $scope.show.sidebarArr = treeCache.createClientArr(data);
                 $scope.initFilterInfo();
-            }
+            });
 
         };
         $scope.init();

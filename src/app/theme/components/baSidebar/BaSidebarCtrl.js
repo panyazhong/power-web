@@ -149,6 +149,9 @@
 
             Log.i('check line: ' + item.id);
             $state.go('branch', {bid: item.id}, {reload: true});
+
+            // close 第二侧边栏
+            $scope.closeMenuTwo();
         };
 
         /**
@@ -215,6 +218,9 @@
             $rootScope.$emit('filterInfo', data);
 
             Log.i('emit cid: ' + JSON.stringify(data));
+
+            // close 第二侧边栏
+            $scope.closeMenuTwo();
         };
 
         /* 记录总进线，过时
