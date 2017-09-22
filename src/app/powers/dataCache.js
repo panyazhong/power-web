@@ -440,7 +440,9 @@
             getUser_contracttypt: getUser_contracttypt,
             getUser_education: getUser_education,
             getUser_authority: getUser_authority,
-            getUser_status: getUser_status
+            getUser_status: getUser_status,
+            getInspect_exception_type: getInspect_exception_type,
+            getInspect_type: getInspect_type
         };
 
         return service;
@@ -500,6 +502,13 @@
             ]
         }
 
+        function getInspect_exception_type(data) {
+            return getType(data, groups.inspect_exception_type);
+        }
+
+        function getInspect_type(data) {
+            return getType(data, groups.inspect_type);
+        }
     }
 
     function coreConfig() {

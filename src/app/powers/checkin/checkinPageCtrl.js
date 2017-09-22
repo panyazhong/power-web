@@ -9,7 +9,7 @@
 
     /** @ngInject */
     function checkinPageCtrl($scope, $state, PageTopCache, Sidebar, SidebarCache, Log, locals, Task, HttpToast,
-                             $rootScope, Exception, KeywordCache, Keyword, ModalUtils, $timeout) {
+                             $rootScope, Exception, KeywordCache, Keyword, ModalUtils, $timeout, treeCache, kCache) {
         PageTopCache.cache.state = $state.$current; // active
 
         $scope.GetDateStr = function () {
@@ -224,7 +224,7 @@
 
         $scope.initFilterInfo = function () {
 
-            var cid = locals.get('cid', '') ? locals.get('cid', '') : SidebarCache.getData().sidebar[0].clientId;
+            var cid = locals.get('cid', '') || $scope.show.sidebarArr[0].clientId;
             if (cid) {
                 for (var i = 0; i < $scope.show.sidebarArr.length; i++) {
                     var item = $scope.show.sidebarArr[i];
@@ -238,36 +238,17 @@
 
         $scope.init = function () {
 
-            if (KeywordCache.isEmpty()) {
-                Keyword.query({},
-                    function (data) {
-                        KeywordCache.create(data);
-                        $scope.show.exceptionTypeArr = KeywordCache.getInspect_exception_type();
-                        $scope.show.inspectTypeArr = KeywordCache.getInspect_type();
-                    }, function (err) {
-                        HttpToast.toast(err);
-                    });
-            } else {
-                $scope.show.exceptionTypeArr = KeywordCache.getInspect_exception_type();
-                $scope.show.inspectTypeArr = KeywordCache.getInspect_type();
-            }
+            var pmKey = kCache.getKey();
+            pmKey.then(function (data) {
+                $scope.show.exceptionTypeArr = kCache.getInspect_exception_type(data);
+                $scope.show.inspectTypeArr = kCache.getInspect_type(data);
+            });
 
-            if (SidebarCache.isEmpty()) {
-                Log.i('empty： ——SidebarCache');
-
-                Sidebar.query({},
-                    function (data) {
-                        SidebarCache.create(data);
-                        $scope.show.sidebarArr = data.sidebar;
-                        $scope.initFilterInfo();
-                    }, function (err) {
-                        HttpToast.toast(err);
-                    });
-            } else {
-                Log.i('exist： ——SidebarCache');
-                $scope.show.sidebarArr = SidebarCache.getData().sidebar;
+            var pm = treeCache.getTree();
+            pm.then(function (data) {
+                $scope.show.sidebarArr = treeCache.createClientArr(data);
                 $scope.initFilterInfo();
-            }
+            });
 
         };
         $scope.init();
@@ -489,7 +470,7 @@
             }
 
             // 图片处理
-            data.picturesArr = JSON.parse(data.pictures);
+            data.picturesArr = data.pictures;
 
             // 处理详情数组
             if (Array.isArray(data.handleHistory) && data.handleHistory.length > 0) {
@@ -872,15 +853,17 @@
         $scope.addSlide = function () {
             var imgs = params.imgs;
 
+            /* 如果异常图片需要展示文字，且服务器有相应字段，给text字段赋值即可
             var dd = [
                 '异常图片001',
                 '异常图片007'
             ];
+            */
 
             for (var i = 0; i < imgs.length; i++) {
                 slides.push({
                     image: imgs[i],
-                    text: dd[i]
+                    text: ''
                 })
             }
         };
