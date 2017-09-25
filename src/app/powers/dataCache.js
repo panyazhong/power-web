@@ -514,7 +514,7 @@
     function coreConfig() {
 
         // var host = 'http://www.shanghaihenghui.com';
-        var host = 'http://192.168.0.155';
+        var host = 'http://192.168.0.200';
 
         // var httpHost = host + '/api';
         var httpHost = host + '/power/api';

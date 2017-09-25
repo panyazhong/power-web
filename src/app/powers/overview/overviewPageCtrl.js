@@ -14,7 +14,8 @@
             mapData: [],
             cid: '',
             requiredmd: '',
-            baseList: []
+            baseList: [],   // 基本概况数据
+            safetyData: {}  // 安全用电数据
         };
 
         $scope.setMap = function () {
@@ -247,6 +248,23 @@
 
         };
         $scope.queryBase();
+
+        /** 用电安全 **/
+        $scope.querySafety = function () {
+            var p = {
+                id: locals.get('cid', ''),
+                eventAndException: 'eventAndException'
+            };
+            Client.safety(p,
+                function (data) {
+                    $scope.show.safetyData = data;
+                },
+                function (err) {
+                    HttpToast.toast(err);
+                });
+
+        };
+        $scope.querySafety();
 
         /**
          * 当前需量

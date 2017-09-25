@@ -19,6 +19,14 @@
   background: #ef5c62 !important;;
 }
 
+.bg-yellow {
+  background-color: #f0a53d;
+}
+
+.bg-blue {
+  background-color: #3b89ce;
+}
+
 //内容默认无边距
 .panel > .panel-body {
   padding: 0 !important;
@@ -858,4 +866,21 @@ btn 不可用
   width: 30%;
   text-align: right;
   float: right;
+}
+
+.overview .warn-content {
+  height: 14px;
+  //margin: 0 42px;
+  border-radius: 10px;
+}
+
+.overview .warn-item__radius {
+  display: inline-block;
+  height: 100%;
+  border-radius: 10px;
+}
+
+.overview .warn-item {
+  display: inline-block;
+  height: 100%;
 }

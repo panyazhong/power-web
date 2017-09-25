@@ -494,12 +494,13 @@
         // 变电站
         .factory('Client', function (Resource) {
             var config = {
-                url: 'client/:id/:attr/:tree/:preview',
+                url: 'client/:id/:attr/:tree/:preview/:eventAndException',
                 paramsDefault: {
                     id: '@id',
                     attr: '@attr',
                     tree: '@tree',
-                    preview: '@preview'
+                    preview: '@preview',
+                    eventAndException: '@eventAndException'
                 },
                 action: {
                     query: {
@@ -507,6 +508,9 @@
                         isArray: true
                     },
                     queryDetail: {
+                        method: 'GET'
+                    },
+                    safety: {
                         method: 'GET'
                     }
                 }
