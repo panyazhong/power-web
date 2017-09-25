@@ -13,7 +13,8 @@
         $scope.show = {
             mapData: [],
             cid: '',
-            requiredmd: ''
+            requiredmd: '',
+            baseList: []
         };
 
         $scope.setMap = function () {
@@ -223,6 +224,29 @@
 
             locals.put('cid', id);      // 也记录下变电站id
         };
+
+        /**
+         *
+         * 基本概况
+         *
+         */
+        $scope.queryBase = function () {
+            var p = {
+                id: locals.get('cid', ''),
+                attr: 'attr'
+            };
+            Client.query(p,
+                function (data) {
+                    if (Array.isArray(data)) {
+                        $scope.show.baseList = data;
+                    }
+                },
+                function (err) {
+                    HttpToast.toast(err);
+                });
+
+        };
+        $scope.queryBase();
 
         /**
          * 当前需量
