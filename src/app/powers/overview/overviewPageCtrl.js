@@ -5,7 +5,7 @@
         .controller('overviewPageCtrl', overviewPageCtrl);
 
     /** @ngInject */
-    function overviewPageCtrl($scope, Overview, Sidebar, SidebarCache, Log, HttpToast, $timeout,
+    function overviewPageCtrl($scope, Overview, Sidebar, SidebarCache, Log, HttpToast, $timeout, excepNumHelper,
                               locals, ToastUtils, $state, $rootScope, clientCache, PageTopCache, Client, mapImgCache, userCache) {
 
         PageTopCache.cache.state = $state.$current; // active
@@ -15,7 +15,27 @@
             cid: '',
             requiredmd: '',
             baseList: [],   // 基本概况数据
-            safetyData: {}  // 安全用电数据
+            safetyData: {},  // 安全用电数据
+            doneData: {},   // 已处理数据
+            undoData: {},    // 未处理数据
+            excepStatus: [   //异常状态文字
+                {
+                    bg: '#e85656',
+                    text: '危急'
+                },
+                {
+                    bg: '#f0a53d',
+                    text: '严重'
+                },
+                {
+                    bg: '#3b89ce',
+                    text: '一般'
+                },
+                {
+                    bg: '#999999',
+                    text: '无'
+                }
+            ]
         };
 
         $scope.setMap = function () {
@@ -258,6 +278,9 @@
             Client.safety(p,
                 function (data) {
                     $scope.show.safetyData = data;
+                    //已完成
+                    $scope.show.doneData = excepNumHelper.createDone(data);
+                    $scope.show.undoData = excepNumHelper.createUndo(data);
                 },
                 function (err) {
                     HttpToast.toast(err);

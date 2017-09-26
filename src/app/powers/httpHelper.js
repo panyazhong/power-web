@@ -7,7 +7,8 @@
         .factory("DeviceHelper", deviceHelper)
         .factory("UserHelper", userHelper)
         .factory("reportHelper", reportHelper)
-        .factory("setalarmHelper", setalarmHelper);
+        .factory("setalarmHelper", setalarmHelper)
+        .factory("excepNumHelper", excepNumHelper);
 
     function clientimgHelper(_) {
 
@@ -224,4 +225,68 @@
         }
     }
 
+    function excepNumHelper(_) {
+        return {
+            createDone: function (data) {
+                if (!data.exception || !data.exception.done) return {};
+
+                var temp = data.exception.done;
+
+                if (temp["1"] == 0 && temp["2"] == 0 && temp["3"] == 0) {
+                    // 数量都为0时
+                    return {
+                        color: ['#999999'],
+                        data: [
+                            {value: 0, name: '无'}
+                        ]
+                    };
+                }
+                else {
+                    var ringData = {
+                        color: ['#e85656', '#f0a53d', '#3b89ce'],
+                        data: [
+                            {value: 0, name: '危急'},
+                            {value: 0, name: '严重'},
+                            {value: 0, name: '一般'}
+                        ]
+                    };
+                    ringData.data[0].value = temp["1"];
+                    ringData.data[1].value = temp["2"];
+                    ringData.data[2].value = temp["3"];
+
+                    return _.cloneDeep(ringData);
+                }
+            },
+            createUndo: function (data) {
+                if (!data.exception || !data.exception.undo) return {};
+
+                var temp = data.exception.undo;
+
+                if (temp["1"] == 0 && temp["2"] == 0 && temp["3"] == 0) {
+                    // 数量都为0时
+                    return {
+                        color: ['#999999'],
+                        data: [
+                            {value: 0, name: '无'}
+                        ]
+                    };
+                }
+                else {
+                    var ringData = {
+                        color: ['#e85656', '#f0a53d', '#3b89ce'],
+                        data: [
+                            {value: 0, name: '危急'},
+                            {value: 0, name: '严重'},
+                            {value: 0, name: '一般'}
+                        ]
+                    };
+                    ringData.data[0].value = temp["1"];
+                    ringData.data[1].value = temp["2"];
+                    ringData.data[2].value = temp["3"];
+
+                    return _.cloneDeep(ringData);
+                }
+            }
+        }
+    }
 })();

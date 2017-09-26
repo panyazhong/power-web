@@ -36,3 +36,28 @@
         <span class="baseTitle">缺陷统计</span>
     </div>
 </div>
+
+<div class="row">
+    <div class="col-xs-6">
+        <div style="height:100px;" ring-bar e-data="show.doneData"></div>
+    </div>
+    <div class="col-xs-6">
+        <div style="height:100px;" ring-bar e-data="show.undoData"></div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-xs-6 text-center">
+        已修复
+    </div>
+    <div class="col-xs-6 text-center">
+        未修复
+    </div>
+</div>
+
+<div class="row text-center">
+    <div style="display: inline-block;width: 60px;margin-top: 5px;margin-bottom: 5px;"
+         ng-repeat="item in show.excepStatus track by $index">
+        <span class="excep_status" style="background: {{ item.bg }}"></span>{{ item.text }}
+    </div>
+</div>
