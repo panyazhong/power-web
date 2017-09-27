@@ -5,7 +5,7 @@
         .controller('overviewPageCtrl', overviewPageCtrl);
 
     /** @ngInject */
-    function overviewPageCtrl($scope, Overview, Sidebar, SidebarCache, Log, HttpToast, $timeout, excepNumHelper,
+    function overviewPageCtrl($scope, Overview, Sidebar, SidebarCache, Log, HttpToast, $timeout, $interval, excepNumHelper, arrUtil,
                               locals, ToastUtils, $state, $rootScope, clientCache, PageTopCache, Client, mapImgCache, userCache) {
 
         PageTopCache.cache.state = $state.$current; // active
@@ -286,8 +286,62 @@
                     HttpToast.toast(err);
                 });
 
+            // test
+            $scope.show.loadTitle = [
+                {
+                    active: true,
+                    id: "001",
+                    name: '一号进线',
+                },
+                {
+                    active: false,
+                    id: "002",
+                    name: '二号进线',
+                },
+                {
+                    active: false,
+                    id: "003",
+                    name: '三号进线',
+                }
+            ];
+
+            $scope.show.loadData = [
+                {
+                    current: 0,
+                    total: 1
+                },
+                {
+                    current: 0,
+                    total: 1
+                },
+                {
+                    current: 0,
+                    total: 1
+                }
+            ];
+
+            $interval(function () {
+                $scope.show.loadData = [
+                    {
+                        current: Math.random() * 100,
+                        total: 100
+                    },
+                    {
+                        current: Math.random() * 100,
+                        total: 100
+                    },
+                    {
+                        current: Math.random() * 100,
+                        total: 100
+                    }
+                ];
+
+            }, 2000);
         };
         $scope.querySafety();
+
+        $scope.changeLineLoad = function (item) {
+        };
 
         /**
          * 当前需量

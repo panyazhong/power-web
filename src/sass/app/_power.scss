@@ -891,3 +891,21 @@ btn 不可用
   height: 10px;
   margin-right: 5px;
 }
+
+.overview .line_def {
+  display: inline-block;
+  height: 22px;
+  line-height: 22px;
+  padding: 1px 6px;
+  border-radius: 5px;
+}
+
+.overview .line_active {
+  display: inline-block;
+  height: 22px;
+  line-height: 22px;
+  padding: 1px 6px;
+  border-radius: 5px;
+  color: #fff;
+  background-color: #f0a53d;
+}

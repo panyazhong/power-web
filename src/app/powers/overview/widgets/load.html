@@ -1,0 +1,23 @@
+<div class="part-line">
+    <button type="button" class="btn-def btn-submit-blue part-title">
+        负荷概况
+    </button>
+</div>
+
+<div class="row">
+    <div class="col-xs-4 text-center"
+         ng-repeat="item in show.loadTitle track by $index"
+         ng-click="changeLineLoad(item)">
+        <span ng-bind="item.name"
+              ng-class="item.active?'line_active':'line_def'"></span>
+    </div>
+</div>
+
+<!--半环形图-->
+<div class="row">
+    <div class="col-xs-4 text-center" ng-repeat="item in show.loadData track by $index">
+        <div style="height:100px;" half-ring-bar e-data="item"></div>
+    </div>
+</div>
+
+<!--单条线的曲线-->
