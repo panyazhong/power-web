@@ -389,7 +389,7 @@
         // 新报警设置
         .factory('AlertSet', function (Resource) {
             var config = {
-                url: 'setting/prop/:client/:cid',
+                url: 'event/setting/:client/:cid',
                 paramsDefault: {
                     client: '@client',
                     cid: '@cid',

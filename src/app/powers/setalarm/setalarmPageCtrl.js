@@ -185,17 +185,17 @@
         $scope.rowCollection = params.data;
 
         $scope.formatForm = function () {
-            var data = {
-                props: {}
-            };
+            var data = [];
 
             params.data.map(function (item) {
                 // 全部传
-                data.props[item.prop_id] = {};
-                data.props[item.prop_id]['warning'] = item.warning;
-                data.props[item.prop_id]['error'] = item.error;
-                data.props[item.prop_id]['status'] = item.showStatus ? '1' : '0';
-                data.props[item.prop_id]['msgFlag'] = item.showMsgFlag ? '1' : '0';
+                var obj = {};
+                obj['prop_id'] = item.prop_id;
+                obj['warning'] = item.warning || '';
+                obj['error'] = item.error || '';
+                obj['status'] = item.showStatus ? '1' : '0';
+                obj['msgFlag'] = item.showMsgFlag ? '1' : '0';
+                data.push(obj);
             });
 
             return data;
@@ -227,19 +227,19 @@
         $scope.rowCollection = params.data;
 
         $scope.formatForm = function () {
-            var data = {
-                props: {}
-            };
+            var data = [];
 
             params.data.map(function (item) {
                 // 全部传
-                data.props[item.prop_id] = {};
-                data.props[item.prop_id]['warning'] = item.warning;
-                data.props[item.prop_id]['error'] = item.error;
-                data.props[item.prop_id]['status'] = item.showStatus ? '1' : '0';
-                data.props[item.prop_id]['msgFlag'] = item.showMsgFlag ? '1' : '0';
+                var obj = {};
+                obj['prop_id'] = item.prop_id;
+                obj['warning'] = item.warning || '';
+                obj['error'] = item.error || '';
+                obj['status'] = item.showStatus ? '1' : '0';
+                obj['msgFlag'] = item.showMsgFlag ? '1' : '0';
                 // diff
-                data.props[item.prop_id]['refVal'] = item.refVal;
+                obj['refVal'] = item.refVal || '';
+                data.push(obj);
             });
 
             return data;
@@ -271,15 +271,15 @@
         $scope.rowCollection = params.data;
 
         $scope.formatForm = function () {
-            var data = {
-                props: {}
-            };
+            var data = [];
 
             params.data.map(function (item) {
                 // 全部传
-                data.props[item.prop_id] = {};
-                data.props[item.prop_id]['status'] = item.showStatus ? '1' : '0';
-                data.props[item.prop_id]['msgFlag'] = item.showMsgFlag ? '1' : '0';
+                var obj = {};
+                obj['prop_id'] = item.prop_id;
+                obj['status'] = item.showStatus ? '1' : '0';
+                obj['msgFlag'] = item.showMsgFlag ? '1' : '0';
+                data.push(obj);
             });
 
             return data;
@@ -338,9 +338,9 @@
 
             data['status'] = $scope.show.data.showStatus ? '1' : '0';
             data['msgFlag'] = $scope.show.data.showMsgFlag ? '1' : '0';
-            data['advancePeriod'] = $scope.show.data.advancePeriod;
-            data['date'] = $scope.show.data.upDate;
-            data['cid'] = $scope.show.cid;
+            data['advancePeriod'] = $scope.show.data.advancePeriod || '';
+            data['date'] = $scope.show.data.upDate || '';
+            data['client_id'] = $scope.show.cid;
             data['prop'] = $scope.show.prop;
 
             return data;
@@ -384,9 +384,9 @@
 
             data['status'] = $scope.show.data.showStatus ? '1' : '0';
             data['msgFlag'] = $scope.show.data.showMsgFlag ? '1' : '0';
-            data['warning'] = $scope.show.data.warning;
-            data['error'] = $scope.show.data.error;
-            data['cid'] = $scope.show.cid;
+            data['warning'] = $scope.show.data.warning || '';
+            data['error'] = $scope.show.data.error || '';
+            data['client_id'] = $scope.show.cid;
             data['prop'] = $scope.show.prop;
 
             return data;
