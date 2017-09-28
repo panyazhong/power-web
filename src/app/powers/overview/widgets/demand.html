@@ -1,1 +1,42 @@
-<h2>需量...</h2>
+<div class="part-line">
+    <button type="button" class="btn-def btn-submit-blue part-title">
+        需量概况
+    </button>
+</div>
+
+<div class="row">
+    <div class="col-xs-4 text-center"
+         ng-repeat="item in show.demandTitle track by $index"
+         ng-click="changeLineDemand(item)">
+        <span ng-bind="item.name"
+              ng-class="item.active?'line_active':'line_def'"></span>
+    </div>
+</div>
+
+<!--半环形图-->
+<div class="row">
+    <div class="col-xs-4 text-center" ng-repeat="item in show.demandPieData track by $index">
+        <div style="height:100px;" half-ring-bar e-data="item"></div>
+    </div>
+</div>
+
+<!--单条线的曲线-->
+<div class="row" style="margin: 0;">
+    <div class="chart-item">
+        <div style="height:214px;" line-chart e-data="show.demandLineData"></div>
+    </div>
+    <div class="max-item">
+        <div class="time_item" ng-show="show.demandMaxData.length">
+            <div ng-repeat="item in show.demandMaxData track by $index">
+                <div>
+                    {{ item.title }} <span style="float: right;">{{ item.val }}</span>
+                </div>
+                <div style="margin-bottom: 5px">
+                    <img class="time_img" ng-src="assets/img/time.png"/>
+                    <span class="time_text">{{ item.time }}</span>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>

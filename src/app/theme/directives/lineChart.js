@@ -22,7 +22,11 @@
                     var option = {
                         backgroundColor: '#fff', //背景色
                         title: {
-                            text: title
+                            text: title,
+                            textStyle: {
+                                color: '#666',
+                                fontSize: 14
+                            }
                         },
                         tooltip: { //提示框组件
                             trigger: 'axis',

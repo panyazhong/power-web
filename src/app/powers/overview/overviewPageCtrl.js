@@ -36,9 +36,15 @@
                     text: '无'
                 }
             ],
+            loadTitle: [],  // 负荷1~3 line data
             loadPieData: [], // 负荷半环形data
             loadLineData: {},    // 负荷折线图data
-            loadMaxData: {}     // 负荷各项最大值
+            loadMaxData: {},     // 负荷各项最大值
+
+            demandTitle: [],     // demand
+            demandPieData: [],
+            demandLineData: {},
+            demandMaxData: {}
         };
 
         $scope.setMap = function () {
@@ -302,7 +308,7 @@
                     HttpToast.toast(err);
                 });
 
-            // test
+            // 模拟load 测试数据
             $scope.show.loadTitle = [
                 {
                     active: true,
@@ -333,57 +339,6 @@
                 {
                     current: 0,
                     total: 1
-                }
-            ];
-
-            $scope.show.loadLineData = {
-                title: '一号线日负荷曲线',
-                unit: '负荷 kW',
-                lineTitle: ['今日负荷', '昨日负荷'],
-                timeData: [
-                    '09:45',
-                    '10:00',
-                    '10:15',
-                    '10:30',
-                    '10:45',
-                    '11:00',
-                    '11:15',
-                    '11:30',
-                    '11:45',
-                    '12:00'],
-                todayData: [
-                    300, 280, 250, 260, 270, 300, 550, 500, 400, 390
-                ],
-                yesdayData: [
-                    550, 500, 400, 390, 380, 390, 400, 500, 600, 750
-                ]
-            };
-
-            $scope.show.loadMaxData = [
-                {
-                    time: '09-12 12:00',
-                    val: Math.floor(Math.random() * 1000) + 'kW',
-                    title: '今日最大负荷'
-                },
-                {
-                    time: '09-12 12:00',
-                    val: Math.floor(Math.random() * 1000) + 'kW',
-                    title: '昨日最大负荷'
-                },
-                {
-                    time: '09-12 12:00',
-                    val: Math.floor(Math.random() * 1000) + 'kW',
-                    title: '本月最大负荷'
-                },
-                {
-                    time: '09-12 12:00',
-                    val: Math.floor(Math.random() * 1000) + 'kW',
-                    title: '上月最大负荷'
-                },
-                {
-                    time: '09-12 12:00',
-                    val: Math.floor(Math.random() * 1000) + 'kW',
-                    title: '本年最大负荷'
                 }
             ];
 
@@ -473,11 +428,136 @@
                 ];
 
             }, 2000);
+
+            // 模拟demand 测试数据
+            $scope.show.demandTitle = [
+                {
+                    active: true,
+                    id: "001",
+                    name: '一号进线',
+                },
+                {
+                    active: false,
+                    id: "002",
+                    name: '二号进线',
+                },
+                {
+                    active: false,
+                    id: "003",
+                    name: '三号进线',
+                }
+            ];
+
+            $scope.show.demandPieData = [
+                {
+                    current: 0,
+                    total: 1
+                },
+                {
+                    current: 0,
+                    total: 1
+                },
+                {
+                    current: 0,
+                    total: 1
+                }
+            ];
+
+            $interval(function () {
+                $scope.show.demandPieData = [
+                    {
+                        current: Math.random() * 100,
+                        total: 100
+                    },
+                    {
+                        current: Math.random() * 100,
+                        total: 100
+                    },
+                    {
+                        current: Math.random() * 100,
+                        total: 100
+                    }
+                ];
+
+                $scope.show.demandLineData = {
+                    title: '一号线日需量曲线',
+                    unit: '需量 kW',
+                    lineTitle: ['今日需量', '昨日需量'],
+                    timeData: [
+                        '09:45',
+                        '10:00',
+                        '10:15',
+                        '10:30',
+                        '10:45',
+                        '11:00',
+                        '11:15',
+                        '11:30',
+                        '11:45',
+                        '12:00'],
+                    todayData: [
+                        Math.floor(Math.random() * 200),
+                        Math.floor(Math.random() * 200),
+                        Math.floor(Math.random() * 200),
+                        Math.floor(Math.random() * 200),
+                        Math.floor(Math.random() * 200),
+                        Math.floor(Math.random() * 200),
+                        Math.floor(Math.random() * 200),
+                        Math.floor(Math.random() * 200),
+                        Math.floor(Math.random() * 200),
+                        Math.floor(Math.random() * 200)
+                    ],
+                    yesdayData: [
+                        Math.floor(Math.random() * 200),
+                        Math.floor(Math.random() * 200),
+                        Math.floor(Math.random() * 200),
+                        Math.floor(Math.random() * 200),
+                        Math.floor(Math.random() * 200),
+                        Math.floor(Math.random() * 200),
+                        Math.floor(Math.random() * 200),
+                        Math.floor(Math.random() * 200),
+                        Math.floor(Math.random() * 200),
+                        Math.floor(Math.random() * 200)
+                    ]
+                };
+
+                $scope.show.demandMaxData = [
+                    {
+                        time: '09-12 12:00',
+                        val: Math.floor(Math.random() * 1000) + 'kW',
+                        title: '今日最大需量'
+                    },
+                    {
+                        time: '09-12 12:00',
+                        val: Math.floor(Math.random() * 1000) + 'kW',
+                        title: '昨日最大需量'
+                    },
+                    {
+                        time: '09-12 12:00',
+                        val: Math.floor(Math.random() * 1000) + 'kW',
+                        title: '本月最大需量'
+                    },
+                    {
+                        time: '09-12 12:00',
+                        val: Math.floor(Math.random() * 1000) + 'kW',
+                        title: '上月最大需量'
+                    },
+                    {
+                        time: '09-12 12:00',
+                        val: Math.floor(Math.random() * 1000) + 'kW',
+                        title: '本年最大需量'
+                    }
+                ];
+
+            }, 1000);
         };
         $scope.querySafety();
 
         $scope.changeLineLoad = function (item) {
             $scope.editValById($scope.show.loadTitle, item.id);
+        };
+
+        $scope.changeLineDemand = function (item) {
+            $scope.editValById($scope.show.demandTitle, item.id);
         };
 
         /**

@@ -26,7 +26,7 @@
         <div style="height:214px;" line-chart e-data="show.loadLineData"></div>
     </div>
     <div class="max-item">
-        <div class="time_item">
+        <div class="time_item" ng-show="show.loadMaxData.length">
             <div ng-repeat="item in show.loadMaxData track by $index">
                 <div>
                     {{ item.title }} <span style="float: right;">{{ item.val }}</span>
