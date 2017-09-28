@@ -15,9 +15,28 @@
 
 <!--半环形图-->
 <div class="row">
-    <div class="col-xs-4 text-center" ng-repeat="item in show.loadData track by $index">
+    <div class="col-xs-4 text-center" ng-repeat="item in show.loadPieData track by $index">
         <div style="height:100px;" half-ring-bar e-data="item"></div>
     </div>
 </div>
 
 <!--单条线的曲线-->
+<div class="row" style="margin: 0;">
+    <div class="chart-item">
+        <div style="height:214px;" line-chart e-data="show.loadLineData"></div>
+    </div>
+    <div class="max-item">
+        <div class="time_item">
+            <div ng-repeat="item in show.loadMaxData track by $index">
+                <div>
+                    {{ item.title }} <span style="float: right;">{{ item.val }}</span>
+                </div>
+                <div style="margin-bottom: 5px">
+                    <img class="time_img" ng-src="assets/img/time.png"/>
+                    <span class="time_text">{{ item.time }}</span>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>

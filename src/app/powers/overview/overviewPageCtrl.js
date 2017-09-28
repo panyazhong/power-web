@@ -35,7 +35,10 @@
                     bg: '#999999',
                     text: '无'
                 }
-            ]
+            ],
+            loadPieData: [], // 负荷半环形data
+            loadLineData: {},    // 负荷折线图data
+            loadMaxData: {}     // 负荷各项最大值
         };
 
         $scope.setMap = function () {
@@ -270,6 +273,19 @@
         $scope.queryBase();
 
         /** 用电安全 **/
+        $scope.editValById = function (arr, id) {
+            if (!arr || !arr.length) return;
+
+            for (var i = 0; i < arr.length; i++) {
+                if (arr[i].id == id) {
+                    arr[i].active = true;
+                }
+                else {
+                    arr[i].active = false;
+                }
+            }
+        };
+
         $scope.querySafety = function () {
             var p = {
                 id: locals.get('cid', ''),
@@ -305,7 +321,7 @@
                 }
             ];
 
-            $scope.show.loadData = [
+            $scope.show.loadPieData = [
                 {
                     current: 0,
                     total: 1
@@ -320,8 +336,59 @@
                 }
             ];
 
+            $scope.show.loadLineData = {
+                title: '一号线日负荷曲线',
+                unit: '负荷 kW',
+                lineTitle: ['今日负荷', '昨日负荷'],
+                timeData: [
+                    '09:45',
+                    '10:00',
+                    '10:15',
+                    '10:30',
+                    '10:45',
+                    '11:00',
+                    '11:15',
+                    '11:30',
+                    '11:45',
+                    '12:00'],
+                todayData: [
+                    300, 280, 250, 260, 270, 300, 550, 500, 400, 390
+                ],
+                yesdayData: [
+                    550, 500, 400, 390, 380, 390, 400, 500, 600, 750
+                ]
+            };
+
+            $scope.show.loadMaxData = [
+                {
+                    time: '09-12 12:00',
+                    val: Math.floor(Math.random() * 1000) + 'kW',
+                    title: '今日最大负荷'
+                },
+                {
+                    time: '09-12 12:00',
+                    val: Math.floor(Math.random() * 1000) + 'kW',
+                    title: '昨日最大负荷'
+                },
+                {
+                    time: '09-12 12:00',
+                    val: Math.floor(Math.random() * 1000) + 'kW',
+                    title: '本月最大负荷'
+                },
+                {
+                    time: '09-12 12:00',
+                    val: Math.floor(Math.random() * 1000) + 'kW',
+                    title: '上月最大负荷'
+                },
+                {
+                    time: '09-12 12:00',
+                    val: Math.floor(Math.random() * 1000) + 'kW',
+                    title: '本年最大负荷'
+                }
+            ];
+
             $interval(function () {
-                $scope.show.loadData = [
+                $scope.show.loadPieData = [
                     {
                         current: Math.random() * 100,
                         total: 100
@@ -336,11 +403,81 @@
                     }
                 ];
 
+                $scope.show.loadLineData = {
+                    title: '一号线日负荷曲线',
+                    unit: '负荷 kW',
+                    lineTitle: ['今日负荷', '昨日负荷'],
+                    timeData: [
+                        '09:45',
+                        '10:00',
+                        '10:15',
+                        '10:30',
+                        '10:45',
+                        '11:00',
+                        '11:15',
+                        '11:30',
+                        '11:45',
+                        '12:00'],
+                    todayData: [
+                        Math.floor(Math.random() * 200),
+                        Math.floor(Math.random() * 200),
+                        Math.floor(Math.random() * 200),
+                        Math.floor(Math.random() * 200),
+                        Math.floor(Math.random() * 200),
+                        Math.floor(Math.random() * 200),
+                        Math.floor(Math.random() * 200),
+                        Math.floor(Math.random() * 200),
+                        Math.floor(Math.random() * 200),
+                        Math.floor(Math.random() * 200)
+                    ],
+                    yesdayData: [
+                        Math.floor(Math.random() * 200),
+                        Math.floor(Math.random() * 200),
+                        Math.floor(Math.random() * 200),
+                        Math.floor(Math.random() * 200),
+                        Math.floor(Math.random() * 200),
+                        Math.floor(Math.random() * 200),
+                        Math.floor(Math.random() * 200),
+                        Math.floor(Math.random() * 200),
+                        Math.floor(Math.random() * 200),
+                        Math.floor(Math.random() * 200)
+                    ]
+                };
+
+                $scope.show.loadMaxData = [
+                    {
+                        time: '09-12 12:00',
+                        val: Math.floor(Math.random() * 1000) + 'kW',
+                        title: '今日最大负荷'
+                    },
+                    {
+                        time: '09-12 12:00',
+                        val: Math.floor(Math.random() * 1000) + 'kW',
+                        title: '昨日最大负荷'
+                    },
+                    {
+                        time: '09-12 12:00',
+                        val: Math.floor(Math.random() * 1000) + 'kW',
+                        title: '本月最大负荷'
+                    },
+                    {
+                        time: '09-12 12:00',
+                        val: Math.floor(Math.random() * 1000) + 'kW',
+                        title: '上月最大负荷'
+                    },
+                    {
+                        time: '09-12 12:00',
+                        val: Math.floor(Math.random() * 1000) + 'kW',
+                        title: '本年最大负荷'
+                    }
+                ];
+
             }, 2000);
         };
         $scope.querySafety();
 
         $scope.changeLineLoad = function (item) {
+            $scope.editValById($scope.show.loadTitle, item.id);
         };
 
         /**
@@ -380,4 +517,5 @@
         });
     }
 
-})();
+})
+();

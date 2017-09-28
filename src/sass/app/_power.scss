@@ -911,3 +911,36 @@ btn 不可用
   color: #fff;
   background-color: #f0a53d;
 }
+
+.overview .chart-item {
+  width: calc(100% - 190px);;
+  display: inline-block;
+  float: left;
+}
+
+.overview .max-item {
+  width: 190px;
+  display: inline-block;
+  float: left;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis
+}
+
+.overview .time_item {
+  border: 1.5px solid #5eb0ff;
+  border-radius: 6px;
+  padding: 3px 6px;
+}
+
+.overview .time_img {
+  height: 15px;
+  float: left;
+  margin-right: 5px;
+  margin-top: 2px;
+}
+
+.overview .time_text {
+  display: inline-block;
+  line-height: 20px;
+}
