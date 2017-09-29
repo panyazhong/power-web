@@ -3,8 +3,6 @@
     <thead>
     <tr>
         <th>所属变电站</th>
-        <th>所属总进线</th>
-        <th>所属支线</th>
         <th>设备名称</th>
         <th>设备类型</th>
         <th>设备型号</th>
@@ -17,13 +15,7 @@
     <tbody ng-show="!show.isLoading">
     <tr ng-repeat="item in show.branchEqp.devices">
         <td class="table-def-cursor">
-            <span ng-bind="item.client_name"></span>
-        </td>
-        <td class="table-def-cursor">
-            <span ng-bind="item.incomingline_name"></span>
-        </td>
-        <td class="table-def-cursor">
-            <span ng-bind="item.branch_name"></span>
+            <span ng-bind="item.clientName"></span>
         </td>
         <td class="table-def-cursor">
             <span ng-bind="item.name"></span>
@@ -38,10 +30,10 @@
             <span ng-bind="item.manufacturer"></span>
         </td>
         <td class="table-def-cursor">
-            <span ng-bind="formatDate(item.lastet_date)"></span>
+            <span ng-bind="formatDate(item.electricTestDate)"></span>
         </td>
         <td class="table-def-cursor">
-            <span ng-bind="item.operationstatus"></span>
+            <span ng-bind="item.status"></span>
         </td>
         <td>
             <i class="ion-gear-a color-blue common-table-btn"

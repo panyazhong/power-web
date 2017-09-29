@@ -175,37 +175,31 @@
                 number: number,
             };
 
-            if (!$.isEmptyObject($scope.form.name)) {
+            if ($scope.form.name) {
                 params.name = $scope.form.name;
             }
-            if (!$.isEmptyObject($scope.form.type)) {
-                params.type = $scope.form.type;
+            if ($scope.form.type) {
+                params.type_id = $scope.form.type;
             }
-            if (!$.isEmptyObject($scope.form.model)) {
+            if ($scope.form.model) {
                 params.model = $scope.form.model;
             }
-            if (!$.isEmptyObject($scope.form.manufacturer)) {
+            if ($scope.form.manufacturer) {
                 params.manufacturer = $scope.form.manufacturer;
             }
-            if (!$.isEmptyObject($scope.form.client_id)) {
+            if ($scope.form.client_id) {
                 params.client_id = $scope.form.client_id;
             }
-            if (!$.isEmptyObject($scope.form.incomingline_id)) {
-                params.incomingline_id = $scope.form.incomingline_id;
-            }
-            if (!$.isEmptyObject($scope.form.branch_id)) {
-                params.branch_id = $scope.form.branch_id;
-            }
-            if (!$.isEmptyObject($scope.form.operationstatus)) {
-                params.operationstatus = $scope.form.operationstatus;
+            if ($scope.form.operationstatus) {
+                params.status = $scope.form.operationstatus;
             }
 
             Device.query(params,
                 function (obj) {
                     $scope.show.isLoading = false;
                     $scope.show.branchEqp = obj;
-                    tableState.pagination.numberOfPages = obj.total_page;
-                    $scope.show.displayedPages = Math.ceil(parseFloat(obj.total_count) / parseInt(obj.total_page));
+                    tableState.pagination.numberOfPages = obj.totalPage;
+                    $scope.show.displayedPages = Math.ceil(parseFloat(obj.totalCount) / parseInt(obj.totalPage));
                     $scope.show.branchEqp.tableState = tableState;
                 }, function (err) {
                     $scope.show.isLoading = false;
@@ -214,7 +208,7 @@
         };
 
         $scope.refreshTable = function () {
-            if (parseInt($scope.show.branchEqp.total_page) <= 1 && $scope.show.branchEqp.tableState) {
+            if (parseInt($scope.show.branchEqp.totalPage) <= 1 && $scope.show.branchEqp.tableState) {
                 $scope.getData($scope.show.branchEqp.tableState);
             } else {
                 angular
@@ -255,29 +249,23 @@
         $scope.allPrpos = function () {
             var params = {};
 
-            if (!$.isEmptyObject($scope.form.name)) {
+            if ($scope.form.name) {
                 params.name = $scope.form.name;
             }
-            if (!$.isEmptyObject($scope.form.type)) {
-                params.type = $scope.form.type;
+            if ($scope.form.type) {
+                params.type_id = $scope.form.type;
             }
-            if (!$.isEmptyObject($scope.form.model)) {
+            if ($scope.form.model) {
                 params.model = $scope.form.model;
             }
-            if (!$.isEmptyObject($scope.form.manufacturer)) {
+            if ($scope.form.manufacturer) {
                 params.manufacturer = $scope.form.manufacturer;
             }
-            if (!$.isEmptyObject($scope.form.client_id)) {
+            if ($scope.form.client_id) {
                 params.client_id = $scope.form.client_id;
             }
-            if (!$.isEmptyObject($scope.form.incomingline_id)) {
-                params.incomingline_id = $scope.form.incomingline_id;
-            }
-            if (!$.isEmptyObject($scope.form.branch_id)) {
-                params.branch_id = $scope.form.branch_id;
-            }
-            if (!$.isEmptyObject($scope.form.operationstatus)) {
-                params.operationstatus = $scope.form.operationstatus;
+            if ($scope.form.operationstatus) {
+                params.status = $scope.form.operationstatus;
             }
 
             var names = "";
