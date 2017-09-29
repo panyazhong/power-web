@@ -198,7 +198,9 @@
                 data.push(obj);
             });
 
-            return data;
+            return {
+                "props": data
+            };
         };
 
         $scope.submit = function () {
@@ -242,7 +244,9 @@
                 data.push(obj);
             });
 
-            return data;
+            return {
+                "props": data
+            };
         };
 
         $scope.submit = function () {
@@ -282,7 +286,9 @@
                 data.push(obj);
             });
 
-            return data;
+            return {
+                "props": data
+            };
         };
 
         $scope.submit = function () {

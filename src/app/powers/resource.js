@@ -414,7 +414,7 @@
         // 新报警设置2
         .factory('AlertSetting', function (Resource) {
             var config = {
-                url: 'setting/client/test',
+                url: 'event/setting/clientEvent',
                 paramsDefault: {},
                 action: {
                     edit: {  // 修改
