@@ -179,6 +179,15 @@
                         return arr[i].name;
                     }
                 }
+            },
+            getSafeDaysById: function (arr, id) {
+                if (!arr || !arr.length) return;
+
+                for (var i = 0; i < arr.length; i++) {
+                    if (arr[i].id == id) {
+                        return arr[i].safeRunningDays;
+                    }
+                }
             }
         }
     }

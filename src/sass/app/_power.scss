@@ -913,13 +913,13 @@ btn 不可用
 }
 
 .overview .chart-item {
-  width: calc(100% - 190px);;
+  width: calc(100% - 170px);;
   display: inline-block;
   float: left;
 }
 
 .overview .max-item {
-  width: 190px;
+  width: 170px;
   display: inline-block;
   float: left;
   white-space: nowrap;
@@ -947,4 +947,17 @@ btn 不可用
 
 .overview .panel {
   margin-bottom: 15px !important;
+}
+
+.overview .power-btn {
+  position: absolute !important;
+  left: 30px !important;
+  top: 15px !important;
+}
+
+.overview .power-title {
+  display: inline-block;
+  line-height: 22px;
+  padding: 0 7px;
+  cursor: pointer;
 }

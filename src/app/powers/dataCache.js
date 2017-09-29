@@ -12,6 +12,7 @@
         .factory("pieChartCache", pieChartCache)
         .service("treeCache", treeCache)    // 树cache
         .service("kCache", kCache)    // key cache
+        .service("previewCache", previewCache)    // 变电站preview
         .service("clientCache", clientCache)    // 变电站事件
         .service("coreConfig", coreConfig)
         .service("mapImgCache", mapImgCache)
@@ -509,6 +510,51 @@
         function getInspect_type(data) {
             return getType(data, groups.inspect_type);
         }
+    }
+
+    function previewCache(Client, HttpToast, locals, $q, mapImgCache) {
+
+        var key = 'preview';   //变电站preview
+
+        var service = {
+            init: init,
+            getPreview: getPreview
+        };
+
+        return service;
+
+        function init() {
+            locals.removeItem(key);
+        }
+
+        function getPreview() {
+            var deferred = $q.defer();
+
+            var pCache = locals.getObject(key);
+
+            if (JSON.stringify(pCache) == '{}' || JSON.stringify(pCache) == '[]') {
+                var p = {preview: 'preview'};
+                Client.query(p,
+                    function (data) {
+                        if (Array.isArray(data)) {
+                            var resData = mapImgCache.create(data);
+
+                            deferred.resolve(resData);
+                            locals.putObject(key, resData);
+                        }
+                    },
+                    function (err) {
+                        deferred.reject();
+                        HttpToast.toast(err);
+                    })
+            }
+            else {
+                deferred.resolve(pCache);
+            }
+
+            return deferred.promise;
+        }
+
     }
 
     function coreConfig() {

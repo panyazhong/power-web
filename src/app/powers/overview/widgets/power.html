@@ -1,0 +1,25 @@
+<div class="part-line text-center">
+    <button type="button" class="btn-def btn-submit-blue part-title power-btn">
+        电量概况
+    </button>
+
+    <span class="power-title" ng-click="viewPower()">月电量柱图</span>
+
+    <span class="power-title" ng-click="viewPowerStack()">月电量堆积图</span>
+</div>
+
+<!--柱状图-->
+<div class="row" style="margin: 0;">
+    <div class="chart-item">
+        <div style="height:140px;" column-chart e-data="show.powerStackData"></div>
+    </div>
+    <div class="max-item">
+        <div class="time_item" ng-show="show.powerMaxData.length">
+            <div ng-repeat="item in show.powerMaxData track by $index">
+                <div style="line-height: 26px;">
+                    {{ item.title }} <span style="float: right;">{{ item.val }}</span>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

@@ -5,7 +5,7 @@
         .controller('overviewPageCtrl', overviewPageCtrl);
 
     /** @ngInject */
-    function overviewPageCtrl($scope, Log, HttpToast, $interval, excepNumHelper,
+    function overviewPageCtrl($scope, Log, HttpToast, $interval, $timeout, excepNumHelper, previewCache, arrUtil,
                               locals, ToastUtils, $state, $rootScope, clientCache, PageTopCache, Client, mapImgCache, userCache) {
 
         PageTopCache.cache.state = $state.$current; // active
@@ -44,7 +44,13 @@
             demandTitle: [],     // demand
             demandPieData: [],
             demandLineData: {},
-            demandMaxData: {}
+            demandMaxData: {},
+
+            powerData: {},  // power 柱状图
+            powerStackData: {},  // 堆积图
+            powerMaxData: {},    // max
+
+            safeRunningDays: '', // 安全运行天数，非地图
         };
 
         $scope.setMap = function () {
@@ -192,27 +198,6 @@
         };
 
         /**
-         * 获取变电站预览信息
-         */
-        $scope.init = function () {
-
-            var p = {preview: 'preview'};
-            Client.query(p,
-                function (data) {
-                    if (Array.isArray(data)) {
-                        $scope.show.mapData = mapImgCache.create(data);
-                        $scope.setMap();
-
-                        Log.i('变电站预览信息：' + JSON.stringify($scope.show.mapData));
-                    }
-                },
-                function (err) {
-                    HttpToast.toast(err);
-                })
-        };
-        $scope.init();
-
-        /**
          * 获取变电站详细信息
          * @param id    变电站的id
          * @param pos   当前选择点的位置
@@ -255,11 +240,7 @@
             locals.put('cid', id);      // 也记录下变电站id
         };
 
-        /**
-         *
-         * 基本概况
-         *
-         */
+        /**获取基本概况**/
         $scope.queryBase = function () {
             var p = {
                 id: locals.get('cid', ''),
@@ -276,7 +257,7 @@
                 });
 
         };
-        $scope.queryBase();
+        // $scope.queryBase();
 
         /** 用电安全 **/
         $scope.editValById = function (arr, id) {
@@ -292,6 +273,7 @@
             }
         };
 
+        /**获取异常、缺陷数量**/
         $scope.querySafety = function () {
             var p = {
                 id: locals.get('cid', ''),
@@ -549,8 +531,105 @@
                 ];
 
             }, 1000);
+
+            // 模拟月电量堆积 测试数据
+
+            $interval(function () {
+
+                $scope.show.powerStackData = {
+                    "data": [{
+                        'type': '尖时电量',
+                        'stack': '电量',
+                        'value': [
+                            Math.floor(Math.random() * 200),
+                            Math.floor(Math.random() * 200),
+                            Math.floor(Math.random() * 200),
+                            Math.floor(Math.random() * 200),
+                            Math.floor(Math.random() * 200),
+                            Math.floor(Math.random() * 200),
+                            Math.floor(Math.random() * 200),
+                            Math.floor(Math.random() * 200),
+                            Math.floor(Math.random() * 200),
+                            Math.floor(Math.random() * 200)
+                        ]
+                    }, {
+                        'type': '峰时电量',
+                        'stack': '电量',
+                        'value': [
+                            Math.floor(Math.random() * 200),
+                            Math.floor(Math.random() * 200),
+                            Math.floor(Math.random() * 200),
+                            Math.floor(Math.random() * 200),
+                            Math.floor(Math.random() * 200),
+                            Math.floor(Math.random() * 200),
+                            Math.floor(Math.random() * 200),
+                            Math.floor(Math.random() * 200),
+                            Math.floor(Math.random() * 200),
+                            Math.floor(Math.random() * 200)
+                        ]
+                    }, {
+                        'type': '平时电量',
+                        'stack': '电量',
+                        'value': [
+                            Math.floor(Math.random() * 200),
+                            Math.floor(Math.random() * 200),
+                            Math.floor(Math.random() * 200),
+                            Math.floor(Math.random() * 200),
+                            Math.floor(Math.random() * 200),
+                            Math.floor(Math.random() * 200),
+                            Math.floor(Math.random() * 200),
+                            Math.floor(Math.random() * 200),
+                            Math.floor(Math.random() * 200),
+                            Math.floor(Math.random() * 200)
+                        ]
+                    }, {
+                        'type': '谷时电量',
+                        'stack': '电量',
+                        'value': [
+                            Math.floor(Math.random() * 200),
+                            Math.floor(Math.random() * 200),
+                            Math.floor(Math.random() * 200),
+                            Math.floor(Math.random() * 200),
+                            Math.floor(Math.random() * 200),
+                            Math.floor(Math.random() * 200),
+                            Math.floor(Math.random() * 200),
+                            Math.floor(Math.random() * 200),
+                            Math.floor(Math.random() * 200),
+                            Math.floor(Math.random() * 200)
+                        ]
+                    }
+
+                    ],
+                    'xAxisData': ['9-1', '9-2', '9-3', '9-11', '9-12', '9-13', '9-21', '9-22', '9-23', '9-29']
+                };
+
+                $scope.show.powerMaxData = [
+                    {
+                        val: Math.floor(Math.random() * 1000) + 'KW.h',
+                        title: '今日累计电量'
+                    },
+                    {
+                        val: Math.floor(Math.random() * 1000) + 'KW.h',
+                        title: '昨日累计电量'
+                    },
+                    {
+                        val: Math.floor(Math.random() * 1000) + 'KW.h',
+                        title: '本月累计电量'
+                    },
+                    {
+                        val: Math.floor(Math.random() * 1000) + 'KW.h',
+                        title: '上月累计电量'
+                    },
+                    {
+                        val: Math.floor(Math.random() * 1000) + 'KW.h',
+                        title: '本年累计电量'
+                    }
+                ];
+
+            }, 1500);
+
         };
-        $scope.querySafety();
+        // $scope.querySafety();
 
         $scope.changeLineLoad = function (item) {
             $scope.editValById($scope.show.loadTitle, item.id);
@@ -559,6 +638,63 @@
         $scope.changeLineDemand = function (item) {
             $scope.editValById($scope.show.demandTitle, item.id);
         };
+
+        /**
+         * 查看月电量柱图
+         */
+        $scope.viewPower = function () {
+
+        };
+
+        /**
+         * 月电量堆积图
+         */
+        $scope.viewPowerStack = function () {
+
+        };
+
+
+        $scope.initFilterInfo = function () {
+
+            var cid = locals.get('cid', '');
+            if (cid) {
+                $scope.queryBase();
+                $scope.querySafety();
+
+                $scope.show.safeRunningDays = arrUtil.getSafeDaysById($scope.show.mapData, cid);
+
+                Log.i('cid不为空：' + cid + " / " + $scope.show.safeRunningDays);
+            }
+            else {  // 和其它界面diff，不存在也需选中一个客户
+                locals.put('cid', $scope.show.mapData[0].id);
+                $timeout(function () {
+                    $scope.queryBase();
+                    $scope.querySafety();
+                }, 200);
+
+                $scope.show.safeRunningDays = $scope.show.mapData[0].safeRunningDays;
+
+                Log.i('cid空：' + $scope.show.mapData[0].id + " / " + $scope.show.safeRunningDays);
+            }
+
+        };
+
+        /**
+         * 获取变电站预览信息
+         */
+        $scope.init = function () {
+
+            var pm = previewCache.getPreview();
+            pm.then(function (data) {
+                $scope.show.mapData = data;
+                $scope.setMap();
+                Log.i('变电站预览信息：' + JSON.stringify($scope.show.mapData));
+
+                $scope.initFilterInfo();
+            });
+
+        };
+        $scope.init();
 
         /**
          * 当前需量

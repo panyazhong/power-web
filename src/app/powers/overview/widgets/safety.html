@@ -5,7 +5,7 @@
     </button>
 
     <span class="color-blue" style="float: right;">
-         707天
+         {{show.safeRunningDays}}
      </span>
 </div>
 
@@ -24,8 +24,8 @@
 </div>
 
 <div style="margin: 5px 0 15px;">
-    <span class="text-center" style="display: inline-block;width: 60%;">已处理 99</span>
-    <span class=text-right" style="float: right;">待处理 3</span>
+    <span class="text-center" style="display: inline-block;width: 60%;">已处理 {{show.safetyData.event.confirmed}}</span>
+    <span class=text-right" style="float: right;">待处理 {{show.safetyData.event.notConfirmed}}</span>
 </div>
 
 <!--缺陷统计-->
