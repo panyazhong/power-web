@@ -231,14 +231,19 @@
         // 设备
         .factory('Device', function (Resource) {
             var config = {
-                url: 'device/:did/:export',
+                url: 'device/:did/:export/:type',
                 paramsDefault: {
                     did: '@did',
-                    export: '@export'
+                    export: '@export',
+                    type: '@type',
                 },
                 action: {
                     query: {
                         method: 'GET'   //获取设备信息
+                    },
+                    queryDT: {      // 获取设备类型
+                        method: 'GET',
+                        isArray: true
                     },
                     create: {
                         method: 'POST'  //新建设备

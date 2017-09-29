@@ -13,6 +13,7 @@
         .service("treeCache", treeCache)    // 树cache
         .service("kCache", kCache)    // key cache
         .service("previewCache", previewCache)    // 变电站preview
+        .service("deviceTypeCache", deviceTypeCache)    // 设备类型cache，之前从keyword取
         .service("clientCache", clientCache)    // 变电站事件
         .service("coreConfig", coreConfig)
         .service("mapImgCache", mapImgCache)
@@ -550,6 +551,49 @@
             }
             else {
                 deferred.resolve(pCache);
+            }
+
+            return deferred.promise;
+        }
+
+    }
+
+    function deviceTypeCache(Device, HttpToast, locals, $q) {
+
+        var key = 'dtCache';   //设备类型
+
+        var service = {
+            init: init,
+            getDeviceType: getDeviceType
+        };
+
+        return service;
+
+        function init() {
+            locals.removeItem(key);
+        }
+
+        function getDeviceType() {
+            var deferred = $q.defer();
+
+            var dtCache = locals.getObject(key);
+
+            if (JSON.stringify(dtCache) == '{}' || JSON.stringify(dtCache) == '[]') {
+                var p = {type: 'type'};
+                Device.queryDT(p,
+                    function (data) {
+                        if (Array.isArray(data)) {
+                            deferred.resolve(data);
+                            locals.putObject(key, data);
+                        }
+                    },
+                    function (err) {
+                        deferred.reject();
+                        HttpToast.toast(err);
+                    })
+            }
+            else {
+                deferred.resolve(dtCache);
             }
 
             return deferred.promise;

@@ -9,7 +9,8 @@
 
     /** @ngInject */
     function devicePageCtrl($scope, PageTopCache, $state, ModalUtils, HttpToast, Keyword, KeywordCache,
-                            Sidebar, SidebarCache, Device, ToastUtils, Log, ExportPrefix, $rootScope, $timeout, locals) {
+                            Sidebar, SidebarCache, Device, ToastUtils, Log, ExportPrefix, $rootScope, $timeout, locals,
+                            deviceTypeCache, treeCache) {
 
         PageTopCache.cache.state = $state.$current; // active
 
@@ -135,36 +136,28 @@
 
         $scope.init = function () {
 
-            if (KeywordCache.isEmpty()) {
-                Keyword.query({},
-                    function (data) {
-                        KeywordCache.create(data);
-                        $scope.show.deviceoperationstatusArr = KeywordCache.getDevice_operationstatus();
-                        $scope.show.devicetypeArr = KeywordCache.getDevice_type();
-                    }, function (err) {
-                        HttpToast.toast(err);
-                    });
-            } else {
-                $scope.show.deviceoperationstatusArr = KeywordCache.getDevice_operationstatus();
-                $scope.show.devicetypeArr = KeywordCache.getDevice_type();
-            }
+            // 设备状态
+            $scope.show.deviceoperationstatusArr = [
+                {
+                    id: 1,
+                    name: '运行'
+                },
+                {
+                    id: 2,
+                    name: '停役'
+                }
+            ];
+            // 设备类型
+            var pmDt = deviceTypeCache.getDeviceType();
+            pmDt.then(function (data) {
+                $scope.show.devicetypeArr = data;
+            });
 
-            if (SidebarCache.isEmpty()) {
-                Log.i('empty： ——SidebarCache');
-
-                Sidebar.query({},
-                    function (data) {
-                        SidebarCache.create(data);
-                        $scope.show.sidebarArr = data.sidebar;
-                        $scope.initFilterInfo();
-                    }, function (err) {
-                        HttpToast.toast(err);
-                    });
-            } else {
-                Log.i('exist： ——SidebarCache');
-                $scope.show.sidebarArr = SidebarCache.getData().sidebar;
+            var pm = treeCache.getTree();
+            pm.then(function (data) {
+                $scope.show.sidebarArr = treeCache.createClientArr(data);
                 $scope.initFilterInfo();
-            }
+            });
 
         };
         $scope.init();
