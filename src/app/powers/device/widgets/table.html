@@ -3,6 +3,7 @@
     <thead>
     <tr>
         <th>所属变电站</th>
+        <th>所属支线</th>
         <th>设备名称</th>
         <th>设备类型</th>
         <th>设备型号</th>
@@ -16,6 +17,9 @@
     <tr ng-repeat="item in show.branchEqp.devices">
         <td class="table-def-cursor">
             <span ng-bind="item.clientName"></span>
+        </td>
+        <td class="table-def-cursor">
+            <span ng-bind="item.lineName"></span>
         </td>
         <td class="table-def-cursor">
             <span ng-bind="item.name"></span>
