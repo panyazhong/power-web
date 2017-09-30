@@ -41,9 +41,9 @@
         </td>
         <td>
             <i class="ion-gear-a color-blue common-table-btn"
-               ng-click="setItem(item.did)"></i>
+               ng-click="setItem(item.id)"></i>
             <i class="ion-trash-a color-red common-table-btn"
-               ng-click="delItem(item.did)"></i>
+               ng-click="delItem(item.id)"></i>
         </td>
     </tr>
     </tbody>
@@ -59,7 +59,7 @@
                 class="text-center" st-pagination=""
                 st-items-by-page="show.maxSize"
                 st-displayed-pages="show.displayedPages"
-                colspan="10">
+                colspan="9">
         </td>
     </tr>
     </tfoot>
