@@ -460,7 +460,8 @@
 
             choiceAttrId: '',       //选中的设备属性id
             deviceAttrList: [],     //设备属性列表
-            lineNodeList: []    //节点集合完整数据
+            lineNodeList: [],    //节点集合完整数据
+            choiceLine: []   //选择的节点的数据
         };
         $scope.form = {
             base: {
@@ -483,7 +484,9 @@
                 current: '',  //额定电流
                 frequency: '',    //额定频率
                 capacity: '', //额定电容
-                status: '' //运行状态：1-运行，2-停役
+                status: '', //运行状态：1-运行，2-停役
+
+                line_id: '', //所属节点
             },
             detail: {
                 phasenum: '',   //相数KEY
@@ -636,12 +639,29 @@
             return false;
         };
 
+        $scope.changeNode = function (pos, item) {
+            // a.设置form数据
+            $scope.show.choiceLine[pos].id = item.id;
+            $scope.show.choiceLine[pos].name = item.name;
+
+            // b.pos小于数组长度时，删除pos以后的数据
+            if (pos < $scope.show.lineNodeList.length - 1) {
+                Log.e('bbb...');
+            }
+
+            // c.设置子树
+            if (!item.lines || !item.lines.length) return;
+
+            Log.e(pos + " \n " + JSON.stringify(item.lines));
+            Log.e("choice：" + JSON.stringify($scope.show.choiceLine));
+        };
+
         // dropdown set
         $scope.changeClent = function (obj) {
             if ($scope.show.clientName == obj.clientName) return;
+            $scope.show.clientName = obj.clientName;
 
             // set
-            $scope.show.clientName = obj.clientName;
             /*
             $scope.show.incominglingArr = obj.incominglineData;
             $scope.form.base.branch_id = '';
@@ -655,7 +675,9 @@
             */
 
             // clear
+            $scope.form.base.line_id = '';
             $scope.show.lineNodeList = [];
+            $scope.show.choiceLine = [];
 
             // set
             var pm = treeCache.getTree();
@@ -663,8 +685,19 @@
                 for (var i = 0; i < data.length; i++) {
                     var item = data[i];
                     if (item.id == obj.clientId) {
-                        $scope.show.lineNodeList = item.lines;
-                        Log.e(JSON.stringify($scope.show.lineNodeList));
+                        if (!item.lines || !item.lines.length) {
+                            ToastUtils.openToast('error', '该变电站数据库不存在支线。');
+                            return;
+                        }
+
+                        // set 第一层节点默认数据
+                        $scope.show.lineNodeList.push(item.lines);
+                        $scope.show.choiceLine.push({
+                            id: '',
+                            name: ''
+                        });
+
+                        Log.e('选择变电站的节点：\n' + JSON.stringify($scope.show.lineNodeList));
                         return
                     }
                 }
