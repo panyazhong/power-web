@@ -376,7 +376,7 @@
     }
 
     function addDeviceCtrl($scope, KeywordCache, SidebarCache, ToastUtils, Device, locals, HttpToast,
-                           DeviceHelper, Log, Sidebar, Keyword) {
+                           DeviceHelper, Log, Sidebar, Keyword, deviceTypeCache, treeCache) {
 
         $scope.data = {
             beginDate: {
@@ -501,6 +501,7 @@
 
         $scope.init = function () {
 
+            /*
             if (KeywordCache.isEmpty()) {
                 Keyword.query({},
                     function (data) {
@@ -535,6 +536,29 @@
                 Log.i('exist： ——SidebarCache');
                 $scope.show.sidebarArr = SidebarCache.getData().sidebar;
             }
+            */
+
+            // 设备状态
+            $scope.show.deviceoperationstatusArr = [
+                {
+                    id: 1,
+                    name: '运行'
+                },
+                {
+                    id: 2,
+                    name: '停役'
+                }
+            ];
+            // 设备类型
+            var pmDt = deviceTypeCache.getDeviceType();
+            pmDt.then(function (data) {
+                $scope.show.devicetypeArr = data;
+            });
+
+            var pm = treeCache.getTree();
+            pm.then(function (data) {
+                $scope.show.sidebarArr = treeCache.createClientArr(data);
+            });
 
         };
         $scope.init();

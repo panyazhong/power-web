@@ -143,8 +143,8 @@
 
     function imgPrefix(coreConfig) {
         return {
-            prefix: coreConfig.host + '/'
-            // prefix: coreConfig.host + '/power/'
+            // prefix: coreConfig.host + '/'
+            prefix: coreConfig.host + '/power/'
         }
     }
 
@@ -603,11 +603,11 @@
 
     function coreConfig() {
 
-        var host = 'http://www.shanghaihenghui.com';
-        // var host = 'http://192.168.0.155';
+        // var host = 'http://www.shanghaihenghui.com';
+        var host = 'http://192.168.0.155';
 
-        var httpHost = host + '/api';
-        // var httpHost = host + '/power/api';
+        // var httpHost = host + '/api';
+        var httpHost = host + '/power/api';
 
         var service = {
             host: host,
