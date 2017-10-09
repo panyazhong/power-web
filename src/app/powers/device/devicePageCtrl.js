@@ -457,6 +457,9 @@
             comminssioningdate: '', //投运日期
             lastet_date: '',    //上次电试日期
             lastrepair_date: '',    //上次维修日期
+
+            choiceAttrId: '',       //选中的设备属性id
+            deviceAttrList: [],     //设备属性列表
         };
         $scope.form = {
             base: {
@@ -665,9 +668,33 @@
             $scope.form.base.branch_id = obj.branchId;
         };
 
+        /**获取设备属性列表**/
+        $scope.queryAttr = function (id) {
+            if (!id) return;
+            if (id == $scope.show.choiceAttrId) return;
+            $scope.show.choiceAttrId = id;
+
+            var p = {
+                type: 'type',
+                type_id: id,
+                attr: 'attr'
+            };
+            Device.queryAttr(p,
+                function (data) {
+                    if (Array.isArray(data)) {
+                        $scope.show.deviceAttrList = data;
+                    }
+                },
+                function (err) {
+                    HttpToast.toast(err);
+                });
+        };
+
         $scope.setDeviceType = function (obj) {
             $scope.show.deviceType = obj.name;
             $scope.form.base.type = obj.id;
+            /**query**/
+            $scope.queryAttr(obj.id);
         };
 
         $scope.setStatus = function (obj) {

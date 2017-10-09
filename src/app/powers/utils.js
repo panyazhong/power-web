@@ -113,6 +113,11 @@
                 if (isDebug) {
                     console.log(msg);
                 }
+            },
+            e: function (msg) {
+                if (isDebug) {
+                    console.error(msg);
+                }
             }
         }
     }

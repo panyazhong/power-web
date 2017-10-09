@@ -231,11 +231,13 @@
         // 设备
         .factory('Device', function (Resource) {
             var config = {
-                url: 'device/:did/:export/:type',
+                url: 'device/:did/:export/:type/:type_id/:attr',
                 paramsDefault: {
                     did: '@did',
                     export: '@export',
                     type: '@type',
+                    type_id: '@type_id',
+                    attr: '@attr'
                 },
                 action: {
                     query: {
@@ -253,6 +255,10 @@
                     },
                     delete: {   // 删除设备
                         method: 'DELETE'
+                    },
+                    queryAttr: {      // 6.2 获取设备属性列表
+                        method: 'GET',
+                        isArray: true
                     }
                 }
             };
