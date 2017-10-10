@@ -8,7 +8,8 @@
         .factory("UserHelper", userHelper)
         .factory("reportHelper", reportHelper)
         .factory("setalarmHelper", setalarmHelper)
-        .factory("excepNumHelper", excepNumHelper);
+        .factory("excepNumHelper", excepNumHelper)
+        .factory("deviceAttrHelper", deviceAttrHelper);
 
     function clientimgHelper(_) {
 
@@ -286,6 +287,26 @@
 
                     return _.cloneDeep(ringData);
                 }
+            }
+        }
+    }
+
+    function deviceAttrHelper(_) {
+        return {
+            create: function (data) {
+                if (!data || !data.length) return;
+
+                data.map(function (item) {
+                    item.val = '';  // form val
+                    if (item.type == "RAD") {
+                        // 说明是下拉框
+                        item.click = function (str) {
+                            this.val = str;
+                        }
+                    }
+                });
+
+                return _.cloneDeep(data);
             }
         }
     }

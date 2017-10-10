@@ -376,7 +376,7 @@
     }
 
     function addDeviceCtrl($scope, KeywordCache, SidebarCache, ToastUtils, Device, locals, HttpToast,
-                           DeviceHelper, Log, Sidebar, Keyword, deviceTypeCache, treeCache) {
+                           DeviceHelper, Log, Sidebar, Keyword, deviceTypeCache, treeCache, deviceAttrHelper) {
 
         $scope.data = {
             beginDate: {
@@ -639,6 +639,31 @@
             return false;
         };
 
+        /**
+         * 判断是否有依赖
+         */
+        $scope.checkDepend = function (item) {
+            if (!item.dependID) return true;
+
+            if (item.dependID) {
+                // 说明有依赖
+                for (var i = 0; i < $scope.show.deviceAttrList.length; i++) {
+                    var obj = $scope.show.deviceAttrList[i];
+                    if (item.dependID == obj.id) {
+                        if (item.dependOption.indexOf(obj.val) == -1) {
+                            //不包含
+                            return false;
+                        } else {
+                            return true;
+                        }
+                    }
+                }
+            }
+        };
+
+        /**
+         * 节点相关
+         */
         $scope.setTreeNodes = function (treeNodes) {
             if (!treeNodes || !treeNodes.length) return;
 
@@ -714,7 +739,8 @@
             Device.queryAttr(p,
                 function (data) {
                     if (Array.isArray(data)) {
-                        $scope.show.deviceAttrList = data;
+                        $scope.show.deviceAttrList = deviceAttrHelper.create(data);
+                        Log.e('属性列表：\n' + JSON.stringify($scope.show.deviceAttrList));
                     }
                 },
                 function (err) {

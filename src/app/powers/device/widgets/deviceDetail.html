@@ -1,117 +1,31 @@
 <div class="row">
-    <div class="form-group col-md-4">
-        <label>相数</label>
+    <div class="form-group col-md-4"
+         ng-repeat="item in show.deviceAttrList track by $index"
+         ng-show="checkDepend(item)">
+        <label>{{item.name + (item.unit ?'('+item.unit+')':'')}}</label>
 
-        <div class="row" style="margin-left: 0;margin-right: 0">
-            <!-- Single button -->
+        <input type="{{ item.type == 'NUM' ? 'number' :item.type == 'STR'?'text' :'text' }}"
+               class="form-control"
+               ng-model="item.val"
+               ng-show="item.type == 'NUM' || item.type == 'STR'">
+
+        <div class="row" style="margin-left: 0;margin-right: 0"
+             ng-show="item.type == 'RAD'">
             <div class="select-right" uib-dropdown>
                 <button type="button" class="btn-def btn-trans" style="text-align: left"
                         uib-dropdown-toggle ng-disabled="disabled">
-                    <span class="caret"></span>{{show.phasenum}}
+                    <span class="caret"></span>{{item.val}}
                 </button>
 
                 <ul class="dropdown-menu common-dp-ul" uib-dropdown-menu role="menu"
                     aria-labelledby="single-button">
                     <li role="menuitem"
-                        ng-repeat="info in show.devicephasenumArr track by $index">
-                        <a ng-bind="info.name" ng-click="setDevicephasenum(info)"></a>
+                        ng-repeat="info in item.option track by $index">
+                        <a ng-bind="info" ng-click="item.click(info)"></a>
                     </li>
                 </ul>
             </div>
         </div>
-
-    </div>
-    <div class="form-group col-md-4">
-        <label>产品代号</label>
-        <input type="text" class="form-control" ng-model="form.detail.product_code">
-    </div>
-    <div class="form-group col-md-4">
-        <label>标准代号</label>
-        <input type="text" class="form-control" ng-model="form.detail.standard_code">
-    </div>
-
-    <div class="form-group col-md-4">
-        <label>绝缘水平</label>
-        <input type="text" class="form-control" ng-model="form.detail.insulationlevel">
-    </div>
-    <div class="form-group col-md-4">
-        <label>使用条件</label>
-
-        <div class="row" style="margin-left: 0;margin-right: 0">
-            <!-- Single button -->
-            <div class="select-right" uib-dropdown>
-                <button type="button" class="btn-def btn-trans" style="text-align: left"
-                        uib-dropdown-toggle ng-disabled="disabled">
-                    <span class="caret"></span>{{show.usecondition}}
-                </button>
-
-                <ul class="dropdown-menu common-dp-ul" uib-dropdown-menu role="menu"
-                    aria-labelledby="single-button">
-                    <li role="menuitem"
-                        ng-repeat="info in show.deviceuseconditionArr track by $index">
-                        <a ng-bind="info.name" ng-click="setUsecondition(info)"></a>
-                    </li>
-                </ul>
-            </div>
-        </div>
-
-    </div>
-    <div class="form-group col-md-4">
-        <label>绝缘耐热等级</label>
-
-        <div class="row" style="margin-left: 0;margin-right: 0">
-            <!-- Single button -->
-            <div class="select-right" uib-dropdown>
-                <button type="button" class="btn-def btn-trans" style="text-align: left"
-                        uib-dropdown-toggle ng-disabled="disabled">
-                    <span class="caret"></span>{{show.insulationclass}}
-                </button>
-
-                <ul class="dropdown-menu common-dp-ul" uib-dropdown-menu role="menu"
-                    aria-labelledby="single-button">
-                    <li role="menuitem"
-                        ng-repeat="info in show.deviceinsulationclassArr track by $index">
-                        <a ng-bind="info.name" ng-click="setInsulationclass(info)"></a>
-                    </li>
-                </ul>
-            </div>
-        </div>
-
-    </div>
-
-    <div class="form-group col-md-4">
-        <label>温升限值</label>
-        <input type="text" class="form-control" ng-model="form.detail.tempriselimit">
-    </div>
-    <div class="form-group col-md-4">
-        <label>总重（kg）</label>
-        <input type="number" class="form-control" ng-model="form.detail.totalweight">
-    </div>
-    <div class="form-group col-md-4">
-        <label>联结组标号</label>
-        <input type="text" class="form-control" ng-model="form.detail.connectionsymbol">
-    </div>
-
-    <div class="form-group col-md-4">
-        <label>冷却方式</label>
-        <input type="text" class="form-control" ng-model="form.detail.coolingmode">
-    </div>
-    <div class="form-group col-md-4">
-        <label>空载电流（%）</label>
-        <input type="number" class="form-control" ng-model="form.detail.current_noload">
-    </div>
-    <div class="form-group col-md-4">
-        <label>空载损耗（kW）</label>
-        <input type="number" class="form-control" ng-model="form.detail.loss_noload">
-    </div>
-
-    <div class="form-group col-md-4">
-        <label>短路阻抗（%）</label>
-        <input type="number" class="form-control" ng-model="form.detail.shortcircuit_impedance">
-    </div>
-    <div class="form-group col-md-4">
-        <label>所在分接档位</label>
-        <input type="text" class="form-control" ng-model="form.detail.tapgear">
     </div>
 
 </div>
