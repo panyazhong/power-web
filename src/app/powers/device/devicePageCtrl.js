@@ -741,9 +741,369 @@
 
     }
 
-    function editDeviceCtrl($scope, params) {
+    function editDeviceCtrl($scope, Device, DeviceAdd, deviceTypeCache, deviceAttrHelper, treeCache,
+                            HttpToast, ToastUtils, Log) {
 
-        $scope.did = params.did;
+        $scope.data = {
+            beginDate: {
+                options: {
+                    formatYear: 'yyyy',
+                    startingDay: 1,
+                    showWeeks: false,
+                    language: 'zh-CN',
+                },
+                isOpen: false,
+                altInputFormats: ['yyyy-MM-dd'],
+                format: 'yyyy-MM-dd',
+                modelOptions: {
+                    timezone: 'Asia/beijing'
+                }
+            },
+            lastet: {
+                options: {
+                    formatYear: 'yyyy',
+                    startingDay: 1,
+                    showWeeks: false,
+                    language: 'zh-CN',
+                },
+                isOpen: false,
+                altInputFormats: ['yyyy-MM-dd'],
+                format: 'yyyy-MM-dd',
+                modelOptions: {
+                    timezone: 'Asia/beijing'
+                }
+            },
+            lastrepair: {
+                options: {
+                    formatYear: 'yyyy',
+                    startingDay: 1,
+                    showWeeks: false,
+                    language: 'zh-CN',
+                },
+                isOpen: false,
+                altInputFormats: ['yyyy-MM-dd'],
+                format: 'yyyy-MM-dd',
+                modelOptions: {
+                    timezone: 'Asia/beijing'
+                }
+            },
+        };
+
+        $scope.show = {
+            pageTabData: [
+                {
+                    title: '基本信息',
+                    state: 'base'
+                },
+                {
+                    title: '详细信息',
+                    state: 'detail'
+                }
+            ],
+            pageTabState: 'base',   // 默认state
+            deviceType: '',          // 设备类型-name
+
+            devicetypeArr: [],
+            deviceoperationstatusArr: [],
+            clientName: '',  //变电站
+            sidebarArr: [],    //变电站数组
+
+            status: '',   //运行状态name
+
+            usingDate: '', //投运日期
+            electricTestDate: '',    //上次电试日期
+            repairDate: '',    //上次维修日期
+
+            choiceAttrId: '',       //选中的设备属性id
+            deviceAttrList: [],     //设备属性列表
+            lineNodeList: [],    //节点集合完整数据
+            choiceLine: []   //选择的节点的数据
+        };
+        $scope.form = {
+            base: {
+                name: '',   //名称
+                type_id: '',   //设备类型
+                category: '',//category
+                code: '',   //设备代码
+                model: '',  //设备型号
+                position: '',   //安装位置
+
+                serialNum: '',   //出厂编号
+                manufacturer: '',   //生产厂家
+                manufacturerContact: '',    //厂家联系人
+                manufacturerTel: '',   //厂家联系电话
+                usingDate: '', //投运日期
+                electricTestDate: '',    //上次电试日期
+                repairDate: '',    //上次维修日期
+
+                voltage: '',  //额定电压
+                current: '',  //额定电流
+                frequency: '',    //额定频率
+                capacity: '', //额定电容
+                status: '', //运行状态：1-运行，2-停役
+
+                line_id: '', //所属节点
+            },
+        };
+
+        $scope.formatForm = function () {
+            // 基本信息
+            var params = $scope.form.base;
+
+            // 详细信息
+            params["attr"] = {};
+            for (var i = 0; i < $scope.show.deviceAttrList.length; i++) {
+                var item = $scope.show.deviceAttrList[i];
+                if (item.val) {
+                    params["attr"][item.id] = item.val;
+                }
+            }
+
+            return params;
+        };
+
+        $scope.checkForm = function () {
+
+            // a.日期
+            $scope.form.base.usingDate = '';
+            $scope.form.base.electricTestDate = '';
+            $scope.form.base.repairDate = '';
+            if ($scope.show.usingDate) {
+                $scope.form.base.usingDate = moment($scope.show.usingDate).unix();
+            }
+            if ($scope.show.electricTestDate) {
+                $scope.form.base.electricTestDate = moment($scope.show.electricTestDate).unix();
+            }
+            if ($scope.show.repairDate) {
+                $scope.form.base.repairDate = moment($scope.show.repairDate).unix();
+            }
+
+            // b.节点
+            var choiceLineId = '';
+            for (var i = 0; i < $scope.show.choiceLine.length; i++) {
+                var obj = $scope.show.choiceLine[i];
+                if (obj.id) {
+                    // 有选中的节点，只需要最后一个节点
+                    choiceLineId = obj.id;
+                }
+            }
+            if (!choiceLineId) {
+                // 说明没有选中的节点id
+                ToastUtils.openToast('warning', '请选择设备所属支线！');
+                return false;
+            }
+            $scope.form.base.line_id = choiceLineId;
+
+            // 基本信息
+            for (var Key in $scope.form.base) {
+                if (!$scope.form.base[Key]) {
+                    ToastUtils.openToast('warning', '请完善基本信息！');
+                    return false;
+                }
+            }
+
+            // 详细信息
+            for (var i = 0; i < $scope.show.deviceAttrList.length; i++) {
+                var item = $scope.show.deviceAttrList[i];
+                if (!item.val) {
+                    // 说明有val为空
+                    ToastUtils.openToast('warning', '请完善详细信息！');
+                    return false;
+                }
+            }
+
+            return true;
+        };
+
+        $scope.confirm = function () {
+            if (!$scope.checkForm()) return;
+
+            var params = $scope.formatForm();
+            Log.i('query params : \n' + JSON.stringify(params));
+
+            DeviceAdd.create(params,
+                function (data) {
+                    ToastUtils.openToast('success', data.message);
+                    $scope.$close(data);
+                },
+                function (err) {
+                    HttpToast.toast(err);
+                });
+        };
+
+        $scope.init = function () {
+
+            // 设备状态
+            $scope.show.deviceoperationstatusArr = [
+                {
+                    id: 1,
+                    name: '运行'
+                },
+                {
+                    id: 2,
+                    name: '停役'
+                }
+            ];
+            // 设备类型
+            var pmDt = deviceTypeCache.getDeviceType();
+            pmDt.then(function (data) {
+                $scope.show.devicetypeArr = data;
+            });
+
+            var pm = treeCache.getTree();
+            pm.then(function (data) {
+                $scope.show.sidebarArr = treeCache.createClientArr(data);
+            });
+
+        };
+        $scope.init();
+
+        /**
+         * 页面状态相关
+         */
+        $scope.activePageState = function (state) {
+            $scope.show.pageTabState = state;
+        };
+
+        $scope.checkPageState = function (state) {
+            if (state == 'base') return true;   //base显示
+
+            if ($scope.show.deviceAttrList.length > 0) return true;     //设备属性列表长度大于0 按钮显示才有意义
+
+            return false;
+        };
+
+        /**
+         * 判断是否有依赖
+         */
+        $scope.checkDepend = function (item) {
+            if (!item.dependID) return true;
+
+            if (item.dependID) {
+                // 说明有依赖
+                for (var i = 0; i < $scope.show.deviceAttrList.length; i++) {
+                    var obj = $scope.show.deviceAttrList[i];
+                    if (item.dependID == obj.id) {
+                        if (item.dependOption.indexOf(obj.val) == -1) {
+                            //不包含
+                            return false;
+                        } else {
+                            return true;
+                        }
+                    }
+                }
+            }
+        };
+
+        /**
+         * 节点相关
+         */
+        $scope.setTreeNodes = function (treeNodes) {
+            if (!treeNodes || !treeNodes.length) return;
+
+            // 设置节点完整数据 和 选择的节点数据
+            $scope.show.lineNodeList.push(treeNodes);
+            $scope.show.choiceLine.push({
+                id: '',
+                name: ''
+            });
+        };
+
+        $scope.changeNode = function (pos, item) {
+            if (item.id == $scope.show.choiceLine[pos].id) return;
+
+            // a.设置当前点击的form数据
+            $scope.show.choiceLine[pos].id = item.id;
+            $scope.show.choiceLine[pos].name = item.name;
+
+            // b.pos小于数组长度时，删除pos以后的数据
+            if (pos < $scope.show.lineNodeList.length - 1) {
+
+                for (var i = $scope.show.lineNodeList.length - 1; i >= 0; i--) {
+                    if (i > pos) {
+                        $scope.show.lineNodeList.splice(i, 1);
+                        $scope.show.choiceLine.splice(i, 1);
+                    }
+                }
+            }
+
+            // c.设置子树
+            $scope.setTreeNodes(item.lines);
+        };
+
+        // dropdown set
+        $scope.changeClent = function (obj) {
+            if ($scope.show.clientName == obj.clientName) return;
+            $scope.show.clientName = obj.clientName;
+
+            // clear
+            $scope.form.base.line_id = '';
+            $scope.show.lineNodeList = [];
+            $scope.show.choiceLine = [];
+
+            // set
+            var pm = treeCache.getTree();
+            pm.then(function (data) {
+                for (var i = 0; i < data.length; i++) {
+                    var item = data[i];
+                    if (item.id == obj.clientId) {
+
+                        $scope.setTreeNodes(item.lines);
+
+                        return
+                    }
+                }
+            });
+
+        };
+
+        /**
+         * 获取设备属性列表
+         */
+        $scope.queryAttr = function (id) {
+            if (!id) return;
+            if (id == $scope.show.choiceAttrId) return;
+            $scope.show.choiceAttrId = id;
+
+            var p = {
+                type: 'type',
+                type_id: id,
+                attr: 'attr'
+            };
+            Device.queryAttr(p,
+                function (data) {
+                    if (Array.isArray(data)) {
+                        $scope.show.deviceAttrList = deviceAttrHelper.create(data);
+                        Log.e('属性列表：\n' + JSON.stringify($scope.show.deviceAttrList));
+                    }
+                },
+                function (err) {
+                    HttpToast.toast(err);
+                });
+        };
+
+        $scope.setDeviceType = function (obj) {
+            $scope.show.deviceType = obj.name;
+            $scope.form.base.type_id = obj.id;
+            //query
+            $scope.queryAttr(obj.id);
+        };
+
+        $scope.setStatus = function (obj) {
+            $scope.show.status = obj.name;
+            $scope.form.base.status = obj.id;
+        };
+
+        // date
+        $scope.toggleDatepicker = function () {
+            $scope.data.beginDate.isOpen = !$scope.data.beginDate.isOpen;
+        };
+        $scope.togglelastetDatepicker = function () {
+            $scope.data.lastet.isOpen = !$scope.data.lastet.isOpen;
+        };
+        $scope.togglelastrepairDatepicker = function () {
+            $scope.data.lastrepair.isOpen = !$scope.data.lastrepair.isOpen;
+        };
 
     }
 
