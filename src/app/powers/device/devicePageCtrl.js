@@ -742,7 +742,91 @@
     }
 
     function editDeviceCtrl($scope, Device, DeviceAdd, deviceTypeCache, deviceAttrHelper, treeCache,
-                            HttpToast, ToastUtils, Log) {
+                            HttpToast, ToastUtils, Log, params, ModalUtils) {
+
+        $scope.did = params.did;
+        $scope.filterKey = ['id', 'resources', 'usingDate', 'electricTestDate', 'repairDate', 'attr'];
+
+        $scope.queryAndSetAttr = function (id, attr) {
+            if (!id) return;
+            if (id == $scope.show.choiceAttrId) return;
+            $scope.show.choiceAttrId = id;
+
+            var p = {
+                type: 'type',
+                type_id: id,
+                attr: 'attr'
+            };
+            Device.queryAttr(p,
+                function (data) {
+                    if (Array.isArray(data)) {
+                        $scope.show.deviceAttrList = deviceAttrHelper.create(data);
+                        Log.e('属性列表：\n' + JSON.stringify($scope.show.deviceAttrList));
+
+                        if (attr) {
+                            $scope.show.deviceAttrList.map(function (t) {
+                                t.val = attr[t.id];
+                            });
+                        }
+                    }
+                },
+                function (err) {
+                    HttpToast.toast(err);
+                });
+        };
+
+        $scope.queryDeviceDetail = function () {
+            var p = {
+                did: $scope.did
+            };
+            Device.query(p,
+                function (data) {
+                    Log.e(JSON.stringify(data));
+
+                    // 1.基本
+                    for (var Key in data) {
+                        if ($scope.filterKey.indexOf(Key) == -1) {
+                            //说明不需要过滤
+                            $scope.form.base[Key] = data[Key];
+                        }
+                    }
+
+                    // 设备状态
+                    for (var i = 0; i < $scope.show.deviceoperationstatusArr.length; i++) {
+                        var obj = $scope.show.deviceoperationstatusArr[i];
+                        if (obj.id == data.status) {
+                            $scope.show.status = obj.name;
+                        }
+                    }
+                    // 设备类型
+                    for (var i = 0; i < $scope.show.devicetypeArr.length; i++) {
+                        var subObj = $scope.show.devicetypeArr[i];
+                        if (subObj.id == data.type_id) {
+                            $scope.show.deviceType = subObj.name;
+                        }
+                    }
+                    // 变电站，节点
+                    $scope.show.clientName = data.resources[0].name;
+                    var choiceLine = data.resources[data.resources.length - 1];
+                    $scope.show.choiceLine.push(choiceLine);
+                    var treeNodes = [];
+                    choiceLine['lines'] = [];
+                    treeNodes.push(choiceLine);
+                    $scope.show.lineNodeList.push(treeNodes);
+                    // 日期
+                    $scope.show.usingDate = new Date(data.usingDate);
+                    $scope.show.electricTestDate = new Date(data.electricTestDate);
+                    $scope.show.repairDate = new Date(data.repairDate);
+
+
+                    // 2.详细，需要先获取设备属性，获取到后绑定数据
+                    $scope.queryAndSetAttr(data.type_id, data.attr);
+
+                },
+                function (err) {
+                    HttpToast.toast(err);
+                })
+        };
 
         $scope.data = {
             beginDate: {
@@ -920,14 +1004,25 @@
 
             var params = $scope.formatForm();
             Log.i('query params : \n' + JSON.stringify(params));
+            // dif
+            params["id"] = $scope.did;
 
-            DeviceAdd.create(params,
-                function (data) {
-                    ToastUtils.openToast('success', data.message);
-                    $scope.$close(data);
-                },
-                function (err) {
-                    HttpToast.toast(err);
+            ModalUtils.openMsg('app/powers/modal/infoEditDevice.html', '',
+                modalDelDeviceCtrl, {},
+                function (info) {
+                    // 传值走这里
+                    if (info) {
+                        DeviceAdd.update(params,
+                            function (data) {
+                                ToastUtils.openToast('success', data.message);
+                                $scope.$close(data);
+                            },
+                            function (err) {
+                                HttpToast.toast(err);
+                            });
+                    }
+                }, function (empty) {
+                    // 不传值关闭走这里
                 });
         };
 
@@ -953,6 +1048,8 @@
             var pm = treeCache.getTree();
             pm.then(function (data) {
                 $scope.show.sidebarArr = treeCache.createClientArr(data);
+                // dif
+                $scope.queryDeviceDetail();
             });
 
         };

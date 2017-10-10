@@ -4,8 +4,8 @@
         <button type="button" class="btn-def" style="border-radius: 0;"
                 ng-repeat="item in show.pageTabData"
                 ng-class="item.state == show.pageTabState ? 'btn-submit-blue' : 'btn-main-blue' "
-                ng-click="changeState(item.state)"
-                ng-show="checkState(item.state)">
+                ng-click="activePageState(item.state)"
+                ng-show="checkPageState(item.state)">
             {{item.title}}
         </button>
 
@@ -18,7 +18,7 @@
     </div>
 
     <div include-with-scope="app/powers/device/widgets/deviceDetail.html"
-         ng-show="show.pageTabState == 'detail' && show.deviceType=='变压器'">
+         ng-show="show.pageTabState == 'detail' && show.deviceAttrList.length > 0">
     </div>
 
     <div style="margin-top: 30px;text-align: center">
