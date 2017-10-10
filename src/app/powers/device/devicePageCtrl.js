@@ -375,8 +375,8 @@
 
     }
 
-    function addDeviceCtrl($scope, KeywordCache, SidebarCache, ToastUtils, Device, locals, HttpToast,
-                           DeviceHelper, Log, Sidebar, Keyword, deviceTypeCache, treeCache, deviceAttrHelper) {
+    function addDeviceCtrl($scope, Device, DeviceAdd, deviceTypeCache, deviceAttrHelper, treeCache,
+                           HttpToast, ToastUtils, Log) {
 
         $scope.data = {
             beginDate: {
@@ -488,76 +488,91 @@
 
                 line_id: '', //所属节点
             },
-            detail: {
-                phasenum: '',   //相数KEY
-                product_code: '',   //产品代号
-                standard_code: '',  //标准代号
-                insulationlevel: '',    //绝缘水平
-                usecondition: '',   //使用条件KEY
-                insulationclass: '',    //绝缘耐热等级KEY
-
-                tempriselimit: '',  //温升限值
-                totalweight: '',    //总重kg(double)
-                connectionsymbol: '',   //联结组标号
-                coolingmode: '',    //冷却方式
-                current_noload: '', //空载电流%(double)
-                loss_noload: '',    //空载损耗kW(double)
-
-                shortcircuit_impedance: '', //短路阻抗%(double)
-                tapgear: '' //所在分接档位
-            }
         };
 
-        $scope.confirm = function () {
+        $scope.formatForm = function () {
+            // 基本信息
+            var params = $scope.form.base;
 
-            // change格式
+            // 详细信息
+            params["attr"] = {};
+            for (var i = 0; i < $scope.show.deviceAttrList.length; i++) {
+                var item = $scope.show.deviceAttrList[i];
+                if (item.val) {
+                    params["attr"][item.id] = item.val;
+                }
+            }
+
+            return params;
+        };
+
+        $scope.checkForm = function () {
+
+            // a.日期
             $scope.form.base.usingDate = '';
             $scope.form.base.electricTestDate = '';
             $scope.form.base.repairDate = '';
             if ($scope.show.usingDate) {
-                $scope.form.base.usingDate = moment($scope.show.usingDate).format('YYYY-MM-DD HH:mm:ss');
+                $scope.form.base.usingDate = moment($scope.show.usingDate).unix();
             }
             if ($scope.show.electricTestDate) {
-                $scope.form.base.electricTestDate = moment($scope.show.electricTestDate).format('YYYY-MM-DD HH:mm:ss');
+                $scope.form.base.electricTestDate = moment($scope.show.electricTestDate).unix();
             }
             if ($scope.show.repairDate) {
-                $scope.form.base.repairDate = moment($scope.show.repairDate).format('YYYY-MM-DD HH:mm:ss');
+                $scope.form.base.repairDate = moment($scope.show.repairDate).unix();
             }
+
+            // b.节点
+            var choiceLineId = '';
+            for (var i = 0; i < $scope.show.choiceLine.length; i++) {
+                var obj = $scope.show.choiceLine[i];
+                if (obj.id) {
+                    // 有选中的节点，只需要最后一个节点
+                    choiceLineId = obj.id;
+                }
+            }
+            if (!choiceLineId) {
+                // 说明没有选中的节点id
+                ToastUtils.openToast('warning', '请选择设备所属支线！');
+                return false;
+            }
+            $scope.form.base.line_id = choiceLineId;
 
             // 基本信息
             for (var Key in $scope.form.base) {
-                // Log.i($scope.form.base[Key]);
                 if (!$scope.form.base[Key]) {
-                    ToastUtils.openToast('warning', '请完善所有基本信息！');
-                    return;
+                    ToastUtils.openToast('warning', '请完善基本信息！');
+                    return false;
                 }
             }
 
-            // 变电站信息
-            if ($scope.show.deviceType == '变压器') {
-                for (var Key in $scope.form.detail) {
-                    // Log.i($scope.form.detail[Key]);
-                    if (!$scope.form.detail[Key]) {
-                        ToastUtils.openToast('warning', '请完善所有详细信息！');
-                        return;
-                    }
+            // 详细信息
+            for (var i = 0; i < $scope.show.deviceAttrList.length; i++) {
+                var item = $scope.show.deviceAttrList[i];
+                if (!item.val) {
+                    // 说明有val为空
+                    ToastUtils.openToast('warning', '请完善详细信息！');
+                    return false;
                 }
             }
 
-            var params = $scope.form.base;
-            params.uid = locals.getObject('user').uid;
-            if ($scope.show.deviceType == '变压器') {
-                params = DeviceHelper.setDetail(params, $scope.form.detail);
-            }
+            return true;
+        };
 
-            Device.create(params,
+        $scope.confirm = function () {
+            if (!$scope.checkForm()) return;
+
+            var params = $scope.formatForm();
+            Log.i('query params : \n' + JSON.stringify(params));
+
+            DeviceAdd.create(params,
                 function (data) {
                     ToastUtils.openToast('success', data.message);
                     $scope.$close(data);
-                }, function (err) {
+                },
+                function (err) {
                     HttpToast.toast(err);
                 });
-
         };
 
         $scope.init = function () {

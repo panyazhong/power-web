@@ -279,6 +279,21 @@
             };
             return Resource(config);
         })
+        .factory('DeviceAdd', function (Resource) {
+            var config = {
+                url: 'device',
+                paramsDefault: {},
+                action: {
+                    create: {
+                        method: 'POST'  //新建设备
+                    },
+                    update: {
+                        method: 'PUT'   //修改设备
+                    }
+                }
+            };
+            return Resource(config);
+        })
         // 事件
         .factory('Event', function (Resource) {
             var config = {
