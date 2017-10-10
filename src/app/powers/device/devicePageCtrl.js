@@ -439,20 +439,10 @@
 
             devicetypeArr: [],
             deviceoperationstatusArr: [],
-            // devicephasenumArr: [],
-            // deviceinsulationclassArr: [],
-            // deviceuseconditionArr: [],
             clientName: '',  //变电站
-            // incominglineName: '',    //总线
-            // branchName: '',    //支线
             sidebarArr: [],    //变电站数组
-            // incominglingArr: [],  //总线数组
-            // branchArr: [],    //支线数组,
 
             status: '',   //运行状态name
-            // phasenum: '',    //相数name
-            // usecondition: '',    //使用条件KEY
-            // insulationclass: '',    //绝缘耐热等级KEY
 
             usingDate: '', //投运日期
             electricTestDate: '',    //上次电试日期
@@ -576,43 +566,6 @@
         };
 
         $scope.init = function () {
-
-            /*
-            if (KeywordCache.isEmpty()) {
-                Keyword.query({},
-                    function (data) {
-                        KeywordCache.create(data);
-                        $scope.show.devicetypeArr = KeywordCache.getDevice_type();
-                        $scope.show.deviceoperationstatusArr = KeywordCache.getDevice_operationstatus();
-                        $scope.show.devicephasenumArr = KeywordCache.getDevice_phasenum();
-                        $scope.show.deviceinsulationclassArr = KeywordCache.getDevice_insulationclass();
-                        $scope.show.deviceuseconditionArr = KeywordCache.getDevice_usecondition();
-                    }, function (err) {
-                        HttpToast.toast(err);
-                    });
-            } else {
-                $scope.show.devicetypeArr = KeywordCache.getDevice_type();
-                $scope.show.deviceoperationstatusArr = KeywordCache.getDevice_operationstatus();
-                $scope.show.devicephasenumArr = KeywordCache.getDevice_phasenum();
-                $scope.show.deviceinsulationclassArr = KeywordCache.getDevice_insulationclass();
-                $scope.show.deviceuseconditionArr = KeywordCache.getDevice_usecondition();
-            }
-
-            if (SidebarCache.isEmpty()) {
-                Log.i('empty： ——SidebarCache');
-
-                Sidebar.query({},
-                    function (data) {
-                        SidebarCache.create(data);
-                        $scope.show.sidebarArr = data.sidebar;
-                    }, function (err) {
-                        HttpToast.toast(err);
-                    });
-            } else {
-                Log.i('exist： ——SidebarCache');
-                $scope.show.sidebarArr = SidebarCache.getData().sidebar;
-            }
-            */
 
             // 设备状态
             $scope.show.deviceoperationstatusArr = [
