@@ -125,7 +125,7 @@
                 socket.emit('subscribe', {client_id: cid}); // 订阅——变电站信息
             },
             login: function () {
-                // socket.emit('login', {});
+                socket.emit('login', {});
             }
         }
     }
