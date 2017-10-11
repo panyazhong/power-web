@@ -64,11 +64,11 @@
                                 },
                                 {
                                     id: "3",
-                                    data: 81,
+                                    data: 0,
                                     lines: [
                                         {
                                             id: "6",
-                                            data: 72,
+                                            data: 0,
                                             lines: []
                                         },
                                         {
@@ -83,8 +83,170 @@
                     ]
                 },
                 {
+                    id: "3",
+                    data: 0,
+                    lines: []
+                },
+                {
+                    id: "101",
+                    data: 0,
+                    lines: [
+                        {
+                            "id": "96",
+                            data: 0,
+                            "name": "企口4#线电源控制柜",
+                            "category": "0",
+                            "lines": [
+                                {
+                                    "id": "101",
+                                    data: 0,
+                                    "name": "企口4#",
+                                    "category": "0",
+                                    "lines": []
+                                },
+                                {
+                                    "id": "102",
+                                    data: 1,
+                                    "name": "企口5#长",
+                                    "category": "0",
+                                    "lines": []
+                                },
+                                {
+                                    "id": "103",
+                                    data: 1,
+                                    "name": "企口5#短",
+                                    "category": "0",
+                                    "lines": []
+                                }
+                            ]
+                        },
+                        {
+                            "id": "97",
+                            data: 0,
+                            "name": "6#7#机电源控制柜",
+                            "category": "0",
+                            "lines": [
+                                {
+                                    "id": "104",
+                                    "name": "7#除尘",
+                                    "category": "0",
+                                    data: 1,
+                                    "lines": []
+                                },
+                                {
+                                    "id": "105",
+                                    data: 1,
+                                    "name": "企口6#机",
+                                    "category": "0",
+                                    "lines": []
+                                },
+                                {
+                                    "id": "106",
+                                    data: 0,
+                                    "name": "企口7#机",
+                                    "category": "0",
+                                    "lines": []
+                                },
+                                {
+                                    "id": "107",
+                                    data: 0,
+                                    "name": "企口7#机进板处电箱",
+                                    "category": "0",
+                                    "lines": []
+                                }
+                            ]
+                        },
+                        {
+                            "id": "98",
+                            data: 1,
+                            "name": "分检1#机电源控制柜",
+                            "category": "0",
+                            "lines": [
+                                {
+                                    "id": "108",
+                                    data: 0,
+                                    "name": "分检1#线双端锯",
+                                    "category": "0",
+                                    "lines": []
+                                },
+                                {
+                                    "id": "109",
+                                    data: 1,
+                                    "name": "分检1#线分板机",
+                                    "category": "0",
+                                    "lines": []
+                                },
+                                {
+                                    "id": "110",
+                                    data: 0,
+                                    "name": "分检1#线底砂机",
+                                    "category": "0",
+                                    "lines": []
+                                },
+                                {
+                                    "id": "111",
+                                    data: 0,
+                                    "name": "分检1#线背槽机",
+                                    "category": "0",
+                                    "lines": []
+                                },
+                                {
+                                    "id": "112",
+                                    data: 2,
+                                    "name": "分检1#线面砂机、1#线拐弯机",
+                                    "category": "0",
+                                    "lines": []
+                                }
+                            ]
+                        },
+                        {
+                            "id": "99",
+                            data: 1,
+                            "name": "分检2#3#机电源控制柜",
+                            "category": "0",
+                            "lines": [
+                                {
+                                    "id": "113",
+                                    data: 0,
+                                    "name": "分检3#线面砂机、3#线拐弯机",
+                                    "category": "0",
+                                    "lines": []
+                                },
+                                {
+                                    "id": "114",
+                                    data: 1,
+                                    "name": "分检3#线底砂机、3#线双端锯",
+                                    "category": "0",
+                                    "lines": []
+                                },
+                                {
+                                    "id": "115",
+                                    data: 0,
+                                    "name": "分检2#线底砂机、3#线双端锯",
+                                    "category": "0",
+                                    "lines": []
+                                },
+                                {
+                                    "id": "116",
+                                    data: 1,
+                                    "name": "分检2#线面砂机",
+                                    "category": "0",
+                                    "lines": []
+                                },
+                                {
+                                    "id": "117",
+                                    data: 0,
+                                    "name": "分检2#3#线分板机",
+                                    "category": "0",
+                                    "lines": []
+                                }
+                            ]
+                        }
+                    ]
+                },
+                {
                     id: "1001",
-                    data: 101,
+                    data: 103,
                     lines: []
                 }
             ];

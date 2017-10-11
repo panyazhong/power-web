@@ -154,60 +154,10 @@
             $scope.closeMenuTwo();
         };
 
-        $scope.setLineDataStatus = function (i, t) {
-            i["id"] = t.id;
-            i["title"] = t.name;
-            i["category"] = t.category;
-            i["icon"] = t.category == '-1' ? 'indicator-normal indicator-one' : 'indicator-normal'; //是否是变电站
-            i["stateRef"] = t.category == '-1' ? '' : 'branch';
-            // i["subMenu"] = [];
-
-            return i;
-        };
-
-        $scope.setLeftMenuStatus = function (treeNodes) {
-            if (!treeNodes || !treeNodes.length) return;
-
-            var menuData = [];
-            treeNodes.map(function (t) {
-                // 一级菜单
-                var i = $scope.setLineData({}, t);
-                if (t.lines.length) {
-                    i["subMenu"] = [];
-                    t.lines.map(function (subT) {
-                        // 二级菜单
-                        var j = $scope.setLineData({}, subT);
-                        if (subT.lines.length) {
-                            j["subMenu"] = [];
-                            subT.lines.map(function (subSubT) {
-                                // 三级菜单
-                                var k = $scope.setLineData({}, subSubT);
-                                /** 差异需要判断是否有子树 **/
-                                if (subSubT.lines.length) {
-                                    k["subMenu"] = [];  // 无需添加树结构，[]即可
-                                    j.subMenu.push(k);
-                                } else {
-                                    j.subMenu.push(k);
-                                }
-                            });
-                            i.subMenu.push(j);
-                        } else {
-                            i.subMenu.push(j);
-                        }
-                    });
-                    menuData.push(i);
-                } else {
-                    menuData.push(i);
-                }
-            });
-
-            return menuData;
-        };
-
         /**
          * 侧边栏states
          */
-        $rootScope.$on('refresh', function (event, item) {
+        $rootScope.$on('refresh', function (event, statusData) {
             /*
             if (!item.states) {
                 return
@@ -254,9 +204,44 @@
             }
             */
 
-            if (!item || !item.length) return;
+            if (!statusData || !statusData.length) return;
+            if (!$scope.show.menuItems || !$scope.show.menuItems.length) return;
 
             // a. 设置第一树
+            $scope.show.menuItems.map(function (item, pos) {
+                // 一级菜单
+                if (statusData[pos] && statusData[pos].data) {
+                    item.icon = 'indicator-error indicator-one';
+                }
+                else {
+                    item.icon = 'indicator-normal indicator-one';
+                }
+
+                if (item.subMenu && item.subMenu.length) {
+                    item.subMenu.map(function (subItem, subPos) {
+                        // 二级菜单
+                        if (statusData[pos] && statusData[pos].lines[subPos] && statusData[pos].lines[subPos].data) {
+                            subItem.icon = 'indicator-error';
+                        }
+                        else {
+                            subItem.icon = 'indicator-normal';
+                        }
+
+                        if (subItem.subMenu && subItem.subMenu.length) {
+                            subItem.subMenu.map(function (subSubItem, subSubPos) {
+                                // 三级菜单
+                                if (statusData[pos] && statusData[pos].lines[subPos] &&
+                                    statusData[pos].lines[subPos].lines[subSubPos] && statusData[pos].lines[subPos].lines[subSubPos].data) {
+                                    subSubItem.icon = 'indicator-error';
+                                }
+                                else {
+                                    subSubItem.icon = 'indicator-normal';
+                                }
+                            });
+                        }
+                    });
+                }
+            });
 
             // b. 设置第二树
 
