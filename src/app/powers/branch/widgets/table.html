@@ -42,9 +42,14 @@
             </td>
             <td>
                 <i class="ion-gear-a color-blue common-table-btn"
-                   ng-click="setItem(item.id)"></i>
+                   ng-click="setItem(item.id,0)"></i>
                 <i class="ion-trash-a color-red common-table-btn"
                    ng-click="delItem(item.id)"></i>
+                <i class="common-table-btn"
+                   ng-click="setItem(item.id,1)">
+                    <img style="width: 17px;height: 23px;"
+                         ng-src="assets/img/cpdevice.png"/>
+                </i>
             </td>
         </tr>
         </tbody>

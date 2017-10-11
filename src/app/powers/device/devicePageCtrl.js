@@ -277,9 +277,13 @@
         };
 
         // 修改设备
-        $scope.setItem = function (did) {
+        $scope.setItem = function (did, state) {
             ModalUtils.open('app/powers/device/widgets/editDeviceModal.html', 'lg',
-                editDeviceCtrl, {did: did},
+                editDeviceCtrl,
+                {
+                    did: did,
+                    state: state
+                },
                 function (info) {
                     // 传值走这里
                     if (info) {
@@ -745,6 +749,7 @@
                             HttpToast, ToastUtils, Log, params, ModalUtils) {
 
         $scope.did = params.did;
+        $scope.flag = params.state;
         $scope.filterKey = ['id', 'resources', 'usingDate', 'electricTestDate', 'repairDate', 'attr'];
 
         $scope.queryAndSetAttr = function (id, attr) {
@@ -1004,8 +1009,10 @@
 
             var params = $scope.formatForm();
             Log.i('query params : \n' + JSON.stringify(params));
-            // dif
-            params["id"] = $scope.did;
+            // dif，state等于0时说明是修改设备，需要id，state等于1时说明是复制，不需要id
+            if ($scope.flag == 0) {
+                params["id"] = $scope.did;
+            }
 
             ModalUtils.openMsg('app/powers/modal/infoEditDevice.html', '',
                 modalDelDeviceCtrl, {},
