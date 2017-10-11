@@ -27,9 +27,69 @@
         $urlRouterProvider.otherwise('/overview');
     }
 
-    function initialize(EventsCache) {
+    function initialize(EventsCache, $rootScope, $interval) {
         console.log('initialize...');
 
         EventsCache.login();
+
+        $interval(function () {
+
+            /**
+             * status
+             */
+            var statusData = [
+                {
+                    id: "1",
+                    data: 100,
+                    lines: [
+                        {
+                            id: "1",
+                            data: 90,
+                            lines: [
+                                {
+                                    id: "2",
+                                    data: 80,
+                                    lines: [
+                                        {
+                                            id: "4",
+                                            data: 70,
+                                            lines: []
+                                        },
+                                        {
+                                            id: "5",
+                                            data: 71,
+                                            lines: []
+                                        }
+                                    ]
+                                },
+                                {
+                                    id: "3",
+                                    data: 81,
+                                    lines: [
+                                        {
+                                            id: "6",
+                                            data: 72,
+                                            lines: []
+                                        },
+                                        {
+                                            id: "7",
+                                            data: 73,
+                                            lines: []
+                                        }
+                                    ]
+                                }
+                            ]
+                        }
+                    ]
+                },
+                {
+                    id: "1001",
+                    data: 101,
+                    lines: []
+                }
+            ];
+            $rootScope.$emit('refresh', statusData);
+
+        }, 3000);
     }
 })();

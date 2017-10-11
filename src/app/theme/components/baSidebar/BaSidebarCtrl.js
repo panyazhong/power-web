@@ -154,10 +154,61 @@
             $scope.closeMenuTwo();
         };
 
+        $scope.setLineDataStatus = function (i, t) {
+            i["id"] = t.id;
+            i["title"] = t.name;
+            i["category"] = t.category;
+            i["icon"] = t.category == '-1' ? 'indicator-normal indicator-one' : 'indicator-normal'; //是否是变电站
+            i["stateRef"] = t.category == '-1' ? '' : 'branch';
+            // i["subMenu"] = [];
+
+            return i;
+        };
+
+        $scope.setLeftMenuStatus = function (treeNodes) {
+            if (!treeNodes || !treeNodes.length) return;
+
+            var menuData = [];
+            treeNodes.map(function (t) {
+                // 一级菜单
+                var i = $scope.setLineData({}, t);
+                if (t.lines.length) {
+                    i["subMenu"] = [];
+                    t.lines.map(function (subT) {
+                        // 二级菜单
+                        var j = $scope.setLineData({}, subT);
+                        if (subT.lines.length) {
+                            j["subMenu"] = [];
+                            subT.lines.map(function (subSubT) {
+                                // 三级菜单
+                                var k = $scope.setLineData({}, subSubT);
+                                /** 差异需要判断是否有子树 **/
+                                if (subSubT.lines.length) {
+                                    k["subMenu"] = [];  // 无需添加树结构，[]即可
+                                    j.subMenu.push(k);
+                                } else {
+                                    j.subMenu.push(k);
+                                }
+                            });
+                            i.subMenu.push(j);
+                        } else {
+                            i.subMenu.push(j);
+                        }
+                    });
+                    menuData.push(i);
+                } else {
+                    menuData.push(i);
+                }
+            });
+
+            return menuData;
+        };
+
         /**
          * 侧边栏states
          */
         $rootScope.$on('refresh', function (event, item) {
+            /*
             if (!item.states) {
                 return
             }
@@ -201,6 +252,14 @@
                     }
                 });
             }
+            */
+
+            if (!item || !item.length) return;
+
+            // a. 设置第一树
+
+            // b. 设置第二树
+
         });
 
         $scope.saveCid = function (item) {
@@ -253,8 +312,11 @@
                 item = stack.shift();
 
                 if (item.category == "1" && item.id == choiceId) {
+                    // 第二侧边栏数据
                     $scope.show.menuTwo = $scope.setLeftMenu(item.lines);
+                    Log.e('第二sider数据：\n' + JSON.stringify($scope.show.menuTwo));
 
+                    // 第二侧边栏顶部数据
                     $scope.show.menuTwoTop = {
                         id: item.id,
                         name: item.name
