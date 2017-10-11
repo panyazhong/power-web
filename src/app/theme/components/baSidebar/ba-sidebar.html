@@ -123,7 +123,7 @@
 
             <a ng-mouseenter="hoverItem($event, item)" ng-if="::item.subMenu"
                class="al-sidebar-list-link" ba-ui-sref-toggler>
-                <span class="indicator-normal indicator-one"></span>
+                <span class="indicator-one" ng-class="item.icon"></span>
                 <span class="indicator-desc indicator-desc-one"
                       ng-click="goBranch($event,item)">{{ ::item.title }}</span>
                 <b class="fa fa-angle-down" ui-sref-active="fa-angle-up"
@@ -132,7 +132,7 @@
 
             <a ng-mouseenter="hoverItem($event, item)" ng-if="::!item.subMenu"
                class="al-sidebar-list-link">
-                <span class="indicator-normal indicator-one"></span>
+                <span class="indicator-one" ng-class="item.icon"></span>
                 <span class="indicator-desc indicator-desc-one"
                       ng-click="goBranch($event,item)">{{ ::item.title }}</span>
             </a>
