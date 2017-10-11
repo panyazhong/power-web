@@ -154,6 +154,70 @@
             $scope.closeMenuTwo();
         };
 
+        $scope.setSecondSider = function (statusData) {
+            if (!statusData || !statusData.length) return;
+
+            $scope.show.menuTwo.map(function (item, pos) {
+                // 一级菜单
+                if (statusData[pos] && statusData[pos].data) {
+                    item.icon = 'indicator-error indicator-one';
+                }
+                else {
+                    item.icon = 'indicator-normal indicator-one';
+                }
+
+                if (item.subMenu && item.subMenu.length) {
+                    item.subMenu.map(function (subItem, subPos) {
+                        // 二级菜单
+                        if (statusData[pos] && statusData[pos].lines[subPos] && statusData[pos].lines[subPos].data) {
+                            subItem.icon = 'indicator-error';
+                        }
+                        else {
+                            subItem.icon = 'indicator-normal';
+                        }
+
+                        if (subItem.subMenu && subItem.subMenu.length) {
+                            subItem.subMenu.map(function (subSubItem, subSubPos) {
+                                // 三级菜单
+                                if (statusData[pos] && statusData[pos].lines[subPos] &&
+                                    statusData[pos].lines[subPos].lines[subSubPos] && statusData[pos].lines[subPos].lines[subSubPos].data) {
+                                    subSubItem.icon = 'indicator-error';
+                                }
+                                else {
+                                    subSubItem.icon = 'indicator-normal';
+                                }
+                            });
+                        }
+                    });
+                }
+            });
+        };
+
+        $scope.iteratorStatus = function (treeNodes, choiceId) {
+            if (!treeNodes || !treeNodes.length) return;
+
+            var stack = [];
+
+            for (var i = 0; i < treeNodes.length; i++) {
+                stack.push(treeNodes[i]);
+            }
+
+            var item;
+
+            while (stack.length) {
+                item = stack.shift();
+
+                if (item.id == choiceId) {
+
+                    $scope.setSecondSider(item.lines);
+                }
+
+                if (item.lines && item.lines.length) {
+                    stack = item.lines.concat(stack);
+                }
+            }
+        };
+
         /**
          * 侧边栏states
          */
@@ -244,6 +308,9 @@
             });
 
             // b. 设置第二树
+            if (!$scope.show.menuTwo || !$scope.show.menuTwo.length) return;
+            if (!$scope.show.menuTwoTop.id) return;
+            $scope.iteratorStatus(statusData, $scope.show.menuTwoTop.id);
 
         });
 
@@ -299,7 +366,6 @@
                 if (item.category == "1" && item.id == choiceId) {
                     // 第二侧边栏数据
                     $scope.show.menuTwo = $scope.setLeftMenu(item.lines);
-                    Log.e('第二sider数据：\n' + JSON.stringify($scope.show.menuTwo));
 
                     // 第二侧边栏顶部数据
                     $scope.show.menuTwoTop = {
