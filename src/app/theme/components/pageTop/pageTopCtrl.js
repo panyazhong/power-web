@@ -119,16 +119,18 @@
         /**
          * 未处理的event数量
          */
-        $rootScope.$on('refresh', function (event, item) {
-            if (!item.count) {
-                return
+        $rootScope.$on('refresh', function (event, statusData) {
+            if (!statusData || !statusData.length) return;
+
+            var count = 0;
+            for (var i = 0; i < statusData.length; i++) {
+                var obj = statusData[i];
+                if (obj.data) {
+                    count += parseInt(obj.data);
+                }
             }
 
-            if (item.count > 500) {
-                $scope.show.eventTotal = '500+';
-            } else {
-                $scope.show.eventTotal = item.count;
-            }
+            $scope.show.eventTotal = count > 500 ? '500+' : count;
         });
 
     }
