@@ -33,6 +33,7 @@
         EventsCache.login();
 
         var testNum = 0;
+        var testNum2 = 1;
         $interval(function () {
 
             /**
@@ -54,7 +55,19 @@
                                         {
                                             id: "4",
                                             data: 70,
-                                            lines: []
+                                            lines: [
+                                                {
+                                                    id: "8",
+                                                    data: testNum,
+                                                    lines: [
+                                                        {
+                                                            id: "9",
+                                                            data: testNum2,
+                                                            lines: []
+                                                        }
+                                                    ]
+                                                }
+                                            ]
                                         },
                                         {
                                             id: "5",
@@ -252,6 +265,7 @@
                 }
             ];
             testNum = testNum == 0 ? 555 : 0;
+            testNum2 = testNum2 == 0 ? 555 : 0;
             $rootScope.$emit('refresh', statusData);
 
         }, 3000);
