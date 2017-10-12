@@ -23,6 +23,7 @@ angular.module('BlurAdmin', [
     'ui.bootstrap.datetimepicker',
     'ngFileUpload',
     'ngLocale',
+    'HttpMap',      //地图驾驶舱测试服务器请求配置
 
     'BlurAdmin.theme',
     'BlurAdmin.power'
