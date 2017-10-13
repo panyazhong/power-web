@@ -89,7 +89,7 @@
         })
         .factory('LineCount', function (resourceMap) {
             var config = {
-                url: 'count/:getLinesByClientId/:client_id/:clientId/:getCountByLineId/:lineChart/:line_id/:lineId/:type/:dataType',
+                url: 'count/:getLinesByClientId/:client_id/:clientId/:getCountByLineId/:getElectricByLineId/:lineChart/:line_id/:lineId/:type/:dataType',
                 paramsDefault: {
                     getLinesByClientId: '@getLinesByClientId',
                     client_id: '@client_id',
@@ -99,7 +99,8 @@
                     lineId: '@lineId',
                     type: '@type',
                     dataType: '@dataType',
-                    lineChart: '@lineChart'
+                    lineChart: '@lineChart',
+                    getElectricByLineId: '@getElectricByLineId',
                 },
                 action: {
                     query: {    //根据客户端id获取线

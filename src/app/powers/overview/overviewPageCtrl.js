@@ -7,7 +7,7 @@
     /** @ngInject */
     function overviewPageCtrl($scope, Log, HttpToast, $interval, $timeout, excepNumHelper, previewCache, arrUtil,
                               locals, ToastUtils, $state, $rootScope, clientCache, PageTopCache, Client, mapImgCache, userCache,
-                              LineCount, lineTitlePieHelper, _, lineChartHelper, lineMaxDataHelper) {
+                              LineCount, lineTitlePieHelper, _, lineChartHelper, lineMaxDataHelper, lineMaxEleHelper) {
 
         PageTopCache.cache.state = $state.$current; // active
 
@@ -360,6 +360,23 @@
                 });
         };
 
+        // g. 根据lineId获取电量统计
+        $scope.getElectricByLineId = function (obj) {
+            var p = {
+                getElectricByLineId: 'getElectricByLineId',
+                line_id: 'line_id',
+                lineId: obj.id
+            };
+            LineCount.query(p,
+                function (data) {
+                    $scope.show.powerMaxData = lineMaxEleHelper.create(data);
+                    Log.i('map g，电量转换后：\n' + JSON.stringify($scope.show.powerMaxData));
+                },
+                function (err) {
+                    HttpToast.toast(err);
+                });
+        };
+
         /**
          * click event ↓↓↓↓↓
          */
@@ -390,6 +407,9 @@
             $scope.editValById($scope.show.loadTitle, item.id);
             $scope.lineChart('Load', item);
             $scope.getCountByLineId('Load', item);
+
+            //==================================== 测试用 电量实际是客户的 ==========================================>
+            $scope.getElectricByLineId(item);
         };
 
         /**
