@@ -52,6 +52,10 @@
             powerMaxData: {},    // max
 
             safeRunningDays: '', // 安全运行天数，非地图
+
+            eleState: 'ele',        // electric state
+            eleMonth: {},           // 柱状图data
+            eleMonthStack: {}       // 堆积图data
         };
 
         /**
@@ -377,6 +381,33 @@
                 });
         };
 
+        // h. 根据lineId获取电量柱状图，堆积图
+        $scope.getElectricMonth = function (type, id) {
+            var p = {
+                getElectricMonth: 'getElectricMonth',
+                line_id: 'line_id',
+                lineId: id,
+                type: 'type',
+                dataType: type
+            };
+            LineCount.queryLine(p,
+                function (data) {
+                    switch (type) {
+                        case 0:
+                            $scope.show.eleMonth = data;
+                            Log.i('map h，柱状图：\n' + JSON.stringify($scope.show.eleMonth));
+                            break;
+                        case 1:
+                            $scope.show.eleMonthStack = data;
+                            Log.i('map h，堆积图：\n' + JSON.stringify($scope.show.eleMonthStack));
+                            break;
+                    }
+                },
+                function (err) {
+                    HttpToast.toast(err);
+                });
+        };
+
         /**
          * click event ↓↓↓↓↓
          */
@@ -425,21 +456,19 @@
         /**
          * 查看月电量柱图
          */
-        $scope.viewPower = function () {
-            Log.e('map click：查看月电量柱图...');
-        };
-
-        /**
-         * 月电量堆积图
-         */
-        $scope.viewPowerStack = function () {
-            Log.e('map click：月电量堆积图...');
+        $scope.viewEle = function (state) {
+            $scope.show.eleState = state;
         };
 
         $scope.clientChangeQuery = function () {
             $scope.queryBase();
             $scope.querySafety();
             $scope.getLinesByClientId();
+            //======================================================>根据lineId获取柱状，堆积图，测试id-101
+            $scope.getElectricMonth(0, 101);
+            $timeout(function () {
+                $scope.getElectricMonth(1, 101);
+            }, 200);
         };
 
         /**

@@ -3,15 +3,24 @@
         电量概况
     </button>
 
-    <span class="power-title" ng-click="viewPower()">月电量柱图</span>
+    <span class="power-title"
+          ng-click="viewEle('ele')"
+          ng-class="show.eleState =='ele'?'line_active':'line_def'">
+        月电量柱图
+    </span>
 
-    <span class="power-title" ng-click="viewPowerStack()">月电量堆积图</span>
+    <span class="power-title"
+          ng-click="viewEle('eleStack')"
+          ng-class="show.eleState =='eleStack'?'line_active':'line_def'">
+        月电量堆积图
+    </span>
 </div>
 
 <!--柱状图-->
 <div class="row" style="margin: 0;">
     <div class="chart-item">
-        <div style="height:140px;" column-chart e-data="show.powerStackData"></div>
+        <div style="height:140px;" column-chart e-data="show.eleMonth" ng-show="show.eleState =='ele'"></div>
+        <div style="height:140px;" column-chart e-data="show.eleMonthStack" ng-show="show.eleState =='eleStack'"></div>
     </div>
     <div class="max-item">
         <div class="time_item" ng-show="show.powerMaxData.length">
