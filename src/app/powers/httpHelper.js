@@ -11,7 +11,8 @@
         .factory("excepNumHelper", excepNumHelper)
         .factory("deviceAttrHelper", deviceAttrHelper)
         .factory("lineTitlePieHelper", lineTitlePieHelper)
-        .factory("lineChartHelper", lineChartHelper);
+        .factory("lineChartHelper", lineChartHelper)
+        .factory("lineMaxDataHelper", lineMaxDataHelper);
 
     function clientimgHelper(_) {
 
@@ -370,6 +371,25 @@
                 lineData["todayData"] = data.todayData;
 
                 return _.cloneDeep(lineData);
+            }
+        }
+    }
+
+    function lineMaxDataHelper(_) {
+        return {
+            create: function (data, type) {
+                if (!data || !data.length) return;
+
+                // type区分
+                var t = type == 'Load' ? '负荷' : '需量';
+                var listTitle = ['今日最大', '昨日最大', '本月最大', '上月最大', '本年最大'];
+
+                data.map(function (item, pos) {
+                    item["val"] = item.val + 'kW';
+                    item["title"] = listTitle[pos] + t;
+                });
+
+                return _.cloneDeep(data);
             }
         }
     }

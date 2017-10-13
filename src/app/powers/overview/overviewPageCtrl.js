@@ -7,7 +7,7 @@
     /** @ngInject */
     function overviewPageCtrl($scope, Log, HttpToast, $interval, $timeout, excepNumHelper, previewCache, arrUtil,
                               locals, ToastUtils, $state, $rootScope, clientCache, PageTopCache, Client, mapImgCache, userCache,
-                              LineCount, lineTitlePieHelper, _, lineChartHelper) {
+                              LineCount, lineTitlePieHelper, _, lineChartHelper, lineMaxDataHelper) {
 
         PageTopCache.cache.state = $state.$current; // active
 
@@ -279,7 +279,7 @@
 
         };
 
-        // d. 根据id获取线（获取负荷，需量的最大值和id）
+        // d. 根据clientId获取线（获取负荷，需量的最大值和id）
         $scope.getLinesByClientId = function () {
             var p = {
                 getLinesByClientId: 'getLinesByClientId',
@@ -306,7 +306,7 @@
 
         };
 
-        // e. 根据id获取线的折线图数据
+        // e. 根据lineId获取线的折线图数据
         $scope.lineChart = function (type, obj) {
             var p = {
                 lineChart: 'lineChart',
@@ -325,6 +325,33 @@
                         case 'Demand':
                             $scope.show.demandLineData = lineChartHelper.create(data, type, obj.name);
                             Log.i('map e，需量转换后：\n' + JSON.stringify($scope.show.demandLineData));
+                            break;
+                    }
+                },
+                function (err) {
+                    HttpToast.toast(err);
+                });
+        };
+
+        // f. 根据lineId获取负荷、需量统计
+        $scope.getCountByLineId = function (type, obj) {
+            var p = {
+                getCountByLineId: 'getCountByLineId',
+                line_id: 'line_id',
+                lineId: obj.id,
+                type: 'type',
+                dataType: type
+            };
+            LineCount.query(p,
+                function (data) {
+                    switch (type) {
+                        case 'Load':
+                            $scope.show.loadMaxData = lineMaxDataHelper.create(data, type);
+                            Log.i('map f，负荷转换后：\n' + JSON.stringify($scope.show.loadMaxData));
+                            break;
+                        case 'Demand':
+                            $scope.show.demandMaxData = lineMaxDataHelper.create(data, type);
+                            Log.i('map f，需量转换后：\n' + JSON.stringify($scope.show.demandMaxData));
                             break;
                     }
                 },
@@ -362,6 +389,7 @@
         $scope.changeLineLoad = function (item) {
             $scope.editValById($scope.show.loadTitle, item.id);
             $scope.lineChart('Load', item);
+            $scope.getCountByLineId('Load', item);
         };
 
         /**
@@ -371,6 +399,7 @@
         $scope.changeLineDemand = function (item) {
             $scope.editValById($scope.show.demandTitle, item.id);
             $scope.lineChart('Demand', item);
+            $scope.getCountByLineId('Demand', item);
         };
 
         /**
