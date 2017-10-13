@@ -7,7 +7,7 @@
     /** @ngInject */
     function overviewPageCtrl($scope, Log, HttpToast, $interval, $timeout, excepNumHelper, previewCache, arrUtil,
                               locals, ToastUtils, $state, $rootScope, clientCache, PageTopCache, Client, mapImgCache, userCache,
-                              LineCount, lineTitlePieHelper, _) {
+                              LineCount, lineTitlePieHelper, _, lineChartHelper) {
 
         PageTopCache.cache.state = $state.$current; // active
 
@@ -288,42 +288,49 @@
             };
             LineCount.query(p,
                 function (data) {
-                    Log.e('map D：' + JSON.stringify(data));
+                    var d = lineTitlePieHelper.create(data);
+                    Log.i('map d，转换后的数据：' + JSON.stringify(d));
+                    // title
+                    $scope.show.loadTitle = d.titleData;
+                    $scope.show.demandTitle = _.cloneDeep(d.titleData);
+                    // 半环形
+                    $scope.show.loadPieData = d.loadPieData;
+                    $scope.show.demandPieData = d.demandPieData;
+                    // 默认展示第一条line的数据
+                    $scope.changeLineLoad($scope.show.loadTitle[0]);
+                    $scope.changeLineDemand($scope.show.demandTitle[0]);
                 },
                 function (err) {
                     HttpToast.toast(err);
                 });
 
-            // test=============================================================================================
-            var testData = [
-                {
-                    "id": "96",
-                    "name": "企口4#线电源控制柜",
-                    "load": 37,
-                    "demand": 74
-                },
-                {
-                    "id": "97",
-                    "name": "6#7#机电源控制柜",
-                    "load": 17,
-                    "demand": 4
-                },
-                {
-                    "id": "98",
-                    "name": "分检1#机电源控制柜",
-                    "load": 100,
-                    "demand": 57
-                }
-            ];
+        };
 
-            var d = lineTitlePieHelper.create(testData);
-            Log.e('map d，转换后的数据：' + JSON.stringify(d));
-            // title
-            $scope.show.loadTitle = d.titleData;
-            $scope.show.demandTitle = _.cloneDeep(d.titleData);
-            // 半环形
-            $scope.show.loadPieData = d.loadPieData;
-            $scope.show.demandPieData = d.demandPieData;
+        // e. 根据id获取线的折线图数据
+        $scope.lineChart = function (type, obj) {
+            var p = {
+                lineChart: 'lineChart',
+                line_id: 'line_id',
+                lineId: obj.id,
+                type: 'type',
+                dataType: type
+            };
+            LineCount.queryLine(p,
+                function (data) {
+                    switch (type) {
+                        case 'Load':
+                            $scope.show.loadLineData = lineChartHelper.create(data, type, obj.name);
+                            Log.i('map e，负荷转换后：\n' + JSON.stringify($scope.show.loadLineData));
+                            break;
+                        case 'Demand':
+                            $scope.show.demandLineData = lineChartHelper.create(data, type, obj.name);
+                            Log.i('map e，需量转换后：\n' + JSON.stringify($scope.show.demandLineData));
+                            break;
+                    }
+                },
+                function (err) {
+                    HttpToast.toast(err);
+                });
         };
 
         /**
@@ -354,6 +361,7 @@
          */
         $scope.changeLineLoad = function (item) {
             $scope.editValById($scope.show.loadTitle, item.id);
+            $scope.lineChart('Load', item);
         };
 
         /**
@@ -362,6 +370,7 @@
          */
         $scope.changeLineDemand = function (item) {
             $scope.editValById($scope.show.demandTitle, item.id);
+            $scope.lineChart('Demand', item);
         };
 
         /**

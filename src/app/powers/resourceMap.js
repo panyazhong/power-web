@@ -89,7 +89,7 @@
         })
         .factory('LineCount', function (resourceMap) {
             var config = {
-                url: 'count/:getLinesByClientId/:client_id/:clientId/:getCountByLineId/:line_id/:lineId/:type/:dataType',
+                url: 'count/:getLinesByClientId/:client_id/:clientId/:getCountByLineId/:lineChart/:line_id/:lineId/:type/:dataType',
                 paramsDefault: {
                     getLinesByClientId: '@getLinesByClientId',
                     client_id: '@client_id',
@@ -98,15 +98,16 @@
                     line_id: '@line_id',
                     lineId: '@lineId',
                     type: '@type',
-                    dataType: '@dataType'
+                    dataType: '@dataType',
+                    lineChart: '@lineChart'
                 },
                 action: {
                     query: {    //根据客户端id获取线
                         method: 'GET',
                         isArray: true
                     },
-                    create: {
-                        method: 'POST'
+                    queryLine: {   //折线图数据
+                        method: 'GET'
                     },
                     update: {
                         method: 'PUT'

@@ -10,7 +10,8 @@
         .factory("setalarmHelper", setalarmHelper)
         .factory("excepNumHelper", excepNumHelper)
         .factory("deviceAttrHelper", deviceAttrHelper)
-        .factory("lineTitlePieHelper", lineTitlePieHelper);
+        .factory("lineTitlePieHelper", lineTitlePieHelper)
+        .factory("lineChartHelper", lineChartHelper);
 
     function clientimgHelper(_) {
 
@@ -345,6 +346,30 @@
                     loadPieData: _.cloneDeep(loadPieData),
                     demandPieData: _.cloneDeep(demandPieData)
                 }
+            }
+        }
+    }
+
+    function lineChartHelper(_) {
+        return {
+            create: function (data, type, lineTitle) {
+                if (!data) return;
+                if (!data.timeData || !data.timeData.length) return;
+                if (!data.yesdayData) return;   // 今日，昨日 可能[]，不能判断长度
+                if (!data.todayData) return;
+
+                // type区分
+                var t = type == 'Load' ? '负荷' : '需量';
+
+                var lineData = {};
+                lineData["title"] = lineTitle + '日' + t + '曲线';
+                lineData["unit"] = t + ' kW';
+                lineData["lineTitle"] = ['今日' + t, '昨日' + t];
+                lineData["timeData"] = data.timeData;
+                lineData["yesdayData"] = data.yesdayData;
+                lineData["todayData"] = data.todayData;
+
+                return _.cloneDeep(lineData);
             }
         }
     }
