@@ -6,7 +6,8 @@
 
     /** @ngInject */
     function overviewPageCtrl($scope, Log, HttpToast, $interval, $timeout, excepNumHelper, previewCache, arrUtil,
-                              locals, ToastUtils, $state, $rootScope, clientCache, PageTopCache, Client, mapImgCache, userCache) {
+                              locals, ToastUtils, $state, $rootScope, clientCache, PageTopCache, Client, mapImgCache, userCache,
+                              LineCount, lineTitlePieHelper, _) {
 
         PageTopCache.cache.state = $state.$current; // active
 
@@ -52,6 +53,10 @@
 
             safeRunningDays: '', // 安全运行天数，非地图
         };
+
+        /**
+         *  map start
+         */
 
         $scope.setMap = function () {
             var limit = userCache.getUserType();
@@ -197,12 +202,7 @@
             }
         };
 
-        /**
-         * 获取变电站详细信息
-         * @param id    变电站的id
-         * @param pos   当前选择点的位置
-         * @param cb    拿到数据后的回调
-         */
+        // 获取变电站详细信息
         $scope.getDetail = function (id, pos, cb) {
             // change init
             $scope.show.cid = id;
@@ -220,8 +220,6 @@
                 });
         };
 
-
-        // btn click event
         $scope.viewClientDetail = function (id) {
             if (!id) {
                 ToastUtils.openToast('warning', '变电站信息异常。稍后再试.');
@@ -240,7 +238,11 @@
             locals.put('cid', id);      // 也记录下变电站id
         };
 
-        /**获取基本概况**/
+        /**
+         *  map end
+         */
+
+        // b. 获取基本概况
         $scope.queryBase = function () {
             var p = {
                 id: locals.get('cid', ''),
@@ -257,23 +259,8 @@
                 });
 
         };
-        // $scope.queryBase();
 
-        /** 用电安全 **/
-        $scope.editValById = function (arr, id) {
-            if (!arr || !arr.length) return;
-
-            for (var i = 0; i < arr.length; i++) {
-                if (arr[i].id == id) {
-                    arr[i].active = true;
-                }
-                else {
-                    arr[i].active = false;
-                }
-            }
-        };
-
-        /**获取异常、缺陷数量**/
+        // c. 获取异常、缺陷数量
         $scope.querySafety = function () {
             var p = {
                 id: locals.get('cid', ''),
@@ -290,351 +277,89 @@
                     HttpToast.toast(err);
                 });
 
-            // 模拟load 测试数据
-            $scope.show.loadTitle = [
-                {
-                    active: true,
-                    id: "001",
-                    name: '一号进线',
-                },
-                {
-                    active: false,
-                    id: "002",
-                    name: '二号进线',
-                },
-                {
-                    active: false,
-                    id: "003",
-                    name: '三号进线',
-                }
-            ];
-
-            $scope.show.loadPieData = [
-                {
-                    current: 0,
-                    total: 1
-                },
-                {
-                    current: 0,
-                    total: 1
-                },
-                {
-                    current: 0,
-                    total: 1
-                }
-            ];
-
-            $interval(function () {
-                $scope.show.loadPieData = [
-                    {
-                        current: Math.random() * 100,
-                        total: 100
-                    },
-                    {
-                        current: Math.random() * 100,
-                        total: 100
-                    },
-                    {
-                        current: Math.random() * 100,
-                        total: 100
-                    }
-                ];
-
-                $scope.show.loadLineData = {
-                    title: '一号线日负荷曲线',
-                    unit: '负荷 kW',
-                    lineTitle: ['今日负荷', '昨日负荷'],
-                    timeData: [
-                        '09:45',
-                        '10:00',
-                        '10:15',
-                        '10:30',
-                        '10:45',
-                        '11:00',
-                        '11:15',
-                        '11:30',
-                        '11:45',
-                        '12:00'],
-                    todayData: [
-                        Math.floor(Math.random() * 200),
-                        Math.floor(Math.random() * 200),
-                        Math.floor(Math.random() * 200),
-                        Math.floor(Math.random() * 200),
-                        Math.floor(Math.random() * 200),
-                        Math.floor(Math.random() * 200),
-                        Math.floor(Math.random() * 200),
-                        Math.floor(Math.random() * 200),
-                        Math.floor(Math.random() * 200),
-                        Math.floor(Math.random() * 200)
-                    ],
-                    yesdayData: [
-                        Math.floor(Math.random() * 200),
-                        Math.floor(Math.random() * 200),
-                        Math.floor(Math.random() * 200),
-                        Math.floor(Math.random() * 200),
-                        Math.floor(Math.random() * 200),
-                        Math.floor(Math.random() * 200),
-                        Math.floor(Math.random() * 200),
-                        Math.floor(Math.random() * 200),
-                        Math.floor(Math.random() * 200),
-                        Math.floor(Math.random() * 200)
-                    ]
-                };
-
-                $scope.show.loadMaxData = [
-                    {
-                        time: '09-12 12:00',
-                        val: Math.floor(Math.random() * 1000) + 'kW',
-                        title: '今日最大负荷'
-                    },
-                    {
-                        time: '09-12 12:00',
-                        val: Math.floor(Math.random() * 1000) + 'kW',
-                        title: '昨日最大负荷'
-                    },
-                    {
-                        time: '09-12 12:00',
-                        val: Math.floor(Math.random() * 1000) + 'kW',
-                        title: '本月最大负荷'
-                    },
-                    {
-                        time: '09-12 12:00',
-                        val: Math.floor(Math.random() * 1000) + 'kW',
-                        title: '上月最大负荷'
-                    },
-                    {
-                        time: '09-12 12:00',
-                        val: Math.floor(Math.random() * 1000) + 'kW',
-                        title: '本年最大负荷'
-                    }
-                ];
-
-            }, 2000);
-
-            // 模拟demand 测试数据
-            $scope.show.demandTitle = [
-                {
-                    active: true,
-                    id: "001",
-                    name: '一号进线',
-                },
-                {
-                    active: false,
-                    id: "002",
-                    name: '二号进线',
-                },
-                {
-                    active: false,
-                    id: "003",
-                    name: '三号进线',
-                }
-            ];
-
-            $scope.show.demandPieData = [
-                {
-                    current: 0,
-                    total: 1
-                },
-                {
-                    current: 0,
-                    total: 1
-                },
-                {
-                    current: 0,
-                    total: 1
-                }
-            ];
-
-            $interval(function () {
-                $scope.show.demandPieData = [
-                    {
-                        current: Math.random() * 100,
-                        total: 100
-                    },
-                    {
-                        current: Math.random() * 100,
-                        total: 100
-                    },
-                    {
-                        current: Math.random() * 100,
-                        total: 100
-                    }
-                ];
-
-                $scope.show.demandLineData = {
-                    title: '一号线日需量曲线',
-                    unit: '需量 kW',
-                    lineTitle: ['今日需量', '昨日需量'],
-                    timeData: [
-                        '09:45',
-                        '10:00',
-                        '10:15',
-                        '10:30',
-                        '10:45',
-                        '11:00',
-                        '11:15',
-                        '11:30',
-                        '11:45',
-                        '12:00'],
-                    todayData: [
-                        Math.floor(Math.random() * 200),
-                        Math.floor(Math.random() * 200),
-                        Math.floor(Math.random() * 200),
-                        Math.floor(Math.random() * 200),
-                        Math.floor(Math.random() * 200),
-                        Math.floor(Math.random() * 200),
-                        Math.floor(Math.random() * 200),
-                        Math.floor(Math.random() * 200),
-                        Math.floor(Math.random() * 200),
-                        Math.floor(Math.random() * 200)
-                    ],
-                    yesdayData: [
-                        Math.floor(Math.random() * 200),
-                        Math.floor(Math.random() * 200),
-                        Math.floor(Math.random() * 200),
-                        Math.floor(Math.random() * 200),
-                        Math.floor(Math.random() * 200),
-                        Math.floor(Math.random() * 200),
-                        Math.floor(Math.random() * 200),
-                        Math.floor(Math.random() * 200),
-                        Math.floor(Math.random() * 200),
-                        Math.floor(Math.random() * 200)
-                    ]
-                };
-
-                $scope.show.demandMaxData = [
-                    {
-                        time: '09-12 12:00',
-                        val: Math.floor(Math.random() * 1000) + 'kW',
-                        title: '今日最大需量'
-                    },
-                    {
-                        time: '09-12 12:00',
-                        val: Math.floor(Math.random() * 1000) + 'kW',
-                        title: '昨日最大需量'
-                    },
-                    {
-                        time: '09-12 12:00',
-                        val: Math.floor(Math.random() * 1000) + 'kW',
-                        title: '本月最大需量'
-                    },
-                    {
-                        time: '09-12 12:00',
-                        val: Math.floor(Math.random() * 1000) + 'kW',
-                        title: '上月最大需量'
-                    },
-                    {
-                        time: '09-12 12:00',
-                        val: Math.floor(Math.random() * 1000) + 'kW',
-                        title: '本年最大需量'
-                    }
-                ];
-
-            }, 1000);
-
-            // 模拟月电量堆积 测试数据
-
-            $interval(function () {
-
-                $scope.show.powerStackData = {
-                    "data": [{
-                        'type': '尖时电量',
-                        'stack': '电量',
-                        'value': [
-                            Math.floor(Math.random() * 200),
-                            Math.floor(Math.random() * 200),
-                            Math.floor(Math.random() * 200),
-                            Math.floor(Math.random() * 200),
-                            Math.floor(Math.random() * 200),
-                            Math.floor(Math.random() * 200),
-                            Math.floor(Math.random() * 200),
-                            Math.floor(Math.random() * 200),
-                            Math.floor(Math.random() * 200),
-                            Math.floor(Math.random() * 200)
-                        ]
-                    }, {
-                        'type': '峰时电量',
-                        'stack': '电量',
-                        'value': [
-                            Math.floor(Math.random() * 200),
-                            Math.floor(Math.random() * 200),
-                            Math.floor(Math.random() * 200),
-                            Math.floor(Math.random() * 200),
-                            Math.floor(Math.random() * 200),
-                            Math.floor(Math.random() * 200),
-                            Math.floor(Math.random() * 200),
-                            Math.floor(Math.random() * 200),
-                            Math.floor(Math.random() * 200),
-                            Math.floor(Math.random() * 200)
-                        ]
-                    }, {
-                        'type': '平时电量',
-                        'stack': '电量',
-                        'value': [
-                            Math.floor(Math.random() * 200),
-                            Math.floor(Math.random() * 200),
-                            Math.floor(Math.random() * 200),
-                            Math.floor(Math.random() * 200),
-                            Math.floor(Math.random() * 200),
-                            Math.floor(Math.random() * 200),
-                            Math.floor(Math.random() * 200),
-                            Math.floor(Math.random() * 200),
-                            Math.floor(Math.random() * 200),
-                            Math.floor(Math.random() * 200)
-                        ]
-                    }, {
-                        'type': '谷时电量',
-                        'stack': '电量',
-                        'value': [
-                            Math.floor(Math.random() * 200),
-                            Math.floor(Math.random() * 200),
-                            Math.floor(Math.random() * 200),
-                            Math.floor(Math.random() * 200),
-                            Math.floor(Math.random() * 200),
-                            Math.floor(Math.random() * 200),
-                            Math.floor(Math.random() * 200),
-                            Math.floor(Math.random() * 200),
-                            Math.floor(Math.random() * 200),
-                            Math.floor(Math.random() * 200)
-                        ]
-                    }
-
-                    ],
-                    'xAxisData': ['9-1', '9-2', '9-3', '9-11', '9-12', '9-13', '9-21', '9-22', '9-23', '9-29']
-                };
-
-                $scope.show.powerMaxData = [
-                    {
-                        val: Math.floor(Math.random() * 1000) + 'KW.h',
-                        title: '今日累计电量'
-                    },
-                    {
-                        val: Math.floor(Math.random() * 1000) + 'KW.h',
-                        title: '昨日累计电量'
-                    },
-                    {
-                        val: Math.floor(Math.random() * 1000) + 'KW.h',
-                        title: '本月累计电量'
-                    },
-                    {
-                        val: Math.floor(Math.random() * 1000) + 'KW.h',
-                        title: '上月累计电量'
-                    },
-                    {
-                        val: Math.floor(Math.random() * 1000) + 'KW.h',
-                        title: '本年累计电量'
-                    }
-                ];
-
-            }, 1500);
-
         };
-        // $scope.querySafety();
 
+        // d. 根据id获取线（获取负荷，需量的最大值和id）
+        $scope.getLinesByClientId = function () {
+            var p = {
+                getLinesByClientId: 'getLinesByClientId',
+                client_id: 'client_id',
+                clientId: locals.get('cid', '')
+            };
+            LineCount.query(p,
+                function (data) {
+                    Log.e('map D：' + JSON.stringify(data));
+                },
+                function (err) {
+                    HttpToast.toast(err);
+                });
+
+            // test=============================================================================================
+            var testData = [
+                {
+                    "id": "96",
+                    "name": "企口4#线电源控制柜",
+                    "load": 37,
+                    "demand": 74
+                },
+                {
+                    "id": "97",
+                    "name": "6#7#机电源控制柜",
+                    "load": 17,
+                    "demand": 4
+                },
+                {
+                    "id": "98",
+                    "name": "分检1#机电源控制柜",
+                    "load": 100,
+                    "demand": 57
+                }
+            ];
+
+            var d = lineTitlePieHelper.create(testData);
+            Log.e('map d，转换后的数据：' + JSON.stringify(d));
+            // title
+            $scope.show.loadTitle = d.titleData;
+            $scope.show.demandTitle = _.cloneDeep(d.titleData);
+            // 半环形
+            $scope.show.loadPieData = d.loadPieData;
+            $scope.show.demandPieData = d.demandPieData;
+        };
+
+        /**
+         * click event ↓↓↓↓↓
+         */
+
+        /**
+         * 改变line时样式
+         * @param arr
+         * @param id
+         */
+        $scope.editValById = function (arr, id) {
+            if (!arr || !arr.length) return;
+
+            for (var i = 0; i < arr.length; i++) {
+                if (arr[i].id == id) {
+                    arr[i].active = true;
+                }
+                else {
+                    arr[i].active = false;
+                }
+            }
+        };
+
+        /**
+         * 改变line时——负荷
+         * @param item
+         */
         $scope.changeLineLoad = function (item) {
             $scope.editValById($scope.show.loadTitle, item.id);
         };
 
+        /**
+         * 改变line时——需量
+         * @param item
+         */
         $scope.changeLineDemand = function (item) {
             $scope.editValById($scope.show.demandTitle, item.id);
         };
@@ -643,45 +368,50 @@
          * 查看月电量柱图
          */
         $scope.viewPower = function () {
-
+            Log.e('map click：查看月电量柱图...');
         };
 
         /**
          * 月电量堆积图
          */
         $scope.viewPowerStack = function () {
-
+            Log.e('map click：月电量堆积图...');
         };
 
+        $scope.clientChangeQuery = function () {
+            $scope.queryBase();
+            $scope.querySafety();
+            $scope.getLinesByClientId();
+        };
 
+        /**
+         * a. init获取变电站预览信息
+         * 变电站信息改变后需
+         * b. 获取基本概况
+         * c. 获取异常、缺陷数量
+         * ----------测试服务器
+         * d. 根据id获取线（获取负荷，需量的最大值和id）
+         */
         $scope.initFilterInfo = function () {
 
             var cid = locals.get('cid', '');
             if (cid) {
-                $scope.queryBase();
-                $scope.querySafety();
+                $scope.clientChangeQuery();
 
                 $scope.show.safeRunningDays = arrUtil.getSafeDaysById($scope.show.mapData, cid);
-
-                Log.i('cid不为空：' + cid + " / " + $scope.show.safeRunningDays);
             }
             else {  // 和其它界面diff，不存在也需选中一个客户
                 locals.put('cid', $scope.show.mapData[0].id);
                 $timeout(function () {
-                    $scope.queryBase();
-                    $scope.querySafety();
+                    $scope.clientChangeQuery();
                 }, 200);
 
                 $scope.show.safeRunningDays = $scope.show.mapData[0].safeRunningDays;
-
-                Log.i('cid空：' + $scope.show.mapData[0].id + " / " + $scope.show.safeRunningDays);
             }
 
         };
 
-        /**
-         * 获取变电站预览信息
-         */
+        // a. init获取变电站预览信息
         $scope.init = function () {
 
             var pm = previewCache.getPreview();

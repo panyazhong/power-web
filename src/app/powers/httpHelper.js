@@ -9,7 +9,8 @@
         .factory("reportHelper", reportHelper)
         .factory("setalarmHelper", setalarmHelper)
         .factory("excepNumHelper", excepNumHelper)
-        .factory("deviceAttrHelper", deviceAttrHelper);
+        .factory("deviceAttrHelper", deviceAttrHelper)
+        .factory("lineTitlePieHelper", lineTitlePieHelper);
 
     function clientimgHelper(_) {
 
@@ -307,6 +308,43 @@
                 });
 
                 return _.cloneDeep(data);
+            }
+        }
+    }
+
+    function lineTitlePieHelper(_) {
+        return {
+            create: function (data) {
+                if (!data || !data.length) return;
+
+                var titleData = [];
+                var loadPieData = [];
+                var demandPieData = [];
+
+                data.map(function (t, pos) {
+                    // title
+                    titleData.push({
+                        active: pos == 0 ? true : false,
+                        id: t.id,
+                        name: t.name
+                    });
+                    // loadPie
+                    loadPieData.push({
+                        current: 0,
+                        total: t.load
+                    });
+                    // demandPie
+                    demandPieData.push({
+                        current: 0,
+                        total: t.demand
+                    });
+                });
+
+                return {
+                    titleData: _.cloneDeep(titleData),
+                    loadPieData: _.cloneDeep(loadPieData),
+                    demandPieData: _.cloneDeep(demandPieData)
+                }
             }
         }
     }

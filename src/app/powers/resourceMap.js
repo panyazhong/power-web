@@ -26,7 +26,7 @@
         })
         .factory('resourceMap', function ($resource, $httpParamSerializerJQLike, $q) {
 
-            var host = '';
+            var host = 'http://139.196.82.185/yw/api';
 
             var setAction = function (actions) {
                 var defaultParams = {
@@ -73,6 +73,37 @@
                     query: {
                         method: 'GET',
                         isArray: true,
+                    },
+                    create: {
+                        method: 'POST'
+                    },
+                    update: {
+                        method: 'PUT'
+                    },
+                    delete: {
+                        method: 'DELETE'
+                    }
+                }
+            };
+            return resourceMap(config);
+        })
+        .factory('LineCount', function (resourceMap) {
+            var config = {
+                url: 'count/:getLinesByClientId/:client_id/:clientId/:getCountByLineId/:line_id/:lineId/:type/:dataType',
+                paramsDefault: {
+                    getLinesByClientId: '@getLinesByClientId',
+                    client_id: '@client_id',
+                    clientId: '@clientId',
+                    getCountByLineId: '@getCountByLineId',
+                    line_id: '@line_id',
+                    lineId: '@lineId',
+                    type: '@type',
+                    dataType: '@dataType'
+                },
+                action: {
+                    query: {    //根据客户端id获取线
+                        method: 'GET',
+                        isArray: true
                     },
                     create: {
                         method: 'POST'
