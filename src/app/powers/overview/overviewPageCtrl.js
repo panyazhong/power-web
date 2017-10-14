@@ -310,7 +310,7 @@
 
         };
 
-        // e. 根据lineId获取线的折线图数据
+        // e. 根据lineId获取负荷、需量折线图
         $scope.lineChart = function (type, obj) {
             var p = {
                 lineChart: 'lineChart',
@@ -364,12 +364,12 @@
                 });
         };
 
-        // g. 根据lineId获取电量统计
-        $scope.getElectricByLineId = function (obj) {
+        // g. 根据clientId获取电量统计
+        $scope.getElectricByLineId = function (id) {
             var p = {
                 getElectricByLineId: 'getElectricByLineId',
                 line_id: 'line_id',
-                lineId: obj.id
+                lineId: id
             };
             LineCount.query(p,
                 function (data) {
@@ -381,7 +381,7 @@
                 });
         };
 
-        // h. 根据lineId获取电量柱状图，堆积图
+        // h. 根据clientId获取电量柱状图，堆积图
         $scope.getElectricMonth = function (type, id) {
             var p = {
                 getElectricMonth: 'getElectricMonth',
@@ -438,9 +438,6 @@
             $scope.editValById($scope.show.loadTitle, item.id);
             $scope.lineChart('Load', item);
             $scope.getCountByLineId('Load', item);
-
-            //==================================== 测试用 电量实际是客户的 ==========================================>
-            $scope.getElectricByLineId(item);
         };
 
         /**
@@ -464,10 +461,11 @@
             $scope.queryBase();
             $scope.querySafety();
             $scope.getLinesByClientId();
-            //======================================================>根据lineId获取柱状，堆积图，测试id-101
-            $scope.getElectricMonth(0, 101);
+            //======================================================>根据变电站获取电量柱状图，统计数据，测试id
+            $scope.getElectricByLineId(113);
+            $scope.getElectricMonth(0, 113);
             $timeout(function () {
-                $scope.getElectricMonth(1, 101);
+                $scope.getElectricMonth(1, 113);
             }, 200);
         };
 
@@ -477,7 +475,10 @@
          * b. 获取基本概况
          * c. 获取异常、缺陷数量
          * ----------测试服务器
-         * d. 根据id获取线（获取负荷，需量的最大值和id）
+         * d. 根据clientId获取线（获取负荷，需量的最大值和id）
+         *      ————d之后，e/f 默认展示第一条line的数据，根据lineId获取负荷、需量折线图、统计
+         * g. 根据clientId获取电量统计
+         * h. 根据clientId获取电量柱状图，堆积图
          */
         $scope.initFilterInfo = function () {
 
