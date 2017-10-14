@@ -549,6 +549,70 @@
             }
 
         });
+
+        /**
+         * load event
+         */
+        var loadListener = $rootScope.$on('load', function (event, data) {
+            if (!data) return;
+            if (!$scope.show.loadPieData || !$scope.show.loadPieData.length) return;
+            var clientId = locals.get('cid', '');
+            if (!clientId) return;
+
+            Log.i('load，接收到数据：' + JSON.stringify(data));
+
+            $scope.show.loadPieData.map(function (t) {
+                if (data[clientId] && data[clientId][t.id] && data[clientId][t.id].val) {
+                    if (data[clientId][t.id].val < 0) {
+                        t.current = 0;
+                    } else {
+                        t.current = data[clientId][t.id].val > t.total ? t.total : data[clientId][t.id].val;
+                    }
+                }
+            });
+        });
+
+        /**
+         * demand event
+         */
+        var demandListener = $rootScope.$on('demand', function (event, data) {
+            if (!data) return;
+            if (!$scope.show.demandPieData || !$scope.show.demandPieData.length) return;
+            var clientId = locals.get('cid', '');
+            if (!clientId) return;
+
+            Log.i('demand，接收到数据：' + JSON.stringify(data));
+
+            $scope.show.demandPieData.map(function (t) {
+                if (data[clientId] && data[clientId][t.id] && data[clientId][t.id].val) {
+                    if (data[clientId][t.id].val < 0) {
+                        t.current = 0;
+                    } else {
+                        t.current = data[clientId][t.id].val > t.total ? t.total : data[clientId][t.id].val;
+                    }
+                }
+            });
+        });
+
+        var filterListener = $rootScope.$on('filterInfo', function (event, data) {
+            if (!data) return;
+            if ($state.$current != 'overview') return;
+
+            Log.i('filterInfo: ' + JSON.stringify(data));
+
+            if (data.cid) {
+                $scope.initFilterInfo();
+            }
+        });
+
+        $scope.$on('$destroy', function () {
+            loadListener();
+            demandListener();
+            filterListener();
+            loadListener = null;
+            demandListener = null;
+            filterListener = null;
+        });
     }
 
 })

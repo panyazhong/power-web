@@ -334,12 +334,14 @@
                     // loadPie
                     loadPieData.push({
                         current: 0,
-                        total: t.load
+                        total: t.load,
+                        id: t.id
                     });
                     // demandPie
                     demandPieData.push({
                         current: 0,
-                        total: t.demand
+                        total: t.demand,
+                        id: t.id
                     });
                 });
 

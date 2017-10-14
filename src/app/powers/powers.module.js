@@ -268,6 +268,72 @@
             testNum2 = testNum2 == 0 ? 555 : 0;
             $rootScope.$emit('refresh', statusData);
 
+            /**
+             * load
+             */
+            var loadData = {
+                "101": {
+                    "96": {
+                        "val": Math.floor(Math.random() * 50),
+                        "updateAt": 1506682848006,
+                        "prop": "load",
+                        "lineId": "96"
+                    },
+                    "97": {
+                        "val": -77,
+                        "updateAt": 1506682848006,
+                        "prop": "load",
+                        "lineId": "97"
+                    },
+                    "98": {
+                        "val": Math.floor(Math.random() * 50),
+                        "updateAt": 1506682848006,
+                        "prop": "load",
+                        "lineId": "98"
+                    },
+                    "99": {
+                        "val": -99,
+                        "updateAt": 1506682848006,
+                        "prop": "load",
+                        "lineId": "99"
+                    }
+                }
+            };
+            $rootScope.$emit('load', loadData);
+
+            /**
+             * demand
+             */
+            var demandData = {
+                "101": {
+                    "96": {
+                        "val": Math.floor(Math.random() * 50),
+                        "updateAt": 1506683115005,
+                        "prop": "Demand",
+                        "lineId": "96"
+                    },
+                    "97": {
+                        "val": -77,
+                        "updateAt": 1506683115005,
+                        "prop": "Demand",
+                        "lineId": "97"
+                    },
+                    "98": {
+                        "val": Math.floor(Math.random() * 50),
+                        "updateAt": 1506683115005,
+                        "prop": "Demand",
+                        "lineId": "98"
+                    },
+                    "99": {
+                        "val": -99,
+                        "updateAt": 1506683115005,
+                        "prop": "Demand",
+                        "lineId": "99"
+                    }
+                }
+            };
+            $rootScope.$emit('demand', demandData);
+
         }, 3000);
     }
 })();
