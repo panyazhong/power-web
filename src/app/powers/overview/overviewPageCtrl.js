@@ -37,25 +37,23 @@
                     text: '无'
                 }
             ],
+            safeRunningDays: '', // 安全运行天数，非地图
+
+            // chart data
             loadTitle: [],  // 负荷1~3 line data
             loadPieData: [], // 负荷半环形data
             loadLineData: {},    // 负荷折线图data
-            loadMaxData: {},     // 负荷各项最大值
+            loadMaxData: [],     // 负荷各项最大值
 
             demandTitle: [],     // demand
             demandPieData: [],
             demandLineData: {},
-            demandMaxData: {},
-
-            powerData: {},  // power 柱状图
-            powerStackData: {},  // 堆积图
-            powerMaxData: {},    // max
-
-            safeRunningDays: '', // 安全运行天数，非地图
+            demandMaxData: [],
 
             eleState: 'ele',        // electric state
             eleMonth: {},           // 柱状图data
-            eleMonthStack: {}       // 堆积图data
+            eleMonthStack: {},       // 堆积图data
+            eleMaxData: []          // 统计
         };
 
         /**
@@ -373,8 +371,8 @@
             };
             LineCount.query(p,
                 function (data) {
-                    $scope.show.powerMaxData = lineMaxEleHelper.create(data);
-                    Log.i('map g，电量转换后：\n' + JSON.stringify($scope.show.powerMaxData));
+                    $scope.show.eleMaxData = lineMaxEleHelper.create(data);
+                    Log.i('map g，电量转换后：\n' + JSON.stringify($scope.show.eleMaxData));
                 },
                 function (err) {
                     HttpToast.toast(err);
@@ -457,6 +455,163 @@
             $scope.show.eleState = state;
         };
 
+        $scope.initInfo = function () {
+            //b. 获取基本概况
+            $scope.show.baseList = [];
+            //c. 获取异常、缺陷数量、安全用电
+            $scope.show.safetyData = {};
+            $scope.show.doneData = {};
+            $scope.show.undoData = {};
+            $scope.show.safeRunningDays = '';
+
+            // chart
+            $scope.show.loadTitle = [];
+            $scope.show.loadPieData = [];
+            $scope.show.loadLineData = {
+                title: "",
+                unit: "负荷 kW",
+                lineTitle: [
+                    "今日负荷",
+                    "昨日负荷"
+                ],
+                timeData: [],
+                yesdayData: [],
+                todayData: []
+            };
+            $scope.show.loadMaxData = [
+                {
+                    time: "",
+                    val: "",
+                    title: "今日最大负荷"
+                },
+                {
+                    time: "",
+                    val: "",
+                    title: "昨日最大负荷"
+                },
+                {
+                    time: "",
+                    val: "",
+                    title: "本月最大负荷"
+                },
+                {
+                    time: "",
+                    val: "",
+                    title: "上月最大负荷"
+                },
+                {
+                    time: "",
+                    val: "",
+                    title: "本年最大负荷"
+                }
+            ];
+
+            $scope.show.demandTitle = [];
+            $scope.show.demandPieData = [];
+            $scope.show.demandLineData = {
+                title: "",
+                unit: "需量 kW",
+                lineTitle: [
+                    "今日需量",
+                    "昨日需量"
+                ],
+                timeData: [],
+                yesdayData: [],
+                todayData: []
+            };
+            $scope.show.demandMaxData = [
+                {
+                    time: "",
+                    val: "",
+                    title: "今日最大需量"
+                },
+                {
+                    time: "",
+                    val: "",
+                    title: "昨日最大需量"
+                },
+                {
+                    time: "",
+                    val: "",
+                    title: "本月最大需量"
+                },
+                {
+                    time: "",
+                    val: "",
+                    title: "上月最大需量"
+                },
+                {
+                    time: "",
+                    val: "",
+                    title: "本年最大需量"
+                }
+            ];
+
+            $scope.show.eleState = 'ele';
+            $scope.show.eleMonth = {
+                data: [
+                    {
+                        type: "本月电量",
+                        stack: "本月电量",
+                        value: []
+                    },
+                    {
+                        type: "上月电量",
+                        stack: "上月电量",
+                        value: []
+                    }
+                ],
+                xAxisData: []
+            };
+            $scope.show.eleMonthStack = {
+                data: [
+                    {
+                        type: "尖时电量",
+                        stack: "电量",
+                        value: []
+                    },
+                    {
+                        type: "峰时电量",
+                        stack: "电量",
+                        value: []
+                    },
+                    {
+                        type: "平时电量",
+                        stack: "电量",
+                        value: []
+                    },
+                    {
+                        type: "谷时电量",
+                        stack: "电量",
+                        value: []
+                    }
+                ],
+                xAxisData: []
+            };
+            $scope.show.eleMaxData = [
+                {
+                    val: "",
+                    title: "今日累计电量"
+                },
+                {
+                    val: "",
+                    title: "昨日累计电量"
+                },
+                {
+                    val: "",
+                    title: "本月累计电量"
+                },
+                {
+                    val: "",
+                    title: "上月累计电量"
+                },
+                {
+                    val: "",
+                    title: "本年累计电量"
+                }
+            ];
+        };
+
         $scope.clientChangeQuery = function () {
             $scope.queryBase();
             $scope.querySafety();
@@ -481,6 +636,7 @@
          * h. 根据clientId获取电量柱状图，堆积图
          */
         $scope.initFilterInfo = function () {
+            $scope.initInfo();  // clear info
 
             var cid = locals.get('cid', '');
             if (cid) {
