@@ -74,7 +74,7 @@
         <path d="{{clientPathD}}" fill="#FF0000"></path>
       </g>
       <g>
-        <g ng-repeat="inc in tree.data" ng-init="incIndex=$index;incData=monitorData[$index]">
+        <g ng-repeat="inc in tree.data" ng-init="incIndex=$index;">
           <path d="{{incPathD(incIndex)}}" fill="#FF0000"></path>
           <text 
             transform="{{incNameTransform(incIndex, $index)}}"
@@ -85,35 +85,35 @@
           <text 
             transform="{{incUTransform(incIndex, inc.name)}}"
           >
-            <tspan x="-1.165" y="-0" font-family="Helvetica" font-size="1.396" fill="#FFFF00">{{'U: ' + incData.lines[0].Ua}}</tspan>
+            <tspan x="-1.165" y="-0" font-family="Helvetica" font-size="1.396" fill="#FFFF00">{{'U: ' + monitorData[incIndex].lines[0].Ua}}</tspan>
           </text>
           <g>
             <g 
               transform="{{branchTransform(incIndex, branchIndex)}}" 
               ng-repeat="branch in inc.lines " 
-              ng-init="branchIndex=$index;branchData=incData.lines[$index];"
+              ng-init="branchIndex=$index;"
             >
 
-              <path d="M25.829,32.684 L71.664,32.711" fill-opacity="0" stroke="#FF0000" ng-hide="branchData.Ia==='0.00A'" stroke-width="0.5"/>
-              <path d="M30.388,28.613 L22.208,36.783" fill-opacity="0" stroke="#FF0000" ng-hide="branchData.Ia==='0.00A'" stroke-width="0.5"/>
-              <path d="M22.121,28.613 L30.474,37.041" fill-opacity="0" stroke="#FF0000" ng-hide="branchData.Ia==='0.00A'" stroke-width="0.5"/>
+              <path d="M25.829,32.684 L71.664,32.711" fill-opacity="0" stroke="#FF0000" ng-hide="monitorData[incIndex].lines[branchIndex].Ia==='0.00A'" stroke-width="0.5"/>
+              <path d="M30.388,28.613 L22.208,36.783" fill-opacity="0" stroke="#FF0000" ng-hide="monitorData[incIndex].lines[branchIndex].Ia==='0.00A'" stroke-width="0.5"/>
+              <path d="M22.121,28.613 L30.474,37.041" fill-opacity="0" stroke="#FF0000" ng-hide="monitorData[incIndex].lines[branchIndex].Ia==='0.00A'" stroke-width="0.5"/>
               <text transform="matrix(6.619, 0, 0, 6.619, 28.892, 49.127)">
                 <tspan x="-1.086" y="0" font-family="Helvetica" font-size="1.396" fill="#FFFF00">I:</tspan>
               </text>
               <text transform="matrix(6.619, 0, 0, 6.619, 45, 49.127)">
-              <tspan x="-1.165" y="-0" font-family="Helvetica" font-size="1.396" fill="#FFFF00">{{branchData.Ia}}</tspan>
+              <tspan x="-1.165" y="-0" font-family="Helvetica" font-size="1.396" fill="#FFFF00">{{monitorData[incIndex].lines[branchIndex].Ia}}</tspan>
               </text>
               <text transform="matrix(6.619, 0, 0, 6.619, 24.828, 59.879)">
                 <tspan x="-0.676" y="-0" font-family="Helvetica" font-size="1.43" fill="#00FFFF">P:</tspan>
               </text>
               <text transform="matrix(6.619, 0, 0, 6.619, 60, 61.365)">
-              <tspan x="-3.448" y="0" font-family="Helvetica" font-size="1.396" fill="#00FFFF">{{branchData.P}}</tspan>
+              <tspan x="-3.448" y="0" font-family="Helvetica" font-size="1.396" fill="#00FFFF">{{monitorData[incIndex].lines[branchIndex].P}}</tspan>
               </text>
               <text transform="matrix(6.619, 0, 0, 6.619, 24.601, 71.736)">
               <tspan x="-0.737" y="-0" font-family="Helvetica" font-size="1.396" fill="#FF00FF">Q:</tspan>
               </text>
               <text transform="matrix(6.619, 0, 0, 6.619, 50, 71.736)">
-              <tspan x="-1.966" y="0" font-family="Helvetica" font-size="1.396" fill="#FF00FF">{{branchData.Q}}</tspan>
+              <tspan x="-1.966" y="0" font-family="Helvetica" font-size="1.396" fill="#FF00FF">{{monitorData[incIndex].lines[branchIndex].Q}}</tspan>
               </text>
               <path d="M4.899,32.827 L25.829,32.827" fill-opacity="0" stroke="#FF0000" stroke-width="0.5"/>
               <text transform="matrix(8.274, 0, 0, 8.274, 39.337, 12.791)">
@@ -130,7 +130,7 @@
                 <path
                         d="M97,32.75 C97,39.604 91.443,45.161 84.589,45.161 C77.735,45.161 72.178,39.604 72.178,32.75 C72.178,25.896 77.735,20.339 84.589,20.339 C91.443,20.339 97,25.896 97,32.75 z"
                         fill-opacity="0"
-                        stroke="{{branchData.Ia==='0.00A' ? '#00FF00' : '#FF0000'}}"
+                        stroke="{{monitorData[incIndex].lines[branchIndex].Ia==='0.00A' ? '#00FF00' : '#FF0000'}}"
                         stroke-width="0.5"
                 />
                 <text transform="matrix(8.274, 0, 0, 8.274, 88.692, 36.887)">
@@ -139,13 +139,13 @@
                     y="-0"
                     font-family="Helvetica"
                     font-size="1.396"
-                    fill="{{branchData.Ia==='0.00A' ? '#00FF00' : '#FF0000'}}"
+                    fill="{{monitorData[incIndex].lines[branchIndex].Ia==='0.00A' ? '#00FF00' : '#FF0000'}}"
                   >D</tspan>
                 </text>
               </g>
 
-              <path d="M43.427,32.802 L35.246,40.972" fill-opacity="0" stroke="#00FF00" ng-show="branchData.Ia==='0.00A'" stroke-width="0.5"/>
-              <path d="M43.427,32.698 L72.108,32.698" fill-opacity="0" stroke="#00FF00"  ng-show="branchData.Ia==='0.00A'" stroke-width="0.5"/>
+              <path d="M43.427,32.802 L35.246,40.972" fill-opacity="0" stroke="#00FF00" ng-show="monitorData[incIndex].lines[branchIndex].Ia==='0.00A'" stroke-width="0.5"/>
+              <path d="M43.427,32.698 L72.108,32.698" fill-opacity="0" stroke="#00FF00"  ng-show="monitorData[incIndex].lines[branchIndex].Ia==='0.00A'" stroke-width="0.5"/>
               <path d="M4.696,34.889 C3.602,34.889 2.715,33.964 2.715,32.823 C2.715,31.681 3.602,30.756 4.696,30.756 C5.79,30.756 6.676,31.681 6.676,32.823 C6.676,33.964 5.79,34.889 4.696,34.889 z" fill="#FF0000"/>
             </g>
 

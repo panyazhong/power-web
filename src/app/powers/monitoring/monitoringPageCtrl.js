@@ -12,6 +12,9 @@
         PageTopCache.cache.state = $state.$current; // active
         $stateParams.cid ? locals.put('cid', $stateParams.cid) : '';
 
+        $scope.show = {
+            mapData: []
+        };
         /*
         $scope.show = {
             imgs: {},   // images info
@@ -237,6 +240,7 @@
          * svg test data
          */
 
+        /*
         $scope.tree = {
             "name": "良友木业",
             "templateUrl": "app/powers/temp/template.html",
@@ -267,419 +271,426 @@
                 }, {"id": 116, "name": "分检2#线面砂机"}, {"id": 117, "name": "分检2#3#线分板机"}]
             }]
         };
+        */
 
-        $scope.monitorData = [{
-            "alerts": [{
-                "prop": "OV",
-                "title": "总线过压警告",
-                "val": "0.00",
-                "color": "#666666"
-            }, {"prop": "UV", "title": "总线欠压警告", "val": "0.00", "color": "#666666"}],
-            "id": "96",
-            "lines": [{
+        $timeout(function () {
+            $scope.monitorData = [{
                 "alerts": [{
-                    "prop": "IaOC",
-                    "title": "A相过流告警",
+                    "prop": "OV",
+                    "title": "总线过压警告",
                     "val": "0.00",
                     "color": "#666666"
-                }, {"prop": "IbOC", "title": "B相过流告警", "val": "0.00", "color": "#666666"}, {
-                    "prop": "IcOC",
-                    "title": "C相过流告警",
+                }, {"prop": "UV", "title": "总线欠压警告", "val": "0.00", "color": "#666666"}],
+                "id": "96",
+                "lines": [{
+                    "alerts": [{
+                        "prop": "IaOC",
+                        "title": "A相过流告警",
+                        "val": "0.00",
+                        "color": "#666666"
+                    }, {"prop": "IbOC", "title": "B相过流告警", "val": "0.00", "color": "#666666"}, {
+                        "prop": "IcOC",
+                        "title": "C相过流告警",
+                        "val": "0.00",
+                        "color": "#666666"
+                    }],
+                    "Ia": "0.00A",
+                    "Ib": "0.00A",
+                    "Ic": "0.00A",
+                    "Ua": "222.10V",
+                    "Uc": "224.30V",
+                    "P": "0.00kW",
+                    "Q": "0.00kVar",
+                    "Pt1": "316.40kWh",
+                    "Qt2": "22501.30kWh",
+                    "id": "101",
+                    "lines": []
+                }, {
+                    "alerts": [{"prop": "IaOC", "title": "A相过流告警", "val": "0.00", "color": "#666666"}, {
+                        "prop": "IbOC",
+                        "title": "B相过流告警",
+                        "val": "0.00",
+                        "color": "#666666"
+                    }, {"prop": "IcOC", "title": "C相过流告警", "val": "0.00", "color": "#666666"}],
+                    "Ia": "70.50A",
+                    "Ib": "72.00A",
+                    "Ic": "69.00A",
+                    "Ua": "221.70V",
+                    "Uc": "224.20V",
+                    "P": "39.80kW",
+                    "Q": "25.65kVar",
+                    "Pt1": "462.40kWh",
+                    "Qt2": "8462.60kWh",
+                    "id": "102",
+                    "lines": []
+                }, {
+                    "alerts": [{"prop": "IaOC", "title": "A相过流告警", "val": "0.00", "color": "#666666"}, {
+                        "prop": "IbOC",
+                        "title": "B相过流告警",
+                        "val": "0.00",
+                        "color": "#666666"
+                    }, {"prop": "IcOC", "title": "C相过流告警", "val": "0.00", "color": "#666666"}],
+                    "Ia": "41.00A",
+                    "Ib": "44.00A",
+                    "Ic": "39.00A",
+                    "Ua": "222.10V",
+                    "Uc": "224.30V",
+                    "P": "22.22kW",
+                    "Q": "16.70kVar",
+                    "Pt1": "314.60kWh",
+                    "Qt2": "777.70kWh",
+                    "id": "103",
+                    "lines": []
+                }, {
+                    "alerts": [{"prop": "IaOC", "title": "A相过流告警", "val": "0.00", "color": "#666666"}, {
+                        "prop": "IbOC",
+                        "title": "B相过流告警",
+                        "val": "1.00",
+                        "color": "#ef5c62"
+                    }, {"prop": "IcOC", "title": "C相过流告警", "val": "1.00", "color": "#ef5c62"}], "id": "118", "lines": []
+                }, {
+                    "alerts": [{"prop": "IaOC", "title": "A相过流告警", "val": "1.00", "color": "#ef5c62"}, {
+                        "prop": "IbOC",
+                        "title": "B相过流告警",
+                        "val": "0.00",
+                        "color": "#666666"
+                    }, {"prop": "IcOC", "title": "C相过流告警", "val": "0.00", "color": "#666666"}], "id": "119", "lines": []
+                }, {
+                    "alerts": [{"prop": "IaOC", "title": "A相过流告警", "val": "0.00", "color": "#666666"}, {
+                        "prop": "IbOC",
+                        "title": "B相过流告警",
+                        "val": "0.00",
+                        "color": "#666666"
+                    }, {"prop": "IcOC", "title": "C相过流告警", "val": "0.00", "color": "#666666"}], "id": "120", "lines": []
+                }]
+            }, {
+                "alerts": [{"prop": "OV", "title": "总线过压警告", "val": "0.00", "color": "#666666"}, {
+                    "prop": "UV",
+                    "title": "总线欠压警告",
                     "val": "0.00",
                     "color": "#666666"
                 }],
-                "Ia": "0.00A",
-                "Ib": "0.00A",
-                "Ic": "0.00A",
-                "Ua": "222.10V",
-                "Uc": "224.30V",
-                "P": "0.00kW",
-                "Q": "0.00kVar",
-                "Pt1": "316.40kWh",
-                "Qt2": "22501.30kWh",
-                "id": "101",
-                "lines": []
+                "id": "97",
+                "lines": [{
+                    "alerts": [{
+                        "prop": "IaOC",
+                        "title": "A相过流告警",
+                        "val": "0.00",
+                        "color": "#666666"
+                    }, {"prop": "IbOC", "title": "B相过流告警", "val": "0.00", "color": "#666666"}, {
+                        "prop": "IcOC",
+                        "title": "C相过流告警",
+                        "val": "0.00",
+                        "color": "#666666"
+                    }],
+                    "Ia": "135.00A",
+                    "Ib": "135.00A",
+                    "Ic": "135.00A",
+                    "Ua": "221.40V",
+                    "Uc": "226.00V",
+                    "P": "82.21kW",
+                    "Q": "38.85kVar",
+                    "Pt1": "1563.20kWh",
+                    "Qt2": "58669.90kWh",
+                    "id": "104",
+                    "lines": []
+                }, {
+                    "alerts": [{"prop": "IaOC", "title": "A相过流告警", "val": "0.00", "color": "#666666"}, {
+                        "prop": "IbOC",
+                        "title": "B相过流告警",
+                        "val": "0.00",
+                        "color": "#666666"
+                    }, {"prop": "IcOC", "title": "C相过流告警", "val": "0.00", "color": "#666666"}],
+                    "Ia": "0.00A",
+                    "Ib": "0.00A",
+                    "Ic": "0.00A",
+                    "Ua": "221.50V",
+                    "Uc": "226.60V",
+                    "P": "0.00kW",
+                    "Q": "0.00kVar",
+                    "Pt1": "604.80kWh",
+                    "Qt2": "632.70kWh",
+                    "id": "105",
+                    "lines": []
+                }, {
+                    "alerts": [{"prop": "IaOC", "title": "A相过流告警", "val": "0.00", "color": "#666666"}, {
+                        "prop": "IbOC",
+                        "title": "B相过流告警",
+                        "val": "1.00",
+                        "color": "#ef5c62"
+                    }, {"prop": "IcOC", "title": "C相过流告警", "val": "1.00", "color": "#ef5c62"}],
+                    "Ia": "60.00A",
+                    "Ib": "66.00A",
+                    "Ic": "57.00A",
+                    "Ua": "221.40V",
+                    "Uc": "226.90V",
+                    "P": "28.36kW",
+                    "Q": "29.81kVar",
+                    "Pt1": "894.20kWh",
+                    "Qt2": "4710.30kWh",
+                    "id": "106",
+                    "lines": []
+                }, {
+                    "alerts": [{"prop": "IaOC", "title": "A相过流告警", "val": "1.00", "color": "#ef5c62"}, {
+                        "prop": "IbOC",
+                        "title": "B相过流告警",
+                        "val": "0.00",
+                        "color": "#666666"
+                    }, {"prop": "IcOC", "title": "C相过流告警", "val": "0.00", "color": "#666666"}],
+                    "Ia": "0.00A",
+                    "Ib": "0.00A",
+                    "Ic": "0.00A",
+                    "Ua": "221.40V",
+                    "Uc": "226.80V",
+                    "P": "0.00kW",
+                    "Q": "0.00kVar",
+                    "Pt1": "33.80kWh",
+                    "Qt2": "5258.50kWh",
+                    "id": "107",
+                    "lines": []
+                }, {
+                    "alerts": [{"prop": "IaOC", "title": "A相过流告警", "val": "0.00", "color": "#666666"}, {
+                        "prop": "IbOC",
+                        "title": "B相过流告警",
+                        "val": "1.00",
+                        "color": "#ef5c62"
+                    }, {"prop": "IcOC", "title": "C相过流告警", "val": "1.00", "color": "#ef5c62"}], "id": "121", "lines": []
+                }, {
+                    "alerts": [{"prop": "IaOC", "title": "A相过流告警", "val": "1.00", "color": "#ef5c62"}, {
+                        "prop": "IbOC",
+                        "title": "B相过流告警",
+                        "val": "0.00",
+                        "color": "#666666"
+                    }, {"prop": "IcOC", "title": "C相过流告警", "val": "0.00", "color": "#666666"}], "id": "122", "lines": []
+                }]
             }, {
-                "alerts": [{"prop": "IaOC", "title": "A相过流告警", "val": "0.00", "color": "#666666"}, {
-                    "prop": "IbOC",
-                    "title": "B相过流告警",
-                    "val": "0.00",
-                    "color": "#666666"
-                }, {"prop": "IcOC", "title": "C相过流告警", "val": "0.00", "color": "#666666"}],
-                "Ia": "70.50A",
-                "Ib": "72.00A",
-                "Ic": "69.00A",
-                "Ua": "221.70V",
-                "Uc": "224.20V",
-                "P": "39.80kW",
-                "Q": "25.65kVar",
-                "Pt1": "462.40kWh",
-                "Qt2": "8462.60kWh",
-                "id": "102",
-                "lines": []
-            }, {
-                "alerts": [{"prop": "IaOC", "title": "A相过流告警", "val": "0.00", "color": "#666666"}, {
-                    "prop": "IbOC",
-                    "title": "B相过流告警",
-                    "val": "0.00",
-                    "color": "#666666"
-                }, {"prop": "IcOC", "title": "C相过流告警", "val": "0.00", "color": "#666666"}],
-                "Ia": "41.00A",
-                "Ib": "44.00A",
-                "Ic": "39.00A",
-                "Ua": "222.10V",
-                "Uc": "224.30V",
-                "P": "22.22kW",
-                "Q": "16.70kVar",
-                "Pt1": "314.60kWh",
-                "Qt2": "777.70kWh",
-                "id": "103",
-                "lines": []
-            }, {
-                "alerts": [{"prop": "IaOC", "title": "A相过流告警", "val": "0.00", "color": "#666666"}, {
-                    "prop": "IbOC",
-                    "title": "B相过流告警",
-                    "val": "1.00",
-                    "color": "#ef5c62"
-                }, {"prop": "IcOC", "title": "C相过流告警", "val": "1.00", "color": "#ef5c62"}], "id": "118", "lines": []
-            }, {
-                "alerts": [{"prop": "IaOC", "title": "A相过流告警", "val": "1.00", "color": "#ef5c62"}, {
-                    "prop": "IbOC",
-                    "title": "B相过流告警",
-                    "val": "0.00",
-                    "color": "#666666"
-                }, {"prop": "IcOC", "title": "C相过流告警", "val": "0.00", "color": "#666666"}], "id": "119", "lines": []
-            }, {
-                "alerts": [{"prop": "IaOC", "title": "A相过流告警", "val": "0.00", "color": "#666666"}, {
-                    "prop": "IbOC",
-                    "title": "B相过流告警",
-                    "val": "0.00",
-                    "color": "#666666"
-                }, {"prop": "IcOC", "title": "C相过流告警", "val": "0.00", "color": "#666666"}], "id": "120", "lines": []
-            }]
-        }, {
-            "alerts": [{"prop": "OV", "title": "总线过压警告", "val": "0.00", "color": "#666666"}, {
-                "prop": "UV",
-                "title": "总线欠压警告",
-                "val": "0.00",
-                "color": "#666666"
-            }],
-            "id": "97",
-            "lines": [{
-                "alerts": [{
-                    "prop": "IaOC",
-                    "title": "A相过流告警",
-                    "val": "0.00",
-                    "color": "#666666"
-                }, {"prop": "IbOC", "title": "B相过流告警", "val": "0.00", "color": "#666666"}, {
-                    "prop": "IcOC",
-                    "title": "C相过流告警",
-                    "val": "0.00",
-                    "color": "#666666"
-                }],
-                "Ia": "135.00A",
-                "Ib": "135.00A",
-                "Ic": "135.00A",
-                "Ua": "221.40V",
-                "Uc": "226.00V",
-                "P": "82.21kW",
-                "Q": "38.85kVar",
-                "Pt1": "1563.20kWh",
-                "Qt2": "58669.90kWh",
-                "id": "104",
-                "lines": []
-            }, {
-                "alerts": [{"prop": "IaOC", "title": "A相过流告警", "val": "0.00", "color": "#666666"}, {
-                    "prop": "IbOC",
-                    "title": "B相过流告警",
-                    "val": "0.00",
-                    "color": "#666666"
-                }, {"prop": "IcOC", "title": "C相过流告警", "val": "0.00", "color": "#666666"}],
-                "Ia": "0.00A",
-                "Ib": "0.00A",
-                "Ic": "0.00A",
-                "Ua": "221.50V",
-                "Uc": "226.60V",
-                "P": "0.00kW",
-                "Q": "0.00kVar",
-                "Pt1": "604.80kWh",
-                "Qt2": "632.70kWh",
-                "id": "105",
-                "lines": []
-            }, {
-                "alerts": [{"prop": "IaOC", "title": "A相过流告警", "val": "0.00", "color": "#666666"}, {
-                    "prop": "IbOC",
-                    "title": "B相过流告警",
-                    "val": "1.00",
-                    "color": "#ef5c62"
-                }, {"prop": "IcOC", "title": "C相过流告警", "val": "1.00", "color": "#ef5c62"}],
-                "Ia": "60.00A",
-                "Ib": "66.00A",
-                "Ic": "57.00A",
-                "Ua": "221.40V",
-                "Uc": "226.90V",
-                "P": "28.36kW",
-                "Q": "29.81kVar",
-                "Pt1": "894.20kWh",
-                "Qt2": "4710.30kWh",
-                "id": "106",
-                "lines": []
-            }, {
-                "alerts": [{"prop": "IaOC", "title": "A相过流告警", "val": "1.00", "color": "#ef5c62"}, {
-                    "prop": "IbOC",
-                    "title": "B相过流告警",
-                    "val": "0.00",
-                    "color": "#666666"
-                }, {"prop": "IcOC", "title": "C相过流告警", "val": "0.00", "color": "#666666"}],
-                "Ia": "0.00A",
-                "Ib": "0.00A",
-                "Ic": "0.00A",
-                "Ua": "221.40V",
-                "Uc": "226.80V",
-                "P": "0.00kW",
-                "Q": "0.00kVar",
-                "Pt1": "33.80kWh",
-                "Qt2": "5258.50kWh",
-                "id": "107",
-                "lines": []
-            }, {
-                "alerts": [{"prop": "IaOC", "title": "A相过流告警", "val": "0.00", "color": "#666666"}, {
-                    "prop": "IbOC",
-                    "title": "B相过流告警",
-                    "val": "1.00",
-                    "color": "#ef5c62"
-                }, {"prop": "IcOC", "title": "C相过流告警", "val": "1.00", "color": "#ef5c62"}], "id": "121", "lines": []
-            }, {
-                "alerts": [{"prop": "IaOC", "title": "A相过流告警", "val": "1.00", "color": "#ef5c62"}, {
-                    "prop": "IbOC",
-                    "title": "B相过流告警",
-                    "val": "0.00",
-                    "color": "#666666"
-                }, {"prop": "IcOC", "title": "C相过流告警", "val": "0.00", "color": "#666666"}], "id": "122", "lines": []
-            }]
-        }, {
-            "alerts": [{"prop": "OV", "title": "总线过压警告", "val": "0.00", "color": "#666666"}, {
-                "prop": "UV",
-                "title": "总线欠压警告",
-                "val": "0.00",
-                "color": "#666666"
-            }],
-            "id": "98",
-            "lines": [{
-                "alerts": [{
-                    "prop": "IaOC",
-                    "title": "A相过流告警",
-                    "val": "0.00",
-                    "color": "#666666"
-                }, {"prop": "IbOC", "title": "B相过流告警", "val": "1.00", "color": "#ef5c62"}, {
-                    "prop": "IcOC",
-                    "title": "C相过流告警",
-                    "val": "1.00",
-                    "color": "#ef5c62"
-                }],
-                "Ia": "16.00A",
-                "Ib": "16.00A",
-                "Ic": "17.00A",
-                "Ua": "215.00V",
-                "Uc": "215.90V",
-                "P": "5.96kW",
-                "Q": "8.71kVar",
-                "Pt1": "90.90kWh",
-                "Qt2": "13334.90kWh",
-                "id": "108",
-                "lines": []
-            }, {
-                "alerts": [{"prop": "IaOC", "title": "A相过流告警", "val": "1.00", "color": "#ef5c62"}, {
-                    "prop": "IbOC",
-                    "title": "B相过流告警",
-                    "val": "0.00",
-                    "color": "#666666"
-                }, {"prop": "IcOC", "title": "C相过流告警", "val": "0.00", "color": "#666666"}],
-                "Ia": "25.50A",
-                "Ib": "25.50A",
-                "Ic": "27.00A",
-                "Ua": "215.10V",
-                "Uc": "216.10V",
-                "P": "13.93kW",
-                "Q": "9.43kVar",
-                "Pt1": "185.90kWh",
-                "Qt2": "11186.70kWh",
-                "id": "109",
-                "lines": []
-            }, {
-                "alerts": [{"prop": "IaOC", "title": "A相过流告警", "val": "0.00", "color": "#666666"}, {
-                    "prop": "IbOC",
-                    "title": "B相过流告警",
-                    "val": "1.00",
-                    "color": "#ef5c62"
-                }, {"prop": "IcOC", "title": "C相过流告警", "val": "1.00", "color": "#ef5c62"}],
-                "Ia": "135.00A",
-                "Ib": "138.00A",
-                "Ic": "138.00A",
-                "Ua": "214.10V",
-                "Uc": "215.40V",
-                "P": "76.45kW",
-                "Q": "44.13kVar",
-                "Pt1": "779.00kWh",
-                "Qt2": "45634.30kWh",
-                "id": "110",
-                "lines": []
-            }, {
-                "alerts": [{"prop": "IaOC", "title": "A相过流告警", "val": "1.00", "color": "#ef5c62"}, {
-                    "prop": "IbOC",
-                    "title": "B相过流告警",
-                    "val": "0.00",
-                    "color": "#666666"
-                }, {"prop": "IcOC", "title": "C相过流告警", "val": "0.00", "color": "#666666"}],
-                "Ia": "0.00A",
-                "Ib": "0.00A",
-                "Ic": "0.00A",
-                "Ua": "213.80V",
-                "Uc": "215.00V",
-                "P": "0.00kW",
-                "Q": "0.00kVar",
-                "Pt1": "4.50kWh",
-                "Qt2": "715.50kWh",
-                "id": "111",
-                "lines": []
-            }, {
-                "alerts": [{"prop": "IaOC", "title": "A相过流告警", "val": "0.00", "color": "#666666"}, {
-                    "prop": "IbOC",
-                    "title": "B相过流告警",
-                    "val": "0.00",
-                    "color": "#666666"
-                }, {"prop": "IcOC", "title": "C相过流告警", "val": "0.00", "color": "#666666"}],
-                "Ia": "96.00A",
-                "Ib": "93.00A",
-                "Ic": "97.50A",
-                "Ua": "214.40V",
-                "Uc": "215.40V",
-                "P": "56.22kW",
-                "Q": "25.11kVar",
-                "Pt1": "687.90kWh",
-                "Qt2": "33320.50kWh",
-                "id": "112",
-                "lines": []
-            }, {
-                "alerts": [{"prop": "IaOC", "title": "A相过流告警", "val": "0.00", "color": "#666666"}, {
-                    "prop": "IbOC",
-                    "title": "B相过流告警",
-                    "val": "0.00",
-                    "color": "#666666"
-                }, {"prop": "IcOC", "title": "C相过流告警", "val": "0.00", "color": "#666666"}], "id": "123", "lines": []
-            }]
-        }, {
-            "alerts": [{"prop": "OV", "title": "总线过压警告", "val": "0.00", "color": "#666666"}, {
-                "prop": "UV",
-                "title": "总线欠压警告",
-                "val": "0.00",
-                "color": "#666666"
-            }],
-            "id": "99",
-            "lines": [{
-                "alerts": [{
-                    "prop": "IaOC",
-                    "title": "A相过流告警",
-                    "val": "0.00",
-                    "color": "#666666"
-                }, {"prop": "IbOC", "title": "B相过流告警", "val": "0.00", "color": "#666666"}, {
-                    "prop": "IcOC",
-                    "title": "C相过流告警",
+                "alerts": [{"prop": "OV", "title": "总线过压警告", "val": "0.00", "color": "#666666"}, {
+                    "prop": "UV",
+                    "title": "总线欠压警告",
                     "val": "0.00",
                     "color": "#666666"
                 }],
-                "Ia": "60.00A",
-                "Ib": "60.00A",
-                "Ic": "57.00A",
-                "Ua": "210.50V",
-                "Uc": "216.60V",
-                "P": "31.57kW",
-                "Q": "20.92kVar",
-                "Pt1": "577.80kWh",
-                "Qt2": "21408.60kWh",
-                "id": "113",
-                "lines": []
+                "id": "98",
+                "lines": [{
+                    "alerts": [{
+                        "prop": "IaOC",
+                        "title": "A相过流告警",
+                        "val": "0.00",
+                        "color": "#666666"
+                    }, {"prop": "IbOC", "title": "B相过流告警", "val": "1.00", "color": "#ef5c62"}, {
+                        "prop": "IcOC",
+                        "title": "C相过流告警",
+                        "val": "1.00",
+                        "color": "#ef5c62"
+                    }],
+                    "Ia": "16.00A",
+                    "Ib": "16.00A",
+                    "Ic": "17.00A",
+                    "Ua": "215.00V",
+                    "Uc": "215.90V",
+                    "P": "5.96kW",
+                    "Q": "8.71kVar",
+                    "Pt1": "90.90kWh",
+                    "Qt2": "13334.90kWh",
+                    "id": "108",
+                    "lines": []
+                }, {
+                    "alerts": [{"prop": "IaOC", "title": "A相过流告警", "val": "1.00", "color": "#ef5c62"}, {
+                        "prop": "IbOC",
+                        "title": "B相过流告警",
+                        "val": "0.00",
+                        "color": "#666666"
+                    }, {"prop": "IcOC", "title": "C相过流告警", "val": "0.00", "color": "#666666"}],
+                    "Ia": "25.50A",
+                    "Ib": "25.50A",
+                    "Ic": "27.00A",
+                    "Ua": "215.10V",
+                    "Uc": "216.10V",
+                    "P": "13.93kW",
+                    "Q": "9.43kVar",
+                    "Pt1": "185.90kWh",
+                    "Qt2": "11186.70kWh",
+                    "id": "109",
+                    "lines": []
+                }, {
+                    "alerts": [{"prop": "IaOC", "title": "A相过流告警", "val": "0.00", "color": "#666666"}, {
+                        "prop": "IbOC",
+                        "title": "B相过流告警",
+                        "val": "1.00",
+                        "color": "#ef5c62"
+                    }, {"prop": "IcOC", "title": "C相过流告警", "val": "1.00", "color": "#ef5c62"}],
+                    "Ia": "135.00A",
+                    "Ib": "138.00A",
+                    "Ic": "138.00A",
+                    "Ua": "214.10V",
+                    "Uc": "215.40V",
+                    "P": "76.45kW",
+                    "Q": "44.13kVar",
+                    "Pt1": "779.00kWh",
+                    "Qt2": "45634.30kWh",
+                    "id": "110",
+                    "lines": []
+                }, {
+                    "alerts": [{"prop": "IaOC", "title": "A相过流告警", "val": "1.00", "color": "#ef5c62"}, {
+                        "prop": "IbOC",
+                        "title": "B相过流告警",
+                        "val": "0.00",
+                        "color": "#666666"
+                    }, {"prop": "IcOC", "title": "C相过流告警", "val": "0.00", "color": "#666666"}],
+                    "Ia": "0.00A",
+                    "Ib": "0.00A",
+                    "Ic": "0.00A",
+                    "Ua": "213.80V",
+                    "Uc": "215.00V",
+                    "P": "0.00kW",
+                    "Q": "0.00kVar",
+                    "Pt1": "4.50kWh",
+                    "Qt2": "715.50kWh",
+                    "id": "111",
+                    "lines": []
+                }, {
+                    "alerts": [{"prop": "IaOC", "title": "A相过流告警", "val": "0.00", "color": "#666666"}, {
+                        "prop": "IbOC",
+                        "title": "B相过流告警",
+                        "val": "0.00",
+                        "color": "#666666"
+                    }, {"prop": "IcOC", "title": "C相过流告警", "val": "0.00", "color": "#666666"}],
+                    "Ia": "96.00A",
+                    "Ib": "93.00A",
+                    "Ic": "97.50A",
+                    "Ua": "214.40V",
+                    "Uc": "215.40V",
+                    "P": "56.22kW",
+                    "Q": "25.11kVar",
+                    "Pt1": "687.90kWh",
+                    "Qt2": "33320.50kWh",
+                    "id": "112",
+                    "lines": []
+                }, {
+                    "alerts": [{"prop": "IaOC", "title": "A相过流告警", "val": "0.00", "color": "#666666"}, {
+                        "prop": "IbOC",
+                        "title": "B相过流告警",
+                        "val": "0.00",
+                        "color": "#666666"
+                    }, {"prop": "IcOC", "title": "C相过流告警", "val": "0.00", "color": "#666666"}], "id": "123", "lines": []
+                }]
             }, {
-                "alerts": [{"prop": "IaOC", "title": "A相过流告警", "val": "0.00", "color": "#666666"}, {
-                    "prop": "IbOC",
-                    "title": "B相过流告警",
-                    "val": "1.00",
-                    "color": "#ef5c62"
-                }, {"prop": "IcOC", "title": "C相过流告警", "val": "1.00", "color": "#ef5c62"}],
-                "Ia": "127.50A",
-                "Ib": "109.50A",
-                "Ic": "124.50A",
-                "Ua": "211.40V",
-                "Uc": "217.40V",
-                "P": "63.81kW",
-                "Q": "44.24kVar",
-                "Pt1": "754.90kWh",
-                "Qt2": "22839.80kWh",
-                "id": "114",
-                "lines": []
-            }, {
-                "alerts": [{"prop": "IaOC", "title": "A相过流告警", "val": "1.00", "color": "#ef5c62"}, {
-                    "prop": "IbOC",
-                    "title": "B相过流告警",
-                    "val": "1.00",
-                    "color": "#ef5c62"
-                }, {"prop": "IcOC", "title": "C相过流告警", "val": "1.00", "color": "#ef5c62"}],
-                "Ia": "138.00A",
-                "Ib": "138.00A",
-                "Ic": "138.00A",
-                "Ua": "211.30V",
-                "Uc": "217.40V",
-                "P": "76.45kW",
-                "Q": "45.47kVar",
-                "Pt1": "733.40kWh",
-                "Qt2": "32608.60kWh",
-                "id": "115",
-                "lines": []
-            }, {
-                "alerts": [{"prop": "IaOC", "title": "A相过流告警", "val": "1.00", "color": "#ef5c62"}, {
-                    "prop": "IbOC",
-                    "title": "B相过流告警",
-                    "val": "1.00",
-                    "color": "#ef5c62"
-                }, {"prop": "IcOC", "title": "C相过流告警", "val": "1.00", "color": "#ef5c62"}],
-                "Ia": "85.50A",
-                "Ib": "81.00A",
-                "Ic": "85.50A",
-                "Ua": "210.80V",
-                "Uc": "216.70V",
-                "P": "47.74kW",
-                "Q": "25.17kVar",
-                "Pt1": "502.20kWh",
-                "Qt2": "18370.00kWh",
-                "id": "116",
-                "lines": []
-            }, {
-                "alerts": [{"prop": "IaOC", "title": "A相过流告警", "val": "1.00", "color": "#ef5c62"}, {
-                    "prop": "IbOC",
-                    "title": "B相过流告警",
-                    "val": "1.00",
-                    "color": "#ef5c62"
-                }, {"prop": "IcOC", "title": "C相过流告警", "val": "1.00", "color": "#ef5c62"}],
-                "Ia": "43.00A",
-                "Ib": "44.00A",
-                "Ic": "44.00A",
-                "Ua": "210.20V",
-                "Uc": "216.20V",
-                "P": "22.78kW",
-                "Q": "16.26kVar",
-                "Pt1": "337.30kWh",
-                "Qt2": "13969.00kWh",
-                "id": "117",
-                "lines": []
-            }, {
-                "alerts": [{"prop": "IaOC", "title": "A相过流告警", "val": "1.00", "color": "#ef5c62"}, {
-                    "prop": "IbOC",
-                    "title": "B相过流告警",
+                "alerts": [{"prop": "OV", "title": "总线过压警告", "val": "0.00", "color": "#666666"}, {
+                    "prop": "UV",
+                    "title": "总线欠压警告",
                     "val": "0.00",
                     "color": "#666666"
-                }, {"prop": "IcOC", "title": "C相过流告警", "val": "0.00", "color": "#666666"}], "id": "124", "lines": []
-            }]
-        }];
+                }],
+                "id": "99",
+                "lines": [{
+                    "alerts": [{
+                        "prop": "IaOC",
+                        "title": "A相过流告警",
+                        "val": "0.00",
+                        "color": "#666666"
+                    }, {"prop": "IbOC", "title": "B相过流告警", "val": "0.00", "color": "#666666"}, {
+                        "prop": "IcOC",
+                        "title": "C相过流告警",
+                        "val": "0.00",
+                        "color": "#666666"
+                    }],
+                    "Ia": "60.00A",
+                    "Ib": "60.00A",
+                    "Ic": "57.00A",
+                    "Ua": "210.50V",
+                    "Uc": "216.60V",
+                    "P": "31.57kW",
+                    "Q": "20.92kVar",
+                    "Pt1": "577.80kWh",
+                    "Qt2": "21408.60kWh",
+                    "id": "113",
+                    "lines": []
+                }, {
+                    "alerts": [{"prop": "IaOC", "title": "A相过流告警", "val": "0.00", "color": "#666666"}, {
+                        "prop": "IbOC",
+                        "title": "B相过流告警",
+                        "val": "1.00",
+                        "color": "#ef5c62"
+                    }, {"prop": "IcOC", "title": "C相过流告警", "val": "1.00", "color": "#ef5c62"}],
+                    "Ia": "127.50A",
+                    "Ib": "109.50A",
+                    "Ic": "124.50A",
+                    "Ua": "211.40V",
+                    "Uc": "217.40V",
+                    "P": "63.81kW",
+                    "Q": "44.24kVar",
+                    "Pt1": "754.90kWh",
+                    "Qt2": "22839.80kWh",
+                    "id": "114",
+                    "lines": []
+                }, {
+                    "alerts": [{"prop": "IaOC", "title": "A相过流告警", "val": "1.00", "color": "#ef5c62"}, {
+                        "prop": "IbOC",
+                        "title": "B相过流告警",
+                        "val": "1.00",
+                        "color": "#ef5c62"
+                    }, {"prop": "IcOC", "title": "C相过流告警", "val": "1.00", "color": "#ef5c62"}],
+                    "Ia": "138.00A",
+                    "Ib": "138.00A",
+                    "Ic": "138.00A",
+                    "Ua": "211.30V",
+                    "Uc": "217.40V",
+                    "P": "76.45kW",
+                    "Q": "45.47kVar",
+                    "Pt1": "733.40kWh",
+                    "Qt2": "32608.60kWh",
+                    "id": "115",
+                    "lines": []
+                }, {
+                    "alerts": [{"prop": "IaOC", "title": "A相过流告警", "val": "1.00", "color": "#ef5c62"}, {
+                        "prop": "IbOC",
+                        "title": "B相过流告警",
+                        "val": "1.00",
+                        "color": "#ef5c62"
+                    }, {"prop": "IcOC", "title": "C相过流告警", "val": "1.00", "color": "#ef5c62"}],
+                    "Ia": "85.50A",
+                    "Ib": "81.00A",
+                    "Ic": "85.50A",
+                    "Ua": "210.80V",
+                    "Uc": "216.70V",
+                    "P": "47.74kW",
+                    "Q": "25.17kVar",
+                    "Pt1": "502.20kWh",
+                    "Qt2": "18370.00kWh",
+                    "id": "116",
+                    "lines": []
+                }, {
+                    "alerts": [{"prop": "IaOC", "title": "A相过流告警", "val": "1.00", "color": "#ef5c62"}, {
+                        "prop": "IbOC",
+                        "title": "B相过流告警",
+                        "val": "1.00",
+                        "color": "#ef5c62"
+                    }, {"prop": "IcOC", "title": "C相过流告警", "val": "1.00", "color": "#ef5c62"}],
+                    "Ia": "43.00A",
+                    "Ib": "44.00A",
+                    "Ic": "44.00A",
+                    "Ua": "210.20V",
+                    "Uc": "216.20V",
+                    "P": "22.78kW",
+                    "Q": "16.26kVar",
+                    "Pt1": "337.30kWh",
+                    "Qt2": "13969.00kWh",
+                    "id": "117",
+                    "lines": []
+                }, {
+                    "alerts": [{"prop": "IaOC", "title": "A相过流告警", "val": "1.00", "color": "#ef5c62"}, {
+                        "prop": "IbOC",
+                        "title": "B相过流告警",
+                        "val": "0.00",
+                        "color": "#666666"
+                    }, {"prop": "IcOC", "title": "C相过流告警", "val": "0.00", "color": "#666666"}], "id": "124", "lines": []
+                }]
+            }];
+        }, 3000);
+
+        $timeout(function () {
+            $scope.monitorData[0].lines[0]["Ia"] = '88.8A';
+        }, 5000)
     }
 
 })();
