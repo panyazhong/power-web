@@ -88,14 +88,24 @@
         });
 
         socket.on('status', function (data) {
-            Log.i('status : \n' + data);
 
-            var obj = JSON.parse(data);
-            var item = {
-                count: JSON.parse(obj.content).total,  // 未处理的event数量
-                states: (JSON.parse(obj.content)).detail // 侧边栏
-            };
-            $rootScope.$emit('refresh', item);
+            var statusData = JSON.parse(JSON.parse(data).content);  //侧边栏状态、异常总数
+
+            $rootScope.$emit('refresh', statusData);
+        });
+
+        socket.on('load', function (data) {
+
+            var loadData = JSON.parse(JSON.parse(data).content);  //地图某条线的负荷
+
+            $rootScope.$emit('load', loadData);
+        });
+
+        socket.on('demand', function (data) {
+
+            var demandData = JSON.parse(JSON.parse(data).content);  //地图某条线的需量，及变电站总需量
+
+            $rootScope.$emit('demand', demandData);
         });
 
         socket.on('overall', function (data) {

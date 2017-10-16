@@ -674,42 +674,6 @@
         $scope.init();
 
         /**
-         * 当前需量
-         */
-        $rootScope.$on('overallRefresh', function (event, data) {
-            if (!data) {
-                return
-            }
-
-            if (!$scope.show.cid || !$scope.show.requiredmd) {
-                return
-            }
-
-            var pData = data[$scope.show.cid];
-            if (pData) {
-                var currentmd = pData.P + pData.PUnit;
-                if (currentmd) {
-                    var per = (parseInt(currentmd) / parseInt($scope.show.requiredmd) * 100).toFixed(2);
-                    var percentageW = '';   //进度条
-                    var percentage = per + "%"; // 占比
-                    if (per <= 100) {
-                        percentageW = per + "%";
-                    } else {
-                        percentageW = 100 + "%";
-                        // 异常时颜色设置红色
-                        $("#percentageW").addClass("bg-red");
-                        $("#percentage").addClass("color-red");
-                    }
-
-                    $("#currentmd").text("当前负荷：" + currentmd);
-                    $("#percentage").text("需量占比：" + percentage);
-                    $("#percentageW").css({width: percentageW});
-                }
-            }
-
-        });
-
-        /**
          * load event
          */
         var loadListener = $rootScope.$on('load', function (event, data) {
@@ -718,7 +682,7 @@
             var clientId = locals.get('cid', '');
             if (!clientId) return;
 
-            Log.i('load，接收到数据：' + JSON.stringify(data));
+            Log.i('rec-load：\n' + JSON.stringify(data));
 
             $scope.show.loadPieData.map(function (t) {
                 if (data[clientId] && data[clientId][t.id] && data[clientId][t.id].val) {
@@ -740,8 +704,9 @@
             var clientId = locals.get('cid', '');
             if (!clientId) return;
 
-            Log.i('demand，接收到数据：' + JSON.stringify(data));
+            Log.i('rec-demand：\n' + JSON.stringify(data));
 
+            var totalDmd = 0;  //总需量
             $scope.show.demandPieData.map(function (t) {
                 if (data[clientId] && data[clientId][t.id] && data[clientId][t.id].val) {
                     if (data[clientId][t.id].val < 0) {
@@ -750,7 +715,37 @@
                         t.current = data[clientId][t.id].val > t.total ? t.total : data[clientId][t.id].val;
                     }
                 }
+                // 总需量
+                if (data[clientId]) {
+                    for (var Key in data[clientId]) {
+                        totalDmd += data[clientId][Key].val;
+                    }
+                }
             });
+
+            if (totalDmd == 0) return;  //总需量不为空才有意义
+            if (clientId != $scope.show.cid || !$scope.show.requiredmd) return;
+
+            Log.i('totalDmd：' + clientId + " - " + $scope.show.cid + " / " + totalDmd + " / " + $scope.show.requiredmd);
+
+            var currentmd = totalDmd.toFixed(4) + "kW";
+            if (currentmd) {
+                var per = (parseInt(currentmd) / parseInt($scope.show.requiredmd) * 100).toFixed(2);
+                var percentageW = '';   //进度条
+                var percentage = per + "%"; // 占比
+                if (per <= 100) {
+                    percentageW = per + "%";
+                } else {
+                    percentageW = 100 + "%";
+                    // 异常时颜色设置红色
+                    $("#percentageW").addClass("bg-red");
+                    $("#percentage").addClass("color-red");
+                }
+
+                $("#currentmd").text("当前负荷：" + currentmd);
+                $("#percentage").text("需量占比：" + percentage);
+                $("#percentageW").css({width: percentageW});
+            }
         });
 
         var filterListener = $rootScope.$on('filterInfo', function (event, data) {
