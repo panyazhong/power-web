@@ -23,7 +23,7 @@
         /**/
         var socket = io.connect(coreConfig.host + ':6689', {resource: 'event/socket.io'});
         socket.on('alert', function (data) {    // 监听事件
-            Log.i('alert : \n' + data);
+            Log.i('rec-alert : \n' + data);
 
             var obj = JSON.parse(data);
             socket.emit('received', {mhid: obj.mhid}); // 收到alert事件后响应
@@ -79,7 +79,7 @@
         });
 
         socket.on('monitor', function (data) {
-            Log.i('monitor : \n' + data);
+            Log.i('rec-monitor : \n' + data);
 
             var obj = JSON.parse(JSON.parse(data).content);
             clientCache.cache.data = obj;
@@ -106,16 +106,6 @@
             var demandData = JSON.parse(JSON.parse(data).content);  //地图某条线的需量，及变电站总需量
 
             $rootScope.$emit('demand', demandData);
-        });
-
-        socket.on('overall', function (data) {
-            Log.i('overall : \n' + data);
-
-            var obj = JSON.parse(data);
-            var item = JSON.parse(obj.content);
-            clientCache.cache.p = item;
-
-            $rootScope.$emit('overallRefresh', item);
         });
 
         socket.on('inspect', function (data) {  // 巡检模块刷新
