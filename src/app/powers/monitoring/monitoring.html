@@ -1,3 +1,4 @@
+<!--
 <div ba-panel>
     <div style="background: #000;text-align: center;"
          auto-height
@@ -29,4 +30,18 @@
         </div>
     </div>
 
+</div>
+-->
+
+<div ba-panel>
+    <div auto-height style="background-color: #282828;">
+
+        <monitor-svg
+                monitor-data="monitorData"
+                template-url="{{tree.templateUrl}}"
+                line-click="lineClick(inid,lid)"
+                tree="tree">
+        </monitor-svg>
+
+    </div>
 </div>
