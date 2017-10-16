@@ -26,17 +26,14 @@
             Log.i('rec-alert : \n' + data);
 
             var obj = JSON.parse(data);
+            var content = JSON.parse(obj.content);
             socket.emit('received', {mhid: obj.mhid}); // 收到alert事件后响应
-            switch (parseInt(obj.level)) {
+            switch (parseInt(content.level)) {
                 case 1:
-                    if (!window.DEBUG) {
-                        openModal('app/powers/modal/warningEvent.html');
-                    }
+                    openModal('app/powers/modal/warningEvent.html');
                     break;
                 case 2:
-                    if (!window.DEBUG) {
-                        openModal('app/powers/modal/dangerEvent.html');
-                    }
+                    openModal('app/powers/modal/dangerEvent.html');
                     break;
             }
 
@@ -49,7 +46,7 @@
                     // appendTo: angular.element('#' + eleId),
                     resolve: {
                         params: {
-                            data: obj
+                            data: content
                         }
                     },
                     windowTopClass: "power-modal-layout"
@@ -64,7 +61,7 @@
             }
 
             function eventCtrl($scope, params, $timeout) {
-                $scope.title = params.data.desc;
+                $scope.title = params.data.brief;
 
                 $scope.submit = function () {
                     var data = 'submit';
