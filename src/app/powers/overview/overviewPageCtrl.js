@@ -53,7 +53,8 @@
             eleState: 'ele',        // electric state
             eleMonth: {},           // 柱状图data
             eleMonthStack: {},       // 堆积图data
-            eleMaxData: []          // 统计
+            eleMaxData: [],          // 统计
+            eleTitle: '',            //选中的line
         };
 
         /**
@@ -436,6 +437,14 @@
             $scope.editValById($scope.show.loadTitle, item.id);
             $scope.lineChart('Load', item);
             $scope.getCountByLineId('Load', item);
+            // ele 电量line跟着符合走
+            $scope.getElectricByLineId(item.id);
+            $scope.getElectricMonth(0, item.id);
+            $timeout(function () {
+                $scope.getElectricMonth(1, item.id);
+            }, 200);
+
+            $scope.show.eleTitle = item.name;
         };
 
         /**
@@ -616,12 +625,6 @@
             $scope.queryBase();
             $scope.querySafety();
             $scope.getLinesByClientId();
-            //======================================================>根据变电站获取电量柱状图，统计数据，测试id
-            $scope.getElectricByLineId(113);
-            $scope.getElectricMonth(0, 113);
-            $timeout(function () {
-                $scope.getElectricMonth(1, 113);
-            }, 200);
         };
 
         /**

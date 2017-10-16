@@ -12,7 +12,7 @@
                 monitorData: '=',
                 // colors: '=',
                 tree: '=',
-                lineClick: '&'
+                viewBranch: '&'
             },
             link: function ($scope, $element, $attributes) {
                 $http
@@ -78,8 +78,37 @@
                 $scope.incUTransform = function (incIndex, name) {
                     return 'matrix(8, 0, 0, 8, ' + (config.origin.x + config.client.left + incIndex * config.client.gap + config.incU.offsetX) + ',' + (config.origin.y + config.client.h + config.incTitle.top + name.length * config.incTitle.gap) + ')';
                 }
-                $scope.chooseBranch = function (incId, lineId) {
-                    alert('incId: ' + incId + ', lineId: ' + lineId);
+                $scope.line = {
+                    id: '',
+                    name: '',
+                    Ia: '',
+                    Ib: '',
+                    Ic: '',
+                    Ua: '',
+                    Ub: '',
+                    Uc: '',
+                    P: '',
+                    Q: '',
+                    PF: '',
+                    Pt1: ''
+                };   //选中的popov数据
+                $scope.filterKey = ['id', 'name'];
+                $scope.chooseBranch = function (incId, lineId, incIndex, branchIndex) {
+                    // console.log('chooseBranch: ' + incId + " / " + lineId + " / " + incIndex + " / " + branchIndex);
+                    // console.log('chooseBranch 111：' + JSON.stringify($scope.tree.data[incIndex].lines[branchIndex]));
+                    // console.log('chooseBranch 222：' + JSON.stringify($scope.monitorData[incIndex].lines[branchIndex]));
+
+                    $scope.line["id"] = $scope.tree.data[incIndex].lines[branchIndex].id;
+                    $scope.line["name"] = $scope.tree.data[incIndex].lines[branchIndex].name;
+
+                    var info = $scope.monitorData[incIndex].lines[branchIndex];
+                    for (var Key in $scope.line) {
+                        if ($scope.filterKey.indexOf(Key) == -1) {
+                            $scope.line[Key] = info[Key] || '';
+                        }
+                    }
+
+                    // console.log('chooseBranch : ' + JSON.stringify($scope.line));
                 }
             }]
         }

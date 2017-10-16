@@ -21,7 +21,7 @@
 
     function eventsCache(Log, $state, $rootScope, clientCache, $uibModal, coreConfig) {
         /**/
-        var socket = io.connect(coreConfig.host + ':6688', {resource: 'event/socket.io'});
+        var socket = io.connect(coreConfig.host + ':6689', {resource: 'event/socket.io'});
         socket.on('alert', function (data) {    // 监听事件
             Log.i('alert : \n' + data);
 

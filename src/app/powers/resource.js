@@ -520,13 +520,14 @@
         // 变电站
         .factory('Client', function (Resource) {
             var config = {
-                url: 'client/:id/:attr/:tree/:preview/:eventAndException',
+                url: 'client/:id/:attr/:tree/:preview/:eventAndException/:svg',
                 paramsDefault: {
                     id: '@id',
                     attr: '@attr',
                     tree: '@tree',
                     preview: '@preview',
-                    eventAndException: '@eventAndException'
+                    eventAndException: '@eventAndException',
+                    svg: '@svg',
                 },
                 action: {
                     query: {
@@ -537,6 +538,9 @@
                         method: 'GET'
                     },
                     safety: {
+                        method: 'GET'
+                    },
+                    querySvg: {
                         method: 'GET'
                     }
                 }

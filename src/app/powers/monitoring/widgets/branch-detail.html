@@ -1,51 +1,51 @@
 <div class="popover pop-detail">
 
     <div class="pop-title">
-        {{show.branch.name}}
+        {{line.name}}
     </div>
 
     <div class="pop-content">
 
         <div class="pop-content-div">
-            A相电流：{{show.branch.currentA}}
+            A相电流：{{line.Ia}}
         </div>
         <div class="pop-content-div">
-            B相电流：{{show.branch.currentB}}
+            B相电流：{{line.Ib}}
         </div>
         <div class="pop-content-div">
-            C相电流：{{show.branch.currentC}}
+            C相电流：{{line.Ic}}
         </div>
 
         <div class="pop-content-div">
-            A相电压：{{show.branch.voltageA}}
+            A相电压：{{line.Ua}}
         </div>
         <div class="pop-content-div">
-            B相电压：{{show.branch.voltageB}}
+            B相电压：{{line.Ub}}
         </div>
         <div class="pop-content-div">
-            C相电压：{{show.branch.voltageC}}
+            C相电压：{{line.Uc}}
         </div>
 
         <div class="pop-content-div">
-            有功功率(P)：{{show.branch.p}}
+            有功功率(P)：{{line.P}}
         </div>
         <div class="pop-content-div">
-            无功功率(Q)：{{show.branch.q}}
+            无功功率(Q)：{{line.Q}}
         </div>
 
         <div class="pop-content-div">
-            功率因数：{{show.branch.powerFactor}}
+            功率因数：{{line.PF}}
         </div>
         <div class="pop-content-div">
-            当日电量(Wp)：{{show.branch.wp}}
+            当日电量(Wp)：{{line.Pt1}}
         </div>
-        <div class="pop-content-div" ng-show="show.branch.temperature">
-            变压器温度: {{show.branch.temperature}}
+        <div class="pop-content-div" ng-show="line.temperature">
+            变压器温度: {{line.temperature}}
         </div>
 
     </div>
 
-    <div class="pop-footer" ng-click="viewBranchDetail(show.branch.bid)">
+    <div class="pop-footer" ng-click="viewBranch({id:line.id})">
         查看设备明细
     </div>
 

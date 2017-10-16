@@ -7,11 +7,12 @@
     /** @ngInject */
     function monitoringPageCtrl($scope, $state, $stateParams, PageTopCache, Clientimg, ClientimgHelper,
                                 Branch, HttpToast, SidebarCache, Sidebar, Log, locals, EventsCache,
-                                $rootScope, ToastUtils, clientCache) {
+                                $rootScope, ToastUtils, clientCache, previewCache, $timeout, Client, clientSvg) {
 
         PageTopCache.cache.state = $state.$current; // active
         $stateParams.cid ? locals.put('cid', $stateParams.cid) : '';
 
+        /*
         $scope.show = {
             imgs: {},   // images info
             branch: {},  // branch info
@@ -69,10 +70,12 @@
             $scope.show.branch.wp = data.wp;
             $scope.show.branch.temperature = data.temperature;
         };
+        */
 
         /**
          * 显示前搜索
          */
+        /*
         $scope.onBeforeShow = function (id) {
 
             $scope.show.branch = {};    // init
@@ -96,10 +99,12 @@
                     HttpToast.toast(err);
                 });
         };
+        */
 
         /**
          * 查看分支详情
          */
+        /*
         $scope.viewBranchDetail = function (id) {
             if (!id) {
                 ToastUtils.openToast('warning', '支线信息异常。稍后再试.');
@@ -110,6 +115,7 @@
 
             locals.put('bid', id);
         };
+        */
 
         $scope.setBgWidth = function (w) {
             if (!w) {
@@ -120,6 +126,73 @@
                 "min-width": w + "px"
             }
         };
+
+        /**
+         *  查看line详情
+         */
+        $scope.viewBranch = function (id) {
+            if (!id) {
+                ToastUtils.openToast('warning', '支线信息异常。稍后再试.');
+                return
+            }
+
+            $state.go('branch', {bid: id}, {reload: true});
+
+            locals.put('bid', id);
+        };
+
+        $scope.queryClientSvg = function () {
+            var p = {
+                id: locals.get('cid', ''),
+                svg: 'svg'
+            };
+            Client.querySvg(p,
+                function (data) {
+                    $scope.tree = clientSvg.create(data);
+                    Log.i('b，svg转换后 :\n ' + JSON.stringify($scope.tree));
+                },
+                function (err) {
+                    HttpToast.toast(err);
+                });
+        };
+
+        // b. 根据变电站id获取svg信息
+        $scope.initFilterInfo = function () {
+            // $scope.initInfo();  // clear info
+
+            var cid = locals.get('cid', '');
+            if (cid) {
+                EventsCache.subscribeClient(cid);   // 订阅变电站信息
+
+                $scope.queryClientSvg();
+            }
+            else {  // 和其它界面diff，不存在也需选中一个客户
+                locals.put('cid', $scope.show.mapData[0].id);
+                $timeout(function () {
+                    EventsCache.subscribeClient($scope.show.mapData[0].id);   // 订阅变电站信息
+
+                    $scope.queryClientSvg();
+                }, 200);
+            }
+
+        };
+
+        /**
+         * a. 获取变电站信息
+         * b. 根据变电站id获取svg信息
+         */
+        // a. 获取变电站信息
+        $scope.init = function () {
+
+            var pm = previewCache.getPreview();
+            pm.then(function (data) {
+                $scope.show.mapData = data;
+
+                $scope.initFilterInfo();
+            });
+
+        };
+        $scope.init();
 
         /**
          * socket
@@ -161,49 +234,37 @@
 
 
         /**
-         * svg
+         * svg test data
          */
 
         $scope.tree = {
-            name: '良友木业',
-            templateUrl: 'app/powers/temp/template.html',
-            data: [{
-                id: 96,
-                name: '企口4#线电源控制柜',
-                lines: [
-                    {id: 101, name: '企口4#'},
-                    {id: 102, name: '企口5#长'},
-                    {id: 103, name: '企口5#短'}
-                ]
+            "name": "良友木业",
+            "templateUrl": "app/powers/temp/template.html",
+            "data": [{
+                "id": 96,
+                "name": "企口4#线电源控制柜",
+                "lines": [{"id": 101, "name": "企口4#"}, {"id": 102, "name": "企口5#长"}, {"id": 103, "name": "企口5#短"}]
             }, {
-                id: 97,
-                name: '6#7#机电源控制柜',
-                lines: [
-                    {id: 104, name: '7#除尘'},
-                    {id: 105, name: '企口6#机'},
-                    {id: 106, name: '企口7#机'},
-                    {id: 107, name: '企口7#机进板处电箱'}
-                ]
+                "id": 97,
+                "name": "6#7#机电源控制柜",
+                "lines": [{"id": 104, "name": "7#除尘"}, {"id": 105, "name": "企口6#机"}, {
+                    "id": 106,
+                    "name": "企口7#机"
+                }, {"id": 107, "name": "企口7#机进板处电箱"}]
             }, {
-                id: 98,
-                name: '分检1#机电源控制柜',
-                lines: [
-                    {id: 108, name: '分检1#线双端锯'},
-                    {id: 109, name: '分检1#线分板机'},
-                    {id: 110, name: '分检1#线底砂机'},
-                    {id: 111, name: '分检1#线背槽机'},
-                    {id: 112, name: '分检1#线面砂机、1#线拐弯机'}
-                ]
+                "id": 98,
+                "name": "分检1#机电源控制柜",
+                "lines": [{"id": 108, "name": "分检1#线双端锯"}, {"id": 109, "name": "分检1#线分板机"}, {
+                    "id": 110,
+                    "name": "分检1#线底砂机"
+                }, {"id": 111, "name": "分检1#线背槽机"}, {"id": 112, "name": "分检1#线面砂机、1#线拐弯机"}]
             }, {
-                id: 99,
-                name: '分检2#3#机电源控制柜',
-                lines: [
-                    {id: 113, name: '分检3#线面砂机、3#线拐弯机'},
-                    {id: 114, name: '分检3#线底砂机、3#线双端锯'},
-                    {id: 115, name: '分检2#线底砂机、3#线双端锯'},
-                    {id: 116, name: '分检2#线面砂机'},
-                    {id: 117, name: '分检2#3#线分板机'}
-                ]
+                "id": 99,
+                "name": "分检2#3#机电源控制柜",
+                "lines": [{"id": 113, "name": "分检3#线面砂机、3#线拐弯机"}, {"id": 114, "name": "分检3#线底砂机、3#线双端锯"}, {
+                    "id": 115,
+                    "name": "分检2#线底砂机、3#线双端锯"
+                }, {"id": 116, "name": "分检2#线面砂机"}, {"id": 117, "name": "分检2#3#线分板机"}]
             }]
         };
 
@@ -619,10 +680,6 @@
                 }, {"prop": "IcOC", "title": "C相过流告警", "val": "0.00", "color": "#666666"}], "id": "124", "lines": []
             }]
         }];
-
-        $scope.lineClick = function (inid, lid) {
-            console.info('lineClick...', inid, lid);
-        };
     }
 
 })();

@@ -13,7 +13,8 @@
         .factory("lineTitlePieHelper", lineTitlePieHelper)
         .factory("lineChartHelper", lineChartHelper)
         .factory("lineMaxDataHelper", lineMaxDataHelper)
-        .factory("lineMaxEleHelper", lineMaxEleHelper);
+        .factory("lineMaxEleHelper", lineMaxEleHelper)
+        .factory("clientSvg", clientSvg);   //变电站svg信息
 
     function clientimgHelper(_) {
 
@@ -408,6 +409,18 @@
                     item["val"] = item.val + 'KW.h';
                     item["title"] = listTitle[pos];
                 });
+
+                return _.cloneDeep(data);
+            }
+        }
+    }
+
+    function clientSvg(_, ImgPrefix) {
+        return {
+            create: function (data) {
+                if (!data) return;
+
+                data.templateUrl = ImgPrefix.prefix + data.templateUrl;
 
                 return _.cloneDeep(data);
             }
