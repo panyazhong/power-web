@@ -110,6 +110,7 @@
 
             var pm = treeCache.getTree();
             pm.then(function (data) {
+                var treeObj = treeCache.getTreeObj(data); // 初始化treeObj
 
                 $scope.show.menuItems = $scope.setLeftMenu(data);
             });

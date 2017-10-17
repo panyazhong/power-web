@@ -5,51 +5,51 @@
         <div class="top-content">
 
             <div class="top-content-tile">
-                {{show.branchData.name}}
+                {{line.name}}
             </div>
 
             <div class="col-md-6 top-content-div">
-                A相电流：{{show.branchData.currentA}}
+                A相电流：{{line.Ia}}
             </div>
             <div class="col-md-6 top-content-div">
-                A相电压：{{show.branchData.voltageA}}
-            </div>
-
-
-            <div class="col-md-6 top-content-div">
-                B相电流：{{show.branchData.currentB}}
-            </div>
-            <div class="col-md-6 top-content-div">
-                B相电压：{{show.branchData.voltageB}}
+                A相电压：{{line.Ua}}
             </div>
 
 
             <div class="col-md-6 top-content-div">
-                C相电流：{{show.branchData.currentC}}
+                B相电流：{{line.Ib}}
             </div>
             <div class="col-md-6 top-content-div">
-                C相电压：{{show.branchData.voltageC}}
-            </div>
-
-
-            <div class="col-md-6 top-content-div">
-                有功功率(P)：{{show.branchData.p}}
-            </div>
-            <div class="col-md-6 top-content-div">
-                无功功率(Q)：{{show.branchData.q}}
+                B相电压：{{line.Ub}}
             </div>
 
 
             <div class="col-md-6 top-content-div">
-                功率因数：{{show.branchData.powerFactor}}
+                C相电流：{{line.Ic}}
             </div>
             <div class="col-md-6 top-content-div">
-                当日电量(Wp)：{{show.branchData.wp}}
+                C相电压：{{line.Uc}}
             </div>
 
 
-            <div class="col-md-6 top-content-div" ng-show="show.branchData.temperature">
-                变压器温度: {{show.branchData.temperature}}
+            <div class="col-md-6 top-content-div">
+                有功功率(P)：{{line.P}}
+            </div>
+            <div class="col-md-6 top-content-div">
+                无功功率(Q)：{{line.Q}}
+            </div>
+
+
+            <div class="col-md-6 top-content-div">
+                功率因数：{{line.PF}}
+            </div>
+            <div class="col-md-6 top-content-div">
+                当日电量(Wp)：{{line.Pt1}}
+            </div>
+
+
+            <div class="col-md-6 top-content-div" ng-show="line.temperature">
+                变压器温度: {{line.temperature}}
             </div>
             <div class="col-md-6 top-content-div">
             </div>
@@ -59,7 +59,9 @@
     <div class="col-md-3 top-middle">
 
         <div style="max-width: 240px;background: #000">
-            <img ng-src="{{show.branchData.dlt_img}}" style="height: 296px;"/>
+
+            <!--line svg-->
+
         </div>
 
     </div>

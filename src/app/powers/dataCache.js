@@ -334,11 +334,13 @@
     function treeCache(Client, HttpToast, locals, $q) {
 
         var key = 'tree';   //变电站树
+        var keyObj = 'treeObj';   //变电站树Obj
         var k = 'client';   //选中的变电站信息
 
         var service = {
             init: init,
             getTree: getTree,
+            getTreeObj: getTreeObj,
             putClient: putClient,
             getClient: getClient,
             createClientArr: createClientArr
@@ -348,6 +350,7 @@
 
         function init() {
             locals.removeItem(key);
+            locals.removeItem(keyObj);
             locals.removeItem(k);
         }
 
@@ -375,6 +378,54 @@
             }
 
             return deferred.promise;
+        }
+
+        function iterator(treeNodes) {
+            if (!treeNodes || !treeNodes.length) return;
+
+            var stack = [];
+
+            //先将第一层节点放入栈
+            for (var i = 0, len = treeNodes.length; i < len; i++) {
+                stack.push(treeNodes[i]);
+            }
+
+            var item;
+            var subArr = [];
+
+            while (stack.length) {
+                item = stack.shift();
+
+                subArr.push(item.id);
+
+                //如果该节点有子节点，继续添加进入栈底
+                if (item.lines && item.lines.length) {
+
+                    stack = stack.concat(item.lines);
+                }
+            }
+
+            return subArr;
+        }
+
+        function getTreeObj(data) {
+
+            var treeObj = locals.getObject(keyObj);
+
+            if (JSON.stringify(treeObj) == '{}' || JSON.stringify(treeObj) == '[]') {
+                var obj = {};
+                if (!data || !data.length) return obj;
+
+                // clientId做key，所有子节点id做对象val
+                data.map(function (t) {
+                    obj[t.id] = iterator(t.lines);
+                });
+
+                return obj;
+            }
+            else {
+                return treeObj;
+            }
         }
 
         function putClient(data) {

@@ -8,20 +8,33 @@
 
     /** @ngInject */
     function branchPageCtrl($scope, $stateParams, Branch, HttpToast, Device, ToastUtils, BranchimgHelper,
-                            PageTopCache, ModalUtils, locals, $rootScope, EventsCache, clientCache, Log, Line) {
+                            PageTopCache, ModalUtils, locals, $rootScope, EventsCache, clientCache, Log, Line,
+                            treeCache) {
 
         PageTopCache.cache.state = 'monitoring';
 
         $scope.show = {
             bid: '',
-            branchAlarm: [],
-            branchData: {},      // 支线基本信息
-            branchEqp: [],   // 支线 设备列表
-
-            isGetData: false,   //标记获取支线信息，ok
-            branchImgPrefix: '' // 图片前缀
+            branchAlarm: [],    // line 报警信息
+            branchEqp: []       // line 设备列表
         };
         $scope.rowCollection = [];
+        // line 基本信息
+        $scope.line = {
+            id: '',
+            name: '',
+            Ia: '',
+            Ib: '',
+            Ic: '',
+            Ua: '',
+            Ub: '',
+            Uc: '',
+            P: '',
+            Q: '',
+            PF: '',
+            Pt1: ''
+        };   //选中的popov数据
+        $scope.filterKey = ['id', 'name'];
 
         $scope.queryList = function () {
 
@@ -39,30 +52,28 @@
                 });
         };
 
-        $scope.setBranchImg = function (state) {
-            switch (state) {
-                case 'def': // 默认
-                    return $scope.show.branchImgPrefix + 'red.png';
-                    break;
-                case 'err': // 异常
-                    return $scope.show.branchImgPrefix + 'green.png';
-                    break;
-            }
-        };
+        $scope.setLineInfo = function (clientId) {
 
-        $scope.setBranchInfo = function (data) {
-            $scope.show.branchData.currentA = data.currentA;
-            $scope.show.branchData.currentB = data.currentB;
-            $scope.show.branchData.currentC = data.currentC;
-            $scope.show.branchData.p = data.p;
-            $scope.show.branchData.powerFactor = data.powerFactor;
+            locals.put('cid', clientId);    //update cid
 
-            $scope.show.branchData.voltageA = data.voltageA;
-            $scope.show.branchData.voltageB = data.voltageB;
-            $scope.show.branchData.voltageC = data.voltageC;
-            $scope.show.branchData.q = data.q;
-            $scope.show.branchData.wp = data.wp;
-            $scope.show.branchData.temperature = data.temperature;
+            EventsCache.subscribeClient(clientId);  //订阅变电站信息
+
+            var pm = treeCache.getTree();
+            pm.then(function (data) {           //PageTop name显示
+
+                data.map(function (t) {
+                    if (t.id == clientId) {
+                        var clientName = t.name;
+                        var lineName = $scope.iterator(t.lines, $scope.show.bid).name;
+                        PageTopCache.currentState.state = clientName + " / " + lineName; // contentTop 变电站name+支线name
+
+                        $scope.line.name = lineName;
+
+                        Log.i('line：\n' + JSON.stringify($scope.line));
+                    }
+                })
+
+            });
         };
 
         $scope.init = function () {
@@ -73,41 +84,29 @@
                 return;
             }
 
-            // 1.缓存取变量信息
-            var branchData = clientCache.cache.data[$scope.show.bid];
-            if (branchData) {
-                console.log('branchData Cache不为空：' + JSON.stringify(branchData));
-                // 支线详情
-                $scope.setBranchInfo(branchData);
+            $scope.queryList(); //获取当前line设备列表
 
-                // 继电报警信息
-                $scope.show.branchAlarm = branchData.alerts;
+            /**
+             *
+             * a.获取当前line的clientId
+             * b.订阅clientId事件
+             * c.获取当前line事件数据
+             *
+             */
+            var pm = treeCache.getTree();
+            pm.then(function (data) {
+                var treeObj = treeCache.getTreeObj(data);
 
-                // 默认图片不设置，前缀还未拿到
-            }
+                for (var Key in treeObj) {
+                    if (treeObj[Key]) {
+                        if (treeObj[Key].indexOf($scope.show.bid) != -1) {
 
-            // 2.取，其它信息
-            Branch.query({
-                    bid: $scope.show.bid
-                },
-                function (suc) {
-                    var data = BranchimgHelper.query(suc);
-                    $scope.show.branchImgPrefix = data.dlt_img;  // 支线图片前缀
+                            $scope.setLineInfo(Key);
+                        }
+                    }
+                }
+            });
 
-                    $scope.show.branchData.dlt_img = $scope.setBranchImg('def');  // 中间图片
-                    $scope.show.branchData.name = data.name;    // 支线name
-                    PageTopCache.currentState.state = data.client_name + " / " + data.name; // contentTop 变电站name+支线name
-
-                    locals.put('cid', data.cid);
-
-                    EventsCache.subscribeClient(data.cid);    // 需更新变电站信息，有可能点的是侧边栏
-
-                    $scope.show.isGetData = true;
-                }, function (err) {
-                    HttpToast.toast(err);
-                });
-
-            $scope.queryList();
         };
         $scope.init();
 
@@ -167,36 +166,56 @@
 
         };
 
+        $scope.iterator = function (treeNodes, choiceId) {
+            if (!treeNodes || !treeNodes.length) return;
+
+            var stack = [];
+
+            for (var i = 0; i < treeNodes.length; i++) {
+                stack.push(treeNodes[i]);
+            }
+
+            var item;
+
+            while (stack.length) {
+                item = stack.shift();
+
+                if (item.id == choiceId) {
+
+                    return item;
+                }
+
+                if (item.lines && item.lines.length) {
+                    stack = item.lines.concat(stack);
+                }
+            }
+        };
+
         /**
          * socket
          */
-        $rootScope.$on('refreshMonitor', function (event, data) {
-            if (!data) {
-                return
+        $rootScope.$on('monitor', function (event, data) {
+            if (!data) return;
+            if (!$scope.show.bid) return;
+            var cid = locals.get('cid', '');
+            if (cid != data.id) return;
+
+            Log.i('rec-monitor : \n' + JSON.stringify(data));
+
+            // line基本信息
+            var lineInfo = $scope.iterator(data.lines, $scope.show.bid);
+            if ($scope.show.bid != lineInfo.id) return;
+
+            for (var Key in $scope.line) {
+                if ($scope.filterKey.indexOf(Key) == -1) {
+                    $scope.line[Key] = lineInfo[Key] || '';
+                }
             }
 
-            if (!$scope.show.isGetData) {
-                return
-            }
+            // line报警信息
+            $scope.show.branchAlarm = lineInfo.alerts;
 
-            if (!$scope.show.bid) {
-                return
-            }
-            // 支线详情
-            var branchInfo = data[$scope.show.bid];
-            $scope.setBranchInfo(branchInfo);
-
-            // 继电报警信息
-            $scope.show.branchAlarm = branchInfo.alerts;
-
-            // 设置支线图片
-            if (branchInfo.Itotal == 0) {
-                $scope.show.branchData.dlt_img = $scope.setBranchImg('err');
-            } else {
-                $scope.show.branchData.dlt_img = $scope.setBranchImg('def');
-            }
-
-            $rootScope.$digest();
+            // line异常图片
         });
 
     }
