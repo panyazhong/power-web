@@ -194,7 +194,7 @@
         /**
          * socket
          */
-        $rootScope.$on('monitor', function (event, data) {
+        var monitorListener = $rootScope.$on('monitor', function (event, data) {
             if (!data) return;
             if (!$scope.show.bid) return;
             var cid = locals.get('cid', '');
@@ -216,8 +216,20 @@
             $scope.show.branchAlarm = lineInfo.alerts;
 
             // line异常图片
+            $scope.lineSvg = {
+                Iavg: lineInfo.Iavg,
+                P: lineInfo.P,
+                Q: lineInfo.Q,
+                name: $scope.line.name
+            };
+
+            $scope.$digest();
         });
 
+        $scope.$on('$destroy', function () {
+            monitorListener();
+            monitorListener = null;
+        });
     }
 
     // 编辑设备ctrl，若修改在在台账修改

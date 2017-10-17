@@ -50,7 +50,7 @@
                         }
                     },
                     windowTopClass: "power-modal-layout"
-                }).result.then(function (result) {
+                }).result.then(function (info) {
                     // 传值走这里
                     if (info) {
                         $state.go('events');
