@@ -750,7 +750,6 @@
 
         var filterListener = $rootScope.$on('filterInfo', function (event, data) {
             if (!data) return;
-            if ($state.$current != 'overview') return;
 
             Log.i('filterInfo: ' + JSON.stringify(data));
 

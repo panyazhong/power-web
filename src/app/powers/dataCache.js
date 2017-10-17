@@ -76,12 +76,10 @@
         });
 
         socket.on('monitor', function (data) {
-            Log.i('rec-monitor : \n' + data);
 
-            var obj = JSON.parse(JSON.parse(data).content);
-            clientCache.cache.data = obj;
+            var monitorData = JSON.parse(JSON.parse(data).content);
 
-            $rootScope.$emit('refreshMonitor', obj);    // 一次系统图
+            $rootScope.$emit('monitor', monitorData);    //一次系统图，支线详情line基本信息、报警信息
         });
 
         socket.on('status', function (data) {
