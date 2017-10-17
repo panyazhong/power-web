@@ -684,30 +684,8 @@
 
             Log.i('rec-load：\n' + JSON.stringify(data));
 
-            $scope.show.loadPieData.map(function (t) {
-                if (data[clientId] && data[clientId][t.id] && data[clientId][t.id].val) {
-                    if (data[clientId][t.id].val < 0) {
-                        t.current = 0;
-                    } else {
-                        t.current = data[clientId][t.id].val > t.total ? t.total : data[clientId][t.id].val;
-                    }
-                }
-            });
-        });
-
-        /**
-         * demand event
-         */
-        var demandListener = $rootScope.$on('demand', function (event, data) {
-            if (!data) return;
-            if (!$scope.show.demandPieData || !$scope.show.demandPieData.length) return;
-            var clientId = locals.get('cid', '');
-            if (!clientId) return;
-
-            Log.i('rec-demand：\n' + JSON.stringify(data));
-
             var totalDmd = 0;  //总需量
-            $scope.show.demandPieData.map(function (t) {
+            $scope.show.loadPieData.map(function (t) {
                 if (data[clientId] && data[clientId][t.id] && data[clientId][t.id].val) {
                     if (data[clientId][t.id].val < 0) {
                         t.current = 0;
@@ -746,6 +724,29 @@
                 $("#percentage").text("需量占比：" + percentage);
                 $("#percentageW").css({width: percentageW});
             }
+        });
+
+        /**
+         * demand event
+         */
+        var demandListener = $rootScope.$on('demand', function (event, data) {
+            if (!data) return;
+            if (!$scope.show.demandPieData || !$scope.show.demandPieData.length) return;
+            var clientId = locals.get('cid', '');
+            if (!clientId) return;
+
+            Log.i('rec-demand：\n' + JSON.stringify(data));
+
+            $scope.show.demandPieData.map(function (t) {
+                if (data[clientId] && data[clientId][t.id] && data[clientId][t.id].val) {
+                    if (data[clientId][t.id].val < 0) {
+                        t.current = 0;
+                    } else {
+                        t.current = data[clientId][t.id].val > t.total ? t.total : data[clientId][t.id].val;
+                    }
+                }
+            });
+
         });
 
         var filterListener = $rootScope.$on('filterInfo', function (event, data) {
