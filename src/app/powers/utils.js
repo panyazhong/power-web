@@ -155,10 +155,10 @@
                 window.location.replace(link);
             },
             errExit: function (data) {  // 登陆信息已过期
-                ToastUtils.openToast('error', data.message);
+                ToastUtils.openToast('error', '你的账号已在另一个设备登陆。');
+                locals.clear();
 
                 $timeout(function () {
-                    locals.clear();
                     // 跳转
                     window.location.replace(link);
                 }, 2000);
