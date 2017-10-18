@@ -403,14 +403,26 @@
             create: function (data) {
                 if (!data || !data.length) return;
 
+                /*
                 var listTitle = ['今日累计电量', '昨日累计电量', '本月累计电量', '上月累计电量', '本年累计电量'];
 
                 data.map(function (item, pos) {
                     item["val"] = item.val + 'KW.h';
                     item["title"] = listTitle[pos];
                 });
+                */
 
-                return _.cloneDeep(data);
+                var listTitle = ['今日累计电量', '昨日累计电量', '本月累计电量', '上月累计电量'];
+
+                var resData = [];
+                listTitle.map(function (t, pos) {
+                    resData.push({
+                        val: data[pos].val + 'KW.h',
+                        title: t
+                    })
+                });
+
+                return _.cloneDeep(resData);
             }
         }
     }
