@@ -30,7 +30,7 @@
 
 
                     var config = {
-                        origin: {x: 230, y: 80},
+                        origin: {x: 100, y: 80},    //原点
                         client: {left: 25, right: 85, gap: 200, h: 4},
                         inc: {top: 35, bottom: 60, gap: 95, w: 0.5},
                         branch: {offsetX: -4},

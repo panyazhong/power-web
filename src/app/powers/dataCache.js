@@ -27,6 +27,9 @@
 
             var obj = JSON.parse(data);
             var content = JSON.parse(obj.content);
+
+            $rootScope.$emit('alert', content);
+
             socket.emit('received', {mhid: obj.mhid}); // 收到alert事件后响应
             switch (parseInt(content.level)) {
                 case 1:
@@ -110,6 +113,13 @@
             var item = JSON.parse(obj.content);
 
             $rootScope.$emit('inspectRefresh', item);
+        });
+
+        socket.on('eventAndException', function (data) {
+
+            var eventAndExceptionData = JSON.parse(JSON.parse(data).content);  //地图异常确认时，缺陷有变化时
+
+            $rootScope.$emit('eventAndException', eventAndExceptionData);
         });
 
         /*

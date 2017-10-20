@@ -55,6 +55,9 @@
             eleMonthStack: {},       // 堆积图data
             eleMaxData: [],          // 统计
             eleTitle: '',            //选中的line
+
+            conTotalNum: 0,   // 已处理，未处理总数量,
+            conPercent: 0  // 已处理百分比
         };
 
         /**
@@ -263,6 +266,19 @@
 
         };
 
+        $scope.calWidth = function () {
+            var data = $scope.show.safetyData.event;
+            var con = data["confirmed"];
+            var not = data["notConfirmed"];
+            $scope.show.conTotalNum = con + not;
+            $scope.show.conPercent = (con / $scope.show.conTotalNum).toFixed(2) * 100;
+
+            /*
+                conTotalNum 大于0，说明存在已处理或未处理，背景 黄色，否则 灰色
+                conPercent 存在时，说明存在已处理，所以有百分比
+             */
+        };
+
         // c. 获取异常、缺陷数量
         $scope.querySafety = function () {
             var p = {
@@ -272,6 +288,9 @@
             Client.safety(p,
                 function (data) {
                     $scope.show.safetyData = data;
+
+                    $scope.calWidth();
+
                     //已完成
                     $scope.show.doneData = excepNumHelper.createDone(data);
                     $scope.show.undoData = excepNumHelper.createUndo(data);
@@ -464,14 +483,39 @@
             $scope.show.eleState = state;
         };
 
+        /**
+         * 定时查询load、demand折线图
+         */
+        var timer = $interval(function () {
+
+            // load
+            for (var i = 0; i < $scope.show.loadTitle.length; i++) {
+                var obj = $scope.show.loadTitle[i];
+                if (obj.active) {
+                    $scope.lineChart('Load', obj);
+                }
+            }
+
+            // demand
+            for (var i = 0; i < $scope.show.demandTitle.length; i++) {
+                var item = $scope.show.demandTitle[i];
+                if (item.active) {
+                    $scope.lineChart('Demand', item);
+                }
+            }
+
+        }, 180000); // 3min update
+
         $scope.initInfo = function () {
             //b. 获取基本概况
             $scope.show.baseList = [];
-            //c. 获取异常、缺陷数量、安全用电
+            //c. 获取异常、缺陷数量、安全用电，百分比
             $scope.show.safetyData = {};
             $scope.show.doneData = {};
             $scope.show.undoData = {};
             $scope.show.safeRunningDays = '';
+            $scope.show.conTotalNum = 0;
+            $scope.show.conPercent = 0;
 
             // chart
             $scope.show.loadTitle = [];
@@ -749,6 +793,30 @@
 
         });
 
+        var alertListener = $rootScope.$on('alert', function (event, data) {
+            if (!data) return;
+            var clientId = locals.get('cid', '');
+            if (!clientId) return;
+
+            Log.i('rec-alert: ' + JSON.stringify(data));
+
+            // 事件新增时
+            $scope.querySafety();
+        });
+
+        var eaeListener = $rootScope.$on('eventAndException', function (event, data) {
+            if (!data) return;
+            var clientId = locals.get('cid', '');
+            if (!clientId) return;
+
+            Log.i('rec-eventAndException: ' + JSON.stringify(data));
+
+            // 事件确认时，缺陷改变时
+            if (clientId == data.client_id) {
+                $scope.querySafety();
+            }
+        });
+
         var filterListener = $rootScope.$on('filterInfo', function (event, data) {
             if (!data) return;
 
@@ -763,9 +831,14 @@
             loadListener();
             demandListener();
             filterListener();
+            alertListener();
+            eaeListener();
             loadListener = null;
             demandListener = null;
             filterListener = null;
+            alertListener = null;
+            eaeListener = null;
+            $interval.cancel(timer);
         });
     }
 

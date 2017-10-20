@@ -18,9 +18,9 @@
     </div>
 </div>
 
-<div class="warn-content bg-yellow">
-    <span class="text-center warn-item__radius bg-blue" style="width: 60%;"></span>
-    <span class="text-center warn-item" style="width: 35%;"></span>
+<div class="warn-content" ng-class="show.conTotalNum > 0 ? 'bg-yellow' :'bg-gray'">
+    <span class="text-center warn-item__radius bg-blue" ng-style="{'width':show.conPercent+'%'}"></span>
+    <span class="text-center warn-item"></span>
 </div>
 
 <div style="margin: 5px 0 15px;">
