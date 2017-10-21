@@ -745,6 +745,8 @@
                 }
             });
 
+            $scope.$digest();
+
             if (totalDmd == 0) return;  //总需量不为空才有意义
             if (clientId != $scope.show.cid || !$scope.show.requiredmd) return;
 
@@ -790,6 +792,8 @@
                     }
                 }
             });
+
+            $scope.$digest();
 
         });
 

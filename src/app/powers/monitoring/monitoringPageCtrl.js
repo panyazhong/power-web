@@ -103,6 +103,8 @@
 
             // 系统图监控数据
             $scope.monitorData = data.lines;
+
+            $scope.$digest();
         });
 
         var filterListener = $rootScope.$on('filterInfo', function (event, data) {
