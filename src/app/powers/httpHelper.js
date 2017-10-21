@@ -14,7 +14,13 @@
         .factory("lineChartHelper", lineChartHelper)
         .factory("lineMaxDataHelper", lineMaxDataHelper)
         .factory("lineMaxEleHelper", lineMaxEleHelper)
-        .factory("clientSvg", clientSvg);   //变电站svg信息
+        .factory("clientSvg", clientSvg)   //变电站svg信息
+        .factory("dayHelper", dayHelper)   //Fuhe demo
+        .factory("monthHelper", monthHelper)
+        .factory("barHelper", barHelper)
+        .factory("pieHelper", pieHelper)
+        // .factory("pieHelper1", pieHelper1)
+        .factory("stackHelper", stackHelper);
 
     function clientimgHelper(_) {
 
@@ -357,7 +363,7 @@
 
     function lineChartHelper(_) {
         return {
-            create: function (data, type, lineTitle) {
+            create: function (data, type, lineTitle) {  //这里做了数据转换，转成能用的格式，ineChart的
                 if (!data) return;
                 if (!data.timeData || !data.timeData.length) return;
                 if (!data.yesdayData) return;   // 今日，昨日 可能[]，不能判断长度
@@ -373,7 +379,6 @@
                 lineData["timeData"] = data.timeData;
                 lineData["yesdayData"] = data.yesdayData;
                 lineData["todayData"] = data.todayData;
-
                 return _.cloneDeep(lineData);
             }
         }
@@ -403,26 +408,14 @@
             create: function (data) {
                 if (!data || !data.length) return;
 
-                /*
                 var listTitle = ['今日累计电量', '昨日累计电量', '本月累计电量', '上月累计电量', '本年累计电量'];
 
                 data.map(function (item, pos) {
                     item["val"] = item.val + 'KW.h';
                     item["title"] = listTitle[pos];
                 });
-                */
 
-                var listTitle = ['今日累计电量', '昨日累计电量', '本月累计电量', '上月累计电量'];
-
-                var resData = [];
-                listTitle.map(function (t, pos) {
-                    resData.push({
-                        val: data[pos].val + 'KW.h',
-                        title: t
-                    })
-                });
-
-                return _.cloneDeep(resData);
+                return _.cloneDeep(data);
             }
         }
     }
@@ -439,4 +432,144 @@
             }
         }
     }
+
+    //折线图（1条）
+    function dayHelper() {
+        return {
+            create: function (data) {
+                if (!data) return;
+
+                //这里拿到后台返回的数据，看要转成啥格式。
+                var resData = {
+                    title: "",
+                    unit: "",
+                    lineTitle: [],
+                    timeData: [],   // x轴data
+                    todayData: []   // y轴data 如果只有一个线，设置一个data就行
+                };
+
+                resData['timeData'] = data['chart']['x'];
+                resData['todayData'] = data['chart']['y'];
+
+                // console.log('fuhe 转换后: \n'+JSON.stringify(resData))//这个是返回的数据
+                //看 输出没问题 return 回去就好了
+
+                return resData;
+            }
+        }
+    }
+
+    //折线图（3条）
+    function monthHelper() {
+        return {
+            create: function (data) {
+                if (!data) return;
+
+                //这里拿到后台返回的数据，看要转成啥格式。
+                var resData = {
+                    title: "",
+                    unit: "",
+                    lineTitle: ['最大值', '最小值', '平均值'],
+                    timeData: [],   // x轴data
+                    maxdata: [],   // y轴data 如果只有一个线，设置一个data就行
+                    mindata: [],
+                    avgdata: [],
+                };
+
+                resData['timeData'] = data['chart']['x'];
+                resData['maxdata'] = data['chart']['max'];
+                resData['mindata'] = data['chart']['min'];
+                resData['avgdata'] = data['chart']['avg'];
+
+                // console.log('fuhe 转换后: \n'+JSON.stringify(resData))//这个是返回的数据
+
+                return resData;
+            }
+        }
+    }
+
+    //柱状图
+    function barHelper() {
+        return {
+            create: function (data) {
+                if (!data) return;
+                //这里拿到后台返回的数据，看要转成啥格式。
+                var resData = {
+                    xAxisData: [],   // x轴data
+                    data: [{
+                        type: "电量",
+                        stack: "电量",
+                        value: []
+                    }]
+                };
+
+                resData['xAxisData'] = data['chart']['x'];
+                resData['data'][0]['value'] = data['chart']['y'];
+
+
+                // console.log('fuhe 转换后: \n'+JSON.stringify(resData))//这个是返回的数据
+
+                return resData;
+            }
+        }
+    }
+
+    //饼图
+    function pieHelper() {
+        return {
+            create: function (data) {
+                if (!data) return;
+                var resData = {
+                    color: ['#000000', '#003300', '#330000', '#333300',
+                        '#660000', '#CC0000', '#CC3300', '#663300',
+                        '#990000', '#993300', '#FF0000', '#FF3300',
+                        '#0000FF', '#006699', '#3300FF', '#FF0099', '#FF0033'
+                    ],
+                    data: []
+                };
+                resData.data = data;
+                console.log('dianliang 转换后: \n' + JSON.stringify(resData))//这个是返回的数据
+
+                return resData;
+            }
+        }
+    }
+
+    function pieHelper1() {
+        return {
+            create: function (data) {
+                if (!data) return;
+                var resData = {
+                    color: ['#ff6060', '#5c5c61'],
+                    data: []
+                };
+                resData.data = data.jian;
+                console.log('fenshi 转换后: \n' + JSON.stringify(resData))//这个是返回的数据
+
+                return resData;
+            }
+        }
+    }
+
+    //柱状堆积
+    function stackHelper() {
+        return {
+            create: function (data) {
+                if (!data) return;
+                //这里拿到后台返回的数据，看要转成啥格式。
+                var resData = {
+                    xAxisData: [],   // x轴data
+                    data: []
+                };
+
+                resData['xAxisData'] = data['x'];
+                resData['data'] = data['list'];
+
+
+                // console.log('fuhe 转换后: \n'+JSON.stringify(resData))//这个是返回的数据
+                return resData;
+            }
+        }
+    }
+
 })();

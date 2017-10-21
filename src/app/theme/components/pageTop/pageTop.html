@@ -24,12 +24,19 @@
                 </span>
 
                 <i class="ion-arrow-down-b" style="margin: 0 5px"
-                   ng-show="item.state == 'settings'"></i>
+                   ng-show="item.state == 'settings'|| item.state == 'history'"></i>
                 <!--<span class="page-top-divider" ng-show="item.state == 'settings'"></span>-->
 
                 <ul class="dropdown-menu common-dp-ul" uib-dropdown-menu role="menu"
-                    aria-labelledby="single-button" ng-show="isSetting">
+                    aria-labelledby="single-button" ng-show="isSetting && item.state == 'settings'">
                     <li role="menuitem" ng-repeat="info in show.setData track by $index" ng-show="checkUserType(info)">
+                        <a ng-bind="info.title" ng-click="changeSetState(info)"></a>
+                    </li>
+                </ul>
+
+                <ul class="dropdown-menu common-dp-ul" uib-dropdown-menu role="menu"
+                    aria-labelledby="single-button" ng-show="isSetting && item.state == 'history'">
+                    <li role="menuitem" ng-repeat="info in show.setData2 track by $index" ng-show="checkUserTypeH(info)">
                         <a ng-bind="info.title" ng-click="changeSetState(info)"></a>
                     </li>
                 </ul>

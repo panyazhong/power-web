@@ -1,0 +1,25 @@
+<!--<script src="http://www.shanghaihenghui.com/echarts/angular.min.js" type="text/javascript" charset="utf-8"></script>-->
+<!--<script src="http://www.shanghaihenghui.com/echarts/echarts.min.js" type="text/javascript" charset="utf-8"></script>-->
+<!--<script src="http://www.shanghaihenghui.com/echarts/angular-echarts.min.js" type="text/javascript" charset="utf-8"></script>-->
+
+<div ba-panel>
+    <div class="item-content-list test" auto-height>
+        <div include-with-scope="app/powers/tdianliang/widgets/header.html"></div>
+        <div class="time" ng-show="focusIndex==1">
+            <div style="height:350px;" class="col-md-12" line-chart1 e-data="show.loadLineData"></div>
+        </div>
+        <div class="day" ng-show="focusIndex==2">
+            <div style="height:350px;" class="col-md-12" column-chart e-data="show.loadMonthData"></div>
+        </div>
+        <div class='month' ng-show="focusIndex==3">
+            <div style="height:350px;" class="col-md-12" column-chart e-data="show.loadYearData"></div>
+        </div>
+
+        <div style="margin-top:20px">
+            <div>电量占比</div>
+            <div style="height:350px;" class="col-md-12" ring-bar1 e-data="show.loadPieData"></div>
+        </div>
+    </div>
+
+
+</div>

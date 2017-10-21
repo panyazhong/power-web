@@ -40,7 +40,8 @@
                 {
                     title: '平台设置',
                     state: 'settings'
-                }],
+                },
+                ],
             cache: PageTopCache.cache,
             eventTotal: 0,// 默认0
             setData: [
@@ -56,6 +57,24 @@
                     title: '账号设置',
                     state: 'setpwd'
                 }
+            ],
+            setData2: [
+                {
+                    title: '负荷数据',
+                    state: 'tfuhe'
+                },
+                {
+                    title: '需量数据',
+                    state: 'txuliang'
+                },
+                {
+                    title: '电量数据',
+                    state: 'tdianliang'
+                },
+                // {
+                //     title: '分时数据',
+                //     state: 'tfenshi'
+                // }
             ],
             userName: userCache.getName(),
             userType: userCache.getUserType()
@@ -86,12 +105,39 @@
                     // return $scope.show.userType == 1 ? true : false;
                     return true;
                     break;
+                // case "tfuhe":
+                //     // return $scope.show.userType == 1 ? true : false;
+                //     return true;
+                //     break;
+                // case "txuliang":
+                //     // return $scope.show.userType == 1 ? true : false;
+                //     return true;
+                //     break;
+                // case "tdianliang":
+                //     // return $scope.show.userType == 1 ? true : false;
+                //     return true;
+                //     break;
             }
         };
-
+        $scope.checkUserTypeH = function (item) {
+            switch (item.state) {
+                case "tfuhe":
+                    return true;
+                    break;
+                case "txuliang":
+                    return true;
+                    break;
+                case "tdianliang":
+                    return true;
+                    break;
+                // case "tfenshi":
+                //     return true;
+                //     break;
+            }
+        };
         $scope.changeState = function (item) {
 
-            if (item.state == 'settings') {
+            if (item.state == 'settings'||item.state == 'history') {
                 $scope.isSetting = true;
                 item.isopen = !item.isopen;
                 return;

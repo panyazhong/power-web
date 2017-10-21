@@ -121,5 +121,88 @@
             };
             return resourceMap(config);
         })
-
+        .factory('Fuhe', function (resourceMap) {
+            var config = {
+                url: 'data/dataP/time/:time/type/:type/line_id/:line_id/interval/:interval',
+                paramsDefault: {
+                    time: '@time',
+                    type:'@type',
+                    line_id: '@line_id',
+                    interval: '@interval',
+                },
+                action: {
+                    query : {
+                        method: 'GET'
+                    }
+                }
+            };
+            return resourceMap(config);
+        })
+        .factory('Xuliang', function (resourceMap) {
+            var config = {
+                url: 'data/dataDemand/time/:time/type/:type/line_id/:line_id/interval/:interval',
+                paramsDefault: {
+                    time: '@time',
+                    type:'@type',
+                    line_id: '@line_id',
+                    interval: '@interval',
+                },
+                action: {
+                    query : {
+                        method: 'GET'
+                    }
+                }
+            };
+            return resourceMap(config);
+        })
+        .factory('Dianliang', function (resourceMap) {
+            var config = {
+                url: 'data/dataPt1/time/:time/type/:type/line_id/:line_id/interval/:interval',
+                paramsDefault: {
+                    time: '@time',
+                    type:'@type',
+                    line_id: '@line_id',
+                    interval: '@interval',
+                },
+                action: {
+                    query : {
+                        method: 'GET'
+                    }
+                }
+            };
+            return resourceMap(config);
+        })
+        .factory('Pie', function (resourceMap) {
+            var config = {
+                url: 'data/countPt1/type/1/client_id/101',
+                paramsDefault: {
+                    type:'1',
+                    client_id:'101',
+                },
+                action: {
+                    query : {
+                        method: 'GET',
+                        isArray: true
+                    }
+                }
+            };
+            return resourceMap(config);
+        })
+        // .factory('Fenshi', function (resourceMap) {
+        //     var config = {
+        //         url: 'data/timePt1/time/:time/type/:type/line_id/:line_id/interval/:interval',
+        //         paramsDefault: {
+        //             time: '@time',
+        //             type:'@type',
+        //             line_id: '@line_id',
+        //             interval: '@interval',
+        //         },
+        //         action: {
+        //             query : {
+        //                 method: 'GET'
+        //             }
+        //         }
+        //     };
+        //     return resourceMap(config);
+        // })
 })();

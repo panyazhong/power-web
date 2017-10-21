@@ -16,7 +16,10 @@
         'BlurAdmin.power.branch',
         'BlurAdmin.power.setuser',
         'BlurAdmin.power.setalarm',
-        'BlurAdmin.power.setpwd'
+        'BlurAdmin.power.setpwd',
+        'BlurAdmin.power.tfuhe',
+        'BlurAdmin.power.txuliang',
+        'BlurAdmin.power.tdianliang',
     ])
         .config(routeConfig)
         .run(initialize);
