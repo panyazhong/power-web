@@ -188,21 +188,21 @@
             };
             return resourceMap(config);
         })
-        // .factory('Fenshi', function (resourceMap) {
-        //     var config = {
-        //         url: 'data/timePt1/time/:time/type/:type/line_id/:line_id/interval/:interval',
-        //         paramsDefault: {
-        //             time: '@time',
-        //             type:'@type',
-        //             line_id: '@line_id',
-        //             interval: '@interval',
-        //         },
-        //         action: {
-        //             query : {
-        //                 method: 'GET'
-        //             }
-        //         }
-        //     };
-        //     return resourceMap(config);
-        // })
+        .factory('Fenshi', function (resourceMap) {
+            var config = {
+                url: 'data/timePt1/time/:time/type/:type/line_id/:line_id/interval/:interval',
+                paramsDefault: {
+                    time: '@time',
+                    type:'@type',
+                    line_id: '@line_id',
+                    interval: '@interval',
+                },
+                action: {
+                    query : {
+                        method: 'GET'
+                    }
+                }
+            };
+            return resourceMap(config);
+        })
 })();

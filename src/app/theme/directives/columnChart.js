@@ -25,7 +25,7 @@
                             data: data[i].value
                         })
                     }
-                    console.log(JSON.stringify(seriesData));
+                    // console.log(JSON.stringify(seriesData));
 
                     var option = {
                         backgroundColor: '#fff',

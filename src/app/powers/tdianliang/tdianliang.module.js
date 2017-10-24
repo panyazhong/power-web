@@ -13,7 +13,7 @@
         $stateProvider
             .state('tdianliang', {
                 url: '/tdianliang',
-                title: '电量数据',
+                title: '历史数据/电量数据',
                 templateUrl: 'app/powers/tdianliang/tdianliang.html',
                 controller: 'tdianliangPageCtrl',
             });

@@ -20,6 +20,7 @@
         'BlurAdmin.power.tfuhe',
         'BlurAdmin.power.txuliang',
         'BlurAdmin.power.tdianliang',
+        'BlurAdmin.power.tfenshi',
     ])
         .config(routeConfig)
         .run(initialize);

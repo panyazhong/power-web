@@ -1,0 +1,108 @@
+<!--<script src="http://www.shanghaihenghui.com/echarts/angular.min.js" type="text/javascript" charset="utf-8"></script>-->
+<!--<script src="http://www.shanghaihenghui.com/echarts/echarts.min.js" type="text/javascript" charset="utf-8"></script>-->
+<!--<script src="http://www.shanghaihenghui.com/echarts/angular-echarts.min.js" type="text/javascript" charset="utf-8"></script>-->
+
+<div ba-panel>
+    <div class="item-content-list test" auto-height>
+        <div include-with-scope="app/powers/tfenshi/widgets/header.html"></div>
+        <div class="day" ng-show="focusIndex==2">
+            <div style="height:350px;" class="col-md-12" column-chart e-data="show.loadMonthData"></div>
+
+            <div class=" col-md-12" style="border: 1px solid gainsboro">
+                <div  class=" col-md-12" style="text-align: center;height: 40px;line-height: 40px;">
+                    <lable>总电量:{{zong}} kwh</lable>
+                </div>
+                <hr style="border: 1px solid gainsboro">
+                <div>
+                    <div class=" col-md-3 col-sm-6">
+                        <div style="text-align: center">尖时量:{{jian}} kwh</div>
+                        <div style="width:180px;height:180px;" class="col-md-3 col-sm-6" ring-bar2 e-data="show.piemjianData"></div>
+                    </div>
+                    <div class=" col-md-3 col-sm-6">
+                        <div style="text-align: center">峰时量:{{feng}} kwh</div>
+                        <div style="width:180px;height:180px;" class="col-md-3 col-sm-6" ring-bar2 e-data="show.piemfengData"></div>
+                    </div>
+                    <div class=" col-md-3 col-sm-6">
+                        <div style="text-align: center">平时量:{{ping}} kwh</div>
+                        <div style="width:180px;height:180px;" class="col-md-3 col-sm-6" ring-bar2 e-data="show.piempingData"></div>
+                    </div>
+                    <div class=" col-md-3 col-sm-6">
+                        <div style="text-align: center">谷时量:{{gu}} kwh</div>
+                        <div style="width:180px;height:180px;" class="col-md-3 col-sm-6" ring-bar2 e-data="show.piemguData"></div>
+                    </div>
+                </div>
+            </div>
+            <table class="table table-bordered table-hover common-table col-md-6" style="width: 100%; margin-top: 20px">
+                <thead>
+                <tr>
+                    <th>日期</th>
+                    <th>尖时量（Kwh）</th>
+                    <th>峰时量（Kwh）</th>
+                    <th>谷时量（Kwh）</th>
+                    <th>平时量（Kwh）</th>
+                    <th>总电量（Kwh）</th>
+                </tr>
+                </thead>
+                <tr ng-repeat= "item in datalist">
+                    <td><span>{{item.day}}</span></td>
+                    <td><span>{{item.jian}}</span></td>
+                    <td><span>{{item.feng}}</span></td>
+                    <td><span>{{item.gu}}</span></td>
+                    <td><span>{{item.ping}}</span></td>
+                    <td><span>{{item.total}}</span></td>
+                </tr>
+            </table>
+
+        </div>
+        <div class='month' ng-show="focusIndex==3">
+            <div style="height:350px;" class="col-md-12" column-chart e-data="show.loadYearData"></div>
+
+            <div class=" col-md-12" style="border: 1px solid gainsboro">
+                <div  class=" col-md-12" style="text-align: center;height: 40px;line-height: 40px;">
+                    <lable>总电量:{{mzong}} kwh</lable>
+                </div>
+                <hr style="border: 1px solid gainsboro">
+                <div>
+                    <div class=" col-md-3 col-sm-6">
+                        <div style="text-align: center">尖时量:{{mjian}} kwh</div>
+                        <div style="width:180px;height:180px;" class="col-md-3 col-sm-6" ring-bar2 e-data="show.pieyjianData"></div>
+                    </div>
+                    <div class=" col-md-3 col-sm-6">
+                        <div style="text-align: center">峰时量:{{mfeng}} kwh</div>
+                        <div style="width:180px;height:180px;" class="col-md-3 col-sm-6" ring-bar2 e-data="show.pieyfengData"></div>
+                    </div>
+                    <div class=" col-md-3 col-sm-6">
+                        <div style="text-align: center">平时量:{{mping}} kwh</div>
+                        <div style="width:180px;height:180px;" class="col-md-3 col-sm-6" ring-bar2 e-data="show.pieypingData"></div>
+                    </div>
+                    <div class=" col-md-3 col-sm-6">
+                        <div style="text-align: center">谷时量:{{mgu}} kwh</div>
+                        <div style="width:180px;height:180px;" class="col-md-3 col-sm-6" ring-bar2 e-data="show.pieyguData"></div>
+                    </div>
+                </div>
+            </div>
+            <table class="table table-bordered table-hover common-table col-md-6" style="width: 100%; margin-top: 20px">
+                <thead>
+                <tr>
+                    <th>日期</th>
+                    <th>尖时量（Kwh）</th>
+                    <th>峰时量（Kwh）</th>
+                    <th>谷时量（Kwh）</th>
+                    <th>平时量（Kwh）</th>
+                    <th>总电量（Kwh）</th>
+                </tr>
+                </thead>
+                <tr ng-repeat= "item in mdatalist">
+                    <td><span>{{item.day}}</span></td>
+                    <td><span>{{item.jian}}</span></td>
+                    <td><span>{{item.feng}}</span></td>
+                    <td><span>{{item.gu}}</span></td>
+                    <td><span>{{item.ping}}</span></td>
+                    <td><span>{{item.total}}</span></td>
+                </tr>
+            </table>
+
+        </div>
+    </div>
+
+</div>

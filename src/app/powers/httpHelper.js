@@ -19,7 +19,7 @@
         .factory("monthHelper", monthHelper)
         .factory("barHelper", barHelper)
         .factory("pieHelper", pieHelper)
-        // .factory("pieHelper1", pieHelper1)
+        .factory("pieHelper1", pieHelper1)
         .factory("stackHelper", stackHelper);
 
     function clientimgHelper(_) {
@@ -528,7 +528,7 @@
                     data: []
                 };
                 resData.data = data;
-                console.log('dianliang 转换后: \n' + JSON.stringify(resData))//这个是返回的数据
+                // console.log('dianliang 转换后: \n' + JSON.stringify(resData))//这个是返回的数据
 
                 return resData;
             }
@@ -537,19 +537,21 @@
 
     function pieHelper1() {
         return {
-            create: function (data) {
+            create:function (data) {
                 if (!data) return;
                 var resData = {
                     color: ['#ff6060', '#5c5c61'],
                     data: []
                 };
-                resData.data = data.jian;
-                console.log('fenshi 转换后: \n' + JSON.stringify(resData))//这个是返回的数据
+                resData.data = data;
+
+                // console.log('fenshi 转换后: \n'+JSON.stringify(resData))//这个是返回的数据
 
                 return resData;
             }
         }
     }
+
 
     //柱状堆积
     function stackHelper() {

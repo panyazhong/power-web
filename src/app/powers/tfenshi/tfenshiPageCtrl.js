@@ -1,20 +1,19 @@
 (function () {
     'use strict';
 
-    angular.module('BlurAdmin.power.txuliang')
-        .controller('txuliangPageCtrl', txuliangPageCtrl);
-    // .controller('PieChartCtrl', PieChartCtrl);
+    angular.module('BlurAdmin.power.tfenshi')
+        .controller('tfenshiPageCtrl', tfenshiPageCtrl)
+        // .controller('PieChartCtrl', PieChartCtrl);
 
     /** @ngInject */
-    function txuliangPageCtrl($scope, $state, PageTopCache, HttpToast, Log, ToastUtils, $rootScope, $timeout, treeCache,$stateParams,
-                           Xuliang,dayHelper,monthHelper) {
+    function tfenshiPageCtrl($scope, $state, PageTopCache, HttpToast, Log, ToastUtils, $rootScope, $timeout, treeCache,$stateParams,
+                           Fenshi,Pie,dayHelper,monthHelper,barHelper,pieHelper,pieHelper1,stackHelper) {
         //tab切换
-        $scope.focusIndex=1;
+        $scope.focusIndex=2;
         $scope.focus=function(index){
             $scope.focusIndex=index;
         }
         PageTopCache.cache.state = 'history';
-
         // PageTopCache.cache.state = $state.$current;
         $scope.GetDateStr = function () {
             var dd = new Date();
@@ -87,6 +86,16 @@
             beginDate3: new Date(),  //开始时间
             loadLineData: {},
             loadMonthData:{},
+            loadYearData:{},
+            loadPieData:{},
+            piemjianData:{},
+            piemfengData:{},
+            piempingData:{},
+            piemguData:{},
+            pieyjianData:{},
+            pieyfengData:{},
+            pieypingData:{},
+            pieyguData:{},
         };
 
         $scope.form = {
@@ -103,74 +112,38 @@
         $scope.initData = function () {
 
             // init line chart
-            $scope.show.loadLineData ={
-                title: "",
-                unit: "",
-                lineTitle: [
-                    "日需量"
-                ],
-                timeData: [],
-                yesdayData: [],
-                todayData: [],
-
-            };
             $scope.show.loadMonthData ={
-                title: "",
-                unit: "",
-                lineTitle: [
-                    "月需量"
-                ],
-                timeData: [],
-                yesdayData: [],
-                todayData: [],
+                xAxisData: [],   // x轴data
+                data:[]
 
             };
             $scope.show.loadYearData ={
-                title: "",
-                unit: "",
-                lineTitle: [
-                    "年需量"
-                ],
-                timeData: [],
-                yesdayData: [],
-                todayData: [],
+                xAxisData: [],   // x轴data
+                data:[]
 
             };
         };
-        // $scope.initData()
-        $scope.testclick1 = function(paramsDefault) {
-            $scope.initData()
-            Xuliang.query(paramsDefault,
-                function(data) {
-                // console.log(data)
-                    $scope.show.loadLineData = dayHelper.create(data.data) //把要转换的数据，传进去，讲道理返回是data一层，没有code一层，不然isArray等判断要自己写，不好
-                    // console.log('fuhe : \n'+JSON.stringify(data.data))//这个是返回的数据
-
-                    $scope.day = (data.data.ext.max_time).split(" ")[0];
-                    $scope.xuliang = data.data.ext.max;
-                    $scope.daytime = data.data.ext.max_time;
-                },
-                function(err) {
-                    HttpToast.toast(err);
-                })
-        }
-        var paramsDefault1 ={
-            line_id:'101',
-            time:moment($scope.show.beginDate1).format('YYYY-MM-DD'),
-            interval: 15,
-            type:1
-        }
-        $scope.testclick1(paramsDefault1);
-
+        $scope.initData()
         $scope.testclick2 = function(paramsDefault) {
-            $scope.initData()
-            Xuliang.query(paramsDefault,
+            // $scope.initData()
+            Fenshi.query(paramsDefault,
                 function(data) {
                     // console.log(data)//这个是返回的数据
-                    $scope.show.loadMonthData = dayHelper.create(data.data) //把要转换的数据，传进去，讲道理返回是data一层，没有code一层，不然isArray等判断要自己写，不好
+                    $scope.show.loadMonthData = stackHelper.create(data.data) //把要转换的数据，传进去，讲道理返回是data一层，没有code一层，不然isArray等判断要自己写，不好
 
+                    $scope.show.piemjianData = pieHelper1.create(data.data.ext.jian) //把要转换的数据，传进去，讲道理返回是data一层，没有code一层，不然isArray等判断要自己写，不好
+                    $scope.show.piemfengData = pieHelper1.create(data.data.ext.feng) //把要转换的数据，传进去，讲道理返回是data一层，没有code一层，不然isArray等判断要自己写，不好
+                    $scope.show.piempingData = pieHelper1.create(data.data.ext.ping) //把要转换的数据，传进去，讲道理返回是data一层，没有code一层，不然isArray等判断要自己写，不好
+                    $scope.show.piemguData = pieHelper1.create(data.data.ext.gu) //把要转换的数据，传进去，讲道理返回是data一层，没有code一层，不然isArray等判断要自己写，不好
+                    $scope.zong=data.data.ext.total;
+                    $scope.jian=data.data.ext.jian[0].value;
+                    $scope.feng=data.data.ext.feng[0].value;
+                    $scope.ping=data.data.ext.ping[0].value;
+                    $scope.gu=data.data.ext.gu[0].value;
+                    $scope.datalist=data.data.under;
                     //	处理成功
-                    $scope.monthdata = data.data.list;
+                    // console.log('map h，堆积图：\n' + JSON.stringify($scope.show.loadMonthData));
+
                 },
                 function(err) {
                     HttpToast.toast(err);
@@ -184,15 +157,23 @@
         $scope.testclick2(paramsDefault2);
 
         $scope.testclick3 = function(paramsDefault) {
-            $scope.initData()
-            Xuliang.query(paramsDefault,
+            // $scope.initData()
+            Fenshi.query(paramsDefault,
                 function(data) {
                     // console.log(data)//这个是返回的数据
-                    $scope.show.loadYearData = dayHelper.create(data.data) //把要转换的数据，传进去，讲道理返回是data一层，没有code一层，不然isArray等判断要自己写，不好
+                    $scope.show.loadYearData = stackHelper.create(data.data) //把要转换的数据，传进去，讲道理返回是data一层，没有code一层，不然isArray等判断要自己写，不好
 
-                    //	处理成功
-                    $scope.yeardata = data.data.list;
-
+                    $scope.show.pieyjianData = pieHelper1.create(data.data.ext.jian) //把要转换的数据，传进去，讲道理返回是data一层，没有code一层，不然isArray等判断要自己写，不好
+                    $scope.show.pieyfengData = pieHelper1.create(data.data.ext.feng) //把要转换的数据，传进去，讲道理返回是data一层，没有code一层，不然isArray等判断要自己写，不好
+                    $scope.show.pieypingData = pieHelper1.create(data.data.ext.ping) //把要转换的数据，传进去，讲道理返回是data一层，没有code一层，不然isArray等判断要自己写，不好
+                    $scope.show.pieyguData = pieHelper1.create(data.data.ext.gu) //把要转换的数据，传进去，讲道理返回是data一层，没有code一层，不然isArray等判断要自己写，不好
+                    $scope.mzong=data.data.ext.total;
+                    $scope.mjian=data.data.ext.jian[0].value;
+                    $scope.mfeng=data.data.ext.feng[0].value;
+                    $scope.mping=data.data.ext.ping[0].value;
+                    $scope.mgu=data.data.ext.gu[0].value;
+                    $scope.mdatalist=data.data.under;
+                    //
                 },
                 function(err) {
                     HttpToast.toast(err);
@@ -205,7 +186,21 @@
         }
         $scope.testclick3(paramsDefault3);
 
+        $scope.pie = function(paramsDefault) {
 
+            Pie.query(paramsDefault,
+                function(data) {
+                    $scope.show.loadPieData = pieHelper.create(data);
+                },
+                function(err) {
+                    HttpToast.toast(err);
+                })
+        }
+        var paramsD ={
+            client_id:'101',
+            type:1
+        }
+        $scope.pie(paramsD);
 
         $scope.init = function () {
             var pm = treeCache.getTree();
@@ -271,23 +266,11 @@
         $scope.search = function () {
             var state = $scope.checkForm();
             var params = $scope.formatForm();
-            // console.log(params);
+            console.log(params);
             switch (state) {
-                // case 0:
-                //     ToastUtils.openToast('warning', '请选择时间！');
-                //     break;
-                // case 1:
-                //     ToastUtils.openToast('warning', '起始不能小于结束时间！');
-                //     break;
+
                 case 2:
                     switch ($scope.focusIndex){
-                        case 1:
-                            params.type = 1;
-                            if ($scope.show.beginDate1) {
-                                params.time = moment($scope.show.beginDate1).format('YYYY-MM-DD');
-                            }
-                            $scope.testclick1(params);
-                            break;
                         case 2:
                             params.type = 2;
                             if ($scope.show.beginDate2) {
@@ -392,4 +375,5 @@
 
 
     }
+
 })();

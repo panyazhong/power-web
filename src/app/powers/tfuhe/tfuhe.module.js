@@ -13,7 +13,7 @@
     $stateProvider
         .state('tfuhe', {
           url: '/tfuhe',
-          title: '负荷数据',
+          title: '历史数据/负荷数据',
           templateUrl: 'app/powers/tfuhe/tfuhe.html',
           controller: 'tfuhePageCtrl',
         });

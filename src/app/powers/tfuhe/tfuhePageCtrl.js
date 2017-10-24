@@ -13,8 +13,9 @@
         $scope.focus=function(index){
             $scope.focusIndex=index;
         }
+        PageTopCache.cache.state = 'history';
 
-        PageTopCache.cache.state = $state.$current;
+        // PageTopCache.cache.state = $state.$current;
         $scope.GetDateStr = function () {
             var dd = new Date();
             dd.setHours(0);

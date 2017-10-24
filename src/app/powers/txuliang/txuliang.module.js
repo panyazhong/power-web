@@ -13,7 +13,7 @@
     $stateProvider
         .state('txuliang', {
           url: '/txuliang',
-          title: '需量数据',
+          title: '历史数据/需量数据',
           templateUrl: 'app/powers/txuliang/txuliang.html',
           controller: 'txuliangPageCtrl',
         });

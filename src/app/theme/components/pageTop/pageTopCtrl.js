@@ -71,10 +71,10 @@
                     title: '电量数据',
                     state: 'tdianliang'
                 },
-                // {
-                //     title: '分时数据',
-                //     state: 'tfenshi'
-                // }
+                {
+                    title: '分时数据',
+                    state: 'tfenshi'
+                }
             ],
             userName: userCache.getName(),
             userType: userCache.getUserType()
@@ -105,18 +105,6 @@
                     // return $scope.show.userType == 1 ? true : false;
                     return true;
                     break;
-                // case "tfuhe":
-                //     // return $scope.show.userType == 1 ? true : false;
-                //     return true;
-                //     break;
-                // case "txuliang":
-                //     // return $scope.show.userType == 1 ? true : false;
-                //     return true;
-                //     break;
-                // case "tdianliang":
-                //     // return $scope.show.userType == 1 ? true : false;
-                //     return true;
-                //     break;
             }
         };
         $scope.checkUserTypeH = function (item) {
@@ -130,9 +118,9 @@
                 case "tdianliang":
                     return true;
                     break;
-                // case "tfenshi":
-                //     return true;
-                //     break;
+                case "tfenshi":
+                    return true;
+                    break;
             }
         };
         $scope.changeState = function (item) {
@@ -140,15 +128,19 @@
             if (item.state == 'settings'||item.state == 'history') {
                 $scope.isSetting = true;
                 item.isopen = !item.isopen;
+                // PageTopCache.cache.state = item.state;
+
+                event.stopPropagation();
                 return;
             }
+
 
             PageTopCache.cache.state = item.state;
             $scope.isSetting = false;
             $state.go(item.state);
         };
 
-        $scope.changeSetState = function (obj) {
+        $scope.changeSetState = function (obj,item) {
             $state.go(obj.state);
         };
 
