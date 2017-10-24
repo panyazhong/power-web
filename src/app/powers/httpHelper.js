@@ -425,8 +425,8 @@
             create: function (data) {
                 if (!data) return;
 
-                data.templateUrl = ImgPrefix.prefix + data.templateUrl;
-                // data.templateUrl = "app/powers/temp/template.html";
+                // data.templateUrl = ImgPrefix.prefix + data.templateUrl;
+                data.templateUrl = "app/powers/temp/template.html";
 
                 return _.cloneDeep(data);
             }

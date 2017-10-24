@@ -42,10 +42,12 @@
         };
 
         $scope.edit = function (id) {
+            /*
             if (id == userCache.getUserId()) {
                 ToastUtils.openToast('warning', '您不能操作自己！');
                 return;
             }
+            */
 
             ModalUtils.open('app/powers/setuser/widgets/editUserModal.html', 'lg',
                 editUserCtrl, {id: id},
