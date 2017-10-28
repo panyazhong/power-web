@@ -26,7 +26,7 @@
         })
         .factory('resourceMap', function ($resource, $httpParamSerializerJQLike, $q) {
 
-            var host = 'http://139.196.82.185/yw/api';
+            var host = 'http://test.shanghaihenghui.com/api';
 
             var setAction = function (actions) {
                 var defaultParams = {
