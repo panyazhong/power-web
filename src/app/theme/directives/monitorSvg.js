@@ -12,9 +12,11 @@
                 monitorData: '=',
                 // colors: '=',
                 tree: '=',
-                viewBranch: '&'
+                viewBranch: '&',
+                scaleNum: '='
             },
             link: function ($scope, $element, $attributes) {
+                $scope.num = 1; // 缩放比例，默认1
 
                 $scope.$watch('tree', function (newValue, oldValue, scope) {
 
@@ -115,6 +117,21 @@
                         // console.log('chooseBranch : ' + JSON.stringify($scope.line));
                     }
 
+                });
+
+                $scope.$watch('scaleNum', function (newValue, oldValue, scope) {
+                    if (newValue > oldValue) {
+                        // 增大
+                        $scope.bgSize.width += 100;
+                        $scope.bgSize.height += 100;
+                        $scope.num += 0.1;
+                    }
+                    else if (newValue < oldValue) {
+                        // 缩小
+                        $scope.bgSize.width -= 100;
+                        $scope.bgSize.height -= 100;
+                        $scope.num -= 0.1;
+                    }
                 });
 
             },

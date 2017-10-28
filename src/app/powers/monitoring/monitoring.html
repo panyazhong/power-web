@@ -40,8 +40,14 @@
                 monitor-data="monitorData"
                 template-url="{{tree.templateUrl}}"
                 view-branch="viewBranch(id)"
-                tree="tree">
+                tree="tree"
+                scale-num="scaleNum">
         </monitor-svg>
 
+        <div class="opt-group">
+            <div class="opt-add" ng-click="add()">+</div>
+            <div style="height: 15px;background: #000;width: 2px"></div>
+            <div class="opt-down" ng-click="down()">-</div>
+        </div>
     </div>
 </div>

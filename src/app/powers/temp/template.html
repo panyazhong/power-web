@@ -5,6 +5,7 @@
     <div ng-style="color('blue')" >{{colors.blue}}</div>
   -->
   <svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0" y="0" width="{{bgSize.width}}" height="{{bgSize.height}}" viewBox="{{'0, 0, '+bgSize.width+', '+bgSize.height}}">
+    <g transform="matrix({{num}},0,0,{{num}},{{num-1}},{{num-1}})">
     <g id="tempalte" transform="translate(0, -80)" ng-show="false">
       <text transform="matrix(8.274, 0, 0, 8.274, 61.212, 387.606)">
         <tspan x="-6.22" y="0.5" font-family="PingFangSC-Regular" font-size="1.43" fill="#FF00FF">三相平均无功功率</tspan>
@@ -153,7 +154,7 @@
         </g>
       </g>
     </g>
-
+    </g>
   </svg>
 
 </div>

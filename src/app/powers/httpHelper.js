@@ -537,7 +537,7 @@
 
     function pieHelper1() {
         return {
-            create:function (data) {
+            create: function (data) {
                 if (!data) return;
                 var resData = {
                     color: ['#ff6060', '#5c5c61'],

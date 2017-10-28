@@ -90,6 +90,19 @@
         };
         $scope.init();
 
+        $scope.scaleNum = 1;    // 缩放比例
+        $scope.add = function () {
+            if ($scope.scaleNum < 2) {
+                $scope.scaleNum += 0.1;
+            }
+        };
+
+        $scope.down = function () {
+            if ($scope.scaleNum > 1) {
+                $scope.scaleNum -= 0.1;
+            }
+        };
+
         /**
          * socket
          */

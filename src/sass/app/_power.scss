@@ -965,3 +965,36 @@ btn 不可用
   padding: 0 7px;
   cursor: pointer;
 }
+
+/**
+svg 操作
+ */
+.opt-group {
+  width: 72px;
+  background-color: #3b89ce;
+  color: #fff;
+  display: flex;
+  border-radius: 9px;
+  font-size: 20px;
+  align-items: center;
+  cursor: pointer;
+  position: absolute;
+  right: 30px;
+  top: 20px;
+}
+
+.opt-add {
+  flex: 1;
+  height: 35px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.opt-down {
+  flex: 1;
+  height: 35px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
