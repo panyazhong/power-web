@@ -917,18 +917,11 @@ btn 不可用
 }
 
 .overview .chart-item {
-  width: calc(100% - 205px);;
-  display: inline-block;
-  float: left;
+  flex: 1;
 }
 
 .overview .max-item {
   width: 205px;
-  display: inline-block;
-  float: left;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis
 }
 
 .overview .time_item {
