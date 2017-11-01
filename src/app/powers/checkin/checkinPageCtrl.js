@@ -775,10 +775,11 @@
             inspectTypeArr: params.keys,
             data: {},  // response data
 
-            itemListTitle: ['客户名称', '巡检任务', '异常数量', '开始时间', '结束时间', '用时'],
+            itemListTitle: ['客户名称', '巡检任务', '异常数量', '开始时间', '结束时间', '用时','操作员'],
             subItemListTitle: ['签到点名称', '签到时间', '签到状态', '共用时'],
             subSubItemListTitle: ['设备名称', '步骤内容', '步骤结果', '完成时间', '异常详情'],
-            subItemList: []
+            subItemList: [],
+            stepListTitle:['步骤名称','步骤时间','步骤状态','内容','共用时']
         };
 
         $scope.formatTime = function (seconds) {
@@ -823,10 +824,15 @@
                     //  list
                     data.smallTasks.map(function (item) {
                         item.timeUsedDesc = $scope.formatTime(item.timeUsed);
-
+                        //异常步骤
                         item.steps.map(function (subItem) {
                             var str = subItem.result_str ? '，' + subItem.result_str : '';
                             subItem.result = subItem.result_bool != 0 ? '正常' : "异常" + str;
+                        })
+                        //步骤列表
+                        item.small_task.map(function (stepItem) {
+                            stepItem.timeUsedDesc = $scope.formatTime(stepItem.cost_time);
+                            stepItem.result = stepItem.result_bool != 0 ? '正常' : "异常";
                         })
                     });
 

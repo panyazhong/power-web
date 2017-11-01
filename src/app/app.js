@@ -28,7 +28,8 @@ angular.module('BlurAdmin', [
     'BlurAdmin.theme',
     'BlurAdmin.power'
 
-]).run(function (Log, locals) {
+])
+    .run(function (Log, locals) {
     /**/
     var userInfo = locals.getObject('user');
     if (JSON.stringify(userInfo) == '{}') {

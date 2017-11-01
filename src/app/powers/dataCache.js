@@ -660,6 +660,7 @@
     function coreConfig() {
 
         var host = 'http://monitor.shanghaihenghui.com';
+        // var host = 'http://139.196.82.185';
         // var host = 'http://192.168.0.155';
 
         var httpHost = host + '/api';

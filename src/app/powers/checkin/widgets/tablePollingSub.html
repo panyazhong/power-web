@@ -1,4 +1,5 @@
 <div class="horizontal-scroll" ng-repeat="info in show.subItemList">
+    <!--签到列表-->
     <table class="table table-bordered table-hover common-table" style="table-layout: fixed;margin-bottom: 10px;">
         <thead>
         <tr>
@@ -24,7 +25,37 @@
         </tr>
         </tbody>
     </table>
-
+    <!--步骤列表-->
+    <div class="horizontal-scroll" style="padding-left: 30px;margin-bottom: 15px;">
+        <table class="table table-bordered table-hover common-table" style="table-layout: fixed;">
+            <thead>
+            <tr>
+                <th ng-repeat="item in show.stepListTitle" ng-bind="item"
+                    style="line-height: 19px !important;color: #7d7d7d !important;"></th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr ng-repeat="steplist in info.small_task">
+                <td class="table-def-cursor">
+                    <span ng-bind="steplist.small_task"></span>
+                </td>
+                <td class="table-def-cursor">
+                    <span ng-bind="steplist.create_at"></span>
+                </td>
+                <td class="table-def-cursor">
+                    <span ng-bind="steplist.result"></span>
+                </td>
+                <td class="table-def-cursor">
+                    <span ng-bind="steplist.result_str"></span>
+                </td>
+                <td class="table-def-cursor">
+                    <span ng-bind="steplist.timeUsedDesc"></span>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+    <!--异常步骤列表-->
     <div class="horizontal-scroll" ng-repeat="step in info.steps" style="padding-left: 30px;margin-bottom: 10px;">
         <table class="table table-bordered table-hover common-table" style="table-layout: fixed;">
             <thead>
@@ -57,4 +88,5 @@
         </table>
     </div>
 
+</div>
 </div>
