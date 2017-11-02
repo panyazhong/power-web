@@ -149,12 +149,22 @@
             timeEnd: ''     // 异常结束时间
         };
 
-        $scope.formatForm = function () {
+        $scope.formatForm = function (flag) {
 
             $scope.form.client_id = $scope.form.client_id || 0;
             if ($scope.show.beginDate) {
-                $scope.form.beginDate = moment(moment($scope.show.beginDate).format('YYYY-MM-DD HH:mm:ss')).unix();
-                $scope.form.endDate = moment(moment($scope.show.beginDate).format('YYYY-MM-DD') + " 23:59:59").unix();
+                if (flag) {
+                    var dd = new Date();
+                    dd.setDate(1);
+                    dd.setHours(0);
+                    dd.setMinutes(0);
+                    dd.setSeconds(0);
+                    $scope.form.beginDate = moment(moment(dd).format('YYYY-MM-DD HH:mm:ss')).unix();
+                    $scope.form.endDate = moment(moment().format('YYYY-MM-DD') + " 23:59:59").unix();
+                } else {
+                    $scope.form.beginDate = moment(moment($scope.show.beginDate).format('YYYY-MM-DD HH:mm:ss')).unix();
+                    $scope.form.endDate = moment(moment($scope.show.beginDate).format('YYYY-MM-DD') + " 23:59:59").unix();
+                }
             } else {
                 $scope.form.beginDate = 0;
                 $scope.form.endDate = 0;
@@ -168,8 +178,8 @@
             return params;
         };
 
-        $scope.queryHistory = function () {
-            var params = $scope.formatForm();
+        $scope.queryHistory = function (flag) {
+            var params = $scope.formatForm(flag);
             Log.i('query params : ' + JSON.stringify(params));
 
             // 历史
@@ -177,7 +187,7 @@
             Task.query(params,
                 function (data) {
                     if (Array.isArray(data)) {
-                        $scope.show.setListHistory = data;
+                        $scope.show.setListHistory = data.reverse();
                         $scope.rowCollectionHistory = data;
                     }
                 },
@@ -204,8 +214,8 @@
                 });
         };
 
-        $scope.queryList = function (cid) {
-            $scope.queryHistory();
+        $scope.queryList = function (cid,flag) {
+            $scope.queryHistory(flag);
             $scope.queryReal();
         };
 
@@ -219,7 +229,7 @@
             $scope.show.clientName = obj.clientName;
 
             // 更新列表
-            $scope.queryList($scope.form.client_id);
+            $scope.queryList($scope.form.client_id, true);
         };
 
         $scope.initFilterInfo = function () {
@@ -255,8 +265,7 @@
 
         // 逻辑code
         $scope.search = function () {
-            $scope.queryList($scope.form.client_id);
-
+            $scope.queryList($scope.form.client_id,false);
         };
 
         $scope.clear = function () {
