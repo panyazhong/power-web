@@ -217,7 +217,10 @@
             client_id:'101',
             type:1
         }
-        $scope.pie(paramsD);
+        $timeout(function () {
+            $scope.pie(paramsD);
+        }, 1000);
+
 
         $scope.init = function () {
             var pm = treeCache.getTree();

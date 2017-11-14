@@ -57,6 +57,7 @@
                         $scope.line["name"] = $scope.tree.data[incIndex].lines[branchIndex].name;
 
                         var info = $scope.monitorData[incIndex].lines[branchIndex];
+                        var branchinfo=$scope.monitorData[incIndex]
                         for (var Key in $scope.line) {
                             if ($scope.filterKey.indexOf(Key) == -1) {
                                 $scope.line[Key] = info[Key] || '';
@@ -88,15 +89,15 @@
         }
     }
 
-    function _splitStr(str) {
-        var arr = str.split('');
-        for (var i = arr.length - 1; i >= 0; i--) {
-            if (arr[i] === '#' && i > 0) {
-                arr[i - 1] += arr[i];
-                arr.splice(i, 1);
-            }
-        }
-        return arr;
-    }
+    // function _splitStr(str) {
+    //     var arr = str.split('');
+    //     for (var i = arr.length - 1; i >= 0; i--) {
+    //         if (arr[i] === '#' && i > 0) {
+    //             arr[i - 1] += arr[i];
+    //             arr.splice(i, 1);
+    //         }
+    //     }
+    //     return arr;
+    // }
 
 })();

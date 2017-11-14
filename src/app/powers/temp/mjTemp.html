@@ -470,6 +470,8 @@
 <polyline points="595.35,417.786 591.983,421.153 " />
 <polyline points="595.35,420.119 598.717,423.486 " />
 <polyline points="595.35,420.119 591.983,423.486 " />
+<polyline points="396.852,432.41 400.219,435.776 " />
+<polyline points="400.219,432.41 396.852,435.776 " />
 </g>
 <g clip-path="url(#clipId0)" fill="rgb(255,0,0)" stroke="rgb(255,0,0)" stroke-width="0.25" >
 <path d="M942.088,385.963 942.088,386.524 425.182,386.524 425.182,385.963 z" />
@@ -648,7 +650,16 @@
     <path d="M118.472,438.778 115.105,442.145 z" />
     <path d="M110.587,440.714 110.991,440.712 117.033,450.057 116.629,450.059 z" />
 </g>
-<g fill="{{monitorData[0].lines[2].Iavg==='0.00A' ? '#00FF00' : '#FF0000'}}" stroke="{{monitorData[0].lines[2].Iavg==='0.00A' ? '#00FF00' : '#FF0000'}}" stroke-width="0.25">
+<g
+        fill="{{monitorData[0].lines[2].Iavg==='0.00A' ? '#00FF00' : '#FF0000'}}"
+        stroke="{{monitorData[0].lines[2].Iavg==='0.00A' ? '#00FF00' : '#FF0000'}}"
+        stroke-width="0.25"
+        ng-click="chooseBranch(10023,129,0,2)"
+                      data-placement="{{'right'}}"
+                      data-container="body"
+                      data-template-url="app/powers/monitoring/widgets/branch-detail.html"
+                      data-auto-close="1"
+                      bs-popover>
 <g>
     <path d="M116.605,481.631 117.009,481.632 116.986,527.043 116.582,527.043 z" />
 </g>
@@ -688,16 +699,11 @@
     <path d="M120.704,519.933 120.008,520.359 113.492,520.3 112.784,519.862 z" />
     <path d="M112.784,519.862 113.492,520.3 116.985,527.158 116.6,527.354 z" />
     </g>
-<g fill="none">
-<polyline points="396.852,432.41 400.219,435.776 " />
-<polyline points="400.219,432.41 396.852,435.776 " />
-</g>
 <g>
 <path d="M116.629,464.511 117.033,464.511 117.033,478.978 116.629,478.978 z" />
 <path d="M116.629,450.058 117.033,450.058 117.033,454.49 116.629,454.49 z" />
 </g>
 </g>
-
 
 <!--空压机-->
 <g fill="rgb(255,0,0)" stroke="rgb(255,0,0)" stroke-width="0.25" >
@@ -713,7 +719,16 @@
      <path d="M167.779,438.725 167.874,438.63 171.241,441.997 171.146,442.092 z" />
      <path d="M171.146,438.63 171.241,438.725 167.874,442.092 167.779,441.997 z" />
 </g>
-<g fill="{{monitorData[0].lines[0].Iavg==='0.00A' ? '#00FF00' : '#FF0000'}}" stroke="{{monitorData[0].lines[0].Iavg==='0.00A' ? '#00FF00' : '#FF0000'}}" stroke-width="0.25">
+<g
+        fill="{{monitorData[0].lines[0].Iavg==='0.00A' ? '#00FF00' : '#FF0000'}}"
+        stroke="{{monitorData[0].lines[0].Iavg==='0.00A' ? '#00FF00' : '#FF0000'}}"
+        stroke-width="0.25"
+        ng-click="chooseBranch(10023,127,0,0)"
+                      data-placement="{{'right'}}"
+                      data-container="body"
+                      data-template-url="app/powers/monitoring/widgets/branch-detail.html"
+                      data-auto-close="1"
+                      bs-popover>
     <g >
     <path d="M169.308,482.006 169.712,482.006 169.689,517.317 169.285,517.317 z" />
     </g>
@@ -774,7 +789,16 @@
 <path d="M219.922,438.408 220.017,438.313 223.384,441.68 223.288,441.775 z" />
 <path d="M223.288,438.313 223.384,438.408 220.017,441.775 219.922,441.68 z" />
 </g>
-<g fill="{{monitorData[0].lines[1].Iavg==='0.00A' ? '#00FF00' : '#FF0000'}}" stroke="{{monitorData[0].lines[1].Iavg==='0.00A' ? '#00FF00' : '#FF0000'}}" stroke-width="0.25">
+<g
+        fill="{{monitorData[0].lines[1].Iavg==='0.00A' ? '#00FF00' : '#FF0000'}}"
+        stroke="{{monitorData[0].lines[1].Iavg==='0.00A' ? '#00FF00' : '#FF0000'}}"
+        stroke-width="0.25"
+        ng-click="chooseBranch(10023,128,0,1)"
+                      data-placement="{{'right'}}"
+                      data-container="body"
+                      data-template-url="app/powers/monitoring/widgets/branch-detail.html"
+                      data-auto-close="1"
+                      bs-popover>
 <g fill="none">
 <polyline points="221.653,481.689 225.019,478.322 " />
 <polyline points="221.653,481.689 218.286,478.322 " />
@@ -887,7 +911,16 @@
 <path d="M647.938,438.653 648.033,438.558 651.4,441.925 651.305,442.02 z" />
 <path d="M651.305,438.558 651.4,438.653 648.033,442.02 647.938,441.925 z" />
 </g>
-<g fill="{{monitorData[1].lines[3].Iavg==='0.00A' ? '#00FF00' : '#FF0000'}}" stroke="{{monitorData[1].lines[3].Iavg==='0.00A' ? '#00FF00' : '#FF0000'}}" stroke-width="0.25">
+<g
+        fill="{{monitorData[1].lines[3].Iavg==='0.00A' ? '#00FF00' : '#FF0000'}}"
+        stroke="{{monitorData[1].lines[3].Iavg==='0.00A' ? '#00FF00' : '#FF0000'}}"
+        stroke-width="0.25"
+        ng-click="chooseBranch(10023,133,1,3)"
+                      data-placement="{{'right'}}"
+                      data-container="body"
+                      data-template-url="app/powers/monitoring/widgets/branch-detail.html"
+                      data-auto-close="1"
+                      bs-popover>
 <g fill="none">
 <polyline points="649.669,481.934 653.036,478.567 " />
 <polyline points="649.669,481.934 646.302,478.567 " />
@@ -948,7 +981,16 @@
 <path d="M755.072,439.631 755.167,439.536 758.534,442.903 758.439,442.998 z" />
 <path d="M758.439,439.536 758.534,439.631 755.167,442.998 755.072,442.903 z" />
 </g>
-<g fill="{{monitorData[1].lines[5].Iavg==='0.00A' ? '#00FF00' : '#FF0000'}}" stroke="{{monitorData[1].lines[5].Iavg==='0.00A' ? '#00FF00' : '#FF0000'}}" stroke-width="0.25">
+<g
+        fill="{{monitorData[1].lines[5].Iavg==='0.00A' ? '#00FF00' : '#FF0000'}}"
+        stroke="{{monitorData[1].lines[5].Iavg==='0.00A' ? '#00FF00' : '#FF0000'}}"
+        stroke-width="0.25"
+        ng-click="chooseBranch(10023,135,1,5)"
+                      data-placement="{{'right'}}"
+                      data-container="body"
+                      data-template-url="app/powers/monitoring/widgets/branch-detail.html"
+                      data-auto-close="1"
+                      bs-popover>
 <g fill="none" >
 <polyline points="756.803,482.912 760.17,479.545 " />
 <polyline points="756.803,482.912 753.436,479.545 " />
@@ -1008,7 +1050,16 @@
 <path d="M810.006,439.545 810.101,439.45 813.468,442.817 813.372,442.912 z" />
 <path d="M813.372,439.45 813.468,439.545 810.101,442.912 810.006,442.817 z" />
 </g>
-<g fill="{{monitorData[1].lines[1].Iavg==='0.00A' ? '#00FF00' : '#FF0000'}}" stroke="{{monitorData[1].lines[1].Iavg==='0.00A' ? '#00FF00' : '#FF0000'}}" stroke-width="0.25">
+<g
+        fill="{{monitorData[1].lines[1].Iavg==='0.00A' ? '#00FF00' : '#FF0000'}}"
+        stroke="{{monitorData[1].lines[1].Iavg==='0.00A' ? '#00FF00' : '#FF0000'}}"
+        stroke-width="0.25"
+        ng-click="chooseBranch(10023,131,1,1)"
+                      data-placement="{{'right'}}"
+                      data-container="body"
+                      data-template-url="app/powers/monitoring/widgets/branch-detail.html"
+                      data-auto-close="1"
+                      bs-popover>
 <g fill="none" >
 <polyline points="811.737,482.826 815.103,479.459 " />
 <polyline points="811.737,482.826 808.37,479.459 " />
@@ -1067,7 +1118,16 @@
 <path d="M702.786,439.286 702.881,439.191 706.248,442.558 706.152,442.653 z" />
 <path d="M706.152,439.191 706.248,439.286 702.881,442.653 702.786,442.558 z" />
 </g>
-<g fill="{{monitorData[1].lines[4].Iavg==='0.00A' ? '#00FF00' : '#FF0000'}}" stroke="{{monitorData[1].lines[4].Iavg==='0.00A' ? '#00FF00' : '#FF0000'}}" stroke-width="0.25">
+<g
+        fill="{{monitorData[1].lines[4].Iavg==='0.00A' ? '#00FF00' : '#FF0000'}}"
+        stroke="{{monitorData[1].lines[4].Iavg==='0.00A' ? '#00FF00' : '#FF0000'}}"
+        stroke-width="0.25"
+        ng-click="chooseBranch(10023,134,1,4)"
+                      data-placement="{{'right'}}"
+                      data-container="body"
+                      data-template-url="app/powers/monitoring/widgets/branch-detail.html"
+                      data-auto-close="1"
+                      bs-popover>
 <g >
 <path d="M704.315,482.567 704.719,482.567 704.696,517.878 704.292,517.878 z" />
 </g>
@@ -1129,7 +1189,16 @@
 <path d="M860.939,438.495 861.035,438.4 864.401,441.766 864.306,441.862 z" />
 <path d="M864.306,438.4 864.401,438.495 861.035,441.862 860.939,441.766 z" />
 </g>
-<g fill="{{monitorData[1].lines[0].Iavg==='0.00A' ? '#00FF00' : '#FF0000'}}" stroke="{{monitorData[1].lines[0].Iavg==='0.00A' ? '#00FF00' : '#FF0000'}}" stroke-width="0.25">
+<g
+        fill="{{monitorData[1].lines[0].Iavg==='0.00A' ? '#00FF00' : '#FF0000'}}"
+        stroke="{{monitorData[1].lines[0].Iavg==='0.00A' ? '#00FF00' : '#FF0000'}}"
+        stroke-width="0.25"
+        ng-click="chooseBranch(10023,130,1,0)"
+                      data-placement="{{'right'}}"
+                      data-container="body"
+                      data-template-url="app/powers/monitoring/widgets/branch-detail.html"
+                      data-auto-close="1"
+                      bs-popover>
 <g fill="none" >
 <polyline points="862.67,481.775 866.037,478.409 " />
 <polyline points="862.67,481.775 859.304,478.409 " />
@@ -1188,7 +1257,16 @@
 <path d="M907.154,438.869 907.249,438.774 910.616,442.14 910.521,442.236 z" />
 <path d="M910.521,438.774 910.616,438.869 907.249,442.236 907.154,442.14 z" />
 </g>
-<g fill="{{monitorData[1].lines[2].Iavg==='0.00A' ? '#00FF00' : '#FF0000'}}" stroke="{{monitorData[1].lines[2].Iavg==='0.00A' ? '#00FF00' : '#FF0000'}}" stroke-width="0.25">
+<g
+        fill="{{monitorData[1].lines[2].Iavg==='0.00A' ? '#00FF00' : '#FF0000'}}"
+        stroke="{{monitorData[1].lines[2].Iavg==='0.00A' ? '#00FF00' : '#FF0000'}}"
+        stroke-width="0.25"
+        ng-click="chooseBranch(10023,132,1,2)"
+                      data-placement="{{'right'}}"
+                      data-container="body"
+                      data-template-url="app/powers/monitoring/widgets/branch-detail.html"
+                      data-auto-close="1"
+                      bs-popover>
 <g>
 <polyline points="908.885,482.15 912.252,478.783 " />
 <polyline points="908.885,482.15 905.518,478.783 " />
@@ -1264,7 +1342,7 @@ f 垂直移动-->
         <g clip-path="url(#clipId0)" fill="rgb(255,0,255)" stroke="rgb(255,0,255)" stroke-width="0" >
         <text transform="matrix(7.19404 0 -0 7.19404 20.4617 564.556)" font-family="Arial,'sans-serif'" font-size="1.39636" >Q</text>
         <text transform="matrix(7.19404 0 -0 7.19404 28.2744 564.556)" font-family="SimSun,'sans-serif'" font-size="1.43" >&#65306;</text>
-        <text transform="matrix(7.19404 0 -0 7.19404 28.5619 564.556)" font-family="Arial,'sans-serif'" font-size="1.39636" >{{monitorData[0].Q}}</text>
+        <text transform="matrix(7.19404 0 -0 7.19404 38.5619 564.556)" font-family="Arial,'sans-serif'" font-size="1.39636" >{{monitorData[0].Q}}</text>
         </g>
     </g>
     <!--二号变压器-->

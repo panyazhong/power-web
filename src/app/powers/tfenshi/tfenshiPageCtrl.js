@@ -186,21 +186,21 @@
         }
         // $scope.testclick3(paramsDefault3);
 
-        $scope.pie = function(paramsDefault) {
-
-            Pie.query(paramsDefault,
-                function(data) {
-                    $scope.show.loadPieData = pieHelper.create(data);
-                },
-                function(err) {
-                    HttpToast.toast(err);
-                })
-        }
-        var paramsD ={
-            client_id:'101',
-            type:1
-        }
-        $scope.pie(paramsD);
+        // $scope.pie = function(paramsDefault) {
+        //
+        //     Pie.query(paramsDefault,
+        //         function(data) {
+        //             $scope.show.loadPieData = pieHelper.create(data);
+        //         },
+        //         function(err) {
+        //             HttpToast.toast(err);
+        //         })
+        // }
+        // var paramsD ={
+        //     client_id:'101',
+        //     type:1
+        // }
+        // $scope.pie(paramsD);
 
         $scope.init = function () {
             var pm = treeCache.getTree();

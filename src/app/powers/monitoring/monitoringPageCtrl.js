@@ -110,7 +110,7 @@
                 $scope.show.mapData = data;
                 $scope.initFilterInfo();
             });
-
+            $scope.queryClientSvg();
         };
         $scope.init();
 
@@ -140,8 +140,7 @@
 
             // 系统图监控数据
             $scope.monitorData = data.lines;
-            $scope.monitorLines = data.lines[0].lines
-// console.log( $scope.monitorData )
+            // console.log( $scope.monitorData )
             $scope.$digest();
         });
 
