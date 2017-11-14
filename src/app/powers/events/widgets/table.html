@@ -2,11 +2,8 @@
        st-table="show.eventsData">
     <thead>
     <tr>
-        <th>
-            <label class="custom-checkbox" style="padding: 0 3px 0 10px;">
-                <input type="checkbox" ng-click="switchSelectAll()">
-                <span></span>
-            </label>
+        <th ng-click="switchSelectAll()">
+            <img ng-src="{{show.selectAll==true?'assets/img/cb.png':'assets/img/cb_false.png'}}">
         </th>
         <th>时间</th>
         <th>所属变电站</th>
