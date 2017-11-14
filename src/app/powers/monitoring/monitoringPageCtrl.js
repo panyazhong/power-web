@@ -7,7 +7,7 @@
     /** @ngInject */
     function monitoringPageCtrl($scope, $state, $stateParams, PageTopCache, Clientimg, ClientimgHelper,
                                 Branch, HttpToast, SidebarCache, Sidebar, Log, locals, EventsCache,
-                                $rootScope, ToastUtils, clientCache, previewCache, $timeout, Client, clientSvg) {
+                                $rootScope, ToastUtils, clientCache, previewCache, $timeout, Client, clientSvg,$compile) {
 
         PageTopCache.cache.state = $state.$current; // active
         $stateParams.cid ? locals.put('cid', $stateParams.cid) : '';
@@ -15,7 +15,8 @@
         $scope.show = {
             mapData: []
         };
-
+        $scope.id=locals.get('cid','');
+        // console.log($scope.id)
         /**
          *  查看line详情
          */
@@ -44,8 +45,32 @@
             };
             Client.querySvg(p,
                 function (data) {
+                    // console.log('b，svg转换后 :\n ' + JSON.stringify(data));
+
+                    // var svgName=locals.get('lastSvgName','');
+                    // console.log(svgName)
+                    // // $('#svg').attr('aaa','');
+                    // if(svgName){
+                    //     var compileFn = $compile('<data.svgname></data.svgname>');
+                    //     // $('#svg').removeAttr(svgName)
+                    //     // $('#svg').attr(data.svgname,'');
+                    //     var $dom = compileFn($scope);
+                    //     // 添加到文档中
+                    //     $dom.appendTo('#svg');
+                    //     locals.put('lastSvgName',data.svgname);
+                    // }
+                    // else {
+                    //     var compileFn = $compile('<data.svgname></data.svgname>');
+                    //     // $('#svg').removeAttr(svgName)
+                    //     // $('#svg').attr(data.svgname,'');
+                    //     var $dom = compileFn($scope);
+                    //     // 添加到文档中
+                    //     $dom.appendTo('#svg');
+                    //     // $('#svg').attr(data.svgname,'');
+                    //     locals.put('lastSvgName',data.svgname);
+                    // }
                     $scope.tree = clientSvg.create(data);
-                    Log.i('b，svg转换后 :\n ' + JSON.stringify($scope.tree));
+                    // console.log('b，svg转换后 :\n ' + JSON.stringify(data));
                 },
                 function (err) {
                     HttpToast.toast(err);
@@ -83,7 +108,6 @@
             var pm = previewCache.getPreview();
             pm.then(function (data) {
                 $scope.show.mapData = data;
-
                 $scope.initFilterInfo();
             });
 
@@ -116,7 +140,8 @@
 
             // 系统图监控数据
             $scope.monitorData = data.lines;
-
+            $scope.monitorLines = data.lines[0].lines
+// console.log( $scope.monitorData )
             $scope.$digest();
         });
 

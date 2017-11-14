@@ -427,6 +427,7 @@
 
                 data.templateUrl = ImgPrefix.prefix + data.templateUrl;
                 // data.templateUrl = "app/powers/temp/template.html";
+                // data.templateUrl = "app/powers/temp/mjTemp.html";
 
                 return _.cloneDeep(data);
             }

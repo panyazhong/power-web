@@ -554,6 +554,7 @@
                     }).then(function (suc) {
 
                         if (suc.data.message) {
+                            //更新外面的列表
                             $parentScope.$apply(function () {
                                 $parentScope.$emit('iframe', 'sub');
                             });

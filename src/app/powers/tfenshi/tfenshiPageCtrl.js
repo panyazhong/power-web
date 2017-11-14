@@ -184,7 +184,7 @@
             time:moment($scope.show.beginDate3).format('YYYY'),
             type:3
         }
-        $scope.testclick3(paramsDefault3);
+        // $scope.testclick3(paramsDefault3);
 
         $scope.pie = function(paramsDefault) {
 

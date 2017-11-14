@@ -180,7 +180,7 @@
             time:moment($scope.show.beginDate2).format('YYYY-MM'),
             type:2
         }
-        $scope.testclick2(paramsDefault2);
+        // $scope.testclick2(paramsDefault2);
 
         $scope.testclick3 = function(paramsDefault) {
             $scope.initData()
@@ -199,7 +199,7 @@
             time:moment($scope.show.beginDate3).format('YYYY'),
             type:3
         }
-        $scope.testclick3(paramsDefault3);
+        // $scope.testclick3(paramsDefault3);
 
         $scope.pie = function(paramsDefault) {
 

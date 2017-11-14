@@ -6,7 +6,7 @@
 
     function monitorSvg($compile, $http) {
         return {
-            restrict: 'E',
+            restrict: 'AE',
             scope: {
                 templateUrl: '@',
                 monitorData: '=',
@@ -71,6 +71,7 @@
                     for (var i = 0; i < $scope.tree.data.length; i++) {
                         var inc = $scope.tree.data[i];
                         inc.name = _splitStr(inc.name);
+                        // console.log(inc.name);
                     }
                     // incomingline name transform
                     $scope.incNameTransform = function (incIndex, charIndex) {
@@ -79,7 +80,7 @@
                     }
                     //  client name
                     $scope.clientNameTransform = 'matrix(10, 0, 0, 10, ' + (config.origin.x + clientLength / 2 - 15 * $scope.tree.name.length / 2) + ',' + (config.origin.y - 15) + ')';
-                    console.log(clientLength, $scope.clientNameTransform);
+                    // console.log(clientLength, $scope.clientNameTransform);
                     //  incomingline U
                     $scope.incUTransform = function (incIndex, name) {
                         return 'matrix(8, 0, 0, 8, ' + (config.origin.x + config.client.left + incIndex * config.client.gap + config.incU.offsetX) + ',' + (config.origin.y + config.client.h + config.incTitle.top + name.length * config.incTitle.gap) + ')';
@@ -118,7 +119,6 @@
                     }
 
                 });
-
                 $scope.$watch('scaleNum', function (newValue, oldValue, scope) {
                     if (newValue > oldValue) {
                         // 增大
