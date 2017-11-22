@@ -37,16 +37,16 @@
     <div id="svg" auto-height style="background-color: #282828;">
         <monitor-svg
                 monitor-data="monitorData"
-                template-url="app/powers/temp/template.html"
+                template-url="{{tree.templateUrl}}"
                 view-branch="viewBranch(id)"
                 tree="tree"
                 scale-num="scaleNum"
                 ng-show="id==101">
         </monitor-svg>
-        <!--template-url="{{tree.templateUrl}}"-->
+
         <mj-svg
                 monitor-data="monitorData"
-                template-url="app/powers/temp/mjTemp.html"
+                template-url="{{tree.templateUrl}}"
                 view-branch="viewBranch(id)"
                 tree="tree"
                 scale-num="scaleNum"
@@ -57,7 +57,7 @@
         </mj-svg>
         <mjone-svg
                 monitor-data="monitorData"
-                template-url="app/powers/temp/mjoneTemp.html"
+                template-url="{{tree.templateUrl}}"
                 view-branch="viewBranch(id)"
                 tree="tree"
                 scale-num="scaleNum"
@@ -67,7 +67,7 @@
         </mjone-svg>
         <mjtwo-svg
                 monitor-data="monitorData"
-                template-url="app/powers/temp/mjtwoTemp.html"
+                template-url="{{tree.templateUrl}}"
                 view-branch="viewBranch(id)"
                 tree="tree"
                 scale-num="scaleNum"
@@ -77,7 +77,7 @@
         </mjtwo-svg>
         <mjthree-svg
                 monitor-data="monitorData"
-                template-url="app/powers/temp/mjthreeTemp.html"
+                template-url="{{tree.templateUrl}}"
                 view-branch="viewBranch(id)"
                 tree="tree"
                 scale-num="scaleNum"

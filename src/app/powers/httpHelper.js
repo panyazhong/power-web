@@ -425,7 +425,7 @@
             create: function (data) {
                 if (!data) return;
 
-                // data.templateUrl = ImgPrefix.prefix + data.templateUrl;
+                data.templateUrl = ImgPrefix.prefix + data.templateUrl;
                 // data.templateUrl = "app/powers/temp/template.html";
                 // data.templateUrl = "app/powers/temp/mjTemp.html";
                 // data.templateUrl = "app/powers/temp/mjoneTemp.html";
