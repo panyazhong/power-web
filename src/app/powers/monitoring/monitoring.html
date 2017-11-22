@@ -37,27 +37,27 @@
     <div id="svg" auto-height style="background-color: #282828;">
         <monitor-svg
                 monitor-data="monitorData"
-                template-url="{{tree.templateUrl}}"
+                template-url="app/powers/temp/template.html"
                 view-branch="viewBranch(id)"
                 tree="tree"
                 scale-num="scaleNum"
                 ng-show="id==101">
         </monitor-svg>
-
+        <!--template-url="{{tree.templateUrl}}"-->
         <mj-svg
                 monitor-data="monitorData"
-                template-url="{{tree.templateUrl}}"
+                template-url="app/powers/temp/mjTemp.html"
                 view-branch="viewBranch(id)"
                 tree="tree"
                 scale-num="scaleNum"
                 ng-show="id==10023"
-                ng-hide="bid==125||bid==126||bid==130"
+                ng-hide="bid==125||bid==126||bid==130||id!=10023"
         click-one="clickOne(id)"
         click-two="clickTwo(id)">
         </mj-svg>
         <mjone-svg
                 monitor-data="monitorData"
-                template-url="{{tree.templateUrl}}"
+                template-url="app/powers/temp/mjoneTemp.html"
                 view-branch="viewBranch(id)"
                 tree="tree"
                 scale-num="scaleNum"
@@ -67,7 +67,7 @@
         </mjone-svg>
         <mjtwo-svg
                 monitor-data="monitorData"
-                template-url="{{tree.templateUrl}}"
+                template-url="app/powers/temp/mjtwoTemp.html"
                 view-branch="viewBranch(id)"
                 tree="tree"
                 scale-num="scaleNum"
@@ -77,11 +77,12 @@
         </mjtwo-svg>
         <mjthree-svg
                 monitor-data="monitorData"
-                template-url="{{tree.templateUrl}}"
+                template-url="app/powers/temp/mjthreeTemp.html"
                 view-branch="viewBranch(id)"
                 tree="tree"
                 scale-num="scaleNum"
                 ng-show="bid==130"
+
                 click-one="clickOne(id)"
                 click-two="clickTwo(id)">
         </mjthree-svg>
