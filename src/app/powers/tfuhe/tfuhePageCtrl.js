@@ -7,7 +7,7 @@
 
     /** @ngInject */
     function tfuhePageCtrl($scope, $state, PageTopCache, HttpToast, Log, ToastUtils, $rootScope, $timeout, treeCache,$stateParams,
-                           Fuhe,dayHelper,monthHelper) {
+                           Fuhe,dayHelper,monthHelper,locals) {
         //tab切换
         $scope.focusIndex=1;
         $scope.focus=function(index){
@@ -72,16 +72,10 @@
             }
         };
         $scope.show = {
-            // clientName: '',  //变电站
-            // incominglineName: '',    //总线
-            // branchName: '',    //支线
-            // sidebarArr: [],    //变电站数组，默认从缓存里拿
-            // incominglingArr: [],  //总线数组
-            // branchArr: [],    //支线数组,
-            clientName: '良友木业',  //变电站 ？？？？？
+            clientName: '',  //变电站
             sidebarArr: [],    //变电站数组
-            lineNodeList: [[],[]],    //节点集合完整数据    这个所有节点信息是一个二维数组  里面决定了所有的下拉框信息  有几个元素就有几个下拉框
-            choiceLine: [{name: '企口4#线电源控制柜'},{name : '企口4#'}],  //选择的节点的数据 然后这个地方的元素  决定了 每个下来默认选中的是哪个
+            lineNodeList: '',    //节点集合完整数据    这个所有节点信息是一个二维数组  里面决定了所有的下拉框信息  有几个元素就有几个下拉框
+            choiceLine: '',  //选择的节点的数据 然后这个地方的元素  决定了 每个下来默认选中的是哪个
             beginDate1: new Date(),  //开始时间
             beginDate2: new Date(),  //开始时间
             beginDate3: new Date(),  //开始时间
@@ -91,9 +85,6 @@
         };
 
         $scope.form = {
-            // client_id: $stateParams.cid ? $stateParams.cid : '',  //变电站cid，有可能是从地图界面传过来的参
-            // incomingline_id: "",    //总进线inid
-            // branch_id: "",  //所处支线bid
             beginDate1: '',   //开始时间
             beginDate2: '',   //开始时间
             beginDate3: '',   //开始时间
@@ -140,7 +131,6 @@
 
             };
         };
-        // $scope.initData()
         $scope.testclick1 = function(paramsDefault) {
             $scope.initData()
             // $timeout(function () {
@@ -171,7 +161,7 @@
                 })
         }
         var paramsDefault1 ={
-            line_id:'101',
+            line_id:locals.get('cid',''),
             time:moment($scope.show.beginDate1).format('YYYY-MM-DD'),
             interval: 15,
             type:1
@@ -200,11 +190,11 @@
                     HttpToast.toast(err);
                 })
         }
-        var paramsDefault2 ={
-            line_id:'101',
-            time:moment($scope.show.beginDate2).format('YYYY-MM'),
-            type:2
-        }
+        // var paramsDefault2 ={
+        //     line_id:'101',
+        //     time:moment($scope.show.beginDate2).format('YYYY-MM'),
+        //     type:2
+        // }
         // $scope.testclick2(paramsDefault2);
 
         $scope.testclick3 = function(paramsDefault) {
@@ -229,20 +219,32 @@
                     HttpToast.toast(err);
                 })
         }
-        var paramsDefault3 ={
-            line_id:'101',
-            time:moment($scope.show.beginDate3).format('YYYY'),
-            type:3
-        }
+        // var paramsDefault3 ={
+        //     line_id:'101',
+        //     time:moment($scope.show.beginDate3).format('YYYY'),
+        //     type:3
+        // }
         // $scope.testclick3(paramsDefault3);
 
 
+        $scope.initFilterInfo = function () {
 
+            var cid = locals.get('cid', '') || $scope.show.sidebarArr[0].clientId;
+            if (cid) {
+                for (var i = 0; i < $scope.show.sidebarArr.length; i++) {
+                    var item = $scope.show.sidebarArr[i];
+                    if (item.clientId == cid) {
+                        $scope.changeClent(item);
+                    }
+                }
+            }
+
+        };
         $scope.init = function () {
             var pm = treeCache.getTree();
             pm.then(function (data) {
                 $scope.show.sidebarArr = treeCache.createClientArr(data);
-
+                $scope.initFilterInfo();
             });
 
         };
@@ -379,9 +381,8 @@
 
         // dropdown set
         $scope.changeClent = function (obj) {
-            // if ($scope.show.clientName == obj.clientName) return;
+            if ($scope.show.clientName == obj.clientName) return;
             $scope.show.clientName = obj.clientName;
-            // $scope.show.clientName.title
             // clear
             $scope.form.line_id = '';
             $scope.show.lineNodeList = [];
@@ -395,7 +396,6 @@
                     if (item.id == obj.clientId) {
 
                         $scope.setTreeNodes(item.lines);
-                        // console.log($scope.show.lineNodeList)
                         return
                     }
                 }

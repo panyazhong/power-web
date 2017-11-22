@@ -43,21 +43,48 @@
                 scale-num="scaleNum"
                 ng-show="id==101">
         </monitor-svg>
+
         <mj-svg
                 monitor-data="monitorData"
                 template-url="{{tree.templateUrl}}"
                 view-branch="viewBranch(id)"
                 tree="tree"
                 scale-num="scaleNum"
-                ng-show="id==10023">
+                ng-show="id==10023"
+                ng-hide="bid==125||bid==126||bid==130"
+        click-one="clickOne(id)"
+        click-two="clickTwo(id)">
         </mj-svg>
-        <!--<div id="svg"-->
-             <!--monitor-data="monitorData"-->
-             <!--template-url="{{tree.templateUrl}}"-->
-             <!--view-branch="viewBranch(id)"-->
-             <!--tree="tree"-->
-             <!--scale-num="scaleNum"-->
-        <!--</div>-->
+        <mjone-svg
+                monitor-data="monitorData"
+                template-url="{{tree.templateUrl}}"
+                view-branch="viewBranch(id)"
+                tree="tree"
+                scale-num="scaleNum"
+                ng-show="bid==125"
+                click-one="clickOne(id)"
+                click-two="clickTwo(id)">
+        </mjone-svg>
+        <mjtwo-svg
+                monitor-data="monitorData"
+                template-url="{{tree.templateUrl}}"
+                view-branch="viewBranch(id)"
+                tree="tree"
+                scale-num="scaleNum"
+                ng-show="bid==126"
+                click-one="clickOne(id)"
+                click-two="clickTwo(id)">
+        </mjtwo-svg>
+        <mjthree-svg
+                monitor-data="monitorData"
+                template-url="{{tree.templateUrl}}"
+                view-branch="viewBranch(id)"
+                tree="tree"
+                scale-num="scaleNum"
+                ng-show="bid==130"
+                click-one="clickOne(id)"
+                click-two="clickTwo(id)">
+        </mjthree-svg>
         <div class="opt-group">
             <div class="opt-add" ng-click="add()">+</div>
             <div style="height: 15px;background: #000;width: 2px"></div>

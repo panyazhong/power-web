@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
 </head>
 <body>
-<div style="background-color: #282828;width: 1024px;height: 960px;margin-top: -180px" ng-style="{'width':bgSize.width+'px', 'height':bgSize.height+'px'}">
+<div style="background-color: #282828;width: 1024px;height: 768px;margin-top: -180px" ng-style="{'width':bgSize.width+'px', 'height':bgSize.height+'px'}">
 
 <?xml version="1.0" standalone="no"?>
 <svg viewBox="0 0 1024 768" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" stroke-linecap="round" stroke-linejoin="round" fill-rule="evenodd" xml:space="preserve" >
@@ -1586,7 +1586,14 @@ f 垂直移动-->
 <text transform="matrix(7.19404 0 -0 7.19404 911.276 609.225)" font-family="Arial,'sans-serif'" font-size="1.39636" >{{monitorData[1].lines[2].Q}}</text>
 </g>
     </g>
+
 </svg>
+<div style="position:absolute;margin-left:50%;left: -256px;margin-top: -50px">
+    <div class="btn" style="background: #f0a53d;color: #fff" ng-click="clickTwo({id:10023})">低压配电一次接线</div>
+    <div class="btn" style="background: #0a6aa1;color: #fff" ng-click="clickOne({id:125})">1#变压器出线</div>
+    <div class="btn" style="background: #0a6aa1;color: #fff" ng-click="clickOne({id:126})">2#变压器出线1</div>
+    <div class="btn" style="background: #0a6aa1;color: #fff" ng-click="clickOne({id:130})">2#变压器出线2</div>
+</div>
 </div>
 </body>
 </html>

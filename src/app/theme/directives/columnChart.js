@@ -91,7 +91,7 @@
                             },
                             name: '电量 KW.h',
                             nameLocation: 'middle',
-                            nameGap: 40,
+                            nameGap: 80,
                             nameTextStyle: {
                                 color: '#666'
                             }

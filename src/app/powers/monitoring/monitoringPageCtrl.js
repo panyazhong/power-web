@@ -16,7 +16,6 @@
             mapData: []
         };
         $scope.id=locals.get('cid','');
-        // console.log($scope.id)
         /**
          *  查看line详情
          */
@@ -30,7 +29,41 @@
 
             locals.put('bid', id);
         };
-
+        $scope.clickTwo=function(id){
+            $scope.id=locals.get('cid',id);
+            $scope.bid=locals.put('bid','');
+            var p = {
+                id: id,
+                svg: 'svg'
+            };
+            Client.querySvg(p,
+                function (data) {
+                    // console.log('b，svg转换后 :\n ' + JSON.stringify(data));
+                    $scope.tree = clientSvg.create(data);
+                    // console.log('b，svg转换后 :\n ' + JSON.stringify(data));
+                },
+                function (err) {
+                    HttpToast.toast(err);
+                });
+        }
+        $scope.clickOne=function(id){
+            $scope.id=locals.put('cid', '');
+            locals.put('bid',id);
+            $scope.bid=locals.get('bid','')
+            var p = {
+                id: id,
+                svg: 'svg'
+            };
+            Client.querySvg(p,
+                function (data) {
+                    // console.log('b，svg转换后 :\n ' + JSON.stringify(data));
+                    $scope.tree = clientSvg.create(data);
+                    // console.log('b，svg转换后 :\n ' + JSON.stringify(data));
+                },
+                function (err) {
+                    HttpToast.toast(err);
+                });
+        }
         $scope.initInfo = function () {
             // svg
             $scope.tree = {};
@@ -104,13 +137,12 @@
          */
         // a. 获取变电站信息
         $scope.init = function () {
-
             var pm = previewCache.getPreview();
             pm.then(function (data) {
                 $scope.show.mapData = data;
                 $scope.initFilterInfo();
             });
-            $scope.queryClientSvg();
+
         };
         $scope.init();
 
@@ -150,6 +182,10 @@
             Log.i('filterInfo: ' + JSON.stringify(data));
 
             if (data.cid) {
+                $scope.id = data.cid;
+                $scope.initInfo();
+                $scope.scaleNum = 1;
+                $scope.bid='';
                 $scope.initFilterInfo();
             }
         });

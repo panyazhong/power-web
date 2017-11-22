@@ -428,6 +428,7 @@
                 data.templateUrl = ImgPrefix.prefix + data.templateUrl;
                 // data.templateUrl = "app/powers/temp/template.html";
                 // data.templateUrl = "app/powers/temp/mjTemp.html";
+                // data.templateUrl = "app/powers/temp/mjoneTemp.html";
 
                 return _.cloneDeep(data);
             }
@@ -520,16 +521,29 @@
         return {
             create: function (data) {
                 if (!data) return;
+                var lineTitle =[]
+                data.map(function (item) {
+                    lineTitle.push(item.name);
+                });
+                // console.log(lineTitle)
                 var resData = {
-                    color: ['#000000', '#003300', '#330000', '#333300',
-                        '#660000', '#CC0000', '#CC3300', '#663300',
-                        '#990000', '#993300', '#FF0000', '#FF3300',
-                        '#0000FF', '#006699', '#3300FF', '#FF0099', '#FF0033'
-                    ],
+                    color: '',
                     data: []
                 };
+                function randomColor(n) {
+                    var color=[]
+                    for(var i=0;i<n;i++){
+                       color.push('#' + ( (Math.random() * 0x1000000 << 0).toString(16)));
+                    }
+                    return color
+                }
                 resData.data = data;
-                // console.log('dianliang 转换后: \n' + JSON.stringify(resData))//这个是返回的数据
+                resData.color = randomColor(data.length);
+                resData['lineTitle'] = lineTitle;
+
+                console.log('dianliang 转换后: \n' + JSON.stringify(resData))//这个是返回的数据
+                // console.log(resData.color)//这个是返回的数据
+                // console.log(data)//这个是返回的数据
 
                 return resData;
             }

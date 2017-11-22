@@ -10,16 +10,38 @@
             link: function ($scope, element, attrs) { //attrs是DOM元素的属性集合
                 var myChart = echarts.init(element[0]);
                 $scope.$watch(attrs.eData, function (newValue, oldValue, scope) {
+                    var lineTitle = newValue.lineTitle;
                     var option = {
-                        backgroundColor: '#ffffff',
+                        backgroundColor: '#fff',
                         color: newValue.color,
+                        // legend: {
+                        //     type: 'scroll',
+                        //     orient: 'vertical',
+                        //     right: 10,
+                        //     // width:'100px',
+                        //     // scrollDataIndex:0,
+                        //     // pageButtonItemGap:5,
+                        //     // pageButtonGap:'null',
+                        //     // pageButtonPosition:'end',
+                        //     // pageFormatter: '{current}/{total}' ,
+                        //     // pageIcons:{vertical:['M0,0L20,0L10,-20z', 'M0,0L20,0L10,20z']},
+                        //     // pageIconColor:'#2f4554',
+                        //     // pageIconInactiveColor:'#aaa',
+                        //     // pageIconSize:15,
+                        //     // // pageTextStyle:,
+                        //     // animation:true,
+                        //     // animationDurationUpdate:800,
+                        //     data: lineTitle
+                        // },
+
                         series: [
                             {
                                 type: 'pie',
                                 hoverAnimation: true,       //是否开启 hover 在扇区上的放大动画效果
                                 center: ['50%', '50%'],    //饼图的中心（圆心）坐标
                                 radius: ['', '130px'],  //半径，数组的第一项是内半径，第二项是外半径
-                                avoidLabelOverlap: true,   //是否启用防止标签重叠策略
+                                avoidLabelOverlap: false,   //是否启用防止标签重叠策略
+
                                 label: {                    //饼图图形上的文本标签
                                     normal: {               //默认样式
                                         show: false,
@@ -41,11 +63,11 @@
                                 },
                                 itemStyle: {
                                     normal: {
-                                        borderWidth: 2,
+                                        borderWidth: 1,
                                         borderColor: '#ffffff'
                                     },
                                     emphasis: {
-                                        borderWidth: 2,
+                                        borderWidth: 1,
                                         borderColor: '#ffffff'
                                     }
                                 },

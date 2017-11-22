@@ -90,7 +90,7 @@
                             },
                             name: unit,
                             nameLocation: 'middle',
-                            nameGap: 40,
+                            nameGap: 45,
                             nameTextStyle: {
                                 color: '#666'
                             }

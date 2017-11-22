@@ -2,9 +2,9 @@
     'use strict';
 
     angular.module('BlurAdmin.theme')
-        .directive('mjSvg', mjSvg);
+        .directive('mjthreeSvg', mjthreeSvg);
 
-    function mjSvg($compile, $http) {
+    function mjthreeSvg($compile, $http) {
         return {
             restrict: 'AE',
             scope: {
@@ -48,24 +48,48 @@
                         Q: '',
                         PF: '',
                         Pt1: ''
-                    };   //选中的popov数据
+                    };
+
+                    //选中的popov数据
                     $scope.filterKey = ['id', 'name'];
-                    $scope.chooseBranch = function (incId, lineId, incIndex, branchIndex) {
+                    $scope.chooseBranch = function (incId, lineId, incIndex, branchIndex,subIndex) {
                         // console.log('chooseBranch: ' + incId + " / " + lineId + " / " + incIndex + " / " + branchIndex);
-                        // console.log('chooseBranch 111：' + JSON.stringify($scope.tree.data[incIndex].lines[branchIndex]));
+                        // console.log('chooseBranch 111：' + JSON.stringify($scope.tree.data[incIndex].lines[branchIndex].lines[subIndex]));
                         // console.log('chooseBranch 222：' + JSON.stringify($scope.monitorData[incIndex].lines[branchIndex]));
 
-                        $scope.line["id"] = $scope.tree.data[incIndex].lines[branchIndex].id;
-                        $scope.line["name"] = $scope.tree.data[incIndex].lines[branchIndex].name;
+                        // $scope.line["id"] = $scope.tree.data[incIndex].lines[branchIndex].id;
+                        // $scope.line["name"] = $scope.tree.data[incIndex].lines[branchIndex].name;
+                        //
+                        //
+                        // var info = $scope.monitorData[1].lines[incIndex].lines[branchIndex];
+                        // for (var Key in $scope.line) {
+                        //     if ($scope.filterKey.indexOf(Key) == -1) {
+                        //         $scope.line[Key] = info[Key] || '';
+                        //
+                        //     }
+                        // }
 
-                        var info = $scope.monitorData[incIndex].lines[branchIndex];
-                        for (var Key in $scope.line) {
-                            if ($scope.filterKey.indexOf(Key) == -1) {
-                                $scope.line[Key] = info[Key] || '';
-
+                        if(subIndex || subIndex == '0'){
+                            $scope.line["id"] = $scope.tree.data[incIndex].lines[branchIndex].lines[subIndex].id;
+                            $scope.line["name"] = $scope.tree.data[incIndex].lines[branchIndex].lines[subIndex].name;
+                            var subinfo = $scope.monitorData[1].lines[incIndex].lines[branchIndex].lines[subIndex];
+                            for (var Key in $scope.line) {
+                                if ($scope.filterKey.indexOf(Key) == -1) {
+                                    $scope.line[Key] = subinfo[Key] || '';
+                                }
                             }
                         }
+                        else {
+                            $scope.line["id"] = $scope.tree.data[incIndex].lines[branchIndex].id;
+                            $scope.line["name"] = $scope.tree.data[incIndex].lines[branchIndex].name;
+                            var info = $scope.monitorData[1].lines[incIndex].lines[branchIndex];
+                            for (var Key in $scope.line) {
+                                if ($scope.filterKey.indexOf(Key) == -1) {
+                                    $scope.line[Key] = info[Key] || '';
+                                }
+                            }
 
+                        }
                         // console.log('chooseBranch : ' + JSON.stringify($scope.line));
                     }
 

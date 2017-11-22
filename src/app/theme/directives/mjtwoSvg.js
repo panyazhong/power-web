@@ -2,9 +2,9 @@
     'use strict';
 
     angular.module('BlurAdmin.theme')
-        .directive('mjSvg', mjSvg);
+        .directive('mjtwoSvg', mjtwoSvg);
 
-    function mjSvg($compile, $http) {
+    function mjtwoSvg($compile, $http) {
         return {
             restrict: 'AE',
             scope: {
@@ -58,7 +58,7 @@
                         $scope.line["id"] = $scope.tree.data[incIndex].lines[branchIndex].id;
                         $scope.line["name"] = $scope.tree.data[incIndex].lines[branchIndex].name;
 
-                        var info = $scope.monitorData[incIndex].lines[branchIndex];
+                        var info = $scope.monitorData[1].lines[incIndex].lines[branchIndex];
                         for (var Key in $scope.line) {
                             if ($scope.filterKey.indexOf(Key) == -1) {
                                 $scope.line[Key] = info[Key] || '';
