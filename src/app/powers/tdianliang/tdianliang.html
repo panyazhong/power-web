@@ -14,7 +14,21 @@
         <div class='month' ng-show="focusIndex==3">
             <div style="height:350px;" class="col-md-12" column-chart e-data="show.loadYearData"></div>
         </div>
-
+        <div>
+            <div>各支线电量</div>
+            <table class="table table-bordered table-hover common-table col-md-6" style="width: 100%;margin: 20px 0">
+            <thead>
+            <tr>
+                <th>支线名称</th>
+                <th>电量</th>
+            </tr>
+            </thead>
+            <tr ng-repeat="item in piedata">
+                <td style="width: 50%"><span>{{item.name}}</span></td>
+                <td style="width: 50%"><span>{{item.value}}</span></td>
+            </tr>
+            </table>
+        </div>
         <div style="margin-top:20px">
             <div>电量占比</div>
             <div style="height:350px;" class="col-md-12" ring-bar1 e-data="show.loadPieData"></div>

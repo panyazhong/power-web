@@ -541,9 +541,9 @@
                 resData.color = randomColor(data.length);
                 resData['lineTitle'] = lineTitle;
 
-                console.log('dianliang 转换后: \n' + JSON.stringify(resData))//这个是返回的数据
-                // console.log(resData.color)//这个是返回的数据
-                // console.log(data)//这个是返回的数据
+                // console.log('dianliang 转换后: \n' + JSON.stringify(resData))//这个是返回的数据
+                // // console.log(resData.color)//这个是返回的数据
+                // // console.log(data)//这个是返回的数据
 
                 return resData;
             }

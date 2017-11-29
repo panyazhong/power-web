@@ -72,7 +72,7 @@
             }
         };
         $scope.show = {
-            clientName: '良友木业',  //变电站
+            clientName: '',  //变电站
             sidebarArr: [],    //变电站数组
             lineNodeList: '',    //节点集合完整数据    这个所有节点信息是一个二维数组  里面决定了所有的下拉框信息  有几个元素就有几个下拉框
             choiceLine: '',  //选择的节点的数据 然后这个地方的元素  决定了 每个下来默认选中的是哪个
@@ -181,27 +181,25 @@
         }
 
         $scope.pie = function(paramsDefault) {
-
             Pie.query(paramsDefault,
                 function(data) {
+                    $scope.piedata=data
                     $scope.show.loadPieData = pieHelper.create(data)
-                     //把要转换的数据，传进去，讲道理返回是data一层，没有code一层，不然isArray等判断要自己写，不好
                     // console.log('fuhe : \n'+JSON.stringify($scope.show.loadPieData))//这个是返回的数据
                 },
                 function(err) {
                     HttpToast.toast(err);
                 })
         }
-        var paramsD ={
-            client_id:locals.get('cid', ''),
-            type:1
-        }
-        $timeout(function () {
-            $scope.pie(paramsD);
-        }, 1000);
+        // var paramsD ={
+        //     client_id:locals.get('cid', ''),
+        //     type:1
+        // }
+        // $timeout(function () {
+        //     $scope.pie(paramsD);
+        // }, 1000);
 
         $scope.initFilterInfo = function () {
-
             var cid = locals.get('cid', '') || $scope.show.sidebarArr[0].clientId;
             if (cid) {
                 for (var i = 0; i < $scope.show.sidebarArr.length; i++) {
@@ -219,7 +217,6 @@
                 $scope.show.sidebarArr = treeCache.createClientArr(data);
                 $scope.initFilterInfo();
             });
-
         };
         $scope.init();
 
@@ -264,6 +261,7 @@
                                 params.time = moment($scope.show.beginDate1).format('YYYY-MM-DD');
                             }
                             $scope.testclick1(params);
+                            $scope.pie(params);
                             break;
                         case 2:
                             params.type = 2;
@@ -271,6 +269,7 @@
                                 params.time = moment($scope.show.beginDate2).format('YYYY-MM');
                             }
                             $scope.testclick2(params);
+                            $scope.pie(params);
                             break;
                         case 3:
                             params.type = 3;
@@ -278,6 +277,7 @@
                                 params.time = moment($scope.show.beginDate3).format('YYYY');
                             }
                             $scope.testclick3(params);
+                            $scope.pie(params);
                             break;
                         default:
                             break;
@@ -325,7 +325,7 @@
 
         // dropdown set
         $scope.changeClent = function (obj) {
-            if ($scope.show.clientName == obj.clientName) return;
+            // if ($scope.show.clientName == obj.clientName) return;
             $scope.show.clientName = obj.clientName;
             // clear
             $scope.form.line_id = '';
@@ -338,13 +338,35 @@
                 for (var i = 0; i < data.length; i++) {
                     var item = data[i];
                     if (item.id == obj.clientId) {
-
                         $scope.setTreeNodes(item.lines);
-                        var paramsD ={
-                            client_id:item.id,
-                            type:1
+                        $scope.form.client_id=locals.get('cid',item.id)
+                        switch ($scope.focusIndex){
+                            case 1:
+                                var paramsD ={
+                                    client_id:item.id,
+                                    type:$scope.focusIndex,
+                                    time:moment($scope.show.beginDate1).format('YYYY-MM-DD')
+                                };
+                                $scope.pie(paramsD);
+                                break;
+                            case 2:
+                                var paramsD ={
+                                    client_id:item.id,
+                                    type:$scope.focusIndex,
+                                    time:moment($scope.show.beginDate2).format('YYYY-MM')
+                                };
+                                $scope.pie(paramsD);
+                                break;
+                            case 3:
+                                var paramsD ={
+                                    client_id:item.id,
+                                    type:$scope.focusIndex,
+                                    time:moment($scope.show.beginDate3).format('YYYY')
+                                };
+                                $scope.pie(paramsD);
+                                break;
                         }
-                        $scope.pie(paramsD);
+                        $scope.initData();
                         return
                     }
                 }
@@ -362,8 +384,6 @@
         $scope.toggleDatepicker3 = function () {
             $scope.data.beginDate3.isOpen = !$scope.data.beginDate3.isOpen;
         };
-
-
     }
 
 })();

@@ -288,7 +288,7 @@
 
         // dropdown set
         $scope.changeClent = function (obj) {
-            if ($scope.show.clientName == obj.clientName) return;
+            // if ($scope.show.clientName == obj.clientName) return;
             $scope.show.clientName = obj.clientName;
             // clear
             $scope.form.line_id = '';

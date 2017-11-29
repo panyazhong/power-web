@@ -174,10 +174,11 @@
         })
         .factory('Pie', function (resourceMap) {
             var config = {
-                url: 'data/countPt1/type/1/client_id/101',
+                url: 'data/countPt1/type/:type/client_id/:client_id/time/:time',
                 paramsDefault: {
-                    type:'1',
-                    client_id:'101',
+                    type:'@type',
+                    client_id:'@client_id',
+                    time:'@time'
                 },
                 action: {
                     query : {
