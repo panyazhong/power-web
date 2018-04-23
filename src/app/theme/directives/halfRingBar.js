@@ -10,7 +10,6 @@
             link: function ($scope, element, attrs) { //attrs是DOM元素的属性集合
                 var myChart = echarts.init(element[0]);
                 $scope.$watch(attrs.eData, function (newValue, oldValue, scope) {
-
                     /**
                      需要传入的值
                      current：当前val
@@ -19,6 +18,7 @@
                     var currentVal = parseInt(newValue.current);
                     var totalVal = parseInt(newValue.total);
                     var num = currentVal / totalVal;
+                    var chaVal=totalVal-currentVal;
                     var colors = [
                         '#59b0ff', '#36a0ff', '#2397ff', '#138fff', '#4ba9ff',
                         '#ddda10', '#dece16', '#deb821', '#deaa28', '#dea22c',
@@ -48,6 +48,7 @@
                      展示的参数说明：
                      titleText：百分比
                      currentVal：当前val
+                     chaVal:总-当前的差值
                      totalVal：总val
                      activeColor：覆盖的颜色
                      */
@@ -56,8 +57,8 @@
                     var option = {
                         title: {
                             text: titleText,
-                            x: '50%',
-                            y: '50%',
+                            x: '48%',
+                            y: '40%',
                             textAlign: "center",
                             textStyle: {
                                 fontWeight: 'normal',
@@ -70,9 +71,9 @@
                             name: ' ',
                             type: 'pie',
                             center: ['50%', '50%'], //饼图的中心（圆心）坐标
-                            radius: ['30px', '45px'], //半径，数组的第一项是内半径，第二项是外半径
-                            startAngle: 180, //起始角度，支持范围[0, 360]
-                            color: [activeColor, "transparent"], //当是数组如 ['blue', 'cyan']，颜色将均匀分布
+                            radius: ['35px', '40px'], //半径，数组的第一项是内半径，第二项是外半径
+                            startAngle: 270, //起始角度，支持范围[0, 360]
+                            color: [activeColor,"#d9d9d9"], //当是数组如 ['blue', 'cyan']，颜色将均匀分布
                             hoverAnimation: false, //是否开启 hover 在扇区上的放大动画效果
                             legendHoverLink: false, //是否启用图例 hover 时的联动高亮
                             itemStyle: {
@@ -89,31 +90,32 @@
                             labelLine: {
                                 normal: {
                                     show: false
-                                }
+                                },
                             },
                             data: [{
                                 value: currentVal //默认覆盖的值
                             }, {
-                                value: totalVal
+                                value: chaVal
                             }]
-                        }, {
-                            name: '',
-                            type: 'pie',
-                            center: ['50%', '50%'],
-                            radius: ['30px', '45px'],
-                            startAngle: 180,
-                            color: ["#d9d9d9", "transparent"],
-                            labelLine: {
-                                normal: {
-                                    show: false
-                                }
-                            },
-                            data: [{
-                                value: totalVal
-                            }, {
-                                value: totalVal
-                            }]
-                        }
+                        },
+                        //    {
+                        //    name: '',
+                        //    type: 'pie',
+                        //    center: ['50%', '50%'],
+                        //    radius: ['35px', '40px'],
+                        //    startAngle: 270,
+                        //    color: ["#d9d9d9","transparent" ],
+                        //    labelLine: {
+                        //        normal: {
+                        //            show: false
+                        //        }
+                        //    },
+                        //    data: [{
+                        //        value: totalVal
+                        //    }, {
+                        //        value: totalVal
+                        //    }]
+                        //}
 
                         ]
                     };

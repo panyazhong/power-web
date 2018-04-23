@@ -31,7 +31,7 @@ angular.module('BlurAdmin', [
 ])
     .run(function (Log, locals) {
     /**/
-    var userInfo = locals.getObject('user');
+    var userInfo = locals.getObject('eUser');
     if (JSON.stringify(userInfo) == '{}') {
 
         // 跳转

@@ -17,9 +17,12 @@
         .factory("clientSvg", clientSvg)   //变电站svg信息
         .factory("dayHelper", dayHelper)   //Fuhe demo
         .factory("monthHelper", monthHelper)
+        .factory("zidingHelper", zidingHelper)
         .factory("barHelper", barHelper)
+        .factory("barHelper1", barHelper1)
         .factory("pieHelper", pieHelper)
         .factory("pieHelper1", pieHelper1)
+        .factory("pieHelper2", pieHelper2)
         .factory("stackHelper", stackHelper);
 
     function clientimgHelper(_) {
@@ -391,11 +394,11 @@
 
                 // type区分
                 var t = type == 'Load' ? '负荷' : '需量';
-                var listTitle = ['今日最大', '昨日最大', '本月最大', '上月最大', '本年最大'];
+                var listTitle = ['今日', '昨日', '本月', '上月', '本年'];
 
                 data.map(function (item, pos) {
                     item["val"] = item.val + 'kW';
-                    item["title"] = listTitle[pos] + t;
+                    item["title"] = listTitle[pos];
                 });
 
                 return _.cloneDeep(data);
@@ -408,7 +411,7 @@
             create: function (data) {
                 if (!data || !data.length) return;
 
-                var listTitle = ['今日累计电量', '昨日累计电量', '本月累计电量', '上月累计电量', '本年累计电量'];
+                var listTitle = ['今日', '昨日', '本月', '上月'];
 
                 data.map(function (item, pos) {
                     item["val"] = item.val + 'KW.h';
@@ -425,10 +428,9 @@
             create: function (data) {
                 if (!data) return;
 
-                data.templateUrl = ImgPrefix.prefix + data.templateUrl;
-                // data.templateUrl = "app/powers/temp/template.html";
-                // data.templateUrl = "app/powers/temp/mjTemp.html";
-                // data.templateUrl = "app/powers/temp/mjoneTemp.html";
+                 data.templateUrl = ImgPrefix.prefix + data.templateUrl;
+                 //data.templateUrl = "app/powers/temp/template.html";
+                 //data.templateUrl = "http://monitor.shanghaihenghui.com/svg/sdTemp.html";
 
                 return _.cloneDeep(data);
             }
@@ -489,6 +491,28 @@
             }
         }
     }
+    //折线图（5条）
+    function zidingHelper() {
+        return {
+            create: function (data) {
+                if (!data) return;
+                //这里拿到后台返回的数据，看要转成啥格式。
+                var resData = {
+                    title: "",
+                    unit: "",
+                    lineTitle: [],
+                    timeData: [],   // x轴data
+                    lineData: [],
+                };
+                resData['title'] = data['title'];
+                resData['unit'] = data['unit'];
+                resData['lineTitle'] = data['lineTitle'];
+                resData['timeData'] = data['x'];
+                resData['lineData'] = data['lineData'];
+                return resData;
+            }
+        }
+    }
 
     //柱状图
     function barHelper() {
@@ -515,8 +539,36 @@
             }
         }
     }
+    //柱状图（横）
+    function barHelper1() {
+        return {
+            create: function (data) {
+                if (!data) return;
+                //console.log(data)
+                var current=[];
+                var last=[];
+                data.current.map(function(item){
+                    current.push(item.value)
+                })
+                data.last.map(function(item){
+                    last.push(item.value)
+                })
+                var resData = {
+                    currentData: [],
+                    lastData: [],
+                    barTitle:[],
+                };
+                resData['currentData'] = current;
+                resData['lastData'] = last;
+                resData['barTitle'] = data.barTitle;
+                return resData;
+                //console.log('fuhe 转换后: \n'+JSON.stringify(resData))//这个是返回的数据
 
-    //饼图
+            }
+        }
+    }
+
+    //饼图（实心）
     function pieHelper() {
         return {
             create: function (data) {
@@ -525,7 +577,6 @@
                 data.map(function (item) {
                     lineTitle.push(item.name);
                 });
-                // console.log(lineTitle)
                 var resData = {
                     color: '',
                     data: []
@@ -549,20 +600,52 @@
             }
         }
     }
-
+    //饼图（空心）
     function pieHelper1() {
         return {
             create: function (data) {
                 if (!data) return;
+
                 var resData = {
-                    color: ['#ff6060', '#5c5c61'],
+                    //color: ['#ff6060', '#5c5c61'],
                     data: []
                 };
                 resData.data = data;
-
-                // console.log('fenshi 转换后: \n'+JSON.stringify(resData))//这个是返回的数据
-
                 return resData;
+                //console.log('fenshi 转换后: \n'+JSON.stringify(resData))//这个是返回的数据
+
+            }
+        }
+    }
+    //遍历饼图（空心）
+    function pieHelper2(_) {
+        return {
+            create: function (data) {
+                if (!data || !data.length) return;
+
+                var titleData = [];
+                var loadPieData = [];
+
+                data.map(function (t, pos) {
+                    // title
+                    titleData.push({
+                        active: pos == 0 ? true : false,
+                        id: t.id,
+                        name: t.name
+                    });
+                    // loadPie
+                    loadPieData.push({
+                        diff: t.diff,
+                        total: t.total,
+                        id: t.id,
+                        rate: t.rate
+                    });
+                });
+
+                return {
+                    titleData: _.cloneDeep(titleData),
+                    PieData: _.cloneDeep(loadPieData),
+                }
             }
         }
     }
@@ -580,10 +663,9 @@
                 };
 
                 resData['xAxisData'] = data['x'];
+                //resData['xAxisData'] = ['02-01','02-01','02-01','02-01','02-01','02-01','02-01','02-01','02-01','02-01','02-01','02-01','02-01','02-01','02-01','02-01','02-01','02-01','02-01','02-01','02-01','02-01','02-01','02-01','02-01','02-01','02-01','02-01','02-01','02-01','02-01',];
                 resData['data'] = data['list'];
-
-
-                // console.log('fuhe 转换后: \n'+JSON.stringify(resData))//这个是返回的数据
+                 //console.log('fuhe 转换后: \n'+JSON.stringify(resData))//这个是返回的数据
                 return resData;
             }
         }

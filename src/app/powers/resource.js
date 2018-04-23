@@ -17,7 +17,7 @@
                     },
                     'responseError': function (rejection) {
                         // called if HTTP CODE != 2xx
-                        console.log('responseError::: ' + JSON.stringify(rejection));
+                        //console.log('responseError::: ' + JSON.stringify(rejection));
                         return $q.reject(rejection);
                     }
                 };
@@ -40,7 +40,8 @@
                         withCredentials: true,
                         timeout: 30000,
                         headers: {
-                            'Content-Type': 'application/json'
+                            //'Content-Type': 'application/json'
+                            'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8'
                         },
                         /*
                          transformResponse: function(data) {
@@ -49,7 +50,8 @@
                          },
                          */
                         transformRequest: function (data) {
-                            return JSON.stringify(data);
+                            //return JSON.stringify(data);
+                            return $httpParamSerializerJQLike(data);
                         }
                     };
                     action.params = action.params || {};
@@ -87,482 +89,762 @@
             };
             return Resource(config);
         })
-        // 用户
-        .factory('User', function (Resource) {
+        //设备类型列表
+        .factory('DevicetypeList', function (Resource) {
             var config = {
-                url: 'user/:pwd/:logout/:uid/:verify/:modify',
+                url: 'energy/device/typeList',
                 paramsDefault: {
-                    pwd: '@pwd',
-                    logout: '@logout',
-                    uid: '@uid',
-                    verify: '@verify',
-                    modify: '@modify'
                 },
                 action: {
-                    login: {
-                        method: 'POST'
-                    },
                     query: {
                         method: 'GET',
-                        isArray: true
                     },
-                    update: {
-                        method: 'PUT'
-                    },
-                    editpwd: {
-                        method: 'PUT'
-                    },
-                    exit: {
-                        method: 'GET',
-                    },
-                    create: {
-                        method: 'POST'
-                    },
-                    edit: {
-                        method: 'PUT'
-                    },
-                    queryDetail: {
-                        method: 'GET'
-                    },
-                    getCode: {  // 获取验证码
-                        method: 'POST'
-                    },
-                    editPhone: {    // 修改手机号
-                        method: 'POST'
-                    }
-                }
-            };
-            return Resource(config);
-        })
-        /*
-        // 新建修改user
-        .factory('EditUser', function (Resource) {
-            var config = {
-                url: 'user',
-                paramsDefault: {},
-                action: {
-                    create: {
-                        method: 'POST'
-                    }
-                }
-            };
-            return Resource(config);
-        })
-        */
 
-        // 侧边栏
-        .factory('Sidebar', function (Resource) {
-            var config = {
-                url: 'sidebar',
-                paramsDefault: {},
-                action: {
-                    query: {
-                        method: 'GET',
-                    },
-                    update: {
-                        method: 'PUT'
-                    }
                 }
             };
             return Resource(config);
         })
-        // 概况总览
-        .factory('Overview', function (Resource) {
-            var config = {
-                url: 'client/:cid',
-                paramsDefault: {
-                    cid: '@cid'
-                },
-                action: {
-                    query: {    //获取所有变电站信息
-                        method: 'GET'
-                    },
-                    queryDetail: {    //获取详情
-                        method: 'GET'
-                    },
-                    update: {
-                        method: 'PUT'
-                    }
-                }
-            };
-            return Resource(config);
-        })
-        // 一次系统图
-        .factory('Clientimg', function (Resource) {
-            var config = {
-                url: 'clientimg/:cid',
-                paramsDefault: {
-                    cid: '@cid'
-                },
-                action: {
-                    query: {    //获取一次系统图
-                        method: 'GET',
-                    },
-                    update: {
-                        method: 'PUT'
-                    }
-                }
-            };
-            return Resource(config);
-        })
-        // 支线
-        .factory('Branch', function (Resource) {
-            var config = {
-                url: 'branch/:bid/:device',
-                paramsDefault: {
-                    bid: '@bid',
-                    device: '@device',
-                },
-                action: {
-                    queryList: {
-                        method: 'GET',
-                        isArray: true
-                    },
-                    query: {    //获取支线基本信息 / 获取支线设备
-                        method: 'GET',
-                    },
-                    update: {
-                        method: 'PUT'
-                    }
-                }
-            };
-            return Resource(config);
-        })
-        // 设备
+        //设备
         .factory('Device', function (Resource) {
             var config = {
-                url: 'device/:did/:export/:type/:type_id/:attr',
+                url: 'energy/device/list/status/:status/type/:type/name/:name',
                 paramsDefault: {
-                    did: '@did',
-                    export: '@export',
-                    type: '@type',
-                    type_id: '@type_id',
-                    attr: '@attr'
+                    status: '@status',
+                    type:'@type',
+                    name:'@name',
                 },
                 action: {
                     query: {
-                        method: 'GET'   //获取设备信息
-                    },
-                    queryDT: {      // 获取设备类型
                         method: 'GET',
-                        isArray: true
                     },
-                    create: {
-                        method: 'POST'  //新建设备
-                    },
-                    update: {
-                        method: 'PUT'
-                    },
-                    delete: {   // 删除设备
-                        method: 'DELETE'
-                    },
-                    queryAttr: {      // 6.2 获取设备属性列表
-                        method: 'GET',
-                        isArray: true
-                    }
+
                 }
             };
             return Resource(config);
         })
+        //设备删除
+        .factory('=', function (Resource) {
+            var config = {
+                url: 'energy/device/delete/id/:id',
+                paramsDefault: {
+                    id: '@id',
+                },
+                action: {
+                    query: {
+                        method: 'GET',
+                    },
+
+                }
+            };
+            return Resource(config);
+        })
+        //获取设备数据
+        .factory('DeviceAttr', function (Resource) {
+            var config = {
+                url: 'energy/device/show/id/:id',
+                paramsDefault: {
+                    id: '@id',
+                },
+                action: {
+                    query: {
+                        method: 'GET',
+                    },
+
+                }
+            };
+            return Resource(config);
+        })
+        //修改设备
         .factory('DeviceEdit', function (Resource) {
             var config = {
-                url: 'device',
-                paramsDefault: {},
-                action: {
-                    update: {
-                        method: 'PUT'
-                    },
-                    delete: {   // 删除设备
-                        method: 'DELETE'
-                    }
-                }
-            };
-            return Resource(config);
-        })
-        .factory('DeviceAdd', function (Resource) {
-            var config = {
-                url: 'device',
-                paramsDefault: {},
+                url: 'energy/device/modify/:data',
+                paramsDefault: {
+                    data:'@data'
+                },
                 action: {
                     create: {
-                        method: 'POST'  //新建设备
-                    },
-                    update: {
-                        method: 'PUT'   //修改设备
-                    }
-                }
-            };
-            return Resource(config);
-        })
-        // 事件
-        .factory('Event', function (Resource) {
-            var config = {
-                url: 'event/:list/:confirm',
-                paramsDefault: {
-                    list: '@list',
-                    confirm: '@confirm'
-                },
-                action: {
-                    query: {
-                        method: 'GET'   //获取事件列表，筛选
-                    },
-                    create: {
-                        method: 'POST'
-                    },
-                    update: {
-                        method: 'PUT'   //确认事件
-                    },
-                    delete: {   // 删除设备
-                        method: 'DELETE'
-                    }
-                }
-            };
-            return Resource(config);
-        })
-        // 报警信息
-        .factory('AlertMsg', function (Resource) {
-            var config = {
-                url: 'message/type/:mtid',
-                paramsDefault: {
-                    mtid: '@mtid'
-                },
-                action: {
-                    query: {
-                        method: 'GET',
-                        isArray: true
-                    },
-                    edit: {
-                        method: 'POST'
-                    }
-                }
-            };
-            return Resource(config);
-        })
-        // 报表
-        .factory('Report', function (Resource) {
-            var config = {
-                url: 'report/:rpid/:user',
-                paramsDefault: {
-                    rpid: '@rpid',
-                    user: '@user',
-                },
-                action: {
-                    query: {        // 查询报表列表
-                        method: 'GET',
-                        isArray: true
-                    },
-                    queryUser: {    // 管理员查询上上传
-                        method: 'GET',
-                        isArray: true
-                    },
-                    edit: {
-                        method: 'POST'
-                    },
-                    delete: {
-                        method: 'DELETE'
-                    }
-                }
-            };
-            return Resource(config);
-        })
-        // 签到查询
-        .factory('Signin', function (Resource) {
-            var config = {
-                url: 'signin/:client/:clientId/:list',
-                paramsDefault: {
-                    client: '@client',
-                    clientId: '@clientId',
-                    list: '@list',
-                },
-                action: {
-                    query: {        //7.4 选择变电站后获取相应的签到点下拉列表
-                        method: 'GET',
-                        isArray: true
-                    },
-                    queryUser: {    // 管理员查询上上传
-                        method: 'GET',
-                        isArray: true
-                    },
-                    edit: {
-                        method: 'POST'
-                    },
-                    delete: {
-                        method: 'DELETE'
-                    }
-                }
-            };
-            return Resource(config);
-        })
-        // 历史数据
-        .factory('History', function (Resource) {
-            var config = {
-                url: 'data/id/:clientId/:time/:fromTime/:toTime/:interval',
-                paramsDefault: {
-                    clientId: '@clientId',
-                    time: '@time',
-                    fromTime: '@fromTime',
-                    toTime: '@toTime',
-                    interval: '@interval'
-                },
-                action: {
-                    query: {        // 4.3 获取历史数据
-                        method: 'GET'
-                    }
-                }
-            };
-            return Resource(config);
-        })
-        // 新报警设置
-        .factory('AlertSet', function (Resource) {
-            var config = {
-                url: 'event/setting/:client/:cid',
-                paramsDefault: {
-                    client: '@client',
-                    cid: '@cid',
-                },
-                action: {
-                    query: {    // 获取报警list
-                        method: 'GET',
-                        isArray: true
-                    },
-                    edit: {  // 修改
-                        method: 'PUT'
-                    }
-                }
-            };
-            return Resource(config);
-        })
-        // 新报警设置2
-        .factory('AlertSetting', function (Resource) {
-            var config = {
-                url: 'event/setting/clientEvent',
-                paramsDefault: {},
-                action: {
-                    edit: {  // 修改
-                        method: 'PUT'
-                    }
-                }
-            };
-            return Resource(config);
-        })
-        // 新报表设置
-        .factory('ReportSet', function (Resource) {
-            var config = {
-                url: 'rpt/record/client/:client_id',
-                paramsDefault: {
-                    client_id: '@client_id'
-                },
-                action: {
-                    query: {    // 获取报表列表
-                        method: 'GET'
-                    }
-                }
-            };
-            return Resource(config);
-        })
-        // 巡检查询
-        .factory('Task', function (Resource) {
-            var config = {
-                url: 'task/:history/:real_time/:client_id/:beginDate/:endDate/:mainTaskID',
-                paramsDefault: {
-                    history: '@history',
-                    real_time: '@real_time',
-                    client_id: '@client_id',
-                    beginDate: '@beginDate',
-                    endDate: '@endDate',
-                    mainTaskID: '@mainTaskID'
-                },
-                action: {
-                    query: {    // 获取任务列表
-                        method: 'GET',
-                        isArray: true
-                    },
-                    queryPolling: {    // 获取巡检详情
-                        method: 'GET'
-                    }
-                }
-            };
-            return Resource(config);
-        })
-        // 巡检查询——异常
-        .factory('Exception', function (Resource) {
-            var config = {
-                url: 'exception/:list/:clientIDs/:timeStart/:timeEnd/:exceptionID/:handle',
-                paramsDefault: {
-                    list: '@list',
-                    clientIDs: '@clientIDs',
-                    timeStart: '@timeStart',
-                    timeEnd: '@timeEnd',
-                    exceptionID: '@exceptionID',
-                    handle: '@handle'
-                },
-                action: {
-                    query: {    // 获取异常列表
-                        method: 'GET',
-                        isArray: true
-                    },
-                    detail: {    // 获取异常详情
-                        method: 'GET'
-                    },
-                    edit: { // 修改异常详情
                         method: 'POST',
-                        headers: {
-                            'Content-Type': 'application/json'
-                        },
+                        //headers: { 'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8' },
                         transformRequest: function (data) {
-                            return JSON.stringify(data);
+                            return 'data=' + JSON.stringify(data)
+                        }
+                    },
+
+                }
+            };
+            return Resource(config);
+        })
+
+        //用户列表
+         .factory('UserList', function (Resource) {
+            var config = {
+                url: 'energy/user/index/name/:name',
+                paramsDefault: {
+                    name:'@name'
+                },
+                action: {
+                    query: {
+                        method: 'GET',
+                    },
+
+                }
+            };
+            return Resource(config);
+        })
+
+        //添加用户
+        .factory('UserAdd', function (Resource) {
+            var config = {
+                url: 'energy/user/add/:data',
+                paramsDefault: {
+                    data:'@data'
+                },
+                action: {
+                    create: {
+                        method: 'POST',
+                        //headers: { 'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8' },
+                        transformRequest: function (data) {
+                            return 'data=' + JSON.stringify(data)
+                        }
+                    },
+
+                }
+            };
+            return Resource(config);
+        })
+        //获取单个用户信息
+        .factory('UserAttr', function (Resource) {
+            var config = {
+                url: 'energy/user/getOne/id/:id',
+                paramsDefault: {
+                    id: '@id',
+                },
+                action: {
+                    query: {
+                        method: 'GET',
+                    },
+
+                }
+            };
+            return Resource(config);
+        })
+        //修改用户
+        .factory('UserEdit', function (Resource) {
+            var config = {
+                url: 'energy/user/modify/:data',
+                paramsDefault: {
+                    data:'@data'
+                },
+                action: {
+                    create: {
+                        method: 'POST',
+                        //headers: { 'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8' },
+                        transformRequest: function (data) {
+                            return 'data=' + JSON.stringify(data)
+                        }
+                    },
+
+                }
+            };
+            return Resource(config);
+        })
+        //删除用户
+        .factory('UserDel', function (Resource) {
+            var config = {
+                url: 'energy/user/delete/id/:id',
+                paramsDefault: {
+                    id: '@id',
+                },
+                action: {
+                    query: {
+                        method: 'GET',
+                    },
+
+                }
+            };
+            return Resource(config);
+        })
+        //电价获取
+        .factory('DianjiaList', function (Resource) {
+            var config = {
+                url: 'energy/config/feeQuery/clientId/:clientId/status/:status',
+                paramsDefault: {
+                    clientId:'@clientId',
+                    status:'@status'
+                },
+                action: {
+                    query: {
+                        method: 'GET',
+                    },
+                }
+            };
+            return Resource(config);
+        })
+        //电价修改
+        .factory('DianjiaSave', function (Resource) {
+            var config = {
+                url: 'energy/config/feeSave',
+                paramsDefault: {
+                    data:'@data'
+                },
+                action: {
+                    create: {
+                        method: 'POST',
+                        //headers: { 'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8' },
+                        transformRequest: function (data) {
+                            return 'data=' + JSON.stringify(data)
+                        }
+                    },
+
+                }
+            };
+            return Resource(config);
+        })
+        //上传头像
+        .factory('UpImg', function (Resource) {
+            var config = {
+                url: 'energy/user/headImg',
+                paramsDefault: {
+                    //data:'@data'
+                },
+                action: {
+                    create: {
+                        method: 'POST',
+                        //headers: { 'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8' },
+                        transformRequest: function (data) {
+                            console.log(data)
+                            return JSON.stringify(data)
+                        }
+                    },
+
+                }
+            };
+            return Resource(config);
+        })
+        //报表类型获取
+        .factory('reportTypeList', function (Resource) {
+            var config = {
+                url: 'energy/public/getReportType',
+                paramsDefault: {
+                },
+                action: {
+                    query: {
+                        method: 'GET',
+                    },
+                }
+            };
+            return Resource(config);
+        })
+        //培训列表获取
+        .factory('TrainList', function (Resource) {
+            var config = {
+                url: 'energy/train/list',
+                paramsDefault: {},
+                action: {
+                    query: {
+                        method: 'GET',
+                    },
+                }
+            };
+            return Resource(config);
+        })
+        //培训添加
+        .factory('TrainAdd', function (Resource) {
+            var config = {
+                url: 'energy/train/add/:data',
+                paramsDefault: {
+                    data:'@data'
+                },
+                action: {
+                    create: {
+                        method: 'POST',
+                        //headers: { 'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8' },
+                        transformRequest: function (data) {
+                            return 'data=' + JSON.stringify(data)
+                        }
+                    },
+
+                }
+            };
+            return Resource(config);
+        })
+        //培训删除
+        .factory('TrainDel', function (Resource) {
+            var config = {
+                url: 'energy/train/delete/id/:id',
+                paramsDefault: {
+                    id: '@id',
+                },
+                action: {
+                    query: {
+                        method: 'GET',
+                    },
+
+                }
+            };
+            return Resource(config);
+        })
+        //培训详情
+        .factory('TrainAttr', function (Resource) {
+            var config = {
+                url: 'energy/train/getOne/id/:id',
+                paramsDefault: {
+                    id: '@id',
+                },
+                action: {
+                    query: {
+                        method: 'GET',
+                    },
+
+                }
+            };
+            return Resource(config);
+        })
+        //技术问答添加
+        .factory('TechQaAdd', function (Resource) {
+            var config = {
+                url: 'energy/techQa/add/:data',
+                paramsDefault: {
+                    data:'@data'
+                },
+                action: {
+                    create: {
+                        method: 'POST',
+                        //headers: { 'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8' },
+                        transformRequest: function (data) {
+                            return 'data=' + JSON.stringify(data)
+                        }
+                    },
+
+                }
+            };
+            return Resource(config);
+        })
+        //技术问答列表获取
+        .factory('TechQaList', function (Resource) {
+            var config = {
+                url: 'energy/techQa/list',
+                paramsDefault: {},
+                action: {
+                    query: {
+                        method: 'GET',
+                    },
+                }
+            };
+            return Resource(config);
+        })
+        //技术问答删除
+        .factory('TechQaDel', function (Resource) {
+            var config = {
+                url: 'energy/techQa/delete/id/:id',
+                paramsDefault: {
+                    id: '@id',
+                },
+                action: {
+                    query: {
+                        method: 'GET',
+                    },
+
+                }
+            };
+            return Resource(config);
+        })
+        //技术问答详情
+        .factory('TechQaAttr', function (Resource) {
+            var config = {
+                url: 'energy/techQa/getOne/id/:id',
+                paramsDefault: {
+                    id: '@id',
+                },
+                action: {
+                    query: {
+                        method: 'GET',
+                    },
+
+                }
+            };
+            return Resource(config);
+        })
+        //会议纪要添加
+        .factory('MeetingAdd', function (Resource) {
+            var config = {
+                url: 'energy/meeting/add/:data',
+                paramsDefault: {
+                    data: '@data'
+                },
+                action: {
+                    create: {
+                        method: 'POST',
+                        //headers: { 'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8' },
+                        transformRequest: function (data) {
+                            return 'data=' + JSON.stringify(data)
+                        }
+                    },
+                }
+            }
+            return Resource(config)
+        })
+        //会议纪要列表获取
+        .factory('MeetingList', function (Resource) {
+            var config = {
+                url: 'energy/meeting/list',
+                paramsDefault: {},
+                action: {
+                    query: {
+                        method: 'GET',
+                    },
+                }
+            }
+            return Resource(config)
+        })
+        // //删除会议纪要
+        .factory('MeetingDel', function (Resource) {
+            var config = {
+                url: 'energy/meeting/delete/id/:id',
+                paramsDefault: {
+                    id: '@id'
+                },
+                action: {
+                    query: {
+                        method: 'GET',
+                    },
+                }
+            }
+            return Resource(config)
+        })
+        //获取获取会议详情
+        .factory('MeetingAttr', function (Resource) {
+            var config = {
+                url: 'energy/meeting/getOne/id/:id',
+                paramsDefault: {
+                    id: '@id'
+                },
+                action: {
+                    query: {
+                        method: 'GET'
+                    }
+                }
+            }
+            return Resource(config)
+        })
+        //新增安全日常会议记录
+        .factory('SafetyDayAdd', function(Resource) {
+            var config = {
+                url: 'energy/safetyDay/add/:data',
+                paramsDefault: {
+                    data: '@data'
+                },
+                action: {
+                    create: {
+                        method: "POST",
+                        transformRequest: function (data) {
+                            return 'data=' + JSON.stringify(data)
                         }
                     }
                 }
-            };
-            return Resource(config);
+            }
+            return Resource(config)
         })
-        // 变电站
-        .factory('Client', function (Resource) {
+        //获取日常会议记录列表
+        .factory('SafetyDayList', function(Resource) {
             var config = {
-                url: 'client/:id/:attr/:tree/:preview/:eventAndException/:svg',
+                url: 'energy/safetyDay/list',
+                paramsDefault: {},
+                action: {
+                    query: {
+                        method: "GET"
+                    }
+                }
+            }
+            return Resource(config)
+        })
+        //删除日常会议记录
+        .factory('SafetyDayDel', function (Resource) {
+            var config = {
+                url: 'energy/safetyDay/delete/id/:id',
                 paramsDefault: {
-                    id: '@id',
-                    attr: '@attr',
-                    tree: '@tree',
-                    preview: '@preview',
-                    eventAndException: '@eventAndException',
-                    svg: '@svg',
+                    id: '@id'
                 },
                 action: {
                     query: {
                         method: 'GET',
-                        isArray: true
                     },
-                    queryDetail: {
-                        method: 'GET'
-                    },
-                    safety: {
-                        method: 'GET'
-                    },
-                    querySvg: {
+                }
+            }
+            return Resource(config)
+        })
+        //获取获取会议详情
+        .factory('SafetyDayAttr', function (Resource) {
+            var config = {
+                url: 'energy/safetyDay/getOne/id/:id',
+                paramsDefault: {
+                    id: '@id'
+                },
+                action: {
+                    query: {
                         method: 'GET'
                     }
                 }
-            };
-            return Resource(config);
+            }
+            return Resource(config)
         })
-        // 节点
-        .factory('Line', function (Resource) {
+        //新增工作登记簿
+        .factory('WorkTicketAdd', function(Resource) {
             var config = {
-                url: 'line/:id/:device',
+                url: 'energy/workTicket/add/:data',
                 paramsDefault: {
-                    id: '@id',
-                    device: '@device'
+                    data: '@data'
+                },
+                action: {
+                    create: {
+                        method: "POST",
+                        transformRequest: function (data) {
+                            return 'data=' + JSON.stringify(data)
+                        }
+                    }
+                }
+            }
+            return Resource(config)
+        })
+        //获取工作登记簿列表
+        .factory('WorkTicketList', function(Resource) {
+            var config = {
+                url: 'energy/workTicket/list',
+                paramsDefault: {},
+                action: {
+                    query: {
+                        method: "GET"
+                    }
+                }
+            }
+            return Resource(config)
+        })
+        //删除工作登记簿
+        .factory('WorkTicketDel', function (Resource) {
+            var config = {
+                url: 'energy/workTicket/delete/id/:id',
+                paramsDefault: {
+                    id: '@id'
                 },
                 action: {
                     query: {
                         method: 'GET',
-                        isArray: true
+                    },
+                }
+            }
+            return Resource(config)
+        })
+        //获取工作登记簿详情
+        .factory('WorkTicketAttr', function (Resource) {
+            var config = {
+                url: 'energy/workTicket/getOne/id/:id',
+                paramsDefault: {
+                    id: '@id'
+                },
+                action: {
+                    query: {
+                        method: 'GET'
                     }
                 }
-            };
-            return Resource(config);
+            }
+            return Resource(config)
         })
-
+        //新增周报
+        .factory('OperatingWeeklyAdd', function(Resource) {
+            var config = {
+                url: 'energy/operatingWeekly/add/:data',
+                paramsDefault: {
+                    data: '@data'
+                },
+                action: {
+                    create: {
+                        method: "POST",
+                        transformRequest: function (data) {
+                            return 'data=' + JSON.stringify(data)
+                        }
+                    }
+                }
+            }
+            return Resource(config)
+        })
+        //获取周报列表
+        .factory('OperatingWeeklyList', function(Resource) {
+            var config = {
+                url: 'energy/operatingWeekly/list',
+                paramsDefault: {},
+                action: {
+                    query: {
+                        method: "GET"
+                    }
+                }
+            }
+            return Resource(config)
+        })
+        //删除周报
+        .factory('OperatingWeeklyDel', function (Resource) {
+            var config = {
+                url: 'energy/operatingWeekly/delete/id/:id',
+                paramsDefault: {
+                    id: '@id'
+                },
+                action: {
+                    query: {
+                        method: 'GET',
+                    },
+                }
+            }
+            return Resource(config)
+        })
+        //获取周报详情
+        .factory('OperatingWeeklyAttr', function (Resource) {
+            var config = {
+                url: 'energy/operatingWeekly/getOne/id/:id',
+                paramsDefault: {
+                    id: '@id'
+                },
+                action: {
+                    query: {
+                        method: 'GET'
+                    }
+                }
+            }
+            return Resource(config)
+        })
+        //新增设备缺陷
+        .factory('EquipmentDefectAdd', function(Resource) {
+            var config = {
+                url: 'energy/equipmentDefect/add/:data',
+                paramsDefault: {
+                    data: '@data'
+                },
+                action: {
+                    create: {
+                        method: "POST",
+                        transformRequest: function (data) {
+                            return 'data=' + JSON.stringify(data)
+                        }
+                    }
+                }
+            }
+            return Resource(config)
+        })
+        //获取设备缺陷列表
+        .factory('EquipmentDefectList', function(Resource) {
+            var config = {
+                url: 'energy/equipmentDefect/list',
+                paramsDefault: {},
+                action: {
+                    query: {
+                        method: "GET"
+                    }
+                }
+            }
+            return Resource(config)
+        })
+        //删除设备缺陷
+        .factory('EquipmentDefectDel', function (Resource) {
+            var config = {
+                url: 'energy/equipmentDefect/delete/id/:id',
+                paramsDefault: {
+                    id: '@id'
+                },
+                action: {
+                    query: {
+                        method: 'GET',
+                    },
+                }
+            }
+            return Resource(config)
+        })
+        //获取设备缺陷详情
+        .factory('EquipmentDefectAttr', function (Resource) {
+            var config = {
+                url: 'energy/equipmentDefect/getOne/id/:id',
+                paramsDefault: {
+                    id: '@id'
+                },
+                action: {
+                    query: {
+                        method: 'GET'
+                    }
+                }
+            }
+            return Resource(config)
+        })
+        //根据电站获取设备
+        .factory('GetDeviceByType', function (Resource) {
+            var config = {
+                url: 'energy/device/getDeviceByType/clientId/:id',
+                paramsDefault: {
+                    id: "@id"
+                },
+                action: {
+                    query: {
+                        method: "GET"
+                    }
+                }
+            }
+            return Resource(config)
+        })
+        //新增设备缺陷
+        .factory('AccidentExpectedAdd', function(Resource) {
+            var config = {
+                url: 'energy/accidentExpected/add/:data',
+                paramsDefault: {
+                    data: '@data'
+                },
+                action: {
+                    create: {
+                        method: "POST",
+                        transformRequest: function (data) {
+                            return 'data=' + JSON.stringify(data)
+                        }
+                    }
+                }
+            }
+            return Resource(config)
+        })
+        //获取设备缺陷列表
+        .factory('AccidentExpectedList', function(Resource) {
+            var config = {
+                url: 'energy/accidentExpected/list',
+                paramsDefault: {},
+                action: {
+                    query: {
+                        method: "GET"
+                    }
+                }
+            }
+            return Resource(config)
+        })
+        //删除设备缺陷
+        .factory('AccidentExpectedDel', function (Resource) {
+            var config = {
+                url: 'energy/accidentExpected/delete/id/:id',
+                paramsDefault: {
+                    id: '@id'
+                },
+                action: {
+                    query: {
+                        method: 'GET',
+                    },
+                }
+            }
+            return Resource(config)
+        })
+        //获取设备缺陷详情
+        .factory('AccidentExpectedAttr', function (Resource) {
+            var config = {
+                url: 'energy/accidentExpected/getOne/id/:id',
+                paramsDefault: {
+                    id: '@id'
+                },
+                action: {
+                    query: {
+                        method: 'GET'
+                    }
+                }
+            }
+            return Resource(config)
+        })
 })();

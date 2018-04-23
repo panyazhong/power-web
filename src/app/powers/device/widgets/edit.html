@@ -1,0 +1,75 @@
+<section class="device" ng-show="show.currentState =='edit'">
+  <div class="row">
+    <div class="col-sm-12 col-md-12 col-lg-12" style="padding: 0 15px">
+      <div ba-panel>
+        <div style="display: flex;justify-content: space-around" >
+          <div style="padding: 15px;z-index: 5"
+               ng-repeat="item in show.pageTabData"
+               ng-class="item.state == show.pageTabState ? 'borderB' : '' "
+               ng-click="changeState(item.state)">{{item.title}}</div>
+        </div>
+        <div style="background:#efefef;height: 1px"></div>
+        <div class="col-sm-12 col-md-12 col-lg-12" style="padding: 20px;">
+          <div class="col-sm-3 col-md-3 col-lg-3"></div>
+          <div class="col-sm-9 col-md-9 col-lg-9" style="padding-left: 20px">
+            <div style="height: 300px;border: 1px solid #d5d5d5;padding: 20px">
+              <div><span class="span-title">{{stationName}}</span><i class="ion-ios-download-outline" style="font-size: 34px;color: #03ce9f;float: right;"></i></div>
+              <div style="margin-top: 15px">
+                <div class="col-sm-4 col-md-4 col-lg-4">
+                  <label class="col-sm-5 col-md-5 col-lg-5 text-center line-height">设备名称</label>
+                  <div class="col-sm-7 col-md-7 col-lg-7">
+                    <input type="text" class="form-control-def" placeholder="请输入..." style="max-width: 100% !important;border: none;border-bottom: 1px solid;border-radius: 0"  ng-model="editform.devName">
+                  </div>
+                </div>
+                <div class="col-sm-4 col-md-4 col-lg-4">
+                  <label class="col-sm-5 col-md-5 col-lg-5 text-center line-height">SN号</label>
+                  <div class="col-sm-7 col-md-7 col-lg-7">
+                    <input type="text" class="form-control-def" placeholder="请输入..." style="max-width: 100% !important;border: none;border-bottom: 1px solid;border-radius: 0"  ng-model="editform.devEsn">
+                  </div>
+                </div>
+                <div class="col-sm-4 col-md-4 col-lg-4">
+                  <label class="col-sm-5 col-md-5 col-lg-5 text-center line-height">设备类型</label>
+                  <div class="col-sm-7 col-md-7 col-lg-7">
+                    <!--<input type="text" class="form-control-def" placeholder="请输入..." style="max-width: 100% !important;border: none;border-bottom: 1px solid;border-radius: 0"  ng-model="form.name">-->
+                    <div class="select-right" uib-dropdown>
+                      <button type="button" class="btn-def btn-trans " style="border:none;border-bottom: 1px solid #d5d5d5;border-radius: 0"
+                              uib-dropdown-toggle ng-disabled="disabled">
+                        <span class="caret"></span>{{editform.deviceType}}
+                      </button>
+
+                      <ul class="dropdown-menu common-dp-ul" uib-dropdown-menu role="menu"
+                          aria-labelledby="single-button">
+                        <li role="menuitem"
+                            ng-repeat="info in show.deviceTypeArr track by $index">
+                          <a ng-bind="info.name" ng-click="editSetType(info)"></a>
+                        </li>
+                      </ul>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-sm-4 col-md-4 col-lg-4">
+                  <label class="col-sm-5 col-md-5 col-lg-5 text-center line-height">版本信息</label>
+                  <div class="col-sm-7 col-md-7 col-lg-7">
+                    <input type="text" class="form-control-def" placeholder="请输入..." style="max-width: 100% !important;border: none;border-bottom: 1px solid;border-radius: 0"  ng-model="editform.devVersion">
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-sm-12 col-md-12 col-lg-12" style="padding: 20px;">
+          <div style="margin-bottom: 20px">详细信息</div>
+          <div style="height: 300px;border: 1px solid #d5d5d5"></div>
+        </div>
+        <div class="col-sm-12 col-md-12 col-lg-12 text-center" style="margin-bottom: 20px">
+          <button class="btn-def btn-green"style="margin-right: 15px"
+                  ng-click="editDevice()">保存
+          </button>
+          <button class="btn-def btn-yellow"
+                  ng-click="back()">取消
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

@@ -1,457 +1,193 @@
+/**
+ * @author a.demeshko
+ * created on 12/16/15
+ */
 (function () {
-    'use strict';
-
-    angular.module('BlurAdmin.power.report')
-        .controller('reportPageCtrl', reportPageCtrl)
-        .controller('dayCtrl', dayCtrl);
-
-    /** @ngInject */
-    function reportPageCtrl($scope, $state, PageTopCache, Sidebar, SidebarCache, Log, locals, ReportSet, HttpToast,
-                            $rootScope, ToastUtils, ModalUtils, ExportPrefix, $window, treeCache) {
-        PageTopCache.cache.state = $state.$current; // active
-
-        $scope.data = {
-            beginDate: {
-                options: {
-                    formatYear: 'yyyy',
-                    startingDay: 1,
-                    showWeeks: false,
-                    language: 'zh-CN',
-                },
-                isOpen: false,
-                altInputFormats: ['yyyy-MM-dd'],
-                format: 'yyyy-MM-dd',
-                modelOptions: {
-                    timezone: 'Asia/beijing'
-                }
-            },
-            endDate: {
-                options: {
-                    formatYear: 'yyyy',
-                    startingDay: 1,
-                    showWeeks: false,
-                    language: 'zh-CN',
-                },
-                isOpen: false,
-                altInputFormats: ['yyyy-MM-dd'],
-                format: 'yyyy-MM-dd',
-                modelOptions: {
-                    timezone: 'Asia/beijing'
-                }
-            },
-            beginDateMonth: {
-                options: {
-                    formatYear: 'yyyy',
-                    startingDay: 1,
-                    showWeeks: false,
-                    language: 'zh-CN',
-                    datepickerMode: 'month',
-                    minMode: 'month'
-                },
-                isOpen: false,
-                altInputFormats: ['yyyy-MM'],
-                format: 'yyyy-MM',
-                modelOptions: {
-                    timezone: 'Asia/beijing'
-                }
-            },
-            endDateMonth: {
-                options: {
-                    formatYear: 'yyyy',
-                    startingDay: 1,
-                    showWeeks: false,
-                    language: 'zh-CN',
-                    datepickerMode: 'month',
-                    minMode: 'month'
-                },
-                isOpen: false,
-                altInputFormats: ['yyyy-MM'],
-                format: 'yyyy-MM',
-                modelOptions: {
-                    timezone: 'Asia/beijing'
-                }
-            },
-            beginDateYear: {
-                options: {
-                    formatYear: 'yyyy',
-                    startingDay: 1,
-                    showWeeks: false,
-                    language: 'zh-CN',
-                    datepickerMode: 'year',
-                    minMode: 'year'
-                },
-                isOpen: false,
-                altInputFormats: ['yyyy'],
-                format: 'yyyy',
-                modelOptions: {
-                    timezone: 'Asia/beijing'
-                }
-            },
-            endDateYear: {
-                options: {
-                    formatYear: 'yyyy',
-                    startingDay: 1,
-                    showWeeks: false,
-                    language: 'zh-CN',
-                    datepickerMode: 'year',
-                    minMode: 'year'
-                },
-                isOpen: false,
-                altInputFormats: ['yyyy'],
-                format: 'yyyy',
-                modelOptions: {
-                    timezone: 'Asia/beijing'
-                }
-            }
-        };
-
-        $scope.show = {
-            clientName: '',  //变电站
-            sidebarArr: [],   //变电站数组
-            setList: [],        // 日报表
-            setListMonth: [],   // 月报表
-            setListYear: [],     // 年报表
-
-            daySelect: false,   // 日月年全选全不选
-            monthSelect: false,
-            yearSelect: false
-        };
-        $scope.rowCollection = [];
-        $scope.rowCollectionMonth = [];
-        $scope.rowCollectionYear = [];
-
-        $scope.form = {
-            client_id: '',  //变电站cid
-            beginDate: '',
-            endDate: '',
-            beginMonth: '',
-            endMonth: '',
-            beginYear: '',
-            endYear: ''
-        };
-
-        $scope.formatForm = function () {
-
-            // init form
-            $scope.form.beginDate = '';
-            $scope.form.endDate = '';
-            $scope.form.beginMonth = '';
-            $scope.form.endMonth = '';
-            $scope.form.beginYear = '';
-            $scope.form.endYear = '';
-
-            if ($scope.show.beginDate) {
-                $scope.form.beginDate = moment($scope.show.beginDate).unix();
-            }
-            if ($scope.show.endDate) {
-                $scope.form.endDate = moment($scope.show.endDate).unix();
-            }
-            if ($scope.show.beginDateMonth) {
-                $scope.form.beginMonth = moment($scope.show.beginDateMonth).unix();
-            }
-            if ($scope.show.endDateMonth) {
-                $scope.form.endMonth = moment($scope.show.endDateMonth).unix();
-            }
-            if ($scope.show.beginDateYear) {
-                $scope.form.beginYear = moment($scope.show.beginDateYear).unix();
-            }
-            if ($scope.show.endDateYear) {
-                $scope.form.endYear = moment($scope.show.endDateYear).unix();
-            }
-
-            var params = {};
-            for (var Key in $scope.form) {
-                if ($scope.form[Key]) {
-                    params[Key] = $scope.form[Key];
-                }
-            }
-
-            return params;
-        };
-
-        $scope.checkForm = function () {
-            if (!$scope.form.client_id) {
-                ToastUtils.openToast('warning', '变电站信息异常,请稍后再试!');
-                return false;
-            }
-
-            /** 都存在比较才有意义**/
-            if ($scope.show.endDate && $scope.show.beginDate &&
-                moment($scope.show.endDate).isBefore($scope.show.beginDate)) {
-                ToastUtils.openToast('warning', '起始日不能晚于结束日!');
-                return false;
-            }
-
-            if ($scope.show.endDateMonth && $scope.show.beginDateMonth &&
-                moment($scope.show.endDateMonth).isBefore($scope.show.beginDateMonth)) {
-                ToastUtils.openToast('warning', '起始月不能晚于结束月!');
-                return false;
-            }
-
-            if ($scope.show.endDateYear && $scope.show.beginDateYear &&
-                moment($scope.show.endDateYear).isBefore($scope.show.beginDateYear)) {
-                ToastUtils.openToast('warning', '起始年不能晚于结束年!');
-                return false;
-            }
-
-            return true
-        };
-
-        $scope.queryList = function (cid) {
-            Log.i('queryList : ' + cid);
-
-            if ($scope.checkForm()) {
-
-                var params = $scope.formatForm();
-                Log.i('query params : ' + JSON.stringify(params));
-
-                ReportSet.query(params,
-                    function (data) {
-                        if (Array.isArray(data.daily)) {
-                            $scope.show.setList = data.daily;
-                            $scope.rowCollection = data.daily;
-                        }
-
-                        if (Array.isArray(data.monthly)) {
-                            $scope.show.setListMonth = data.monthly;
-                            $scope.rowCollectionMonth = data.monthly;
-                        }
-
-                        if (Array.isArray(data.yearly)) {
-                            $scope.show.setListYear = data.yearly;
-                            $scope.rowCollectionYear = data.yearly;
-                        }
-                    },
-                    function (err) {
-                        HttpToast.toast(err);
-                    });
-
-            }
-
-        };
-
-        // dropdown set 1
-        $scope.changeClent = function (obj) {
-            if ($scope.show.clientName == obj.clientName) {
-                return;
-            }
-
-            $scope.form.client_id = obj.clientId;
-            $scope.show.clientName = obj.clientName;
-
-            // 更换变电站更新列表
-            $scope.queryList($scope.form.client_id);
-        };
-
-        $scope.initFilterInfo = function () {
-
-            var cid = locals.get('cid', '') || $scope.show.sidebarArr[0].clientId;
-            if (cid) {
-                for (var i = 0; i < $scope.show.sidebarArr.length; i++) {
-                    var item = $scope.show.sidebarArr[i];
-                    if (item.clientId == cid) {
-                        $scope.changeClent(item);
-                    }
-                }
-            }
-
-        };
-
-        $scope.init = function () {
-
-            var pm = treeCache.getTree();
-            pm.then(function (data) {
-                $scope.show.sidebarArr = treeCache.createClientArr(data);
-                $scope.initFilterInfo();
-            });
-
-        };
-        $scope.init();
-
-        // 逻辑code
-        $scope.search = function () {
-            $scope.queryList($scope.form.client_id);
-
-        };
-
-        $scope.formatDownloadForm = function () {
-            var parmas = [];
-
-            $scope.show.setList.map(function (item) {
-                if (item.checked) {
-                    parmas.push(item.id);
-                }
-            });
-            $scope.show.setListMonth.map(function (item) {
-                if (item.checked) {
-                    parmas.push(item.id);
-                }
-            });
-            $scope.show.setListYear.map(function (item) {
-                if (item.checked) {
-                    parmas.push(item.id);
-                }
-            });
-
-            return parmas;
-        };
-
-        $scope.downAll = function () {
-
-            var params = $scope.formatDownloadForm();
-            if (params.length === 0) {
-                ToastUtils.openToast('warning', '您还没有选择报表!');
-                return
-            }
-
-            $window.location.href = ExportPrefix.reportDown(params);
-
-        };
-
-        $scope.editItem = function (item, pos) {
-            switch (pos) {
-                case 0: // 日
-                case 1: // 月
-                    ModalUtils.open('app/powers/report/widgets/dayModal.html', 'lg',
-                        dayCtrl, item,
-                        function (info) {
-                            // 传值走这里
-                            if (info) {
-                                $scope.queryList($scope.form.client_id);
-                            }
-                        }, function (empty) {
-                            // 不传值关闭走这里
-                        });
-
-                    break;
-                case 2: // 年
-                    ToastUtils.openToast('info', '编辑 年报表：' + item.fileName);
-                    break;
-            }
-        };
-
-        $scope.downItem = function (item, pos) {
-
-            if (!item.id) {
-                ToastUtils.openToast('warning', '报表信息异常!');
-                return;
-            }
-
-            var params = [];
-            params.push(item.id);
-
-            $window.location.href = ExportPrefix.reportDown(params);
-
-        };
-
-        // date picker
-        $scope.togglePicker = function () {
-            $scope.data.beginDate.isOpen = !$scope.data.beginDate.isOpen;
-        };
-
-        $scope.toggleEndPicker = function () {
-            $scope.data.endDate.isOpen = !$scope.data.endDate.isOpen;
-        };
-
-        $scope.togglePickerMonth = function () {
-            $scope.data.beginDateMonth.isOpen = !$scope.data.beginDateMonth.isOpen;
-        };
-
-        $scope.toggleEndPickerMonth = function () {
-            $scope.data.endDateMonth.isOpen = !$scope.data.endDateMonth.isOpen;
-        };
-
-        $scope.togglePickerYear = function () {
-            $scope.data.beginDateYear.isOpen = !$scope.data.beginDateYear.isOpen;
-        };
-
-        $scope.toggleEndPickerYear = function () {
-            $scope.data.endDateYear.isOpen = !$scope.data.endDateYear.isOpen;
-        };
-
-        // day/month/year 全选,反选
-        $scope.daySelect = function () {
-            if ($scope.show.daySelect) {
-                $scope.show.setList.map(function (item) {
-                    item.checked = true
-                });
-            } else {
-                $scope.show.setList.map(function (item) {
-                    item.checked = false
-                });
-            }
-
-        };
-
-        $scope.monthSelect = function () {
-            if ($scope.show.monthSelect) {
-                $scope.show.setListMonth.map(function (item) {
-                    item.checked = true
-                });
-            } else {
-                $scope.show.setListMonth.map(function (item) {
-                    item.checked = false
-                });
-            }
-
-        };
-
-        $scope.yearSelect = function () {
-            if ($scope.show.yearSelect) {
-                $scope.show.setListYear.map(function (item) {
-                    item.checked = true
-                });
-            } else {
-                $scope.show.setListYear.map(function (item) {
-                    item.checked = false
-                });
-            }
-
-        };
-
-        $rootScope.$on('filterInfo', function (event, data) {
-            if (!data) {
-                return
-            }
-            if ($state.$current != 'report') {
-                return
-            }
-
-            if (data.cid) {
-                for (var i = 0; i < $scope.show.sidebarArr.length; i++) {
-                    var item = $scope.show.sidebarArr[i];
-                    if (item.clientId == data.cid) {
-                        $scope.changeClent(item);
-                    }
-
-                }
-            }
-
-        });
-
+  'use strict';
+
+  angular.module('BlurAdmin.power.report')
+    .controller('reportPageCtrl', reportPageCtrl)
+
+  /** @ngInject */
+    function reportPageCtrl($scope, $timeout, baConfig,$http,ModalUtils,reportTypeList,$state,ToastUtils) {
+    $scope.data = {
+      beginDate: {
+        options: {
+          formatYear: 'yyyy',
+          startingDay: 1,
+          showWeeks: false,
+          language: 'zh-CN',
+        },
+        isOpen: false,
+        altInputFormats: ['yyyy-MM-dd'],
+        format: 'yyyy-MM-dd',
+        modelOptions: {
+          timezone: 'Asia/beijing'
+        }
+      },
+      endDate: {
+        options: {
+          formatYear: 'yyyy',
+          startingDay: 1,
+          showWeeks: false,
+          language: 'zh-CN',
+        },
+        isOpen: false,
+        altInputFormats: ['yyyy-MM-dd'],
+        format: 'yyyy-MM-dd',
+        modelOptions: {
+          timezone: 'Asia/beijing'
+        }
+      }
+    };
+    $scope.show= {
+      reportType:'',
+      reportTypeArr:[],
+      beginDate:'',
+      endDate:'',
+      //maxSize: 15,    // 每页显示的数量
+      //displayedPages: 0,
+      //trainArr: {},
+    };
+    $scope.form = {
+      type: '',   //报表类型key
+      beginDate:'',
+      endDate:'',
+    };
+    $scope.formatForm = function () {
+      var params = {};
+      for (var Key in $scope.form) {
+        if ($scope.form[Key]) {
+          params[Key] = $scope.form[Key];
+        }
+      }
+      return params;
+    };
+    //报表类型
+    $scope.setTypeList =function(){
+      reportTypeList.query(
+          function(data) {
+            $scope.show.reportTypeArr = data.data
+          },
+          function(err) {
+            HttpToast.toast(err);
+          })
+    };
+    $scope.init = function(){
+      $scope.setTypeList()
+    };
+    $scope.init();
+    //选择类型
+    $scope.setType = function (obj) {
+      $scope.show.reportType = obj.name;
+      $scope.form.type = obj.type;
+      $state.go(obj.type)
+    };
+    //// smart table
+    //$scope.getData = function (tableState) {
+    //
+    //  var pagination = tableState.pagination;
+    //  var start = pagination.start || 0;     // This is NOT the page number, but the index of item in the list that you want to use to display the table.
+    //  var number = pagination.number || $scope.show.maxSize;  // Number of entries showed per page.
+    //
+    //  var params = {
+    //    start: start,
+    //    number: number,
+    //  };
+    //
+    //  if ($scope.show.beginDate) {
+    //    params.startTime = moment(moment($scope.show.beginDate).format('YYYY-MM-DD HH:mm:ss')).unix();
+    //  }
+    //  if ($scope.show.endDate) {
+    //    params.endTime = moment(moment($scope.show.endDate).format('YYYY-MM-DD HH:mm:ss')).unix();
+    //  }
+    //  TrainList.query(params,
+    //      function (obj) {
+    //        if(obj.code!=200){
+    //          ToastUtils.openToast('warning', obj.message);
+    //        }
+    //        $scope.show.trainArr = obj;
+    //        tableState.pagination.numberOfPages = obj.totalPage;
+    //        $scope.show.displayedPages = Math.ceil(parseFloat(obj.totalCount) / parseInt(obj.totalPage));
+    //        $scope.show.trainArr.tableState = tableState;
+    //      }, function (err) {
+    //        HttpToast.toast(err);
+    //      });
+    //};
+    //$scope.refreshTable = function () {
+    //  if (parseInt($scope.show.trainArr.totalPage) <= 1 && $scope.show.trainArr.tableState) {
+    //    $scope.getData($scope.show.trainArr.tableState);
+    //  } else {
+    //    angular
+    //        .element('#powerTablePagination')
+    //        .isolateScope()
+    //        .selectPage(1);
+    //  }
+    //};
+    $scope.searchList = function(){
+      if($scope.show.reportType==''){
+        ToastUtils.openToast('warning', '请选择报表类型！');
+      }
     }
 
-    function dayCtrl($scope, params, Log, ToastUtils, $sce) {
-        Log.i('frame: ' + JSON.stringify(params));
-
-        $scope.url = params.html + "#/?id=" + params.id;
-        // $scope.url = "app/powers/report/widgets/dayIframe.html" + "#/?id=" + params.id;
-        $scope.path = $sce.trustAsResourceUrl($scope.url);
-
-        $scope.$on('iframe', function (e, data) {
-            if (!data) {
-                return;
-            }
-
-            if (data == 'dimiss') {
-                $scope.$close();
-            } else if (data == 'sub') {
-                ToastUtils.openToast('success', '更新报表成功');
-                $scope.$close(data);
-            }
-
-        });
-
-    }
+    $scope.clearForm = function () {
+      //$scope.show.reportType='';
+      $scope.show.beginDate='';
+      $scope.show.endDate='';
+    };
+    //$scope.addReport = function () {
+    //  ModalUtils.open('app/powers/train/widgets/createTrainModal.html', 'lg',
+    //      addTrainPageCtrl, {},
+    //      function (info) {
+    //        // 传值走这里
+    //        if (info) {
+    //          $scope.clearForm();
+    //          $scope.searchList();
+    //        }
+    //      }, function (empty) {
+    //        // 不传值关闭走这里
+    //      }
+    //  );
+    //};
+    //$scope.editReport = function (id) {
+    //  ModalUtils.open('app/powers/train/widgets/editTrainModal.html', 'lg',
+    //      editTrainPageCtrl, {id: id},
+    //      function (info) {
+    //        // 传值走这里
+    //        if (info) {
+    //        }
+    //      }, function (empty) {
+    //        // 不传值关闭走这里
+    //      }
+    //  );
+    //};
+    //$scope.delItem = function (id) {
+    //  ModalUtils.openMsg('app/powers/modal/dangerDel.html', '',
+    //      modalDelCtrl, {},
+    //      function (info) {
+    //        // 传值走这里
+    //        if (info) {
+    //          TrainDel.query({
+    //                id: id
+    //              },
+    //              function (data) {
+    //                ToastUtils.openToast('success', data.message);
+    //                $scope.clearForm(); // 新建，删除需要初始化表单状态
+    //                $scope.searchList()
+    //              }, function (err) {
+    //                HttpToast.toast(err);
+    //              });
+    //        }
+    //      }, function (empty) {
+    //        // 不传值关闭走这里
+    //      });
+    //};
+    $scope.toggleBeginDatepicker = function () {
+      $scope.data.beginDate.isOpen = !$scope.data.beginDate.isOpen;
+    };
+    $scope.toggleEndDatepicker = function () {
+      $scope.data.endDate.isOpen = !$scope.data.endDate.isOpen;
+    };
+  }
 
 })();

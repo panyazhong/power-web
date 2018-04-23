@@ -4,23 +4,20 @@
     angular.module('BlurAdmin.power', [
         'ui.router',
         'Lodash',
-
-        'BlurAdmin.power.overview',
-        'BlurAdmin.power.monitoring',
         'BlurAdmin.power.device',
-        'BlurAdmin.power.events',
-        'BlurAdmin.power.checkin',
-        'BlurAdmin.power.history',
+        'BlurAdmin.power.alarm',
         'BlurAdmin.power.report',
-        'BlurAdmin.power.settings',
-        'BlurAdmin.power.branch',
+        'BlurAdmin.power.train',
+        'BlurAdmin.power.techQa',
         'BlurAdmin.power.setuser',
-        'BlurAdmin.power.setalarm',
-        'BlurAdmin.power.setpwd',
-        'BlurAdmin.power.tfuhe',
-        'BlurAdmin.power.txuliang',
-        'BlurAdmin.power.tdianliang',
-        'BlurAdmin.power.tfenshi',
+        'BlurAdmin.power.setprice',
+        'BlurAdmin.power.setaccount',
+        'BlurAdmin.power.meeting',
+        'BlurAdmin.power.safetyDay',
+        'BlurAdmin.power.workTicket',
+        'BlurAdmin.power.operatingWeekly',
+        'BlurAdmin.power.equipmentDefect',
+        'BlurAdmin.power.accidentExpected',
     ])
         .config(routeConfig)
         .run(initialize);
@@ -28,13 +25,12 @@
     /** @ngInject */
     function routeConfig($urlRouterProvider) {
 
-        $urlRouterProvider.otherwise('/overview');
+        $urlRouterProvider.otherwise('/device');
     }
 
-    function initialize(EventsCache, $rootScope, $interval) {
+    function initialize(EventsCache, $rootScope, $interval,$window) {
         console.log('initialize...');
-
-        EventsCache.login();
-
+        //EventsCache.login();
+        //$window.localStorage.clear();
     }
 })();

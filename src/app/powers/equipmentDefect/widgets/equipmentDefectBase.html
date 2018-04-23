@@ -1,0 +1,76 @@
+<div class="row">
+    <div class="form-group col-sm-12 col-md-12 col-lg-12">
+        <label class="col-sm-3 line-height text-right">电站名称</label>
+        <label class="col-sm-1 line-height"></label>
+        <div class="col-sm-8">
+            <select class="col-sm-8 form-control" ng-options="item.id as item.name for item in clientIds" ng-model="form.clientId" ng-change="getDevice(form.clientId)">
+                <option value="">--请选择--</option>
+            </select>
+        </div>
+    </div>
+    <div class="form-group col-sm-12 col-md-12 col-lg-12">
+        <label class="col-sm-3 line-height text-right">设备名称</label>
+        <label class="col-sm-1 line-height"></label>
+        <div class="col-sm-8">
+            <select class="col-sm-8 form-control" ng-options="item.id as item.name for item in deviceIds" ng-model="form.deviceId">
+                <option value="">--请选择--</option>
+            </select>
+        </div>
+    </div>
+    <div class="form-group col-sm-12 col-md-12 col-lg-12">
+        <label class="col-sm-3 col-md-3 col-lg-3 line-height text-right">缺陷描述</label>
+        <label class="col-sm-1 line-height"></label>
+        <div class="col-sm-8">
+            <textarea
+                    type="text"
+                    class="modal-textarea"
+                    cols="24"
+                    rows="5"
+                    ng-model="form.describe"
+                    placeholder=""
+                    style="padding-left: 10px"></textarea>
+        </div>
+    </div>
+    <div class="form-group col-sm-12 col-md-12 col-lg-12">
+        <label class="col-sm-3 line-height text-right">发现时间</label>
+        <label class="col-sm-1 line-height"></label>
+        <div class="col-sm-8">
+            <input ng-click="toggleTimeDatepicker()"
+                   uib-datepicker-popup="{{data.timeDate.format}}"
+                   is-open="data.timeDate.isOpen"
+                   datepicker-options="data.timeDate.options"
+                   clear-text="清除"
+                   current-text="今天"
+                   close-text="关闭"
+                   alt-input-formats="data.timeDate.altInputFormats"
+                   ng-model="form.time"
+                   ng-model-options="data.timeDate.modelOptions"
+                   type="text"
+                   class="form-control"
+                   readonly="readonly"
+                   style="text-align: left;background-color: #fff">
+        </div>
+    </div>
+    <div class="form-group col-sm-12 col-md-12 col-lg-12">
+        <label class="col-sm-3 line-height text-right">发现人</label>
+        <label class="col-sm-1 line-height"></label>
+        <div class="col-sm-8">
+            <input type="text" class="form-control" ng-model="form.discovery">
+        </div>
+    </div>
+    <div class="form-group col-sm-12 col-md-12 col-lg-12">
+        <label class="col-sm-3 line-height text-right">处理情况</label>
+        <label class="col-sm-1 line-height"></label>
+        <div class="col-sm-8">
+            <input type="text" class="form-control" ng-model="form.handle">
+        </div>
+    </div>
+    <div class="form-group col-sm-12 col-md-12 col-lg-12">
+        <label class="col-sm-3 line-height text-right">处理人</label>
+        <label class="col-sm-1 line-height"></label>
+        <div class="col-sm-8">
+            <input type="text" class="form-control" ng-model="form.handleMan">
+        </div>
+    </div>
+</div>
+

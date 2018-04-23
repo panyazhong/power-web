@@ -1,0 +1,90 @@
+<div class="row">
+    <div class="form-group col-sm-12 col-md-12 col-lg-12">
+        <label class="col-sm-3 line-height text-right">工作票编号</label>
+        <div class="col-sm-6">
+            <input type="text" class="form-control" ng-model="form.number">
+        </div>
+    </div>
+    <div class="form-group col-sm-12 col-md-12 col-lg-12">
+        <label class="col-sm-3 line-height text-right">工作票内容</label>
+        <div class="col-sm-6">
+            <textarea type="text" class="modal-textarea" cols="25.5" rows="5" ng-model="form.content"></textarea>
+        </div>
+    </div>
+    <div class="form-group col-sm-12 col-md-12 col-lg-12">
+        <label class="col-sm-3 line-height text-right">工作签发人</label>
+        <div class="col-sm-6">
+            <input type="text" class="form-control" ng-model="form.issuer">
+        </div>
+    </div>
+    <div class="form-group col-sm-12 col-md-12 col-lg-12">
+        <label class="col-sm-3 line-height text-right">工作负责人</label>
+        <div class="col-sm-6">
+            <input type="text" class="form-control" ng-model="form.responsibleMan">
+        </div>
+    </div>
+    <div class="form-group col-sm-12 col-md-12 col-lg-12">
+        <label class="col-sm-3 line-height text-right">工作许可人</label>
+        <div class="col-sm-6">
+            <input type="text" class="form-control" ng-model="form.licensor">
+        </div>
+    </div>
+    <div class="form-group col-sm-12 col-md-12 col-lg-12">
+        <label class="col-sm-3 line-height text-right">工作许可开始时间</label>
+        <div class="col-sm-6">
+            <input ng-click="toggleStartTimeDatepicker()"
+                   uib-datepicker-popup="{{data.timeDate.format}}"
+                   is-open="data.StarttimeDate.isOpen"
+                   datepicker-options="data.StarttimeDate.options"
+                   clear-text="清除"
+                   current-text="今天"
+                   close-text="关闭"
+                   alt-input-formats="data.StarttimeDate.altInputFormats"
+                   ng-model="form.startTime"
+                   ng-model-options="data.StarttimeDate.modelOptions"
+                   type="text"
+                   class="form-control"
+                   readonly="readonly"
+                   style="text-align: left;background-color: #fff">
+        </div>
+    </div>
+    <div class="form-group col-sm-12 col-md-12 col-lg-12">
+        <label class="col-sm-3 line-height text-right">工作许可延期时间</label>
+        <div class="col-sm-6">
+            <input ng-click="toggleDelayTimeDatepicker()"
+                   uib-datepicker-popup="{{data.timeDate.format}}"
+                   is-open="data.DelaytimeDate.isOpen"
+                   datepicker-options="data.DelaytimeDate.options"
+                   clear-text="清除"
+                   current-text="今天"
+                   close-text="关闭"
+                   alt-input-formats="data.DelaytimeDate.altInputFormats"
+                   ng-model="form.delayTime"
+                   ng-model-options="data.DelaytimeDate.modelOptions"
+                   type="text"
+                   class="form-control"
+                   readonly="readonly"
+                   style="text-align: left;background-color: #fff">
+        </div>
+    </div>
+    <div class="form-group col-sm-12 col-md-12 col-lg-12">
+        <label class="col-sm-3 line-height text-right">工作许可结束时间</label>
+        <div class="col-sm-6">
+            <input ng-click="toggleEndTimeDatepicker()"
+                   uib-datepicker-popup="{{data.timeDate.format}}"
+                   is-open="data.EndtimeDate.isOpen"
+                   datepicker-options="data.EndtimeDate.options"
+                   clear-text="清除"
+                   current-text="今天"
+                   close-text="关闭"
+                   alt-input-formats="data.EndtimeDate.altInputFormats"
+                   ng-model="form.endTime"
+                   ng-model-options="data.EndtimeDate.modelOptions"
+                   type="text"
+                   class="form-control"
+                   readonly="readonly"
+                   style="text-align: left;background-color: #fff">
+        </div>
+    </div>
+</div>
+

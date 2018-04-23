@@ -16,7 +16,6 @@
                     var lineTitle = newValue.lineTitle;
                     var timeData = newValue.timeData;  // x轴 时间间隔
                     var todayData = newValue.todayData; // 今日数据，动态会更新
-                    var yesdayData = newValue.yesdayData;    //昨日数据，静态
 
                     // line config
                     var option = {
@@ -126,7 +125,7 @@
                             // }
                         ]
                     };
-
+                    myChart.clear();
                     myChart.setOption(option);
                 }, true);
                 window.addEventListener("resize", function () {  //这里使用$window.onresize方法会使前面的图表无法调整大小

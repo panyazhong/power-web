@@ -1,0 +1,91 @@
+<section ba-panel>
+  <div class="row">
+    <div class="col-sm-12 col-md-12 col-lg-12" style="padding: 0 15px;height: 68px;">
+      <div class="col-sm-4 col-md-4 col-lg-4 text-center" style="margin-top: 17px" >
+        <!--<label class="col-sm-3 col-md-3 col-lg-3 text-center line-height">姓名</label>-->
+        <div class="col-sm-6 col-md-6 col-lg-6">
+          <label class="radio-inline custom-radio nowrap" >
+            <input type="radio" name="2" value="1" ng-model="form.status" ng-click="query()">
+            <span class="radio-text">夏季</span>
+          </label>
+        </div>
+        <div class="col-sm-6 col-md-6 col-lg-6">
+          <label class="radio-inline custom-radio nowrap" >
+            <input type="radio" name="2" value="2" ng-model="form.status" ng-click="query()">
+            <span class="radio-text">非夏季</span>
+          </label>
+        </div>
+      </div>
+      <div class="col-sm-6 col-md-6 col-lg-6"></div>
+      <div class="col-sm-2 col-md-2 col-lg-2 text-center" style="margin-top: 24px">
+        <form ng-show="flag" class="form-buttons form-inline">
+          <button type="submit"ng-click="save()" class="btn btn-green">
+            保存
+          </button>
+          <button type="button" ng-click="close()" class="btn btn-yellow">
+            取消
+          </button>
+        </form>
+        <div class="buttons" ng-show="!flag">
+          <button class="btn btn-green editable-table-button" ng-click="edit()" ng-disabled=noEdit>编辑</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-sm-12 col-md-12 col-lg-12" style="border: 1px solid #EFEFEF"></div>
+
+    <div class="col-sm-12 col-md-12 col-lg-12" style="padding: 0 15px;">
+      <table class="table table-hover common-table text-center" style="table-layout: fixed" ng-show="form.status==1">
+        <thead>
+        <tr>
+          <th>时段</th>
+          <th>电网电价</th>
+          <th>折扣</th>
+          <th>折后电价</th>
+        </tr>
+        </thead>
+        <tr ng-repeat="item in summer" >
+          <td>{{item.time}}</td>
+          <td><input ng-class="{true:'editable',false:'noEditable'}[flag]"
+                     ng-disabled=!flag
+                     ng-model="$parent.summer[$index].beforePrice"
+                     ng-change="countSummer($parent.summer[$index].beforePrice,$parent.summer[$index].discount,$index)"/>
+          </td>
+          <td><input ng-class="{true:'editable',false:'noEditable'}[flag]"
+                     ng-disabled=!flag
+                     ng-model="$parent.summer[$index].discount"
+                     ng-change="countSummer($parent.summer[$index].beforePrice,$parent.summer[$index].discount,$index)">
+          </td>
+          <td>{{item.afterPrice}}</td>
+        </tr>
+
+      </table>
+      <table class="table table-hover common-table text-center" style="table-layout: fixed" ng-show="form.status==2">
+        <thead>
+        <tr>
+          <th>时段</th>
+          <th>电网电价</th>
+          <th>折扣</th>
+          <th>折后电价</th>
+        </tr>
+        </thead>
+        <tr ng-repeat="info in nonSummer" >
+          <td>{{info.time}}</td>
+          <td><input ng-class="{true:'editable',false:'noEditable'}[flag]"
+                     ng-disabled=!flag
+                     ng-model="$parent.nonSummer[$index].beforePrice"
+                     ng-change="countNonSummer($parent.nonSummer[$index].beforePrice,$parent.nonSummer[$index].discount,$index)"/>
+          </td>
+          <td><input ng-class="{true:'editable',false:'noEditable'}[flag]"
+                     ng-disabled=!flag
+                     ng-model="$parent.nonSummer[$index].discount"
+                     ng-change="countNonSummer($parent.nonSummer[$index].beforePrice,$parent.nonSummer[$index].discount,$index)">
+          </td>
+          <td>{{info.afterPrice}}</td>
+        </tr>
+
+      </table>
+
+    </div>
+  </div>
+</section>

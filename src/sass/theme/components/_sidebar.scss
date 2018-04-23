@@ -1,17 +1,19 @@
-$sidebar-width: 200px;
+$sidebar-width: 180px;
 $angle-left: "\f100";
 $angle-right: "\f101";
 
 .al-sidebar {
   width: $sidebar-width;
-  top: $top-height;
+  //top: $top-height;
   left: 0;
-  z-index: 904;
+  z-index: 950;
   display: block;
   min-height: 100%;
-  background-color: $sidebar;
+  //background-color: $sidebar;
+  background-color: #22252c;
   height: 100%;
   position: fixed;
+
 }
 
 .al-sidebar-list {
@@ -65,7 +67,7 @@ a.al-sidebar-list-link {
   height: 42px;
   padding-left: 18px;
   text-shadow: none;
-  font-size: 13px;
+  font-size: 14px;
   text-decoration: none;
   color: $sidebar-text;
   line-height: 42px;
@@ -79,7 +81,7 @@ a.al-sidebar-list-link {
     }
   }
   i {
-    margin-right: 9px;
+    margin-right: 18px;
     width: 16px;
     display: inline-block;
   }
@@ -92,7 +94,7 @@ a.al-sidebar-list-link {
     text-shadow: none;
     font-size: 18px;
     position: absolute;
-    right: 5px;
+    right: 10px;
     top: 12px;
     padding: 0;
     text-align: center;
@@ -104,13 +106,12 @@ a.al-sidebar-list-link {
 .slimScrollBar, .slimScrollRail {
   border-radius: 0px !important;
   width: 4px !important;
-  left: 196px;
+  left: 176px;
 }
 
 @mixin layout-collapsed() {
   .al-main {
-    //margin-left: 50px;
-    margin-left: 0; // 侧边栏收起来的样式
+    margin-left: 50px;
   }
 
   .al-footer {
@@ -165,7 +166,7 @@ a.al-sidebar-list-link {
   background: $primary;
   position: absolute;
   top: -150px;
-  left: 196px;
+  left: 176px;
   transition: all 0.5s ease;
   transition-property: top, height;
   height: 42px;
@@ -179,8 +180,7 @@ a.al-sidebar-list-link {
 
 @mixin sidebar-collapsed() {
   .al-sidebar {
-    //width: 52px;
-    width: 0; // 侧边栏收起时的宽度
+    width: 52px;
 
     .fa-angle-down, .fa-angle-up {
       opacity: 0;
@@ -232,7 +232,7 @@ a.al-sidebar-list-link {
 @mixin sidebar-overlap() {
   .al-sidebar {
     width: $sidebar-width;
-    //@include bg-translucent-dark(0.75);
+    @include bg-translucent-dark(0.75);
     transition: width 0.5s ease;
 
     .fa-angle-down, .fa-angle-up {

@@ -1,78 +1,115 @@
 <div class="row">
+    <h6 class="color-red">*为必填项</h6>
     <div class="form-group col-sm-4 col-md-4 col-lg-4">
-        <label>姓名</label>
-        <input type="text" class="form-control" ng-model="form.name">
+        <i class="color-red" style="margin-right: 5px">*</i><label>用户名</label>
+        <input type="text" class="form-control-def" ng-model="form.username">
     </div>
     <div class="form-group col-sm-4 col-md-4 col-lg-4">
-        <label>工号（可选）</label>
-        <input type="text" class="form-control" ng-model="form.code">
+        <i class="color-red" style="margin-right: 5px">*</i><label>密码</label>
+        <input type="text" class="form-control-def" ng-model="form.password">
     </div>
     <div class="form-group col-sm-4 col-md-4 col-lg-4">
-        <label>岗位（可选）</label>
-        <input type="text" class="form-control" ng-model="form.position">
+        <i class="color-red" style="margin-right: 5px">*</i><label>姓名</label>
+        <input type="text" class="form-control-def" ng-model="form.name">
     </div>
-
     <div class="form-group col-sm-4 col-md-4 col-lg-4">
-        <label>所辖变电站</label>
-        <!--<input type="text" class="form-control" ng-model="form.auth_id">-->
-
+        <label>性别</label>
         <div class="row" style="margin-left: 0;margin-right: 0">
             <!-- Single button -->
             <div class="select-right" uib-dropdown>
-                <button type="button" class="btn-def btn-trans" style="text-align: left"
+                <button type="button" class="form-control-def btn-trans" style="text-align: left"
                         uib-dropdown-toggle ng-disabled="disabled">
-                    <span class="caret"></span>{{show.clientName}}
-                </button>
-
-                <ul class="dropdown-menu common-dp-ul" uib-dropdown-menu role="menu"
-                    aria-labelledby="single-button" style="padding: 0 !important;">
-                    <li role="menuitem"
-                        ng-repeat="info in show.sidebarArr track by $index"
-                        ng-class="info.state? 'dp-multi-hover' : '' "
-                        style="line-height: 30px;padding: 3px 20px;">
-                        <div ng-bind="info.clientName" ng-click="changeClent(info)"></div>
-                    </li>
-                </ul>
-            </div>
-        </div>
-
-    </div>
-    <div class="form-group col-sm-4 col-md-4 col-lg-4">
-        <label>内线（可选）</label>
-        <input type="text" class="form-control" ng-model="form.tipLine">
-    </div>
-    <div class="form-group col-sm-4 col-md-4 col-lg-4">
-        <label>权限</label>
-        <!--<input type="text" class="form-control" ng-model="form.authority">-->
-
-        <div class="row" style="margin-left: 0;margin-right: 0">
-            <!-- Single button -->
-            <div class="select-right" uib-dropdown>
-                <button type="button" class="btn-def btn-trans" style="text-align: left"
-                        uib-dropdown-toggle ng-disabled="disabled">
-                    <span class="caret"></span>{{show.authority}}
+                    <span class="caret"></span>{{show.gender}}
                 </button>
 
                 <ul class="dropdown-menu common-dp-ul" uib-dropdown-menu role="menu"
                     aria-labelledby="single-button">
                     <li role="menuitem"
-                        ng-repeat="info in show.userAuthorityArr track by $index">
-                        <a ng-bind="info.name" ng-click="setAuthority(info)"></a>
+                        ng-repeat="info in show.genderArr track by $index">
+                        <a ng-bind="info.name" ng-click="setGender(info)"></a>
                     </li>
                 </ul>
             </div>
         </div>
-
     </div>
-
     <div class="form-group col-sm-4 col-md-4 col-lg-4">
-        <label>状态</label>
-        <!--<input type="text" class="form-control" ng-model="form.status">-->
-
+        <i class="color-red" style="margin-right: 5px">*</i><label>联系电话</label>
+        <input type="text" class="form-control-def" ng-model="form.phone">
+    </div>
+    <div class="form-group col-sm-4 col-md-4 col-lg-4">
+        <label>电子邮箱</label>
+        <input type="text" class="form-control-def" ng-model="form.email">
+    </div>
+    <div class="form-group col-sm-4 col-md-4 col-lg-4">
+        <label>邮件通知</label>
         <div class="row" style="margin-left: 0;margin-right: 0">
             <!-- Single button -->
             <div class="select-right" uib-dropdown>
-                <button type="button" class="btn-def btn-trans" style="text-align: left"
+                <button type="button" class="form-control-def btn-trans" style="text-align: left"
+                        uib-dropdown-toggle ng-disabled="disabled">
+                    <span class="caret"></span>{{show.sendEmail}}
+                </button>
+
+                <ul class="dropdown-menu common-dp-ul" uib-dropdown-menu role="menu"
+                    aria-labelledby="single-button">
+                    <li role="menuitem"
+                        ng-repeat="info in show.sendemailArr track by $index">
+                        <a ng-bind="info.name" ng-click="setsendEmail(info)"></a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <div class="form-group col-sm-4 col-md-4 col-lg-4">
+        <label>描述</label>
+        <input type="text" class="form-control-def" ng-model="form.description">
+    </div>
+    <div class="form-group col-sm-4 col-md-4 col-lg-4">
+        <label>户用业主</label>
+        <div class="row" style="margin-left: 0;margin-right: 0">
+            <!-- Single button -->
+            <div class="select-right" uib-dropdown>
+                <button type="button" class="form-control-def btn-trans" style="text-align: left"
+                        uib-dropdown-toggle ng-disabled="disabled">
+                    <span class="caret"></span>{{show.owner}}
+                </button>
+
+                <ul class="dropdown-menu common-dp-ul" uib-dropdown-menu role="menu"
+                    aria-labelledby="single-button">
+                    <li role="menuitem"
+                        ng-repeat="info in show.ownerArr track by $index">
+                        <a ng-bind="info.name" ng-click="setOwner(info)"></a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <div class="form-group col-sm-4 col-md-4 col-lg-4">
+    <label>级别</label>
+    <div class="row" style="margin-left: 0;margin-right: 0">
+        <!-- Single button -->
+        <div class="select-right" uib-dropdown>
+            <button type="button" class="form-control-def btn-trans" style="text-align: left"
+                    uib-dropdown-toggle ng-disabled="disabled">
+                <span class="caret"></span>{{show.level}}
+            </button>
+
+            <ul class="dropdown-menu common-dp-ul" uib-dropdown-menu role="menu"
+                aria-labelledby="single-button">
+                <li role="menuitem"
+                    ng-repeat="info in show.levelArr track by $index">
+                    <a ng-bind="info.name" ng-click="setLevel(info)"></a>
+                </li>
+            </ul>
+        </div>
+    </div>
+    </div>
+    <div class="form-group col-sm-4 col-md-4 col-lg-4">
+        <label>状态</label>
+        <div class="row" style="margin-left: 0;margin-right: 0">
+            <!-- Single button -->
+            <div class="select-right" uib-dropdown>
+                <button type="button" class="form-control-def btn-trans" style="text-align: left"
                         uib-dropdown-toggle ng-disabled="disabled">
                     <span class="caret"></span>{{show.status}}
                 </button>
@@ -80,92 +117,54 @@
                 <ul class="dropdown-menu common-dp-ul" uib-dropdown-menu role="menu"
                     aria-labelledby="single-button">
                     <li role="menuitem"
-                        ng-repeat="info in show.userStatusArr track by $index">
+                        ng-repeat="info in show.statusArr">
                         <a ng-bind="info.name" ng-click="setStatus(info)"></a>
                     </li>
                 </ul>
             </div>
         </div>
-
     </div>
-    <div style="float: left;width: 100%">
-    </div>
-
-    <!--第四行-->
     <div class="form-group col-sm-4 col-md-4 col-lg-4">
-        <label>合同类型（可选）</label>
-
+        <label>权限</label>
         <div class="row" style="margin-left: 0;margin-right: 0">
             <!-- Single button -->
             <div class="select-right" uib-dropdown>
-                <button type="button" class="btn-def btn-trans" style="text-align: left"
+                <button type="button" class="form-control-def btn-trans" style="text-align: left"
                         uib-dropdown-toggle ng-disabled="disabled">
-                    <span class="caret"></span>{{show.contractType}}
+                    <span class="caret"></span>{{show.auth}}
                 </button>
 
                 <ul class="dropdown-menu common-dp-ul" uib-dropdown-menu role="menu"
                     aria-labelledby="single-button">
                     <li role="menuitem"
-                        ng-repeat="info in show.userContracttyptArr track by $index">
-                        <a ng-bind="info.name" ng-click="setContracttype(info)"></a>
+                        ng-repeat="info in show.authArr track by $index">
+                        <a ng-bind="info.name" ng-click="setAuth(info)"></a>
                     </li>
                 </ul>
             </div>
         </div>
-
     </div>
     <div class="form-group col-sm-4 col-md-4 col-lg-4">
-        <label>学历（可选）</label>
-        <!--<input type="text" class="form-control" ng-model="form.education">-->
+        <label>客户名称</label>
 
         <div class="row" style="margin-left: 0;margin-right: 0">
             <!-- Single button -->
             <div class="select-right" uib-dropdown>
-                <button type="button" class="btn-def btn-trans" style="text-align: left"
+                <button type="button" class="form-control-def btn-trans" style="text-align: left"
                         uib-dropdown-toggle ng-disabled="disabled">
-                    <span class="caret"></span>{{show.education}}
+                    <span class="caret"></span>{{show.clientName}}
                 </button>
 
                 <ul class="dropdown-menu common-dp-ul" uib-dropdown-menu role="menu"
-                    aria-labelledby="single-button">
+                    aria-labelledby="single-button" style="padding: 0 !important;">
                     <li role="menuitem"
-                        ng-repeat="info in show.userEducationArr track by $index">
-                        <a ng-bind="info.name" ng-click="setEducation(info)"></a>
+                        ng-repeat="info in show.clientArr track by $index"
+                        ng-class="info.state? 'dp-multi-hover' : '' "
+                        style="line-height: 30px;padding: 3px 20px;">
+                        <div ng-bind="info.name" ng-click="changeClent(info)"></div>
                     </li>
                 </ul>
             </div>
         </div>
-
     </div>
-    <div class="form-group col-sm-4 col-md-4 col-lg-4">
-        <label>手机1</label>
-        <input type="text" class="form-control" ng-model="form.phone1">
-    </div>
-
-    <div class="form-group col-sm-4 col-md-4 col-lg-4">
-        <label>手机2</label>
-        <input type="text" class="form-control" ng-model="form.phone2">
-    </div>
-    <div class="form-group col-sm-4 col-md-4 col-lg-4">
-        <label class="checkbox-inline custom-checkbox nowrap" style="line-height: 55px !important;">
-            <input type="checkbox" ng-model="show.msgLevel">
-            <span>是否接收报警短信</span>
-        </label>
-    </div>
-
-    <!--第六行-->
-    <div style="float: left;width: 100%">
-        <div class="form-group col-sm-4 col-md-4 col-lg-4">
-            <label>平台账号</label>
-            <input type="text" class="form-control" ng-model="form.account"
-                   ng-disabled="show.isAllowEdit">
-        </div>
-        <div class="form-group col-sm-4 col-md-4 col-lg-4">
-        </div>
-        <div class="form-group col-sm-4 col-md-4 col-lg-4">
-            <label>密码</label>
-            <input type="password" class="form-control" ng-model="form.psw">
-        </div>
-    </div>
-
 </div>

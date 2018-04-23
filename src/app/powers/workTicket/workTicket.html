@@ -1,0 +1,46 @@
+<section>
+    <div include-with-scope="app/powers/report/widgets/console.html"></div>
+    <div style="margin-top: 15px">
+        <table class="table table-hover common-table bg-white" st-pipe="getData"
+               st-table="show.trainArr">
+            <thead>
+            <tr>
+                <th style="vertical-align: middle!important; ">工作票编号</th>
+                <th style="vertical-align: middle!important; ">工作票内容</th>
+                <th style="vertical-align: middle!important; ">工作签发人</th>
+                <th style="vertical-align: middle!important; ">工作负责人</th>
+                <th style="vertical-align: middle!important; ">工作许可人</th>
+                <th style="vertical-align: middle!important; ">工作许可<br>开始时间</th>
+                <th style="vertical-align: middle!important; ">工作延期<br>延期时间</th>
+                <th style="vertical-align: middle!important; ">工作结束<br>结束时间</th>
+                <th style="vertical-align: middle!important; ">操作</th>
+            </tr>
+            </thead>
+            <tr ng-repeat="item in show.data track by $index">
+                <td>{{item.number}}</td>
+                <td ng-click="editReport(item.id)">{{item.content}}</td>
+                <td ng-click="editReport(item.id)">{{item.issuer}}</td>
+                <td ng-click="editReport(item.id)">{{item.responsibleMan}}</td>
+                <td ng-click="editReport(item.id)">{{item.licensor}}</td>
+                <td ng-click="editReport(item.id)">{{item.startTimeMin}}</td>
+                <td ng-click="editReport(item.id)">{{item.delayTimeMin}}</td>
+                <td ng-click="editReport(item.id)">{{item.endTimeMin}}</td>
+                <td>
+                    <i class="ion-ios-trash-outline color-yellow common-table-btn"
+                       ng-click="delItem(item.id)"></i>
+                </td>
+            </tr>
+            <tfoot>
+            <tr>
+                <td
+                        id="powerTablePagination"
+                        class="text-center" st-pagination=""
+                        st-items-by-page="show.maxSize"
+                        st-displayed-pages="show.displayedPages"
+                        colspan="9">
+                </td>
+            </tr>
+            </tfoot>
+        </table>
+    </div>
+</section>

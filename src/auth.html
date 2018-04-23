@@ -17,59 +17,7 @@
     </style>
 
     <script src="https://cdn.bootcss.com/jquery/3.2.1/jquery.min.js"></script>
-    <script type="text/javascript">
 
-        window.localStorage.clear();    // init local
-
-        var host = 'http://monitor.shanghaihenghui.com';
-//        var host = 'http://139.196.82.185';
-        var path = host + '/api/user/login';
-
-        var login = function () {
-            var account = $('#inputUsername').val();
-            var pwd = $('#inputPwd').val();
-            if (account && pwd) {
-                var params = {
-                    account: account,
-                    psw: pwd
-                };
-                $.ajax({
-                    url: path,
-                    data: JSON.stringify(params),
-                    contentType: 'application/json',
-                    type: 'POST',
-                    xhrFields: {
-                        withCredentials: true
-                    },
-                    success: function (data) {
-                        if (data.id && data.name) {
-
-                            localStorage.user = JSON.stringify(data);
-                            window.location.replace('/index.html');
-
-                        } else {
-                            alert('很抱歉，无法从服务器获取数据。');
-                        }
-
-                    },
-                    error: function (err) {
-                        if (err.responseJSON && err.responseJSON.message) {
-                            alert(err.responseJSON.message);
-                        } else {
-                            alert('很抱歉，无法从服务器获取数据。');
-                        }
-                    },
-                    complete: function (xhr, textStatus) {
-                        console.log('complete: ' + xhr.status);
-                    }
-                })
-
-            } else {
-                alert("请填入账号和密码。");
-            }
-        };
-
-    </script>
     <!-- build:css({.tmp/serve,src}) styles/vendor.css -->
     <!-- bower:css -->
     <!-- run `gulp inject` to automatically populate bower styles dependencies -->
@@ -82,15 +30,15 @@
     <!-- endbuild -->
 </head>
 
-<body style="background: url(assets/img/app/power/bg_login.png) no-repeat center center">
+<body style="background: url(assets/img/app/power/bg_login.png) no-repeat 100% center">
 <main class="auth-main">
     <div class="auth-block login-content">
 
-        <div style="background: rgba(44,132,193, 0.55);padding: 32px;">
-            <img src="assets/img/app/power/logo_login.png" alt="logo" style="height: 100px;">
+        <div style="background: rgba(28,144,127, 0.3);padding: 32px;">
+            <img src="assets/img/app/power/logo.png" alt="logo" style="">
 
             <div style="padding: 20px 0;font-size: 22px;font-weight: 200">
-                恒汇电力设备数据监控平台
+                恒汇森一光伏平台
             </div>
 
             <form class="form-horizontal" style="margin-top: 30px;">
@@ -110,13 +58,70 @@
             </form>
         </div>
 
-        <div style="padding-top: 32px;">
-            如忘记密码或无法登录，请电话联系平台客服人员：021-68821235
-        </div>
+        <!--<div style="padding-top: 32px;">-->
+            <!--如忘记密码或无法登录，请电话联系平台客服人员：021-68821235-->
+        <!--</div>-->
 
     </div>
 
 </main>
 </body>
+<script type="text/javascript">
 
+    window.localStorage.clear();    // init local
+
+    //        var host = 'http://monitor.shanghaihenghui.com';
+    var host = 'http://yunwei.shanghaihenghui.com';
+    //        var host = 'http://139.196.82.185';
+    var path = host + '/energy/user/login';
+
+    var login = function () {
+        var username = $('#inputUsername').val();
+        var password = $('#inputPwd').val();
+        if (username && password) {
+            var params = {
+                username: username,
+                password: password
+            };
+
+            $.ajax({
+                url: path,
+                data: params,
+                dataType:'json',
+                type: 'POST',
+//                    contentType: 'application/json',
+//                    xhrFields: {
+//                        withCredentials: true
+//                    },
+                success: function (data) {
+//                    console.log(data)
+                    if(data.data){
+                        if (data.data.id && data.data.name) {
+                            localStorage.eUser = JSON.stringify(data.data);
+                            window.location.replace('/index.html');
+                        }
+                    }
+                    else {
+                        alert(data.message);
+                    }
+
+                },
+                error: function (err) {
+                    if (err.responseJSON && err.responseJSON.message) {
+                        alert(err.responseJSON.message);
+                    } else {
+                        alert('很抱歉，无法从服务器获取数据');
+                    }
+                },
+                complete: function (xhr, textStatus) {
+                    console.log('complete: ' + xhr.status);
+                }
+            })
+
+        } else {
+            alert("请填入账号和密码。");
+        }
+    };
+
+</script>
 </html>

@@ -1,0 +1,46 @@
+<section>
+    <div include-with-scope="app/powers/report/widgets/console.html"></div>
+    <div style="margin-top: 15px">
+        <table class="table table-hover common-table bg-white" st-pipe="getData"
+               st-table="show.trainArr">
+            <thead>
+            <tr>
+                <th>序号</th>
+                <th>电站名称</th>
+                <th>设备名称</th>
+                <th>缺陷描述</th>
+                <th>发现时间</th>
+                <th>发现人</th>
+                <th>处理情况</th>
+                <th>处理人</th>
+                <th>操作</th>
+            </tr>
+            </thead>
+            <tr ng-repeat="item in show.data track by $index">
+                <td>{{item.id}}</td>
+                <td ng-click="editReport(item.id)">{{item.clientName}}</td>
+                <td ng-click="editReport(item.id)">{{item.deviceName}}</td>
+                <td ng-click="editReport(item.id)">{{item.describe}}</td>
+                <td ng-click="editReport(item.id)">{{item.date}}</td>
+                <td ng-click="editReport(item.id)">{{item.discovery}}</td>
+                <td ng-click="editReport(item.id)">{{item.handle}}</td>
+                <td ng-click="editReport(item.id)">{{item.handleMan}}</td>
+                <td>
+                    <i class="ion-ios-trash-outline color-yellow common-table-btn"
+                       ng-click="delItem(item.id)"></i>
+                </td>
+            </tr>
+            <tfoot>
+            <tr>
+                <td
+                        id="powerTablePagination"
+                        class="text-center" st-pagination=""
+                        st-items-by-page="show.maxSize"
+                        st-displayed-pages="show.displayedPages"
+                        colspan="9">
+                </td>
+            </tr>
+            </tfoot>
+        </table>
+    </div>
+</section>

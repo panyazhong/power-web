@@ -1,61 +1,26 @@
 <div class="page-top clearfix" scroll-position="scrolled" max-height="50"
-     ng-class="{'scrolled': scrolled}">
-
-    <div class="page-top-div" style="width: 200px;">
-
-        <img src="assets/img/app/power/logo_home.png"
-             style="height: 66px;padding: 5px 0 5px 5px;float: left;"/>
-        <a href class="collapse-menu-link ion-navicon" ba-sidebar-toggle-menu></a>
-    </div>
-
-    <div class="page-top-div" style="width: calc(100% - 200px);">
-        <div class="page-top-div" style="width: 75%;">
-
-            <div class="page-top-div page-top-content-title" style="width: 12%;"
-                 ng-repeat="item in show.topBarData"
-                 ng-class="show.cache.state == item.state ? 'page-top-title-active' : '' "
+     ng-class="{'scrolled': scrolled}" >
+    <div class="page-top-div" style="width: 100%;">
+        <div class="page-top-div" style="width: 80%;"></div>
+        <!--/*page-top-common-title*/-->
+        <div class="page-top-div" style="width: 20%;">
+            <div class="page-top-div page-top-content-title"
+                 style="width: 70%;float: right;"
+                 ng-repeat="item in show.rightBarData"
                  ng-click="changeState(item)"
                  uib-dropdown is-open="item.isopen">
-                {{item.title}}
-
-                <span ng-show="item.state == 'events' && show.eventTotal != 0"
-                      class="event-label-big">
-                    {{show.eventTotal}}
-                </span>
-
-                <i class="ion-arrow-down-b" style="margin: 0 5px"
-                   ng-show="item.state == 'settings'|| item.state == 'history'"></i>
-                <!--<span class="page-top-divider" ng-show="item.state == 'settings'"></span>-->
-
+                <div style="display:inline-block;width: 50px;height: 50px;line-height:50px;background: transparent;border-radius: 50%;margin-right: 10px">
+                <img src="{{show.headImg}}" alt=""width="50" height="50" ng-show="flag==true">
+                <img src="assets/img/app/power/user.png" alt=""  ng-show="flag==false">
+                </div>{{show.userName}}
+                <i class="ion-arrow-down-b" style="margin: 0 5px"></i>
                 <ul class="dropdown-menu common-dp-ul" uib-dropdown-menu role="menu"
-                    aria-labelledby="single-button" ng-show="isSetting && item.state == 'settings'">
-                    <li role="menuitem" ng-repeat="info in show.setData track by $index" ng-show="checkUserType(info)">
+                    aria-labelledby="single-button" ng-show="isSetting && item.state == 'userinfo'">
+                    <li role="menuitem" ng-repeat="info in show.setDataU track by $index" style="height: 33px;line-height: 30px;">
                         <a ng-bind="info.title" ng-click="changeSetState(info)"></a>
                     </li>
+                    <li style="border-top: 1px solid #dde4ee"><a style="height: 30px;line-height: 30px;" ng-click="logout()">退出</a></li>
                 </ul>
-
-                <ul class="dropdown-menu common-dp-ul" uib-dropdown-menu role="menu"
-                    aria-labelledby="single-button" ng-show="isSetting && item.state == 'history'">
-                    <li role="menuitem" ng-repeat="info in show.setData2 track by $index" ng-show="checkUserTypeH(info)">
-                        <a ng-bind="info.title" ng-click="changeSetState(info)"></a>
-                    </li>
-                </ul>
-
-            </div>
-
-        </div>
-        <div class="page-top-div" style="width: 25%;">
-
-            <div class="page-top-div page-top-common-title single-overflow"
-                 style="width: calc(100% - 100px);">
-                欢迎您，{{show.userName}}
-            </div>
-            <div class="page-top-div page-top-common-title" style="width: 100px;">
-
-                <button ng-click="logout()" type="button"
-                        class="btn btn-primary btn-with-icon btn-transparent">
-                    <i class="ion-power"></i>退出
-                </button>
             </div>
         </div>
     </div>

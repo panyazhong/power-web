@@ -47,7 +47,7 @@
                         P: '',
                         Q: '',
                         PF: '',
-                        Pt1: ''
+                        PPt: ''
                     };   //选中的popov数据
                     $scope.filterKey = ['id', 'name'];
                     $scope.chooseBranch = function (incId, lineId, incIndex, branchIndex) {

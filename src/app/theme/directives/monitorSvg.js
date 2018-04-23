@@ -97,7 +97,7 @@
                         P: '',
                         Q: '',
                         PF: '',
-                        Pt1: ''
+                        PPt: ''
                     };   //选中的popov数据
                     $scope.filterKey = ['id', 'name'];
                     $scope.chooseBranch = function (incId, lineId, incIndex, branchIndex) {
@@ -109,15 +109,14 @@
                         $scope.line["name"] = $scope.tree.data[incIndex].lines[branchIndex].name;
 
                         var info = $scope.monitorData[incIndex].lines[branchIndex];
-                        for (var Key in $scope.line) {
-                            if ($scope.filterKey.indexOf(Key) == -1) {
-                                $scope.line[Key] = info[Key] || '';
-                            }
+                        for (var Key in info) {
+                            // if ($scope.filterKey.indexOf(Key)== -1) {
+                            //     $scope.line[Key] = info[Key] ;
+                            // }
+                            $scope.line[Key] = info[Key];
                         }
 
-                        // console.log('chooseBranch : ' + JSON.stringify($scope.line));
                     }
-
                 });
                 $scope.$watch('scaleNum', function (newValue, oldValue, scope) {
                     if (newValue > oldValue) {

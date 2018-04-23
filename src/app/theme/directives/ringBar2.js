@@ -12,7 +12,7 @@
                 $scope.$watch(attrs.eData, function (newValue, oldValue, scope) {
                     var option = {
                         backgroundColor: '#ffffff',
-                        color: newValue.color,
+                        color: ['#ff7c7c','#ffcd85','#68b8ff','#5c5c61'],
                         series: [
                             {
                                 type: 'pie',
@@ -22,21 +22,27 @@
                                 avoidLabelOverlap: false,   //是否启用防止标签重叠策略
                                 label: {                    //饼图图形上的文本标签
                                     normal: {               //默认样式
-                                        show: false,
-                                        position: 'center'
-                                    },
-                                    emphasis: {             //高亮样式
                                         show: true,
+                                        position: 'left',
                                         textStyle: {
                                             fontSize: '14',     //字体大小
                                             fontWeight: 'bold'  //字体的粗细
                                         },
                                         formatter: '{b}\n({d}%)'    //标签内容格式器
                                     }
+
+                                    //emphasis: {             //高亮样式
+                                    //    show: false,
+                                    //    textStyle: {
+                                    //        fontSize: '14',     //字体大小
+                                    //        fontWeight: 'bold'  //字体的粗细
+                                    //    },
+                                    //    formatter: '{b}\n({d}%)'    //标签内容格式器
+                                    //}
                                 },
                                 labelLine: {
                                     normal: {
-                                        show: false
+                                        show: true
                                     }
                                 },
                                 itemStyle: {
@@ -53,6 +59,7 @@
                             }
                         ]
                     };
+                    //myChart.clear();
                     myChart.setOption(option);
                 }, true);
                 window.addEventListener("resize", function () {  //这里使用$window.onresize方法会使前面的图表无法调整大小

@@ -1,0 +1,153 @@
+<section class="device">
+  <div class="row">
+    <div class="col-md-12 col-lg-12" style="padding: 0 15px">
+      <div ba-panel>
+        <div class="console bg-white">
+        <div class="col-md-10 col-lg-10">
+          <div class="col-md-12">
+            <!--<div class="col-md-3">-->
+              <!--<label class="col-sm-5 col-md-5 col-lg-5 text-center line-height" style="line-height: 34px">运行状态</label>-->
+              <!--<div class="col-sm-7 col-md-7 col-lg-7">-->
+                <!--&lt;!&ndash; Single button &ndash;&gt;-->
+                <!--<div class="select-right" uib-dropdown>-->
+                  <!--<button type="button" class="btn-def btn-trans" style="border-radius: 15px"-->
+                          <!--uib-dropdown-toggle ng-disabled="disabled">-->
+                    <!--<span class="caret"></span>{{show.deviceStatus}}-->
+                  <!--</button>-->
+
+                  <!--<ul class="dropdown-menu common-dp-ul" uib-dropdown-menu role="menu"-->
+                      <!--aria-labelledby="single-button">-->
+                    <!--<li role="menuitem"-->
+                        <!--ng-repeat="info in show.deviceStatusArr track by $index">-->
+                      <!--<a ng-bind="info.name" ng-click="setStatus(info)"></a>-->
+                    <!--</li>-->
+                  <!--</ul>-->
+                <!--</div>-->
+              <!--</div>-->
+            <!--</div>-->
+            <!--<div class="col-md-3">-->
+              <!--<label class="col-sm-5 col-md-5 col-lg-5 text-center line-height">设备类型</label>-->
+              <!--<div class="col-sm-7 col-md-7 col-lg-7">-->
+                <!--&lt;!&ndash; Single button &ndash;&gt;-->
+                <!--<div class="select-right" uib-dropdown>-->
+                  <!--<button type="button" class="btn-def btn-trans " style="border-radius: 15px"-->
+                          <!--uib-dropdown-toggle ng-disabled="disabled">-->
+                    <!--<span class="caret"></span>{{show.deviceType}}-->
+                  <!--</button>-->
+
+                  <!--<ul class="dropdown-menu common-dp-ul" uib-dropdown-menu role="menu"-->
+                      <!--aria-labelledby="single-button">-->
+                    <!--<li role="menuitem"-->
+                        <!--ng-repeat="info in show.deviceTypeArr track by $index">-->
+                      <!--<a ng-bind="info.name" ng-click="setType(info)"></a>-->
+                    <!--</li>-->
+                  <!--</ul>-->
+                <!--</div>-->
+              <!--</div>-->
+            <!--</div>-->
+            <div class="form-horizontal col-sm-3 col-md-3 col-lg-3">
+              <label class="col-sm-5 col-md-5 col-lg-5 text-center">起始时间</label>
+              <div class="col-sm-7 col-md-7 col-lg-7">
+                <input ng-click="toggleDatepicker()"
+                       uib-datepicker-popup="{{data.beginDate.format}}"
+                       is-open="data.beginDate.isOpen"
+                       datepicker-options="data.beginDate.options"
+                       clear-text="清除"
+                       current-text="今天"
+                       close-text="关闭"
+                       alt-input-formats="data.beginDate.altInputFormats"
+                       ng-model="show.beginDate"
+                       ng-model-options="data.beginDate.modelOptions"
+                       type="text"
+                       class="form-control-def"
+                       readonly="readonly"
+                       style="max-width: 100% !important;text-align: left;background-color: #fff">
+              </div>
+            </div>
+            <div class="form-horizontal col-sm-3 col-md-3 col-lg-3">
+              <label class="col-sm-5 col-md-5 col-lg-5 text-center">结束时间</label>
+              <div class="col-sm-7 col-md-7 col-lg-7">
+                <input ng-click="toggleEndDatepicker()"
+                       uib-datepicker-popup="{{data.endDate.format}}"
+                       is-open="data.endDate.isOpen"
+                       datepicker-options="data.endDate.options"
+                       clear-text="清除"
+                       current-text="今天"
+                       close-text="关闭"
+                       alt-input-formats="data.endDate.altInputFormats"
+                       ng-model="show.endDate"
+                       ng-model-options="data.endDate.modelOptions"
+                       type="text"
+                       class="form-control-def"
+                       readonly="readonly"
+                       style="max-width:100% !important;text-align: left;background-color: #fff">
+              </div>
+            </div>
+            <div class="col-md-3"></div>
+            <div class="col-md-3">
+          <button class="btn-def btn-green"
+                  ng-click="searchDevice()">查询
+          </button>
+          </div>
+          </div>
+          <div class="col-md-12" style="margin-top: 15px">
+          <!--<div class="col-md-3">-->
+            <!--<label class="col-sm-5 col-md-5 col-lg-5 text-center line-height">生产厂家</label>-->
+            <!--<div class="col-sm-7 col-md-7 col-lg-7">-->
+              <!--<input type="text" class="form-control-def" placeholder="请输入..." style="max-width: 100% !important;" ng-model="form.model">-->
+            <!--</div>-->
+          <!--</div>-->
+          <div class="col-md-3">
+            <!--<label class="col-sm-5 col-md-5 col-lg-5 text-center line-height">设备名称</label>-->
+            <!--<div class="col-sm-7 col-md-7 col-lg-7">-->
+              <!--<input type="text" class="form-control-def" placeholder="请输入..." style="max-width: 100% !important;"  ng-model="form.name">-->
+            <!--</div>-->
+          </div>
+          <div class="col-md-3">
+            <!--<label class="col-sm-5 col-md-5 col-lg-5 text-center line-height">设备型号</label>-->
+            <!--<div class="col-sm-7 col-md-7 col-lg-7">-->
+              <!--<input type="text" class="form-control-def" placeholder="请输入..." style="max-width: 100% !important;" ng-model="form.model">-->
+            <!--</div>-->
+          </div>
+          <div class="col-md-3"></div>
+          <div class="col-md-3">
+          <button class="btn-def btn-yellow"
+                  ng-click="clearForm()">清空
+          </button>
+          </div>
+          </div>
+          </div>
+        <div class="col-md-2 col-lg-2"></div></div>
+      </div>
+    </div>
+  </div>
+  <!--<div ba-panel>-->
+    <table class="table table-hover common-table bg-white">
+      <thead>
+      <tr>
+        <th>电站名称</th>
+        <th>设备名称</th>
+        <th>设备类型</th>
+        <th>版本号</th>
+        <th>SN号</th>
+        <th>状态</th>
+        <th>操作</th>
+      </tr>
+      </thead>
+      <tr ng-repeat="item in deviceList">
+        <td>{{item.stationName}}</td>
+        <td>{{item.devName}}</td>
+        <td>{{item.deviceType}}</td>
+        <td>{{item.devVersion}}</td>
+        <td>{{item.devEsn}}</td>
+        <td>{{item.status}}</td>
+        <td>
+          <i class="ion-ios-compose-outline color-green common-table-btn"
+               ng-click="delItem(item.id)"></i>
+          <i class="ion-ios-trash-outline color-yellow common-table-btn"
+               ng-click="delItem(item.id)"></i>
+        </td>
+        </tr>
+    </table>
+  <!--</div>-->
+</section>

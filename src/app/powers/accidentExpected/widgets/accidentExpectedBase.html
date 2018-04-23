@@ -1,0 +1,95 @@
+<div class="row">
+    <div class="form-group col-sm-6 col-md-6 col-lg-6">
+        <label class="col-sm-4 line-height text-right">日期</label>
+        <div class="col-sm-8">
+            <input ng-click="toggleTimeDatepicker()"
+                   uib-datepicker-popup="{{data.timeDate.format}}"
+                   is-open="data.timeDate.isOpen"
+                   datepicker-options="data.timeDate.options"
+                   clear-text="清除"
+                   current-text="今天"
+                   close-text="关闭"
+                   alt-input-formats="data.timeDate.altInputFormats"
+                   ng-model="form.time"
+                   ng-model-options="data.timeDate.modelOptions"
+                   type="text"
+                   class="form-control"
+                   readonly="readonly"
+                   style="text-align: left;background-color: #fff">
+        </div>
+    </div>
+    <div class="form-group col-sm-6 col-md-6 col-lg-6">
+        <label class="col-sm-4 line-height text-right">预想人</label>
+        <div class="col-sm-8">
+            <input type="text" class="form-control" ng-model="form.expectMan">
+        </div>
+    </div>
+    <div class="form-group col-sm-12 col-md-12 col-lg-12">
+        <label class="col-sm-2 line-height text-right">预想事故</label>
+        <div class="col-sm-10">
+            <textarea
+                    type="text"
+                    class="modal-textarea"
+                    cols="52"
+                    rows="5"
+                    ng-model="form.expectEvent"
+                    style="padding-left: 10px"></textarea>
+        </div>
+    </div>
+    <div class="form-group col-sm-12 col-md-12 col-lg-12">
+        <label class="col-sm-2 col-md-2 col-lg-2 line-height text-right">处理步骤</label>
+        <div class="col-sm-10">
+            <textarea
+                    type="text"
+                    class="modal-textarea"
+                    cols="52"
+                    rows="5"
+                    ng-model="form.handleStep"
+                    style="padding-left: 10px"></textarea>
+        </div>
+    </div>
+    <div class="form-group col-sm-12 col-md-12 col-lg-12">
+        <label class="col-sm-2 col-md-2 col-lg-2 line-height text-right">正确处理步骤和方法</label>
+        <div class="col-sm-10">
+            <textarea
+                    type="text"
+                    class="modal-textarea"
+                    cols="52"
+                    rows="5"
+                    ng-model="form.realHandleStep"
+                    style="padding-left: 10px"></textarea>
+        </div>
+    </div>
+    <div class="form-group col-sm-12 col-md-12 col-lg-12">
+        <label class="col-sm-2 col-md-2 col-lg-2 line-height text-right">评价</label>
+        <div class="col-sm-10">
+            <textarea
+                    type="text"
+                    class="modal-textarea"
+                    cols="52"
+                    rows="5"
+                    ng-model="form.evaluate"
+                    style="padding-left: 10px"></textarea>
+        </div>
+    </div>
+    <div class="form-group col-sm-12 col-md-12 col-lg-12">
+        <label class="col-sm-2 line-height text-right">评价时间</label>
+        <div class="col-sm-4">
+            <input ng-click="toggleEvaluateTimeDatepicker()"
+                   uib-datepicker-popup="{{data.timeDate.format}}"
+                   is-open="data.evaluateTime.isOpen"
+                   datepicker-options="data.evaluateTime.options"
+                   clear-text="清除"
+                   current-text="今天"
+                   close-text="关闭"
+                   alt-input-formats="data.evaluateTime.altInputFormats"
+                   ng-model="form.evaluateTime"
+                   ng-model-options="data.evaluateTime.modelOptions"
+                   type="text"
+                   class="form-control"
+                   readonly="readonly"
+                   style="text-align: left;background-color: #fff">
+        </div>
+    </div>
+</div>
+

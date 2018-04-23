@@ -14,7 +14,7 @@
                     var seriesData = [];
                     var data = newValue.data;
                     var legendDate = newValue.xAxisData;
-
+                    if(!data)return
                     for (var i = 0; i < data.length; i++) {
                         var item = data[i];
                         seriesData.push({
@@ -29,8 +29,10 @@
 
                     var option = {
                         backgroundColor: '#fff',
-                        color: ['#5c5c61', '#95ceff', '#ffbc75', '#ff6060'],
+                        color: ['#ff7c7c','#ffcd85','#68b8ff','#5c5c61'],
                         tooltip: {
+                            lable:{show:false},
+
                             trigger: 'axis',
                             backgroundColor: 'rgba(255,255,255,0.8)',
                             extraCssText: 'box-shadow: 0 0 8px rgba(0, 0, 0, 0.3);',
@@ -39,9 +41,11 @@
                             },
                             axisPointer: { //坐标轴指示器配置项
                                 lineStyle: {
-                                    color: 'transparent' //line color
-                                }
-                            }
+                                    color: 'transparent', //line color
+                                },
+
+                            },
+                            //.axisPointer.label.show
                         },
                         legend: {
                             data: []

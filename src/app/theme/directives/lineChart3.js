@@ -15,10 +15,26 @@
                     var unit = newValue.unit;
                     var lineTitle = newValue.lineTitle;
                     var timeData = newValue.timeData;  // x轴 时间间隔
-                    var avgdata = newValue.avgdata; // 今日数据，动态会更新
-                    var mindata = newValue.mindata;    //昨日数据，静态
-                    var maxdata = newValue.maxdata;    //昨日数据，静态
+                    var lineData = newValue.lineData;
 
+                    var seriesData = [];
+                    if(!lineData)return;
+                    lineData.map(function (item, position) {
+                        seriesData.push({
+                            name: lineTitle[position],
+                            type: 'line',
+                            smooth: true, //是否平滑曲线显示
+                            showSymbol: false, //false 则只有在 tooltip hover 的时候显示
+                            symbol: false, //标记的图形
+                            symbolSize: 1,
+                            lineStyle: {
+                                normal: {
+                                    width: 2 //线宽度，def 2
+                                }
+                            },
+                            data: item
+                        })
+                    });
                     // line config
                     var option = {
                         backgroundColor: '#fff', //背景色
@@ -45,9 +61,9 @@
                         color: ['#ff6060', '#5c5c61','#20B2AA'], //调色盘颜色列表
                         legend: {
                             data: lineTitle,
-                            orient: 'vertical', //位置配置
-                            x: 'right',
-                            y: 'top'
+                            //orient: 'vertical', //位置配置
+                            //x: 'right',
+                            //y: 'top'
                         },
                         grid: { //组件离容器距离配置
                             left: 60,
@@ -90,58 +106,15 @@
                                 }
                             },
                             name: unit,
-                            nameLocation: 'middle',
-                            nameGap: 40,
+                            //nameLocation: 'middle',
+                            //nameGap: 40,
                             nameTextStyle: {
                                 color: '#666'
                             }
                         },
-                        series: [
-                            {
-                                name: lineTitle[0],
-                                type: 'line',
-                                smooth: true, //是否平滑曲线显示
-                                showSymbol: false, //false 则只有在 tooltip hover 的时候显示
-                                symbol: false, //标记的图形
-                                symbolSize: 1,
-                                lineStyle: {
-                                    normal: {
-                                        width: 2 //线宽度，def 2
-                                    }
-                                },
-                                data: maxdata,
-                            },
-                            {
-                                name: lineTitle[1],
-                                type: 'line',
-                                smooth: true, //是否平滑曲线显示
-                                showSymbol: false, //false 则只有在 tooltip hover 的时候显示
-                                symbol: false, //标记的图形
-                                symbolSize: 1,
-                                lineStyle: {
-                                    normal: {
-                                        width: 2 //线宽度，def 2
-                                    }
-                                },
-                                data: mindata,
-                            },
-                            {
-                                name: lineTitle[2],
-                                type: 'line',
-                                smooth: true, //是否平滑曲线显示
-                                showSymbol: false, //false 则只有在 tooltip hover 的时候显示
-                                symbol: false, //标记的图形
-                                symbolSize: 1,
-                                lineStyle: {
-                                    normal: {
-                                        width: 2 //线宽度，def 2
-                                    }
-                                },
-                                data: avgdata,
-                            }
-                        ]
+                        series: seriesData,
                     };
-
+                    myChart.clear();
                     myChart.setOption(option);
                 }, true);
                 window.addEventListener("resize", function () {  //这里使用$window.onresize方法会使前面的图表无法调整大小

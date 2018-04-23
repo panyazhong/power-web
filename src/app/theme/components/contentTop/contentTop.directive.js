@@ -16,7 +16,7 @@
             link: function ($scope) {
                 $scope.$watch(function () {
                     $scope.activePageTitle = $state.current.title;
-                    if ($state.current.name == 'monitoring' || $state.current.name == 'branch') {
+                    if ($state.current.name == 'branch') {
                         $scope.clientTitle = PageTopCache.currentState.state;
                     } else {
                         $scope.clientTitle = '';

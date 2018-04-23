@@ -47,7 +47,7 @@
                         P: '',
                         Q: '',
                         PF: '',
-                        Pt1: ''
+                        PPt: ''
                     };   //选中的popov数据
                     $scope.filterKey = ['id', 'name'];
                     $scope.chooseBranch = function (incId, lineId, incIndex, branchIndex) {
@@ -55,10 +55,18 @@
                         // console.log('chooseBranch 111：' + JSON.stringify($scope.tree.data[incIndex].lines[branchIndex]));
                         // console.log('chooseBranch 222：' + JSON.stringify($scope.monitorData[incIndex].lines[branchIndex]));
 
-                        $scope.line["id"] = $scope.tree.data[incIndex].lines[branchIndex].id;
-                        $scope.line["name"] = $scope.tree.data[incIndex].lines[branchIndex].name;
+                        // $scope.line["id"] = $scope.tree.data[incIndex].lines[branchIndex].id;
+                        // $scope.line["name"] = $scope.tree.data[incIndex].lines[branchIndex].name;
+                        if(lineId == '125' || lineId == '126'){
+                            $scope.line["id"] = $scope.tree.data[incIndex].id;
+                            $scope.line["name"] = ($scope.tree.data[incIndex].name).join('');
+                            var info = $scope.monitorData[incIndex];
+                        }else {
+                            $scope.line["id"] = $scope.tree.data[incIndex].lines[branchIndex].id;
+                            $scope.line["name"] = $scope.tree.data[incIndex].lines[branchIndex].name;
+                            var info = $scope.monitorData[incIndex].lines[branchIndex];
+                        }
 
-                        var info = $scope.monitorData[incIndex].lines[branchIndex];
                         for (var Key in $scope.line) {
                             if ($scope.filterKey.indexOf(Key) == -1) {
                                 $scope.line[Key] = info[Key] || '';

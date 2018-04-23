@@ -1,0 +1,19 @@
+<div  style="max-height: 600px;margin-top: 100px;overflow-y: auto">
+
+    <div style="margin-bottom: 15px">
+        <div class="modal-head">设备缺陷登记</div>
+    </div>
+    <div style="padding: 15px 30px;padding-left: 100px">
+
+        <div include-with-scope="app/powers/equipmentDefect/widgets/equipmentDefectBase.html"></div>
+        <div style="text-align: center">
+            <button class="btn-def btn-green" style="width: 80px;margin: 15px;"
+                    ng-click="add(form)">保存
+            </button>
+
+            <button class="btn-def btn-yellow" style="width: 80px;margin: 15px;"
+                    ng-click="$dismiss()">取消
+            </button>
+        </div>
+    </div>
+</div>

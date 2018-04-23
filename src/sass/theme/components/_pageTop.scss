@@ -1,16 +1,16 @@
 .page-top {
-  background-color: $sidebar;
+  background-color: #fff;
   position: fixed;
   z-index: 904;
   box-shadow: 2px 0px 3px rgba(0, 0, 0, 0.5);
   height: 66px;
   width: 100%;
   min-width: $resMin;
-  //padding: 0 32px 0 40px;
+  padding: 0 32px 0 40px;
 
-  //&.scrolled {
-  //  background-color: rgba(black, 0.85)
-  //}
+  &.scrolled {
+    //background-color: rgba(black, 0.85)
+  }
 }
 
 a.al-logo {
@@ -178,7 +178,7 @@ a.collapse-menu-link {
 }
 
 .page-top-content-title {
-  color: #fff;
+  color: #03ce9f;
   font-size: 15px;
   text-align: center;
   line-height: 66px;
@@ -186,11 +186,13 @@ a.collapse-menu-link {
 }
 
 .page-top-title-active {
-  background: #f0a53d !important;
+  //background: #f0a53d !important;
+  //background: #41a8ff !important;
+  border-bottom: 4px solid #f0a53d;
 }
 
 .page-top-common-title {
-  color: #fff;
+  color: #03ce9f;
   font-size: 15px;
   text-align: center;
   line-height: 66px;

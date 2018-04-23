@@ -17,12 +17,13 @@
         .service("clientCache", clientCache)    // 变电站事件
         .service("coreConfig", coreConfig)
         .service("mapImgCache", mapImgCache)
-        .service("userCache", userCache);
+        .service("userCache", userCache)
+        .service("activeCidCache", activeCidCache);//侧边栏选中
 
     function eventsCache(Log, $state, $rootScope, clientCache, $uibModal, coreConfig) {
         /**/
         var socket = io.connect(coreConfig.host + ':6689', {resource: 'event/socket.io'});
-        socket.on('alert', function (data) {    // 监听事件
+        socket.on('alert', function (data)     {    // 监听事件
             Log.i('rec-alert : \n' + data);
 
             var obj = JSON.parse(data);
@@ -659,12 +660,13 @@
 
     function coreConfig() {
 
-        var host = 'http://monitor.shanghaihenghui.com';
-        // var host = 'http://139.196.82.185';
-        // var host = 'http://192.168.0.155';
+        //var host = 'http://monitor.shanghaihenghui.com';
+        var host = 'http://yunwei.shanghaihenghui.com';
+        //var host = 'http://192.168.1.136/index.php';
 
-        var httpHost = host + '/api';
-        // var httpHost = host + '/power/api';
+
+        //var httpHost = host + '/api';
+        var httpHost = host;
 
         var service = {
             host: host,
@@ -698,23 +700,34 @@
         var service = {
             getName: getName,
             getUserType: getUserType,
-            getUserId: getUserId
+            getUserId: getUserId,
+            getclientIds: getclientIds
         };
 
         return service;
 
         function getName() {
-            return locals.getObject('user').name;
+            return locals.getObject('eUser').name;
         }
 
         function getUserType() {
-            return locals.getObject('user').admin;
+            return locals.getObject('eUser').auth;
         }
 
         function getUserId() {
-            return locals.getObject('user').id;
+            return locals.getObject('eUser').id;
+        }
+
+        function getclientIds() {
+            return locals.getObject('eUser').clientIds;
         }
 
     }
-
+    function activeCidCache(locals){
+        var activeCid = locals.get('cid','');
+        var service = {
+            activeCid: activeCid
+        };
+        return service;
+    }
 })();

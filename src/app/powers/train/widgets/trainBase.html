@@ -1,0 +1,97 @@
+<div class="row">
+    <div class="form-group col-sm-6 col-md-6 col-lg-6">
+        <label class="col-sm-2 line-height">培训项目</label>
+        <div class="col-sm-10">
+            <input type="text" class="form-control" ng-model="form.name">
+        </div>
+    </div>
+    <div class="form-group col-sm-6 col-md-6 col-lg-6">
+        <label class="col-sm-2 line-height">主讲人</label>
+        <div class="col-sm-10">
+            <input type="text" class="form-control" ng-model="form.speaker">
+        </div>
+    </div>
+    <div class="form-group col-sm-6 col-md-6 col-lg-6">
+        <label class="col-sm-2 col-md-2 col-lg-2 line-height">起始时间</label>
+        <div class="col-sm-10">
+            <input ng-click="toggleStartDatepicker()"
+                   uib-datepicker-popup="{{data.beginDate.format}}"
+                   is-open="data.beginDate.isOpen"
+                   datepicker-options="data.beginDate.options"
+                   clear-text="清除"
+                   current-text="今天"
+                   close-text="关闭"
+                   alt-input-formats="data.beginDate.altInputFormats"
+                   ng-model="show.startTime"
+                   ng-model-options="data.beginDate.modelOptions"
+                   type="text"
+                   class="form-control"
+                   readonly="readonly"
+                   style="text-align: left;background-color: #fff">
+        </div>
+    </div>
+    <div class="form-group col-sm-6 col-md-6 col-lg-6">
+        <label class="col-sm-2 line-height">结束时间</label>
+        <div class="col-sm-10">
+            <input ng-click="toggleEndDatepicker()"
+                   uib-datepicker-popup="{{data.endDate.format}}"
+                   is-open="data.endDate.isOpen"
+                   datepicker-options="data.endDate.options"
+                   clear-text="清除"
+                   current-text="今天"
+                   close-text="关闭"
+                   alt-input-formats="data.endDate.altInputFormats"
+                   ng-model="show.endTime"
+                   ng-model-options="data.endDate.modelOptions"
+                   type="text"
+                   class="form-control"
+                   readonly="readonly"
+                   style="text-align: left;background-color: #fff">
+        </div>
+    </div>
+    <div class="form-group col-sm-6 col-md-6 col-lg-6">
+        <label class="col-sm-2 line-height">参加人数</label>
+        <div class="col-sm-10">
+            <input type="text" class="form-control" ng-model="form.count">
+        </div>
+    </div>
+    <div class="form-group col-sm-6 col-md-6 col-lg-6"></div>
+    <div class="form-group col-sm-12 col-md-12 col-lg-12">
+        <label class="col-sm-1 line-height">人员签到</label>
+        <div class="col-sm-10">
+            <textarea type="text" class="modal-textarea" cols="87" rows="5" ng-model="form.sign"></textarea>
+        </div>
+    </div>
+    <div class="form-group col-sm-12 col-md-12 col-lg-12">
+        <label class="col-sm-1 line-height">培训内容</label>
+        <div class="col-sm-10">
+            <textarea type="text" class="modal-textarea" cols="87" rows="5" ng-model="form.content"></textarea>
+        </div>
+    </div>
+    <div class="form-group col-sm-6 col-md-6 col-lg-6">
+        <label class="col-sm-2 line-height">检查人</label>
+        <div class="col-sm-10">
+            <input type="text" class="form-control" ng-model="form.checker">
+        </div>
+    </div>
+    <div class="form-group col-sm-6 col-md-6 col-lg-6">
+        <label class="col-sm-2 line-height">日期</label>
+        <div class="col-sm-10">
+            <input ng-click="toggleTimeDatepicker()"
+                   uib-datepicker-popup="{{data.timeDate.format}}"
+                   is-open="data.timeDate.isOpen"
+                   datepicker-options="data.timeDate.options"
+                   clear-text="清除"
+                   current-text="今天"
+                   close-text="关闭"
+                   alt-input-formats="data.timeDate.altInputFormats"
+                   ng-model="show.time"
+                   ng-model-options="data.timeDate.modelOptions"
+                   type="text"
+                   class="form-control"
+                   readonly="readonly"
+                   style="text-align: left;background-color: #fff">
+        </div>
+    </div>
+</div>
+

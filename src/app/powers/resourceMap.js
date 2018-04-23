@@ -17,7 +17,7 @@
                     },
                     'responseError': function (rejection) {
                         // called if HTTP CODE != 2xx
-                        console.log('responseError::: ' + JSON.stringify(rejection));
+                        //console.log('responseError::: ' + JSON.stringify(rejection));
                         return $q.reject(rejection);
                     }
                 };
@@ -191,13 +191,190 @@
         })
         .factory('Fenshi', function (resourceMap) {
             var config = {
-                url: 'data/timePt1/time/:time/type/:type/line_id/:line_id/interval/:interval',
+                url: 'data/timeSharing/time/:time/type/:type/line_id/:line_id/interval/:interval',
                 paramsDefault: {
                     time: '@time',
                     type:'@type',
                     line_id: '@line_id',
                     interval: '@interval',
                 },
+                action: {
+                    query : {
+                        method: 'GET'
+                    }
+                }
+            };
+            return resourceMap(config);
+        })
+        .factory('Zclinet', function (resourceMap) {
+            var config = {
+                url: 'data/getLevelByClientId/clientId/:clientId',
+                paramsDefault: {
+                    clientId: '@clientId',
+                },
+                action: {
+                    query : {
+                        method: 'GET'
+                    }
+                }
+            };
+            return resourceMap(config);
+        })
+        .factory('Zline', function (resourceMap) {
+            var config = {
+                url: 'data/getListByLevel/clientId/:clientId/level/:level',
+                paramsDefault: {
+                    clientId: '@clientId',
+                    level: '@level',
+                },
+                action: {
+                    query : {
+                        method: 'GET'
+                    }
+                }
+            };
+            return resourceMap(config);
+        })
+        .factory('Ziding', function (resourceMap) {
+            var config = {
+                url: 'data/customQuery/beginDate/:beginDate/endDate/:endDate/interval/:interval/lineIds/:lineIds/type/:type',
+                paramsDefault: {
+                    beginDate:'@beginDate',
+                    endDate:'@endDate',
+                    interval:'@interval',
+                    lineIds: '@lineIds',
+                    type: '@type',
+                },
+                action: {
+                    query : {
+                        method: 'GET'
+                    }
+                }
+            };
+            return resourceMap(config);
+        })
+        .factory('Sanxiang', function (resourceMap) {
+            var config = {
+                url: 'data/unbalanceQuery/lineId/:lineId/time/:time/type/:type/interval/:interval',
+                paramsDefault: {
+                    lineId:'@lineId',
+                    time:'@time',
+                    type: '@type',
+                    interval:'@interval',
+                },
+                action: {
+                    query : {
+                        method: 'GET'
+                    }
+                }
+            };
+            return resourceMap(config);
+        })
+        .factory('Dianfeiday', function (resourceMap) {
+            var config = {
+                url: 'data/powerFeesDayLine/clientId/:client_id/dateTime/:time/type/:type/lineId/:line_id',
+                paramsDefault: {
+                    clientId:'@client_id',
+                    dateTime: '@time',
+                    type:'@type',
+                    lineId: '@line_id',
+                },
+                action: {
+                    query : {
+                        method: 'GET'
+                    }
+                }
+            };
+            return resourceMap(config);
+        })
+        .factory('Dianfei', function (resourceMap) {
+            var config = {
+                url: 'data/powerFees/clientId/:client_id/dateTime/:time/type/:type/lineId/:line_id',
+                paramsDefault: {
+                    clientId:'@client_id',
+                    dateTime: '@time',
+                    type:'@type',
+                    lineId: '@line_id',
+                },
+                action: {
+                    query : {
+                        method: 'GET'
+                    }
+                }
+            };
+            return resourceMap(config);
+        })
+        //分项计量
+        .factory('Fenxiang', function (resourceMap) {
+            var config = {
+                url: 'data/powerItem/clientId/:client_id/dateTime/:time/type/:type/interval/:interval',
+                paramsDefault: {
+                    clientId:'@client_id',
+                    dateTime: '@time',
+                    type:'@type',
+                    interval:'@interval',
+                },
+                action: {
+                    query : {
+                        method: 'GET'
+                    }
+                }
+            };
+            return resourceMap(config);
+        })
+        //巡检报表
+        .factory('Reportcheck', function (resourceMap) {
+            var config = {
+                url: 'inspect/inspectCount/dateTime/:time/userId/:userId/clientName/:clientName',
+                paramsDefault: {
+                    clientName:'@clientName',
+                    dateTime: '@time',
+                    userId: '@userId',
+                },
+                action: {
+                    query : {
+                        method: 'GET'
+                    }
+                }
+            };
+            return resourceMap(config);
+        })
+        //体检报告-MD
+        .factory('Examd', function (resourceMap) {
+            var config = {
+                url: 'health/mdPage/lineId/:line_id/dateTime/:time',
+                paramsDefault: {
+                    lineId: '@line_id',
+                    dateTime: '@time',
+                },
+                action: {
+                    query : {
+                        method: 'GET'
+                    }
+                }
+            };
+            return resourceMap(config);
+        })
+        .factory('Exatype', function (resourceMap) {
+            var config = {
+                url: 'health/mdLine/lineId/:line_id/dateTime/:time/type/:type',
+                paramsDefault: {
+                    lineId: '@line_id',
+                    dateTime: '@time',
+                    type:'@type',
+                },
+                action: {
+                    query : {
+                        method: 'GET'
+                    }
+                }
+            };
+            return resourceMap(config);
+        })
+        .factory('Exatypename', function (resourceMap) {
+            var config = {
+                url: 'daily/getClientParam',
+                paramsDefault: {},
                 action: {
                     query : {
                         method: 'GET'

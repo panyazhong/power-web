@@ -1,0 +1,38 @@
+<section>
+    <div include-with-scope="app/powers/report/widgets/console.html"></div>
+    <div style="margin-top: 15px">
+        <table class="table table-hover common-table bg-white" st-pipe="getData"
+               st-table="show.trainArr">
+            <thead>
+                <tr>
+                    <th>会议时间</th>
+                    <th>会议主题</th>
+                    <th>会议主持</th>
+                    <th>会议地点</th>
+                    <th>操作</th>
+                </tr>
+            </thead>
+            <tr ng-repeat="item in show.data">
+                <td>{{item.date}}</td>
+                <td ng-click="editReport(item.id)">{{item.theme}}</td>
+                <td ng-click="editReport(item.id)">{{item.host}}</td>
+                <td ng-click="editReport(item.id)">{{item.place}}</td>
+                <td>
+                    <i class="ion-ios-trash-outline color-yellow common-table-btn"
+                       ng-click="delItem(item.id)"></i>
+                </td>
+            </tr>
+            <tfoot>
+                <tr>
+                    <td
+                            id="powerTablePagination"
+                            class="text-center" st-pagination=""
+                            st-items-by-page="show.maxSize"
+                            st-displayed-pages="show.displayedPages"
+                            colspan="9">
+                    </td>
+                </tr>
+            </tfoot>
+        </table>
+    </div>
+</section>
